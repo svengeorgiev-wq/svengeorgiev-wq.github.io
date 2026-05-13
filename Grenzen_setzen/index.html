@@ -3,9 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#F5E6E0">
+  <meta name="theme-color" content="#E85E3E">
   <title>21-Tage-Begleiter – Nicht alle. Nicht immer. Nicht alles.</title>
   <meta name="description" content="Der interaktive Begleiter zum Buch von Lea Hoffmann. Grenzen setzen ohne Schuldgefühle.">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Grenzen-App">
+  <meta name="mobile-web-app-capable" content="yes">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1475,6 +1484,127 @@
     .reset-link:hover { color: var(--text-soft); }
 
     #day-detail-anchor { scroll-margin-top: 16px; }
+
+    /* ============ HOME SCREEN BANNER ============ */
+    .install-banner {
+      display: none;
+      background: linear-gradient(135deg, var(--coral-bg) 0%, white 100%);
+      border: 1px solid var(--coral-soft);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .install-banner.visible { display: block; }
+
+    .install-banner::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, var(--coral-soft) 0%, transparent 70%);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .install-banner-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-mute);
+      font-size: 20px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      z-index: 2;
+    }
+    .install-banner-close:hover { background: var(--coral-soft); color: var(--text); }
+
+    .install-banner-title {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      padding-right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .install-banner-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(232, 94, 62, 0.18);
+      object-fit: cover;
+    }
+
+    .install-banner-body {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+
+    .install-banner-toggle {
+      background: transparent;
+      border: none;
+      color: var(--coral);
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 4px 0;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .install-banner-toggle:hover { color: var(--coral-light); }
+
+    .install-banner-steps {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--coral-soft);
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+    .install-banner-steps.visible { display: block; }
+
+    .install-banner-steps strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .install-banner-steps ol {
+      padding-left: 20px;
+      margin-top: 6px;
+    }
+    .install-banner-steps ol li {
+      margin-bottom: 4px;
+    }
+
+    .install-icon-inline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      vertical-align: middle;
+      margin: 0 2px;
+    }
   </style>
 </head>
 <body>
@@ -1516,6 +1646,22 @@
         <div class="kompass-desc">Du bist nicht für alles zuständig.</div>
       </div>
     </div>
+
+    <!-- ============ HOME SCREEN BANNER ============ -->
+    <section class="install-banner" id="install-banner">
+      <button class="install-banner-close" onclick="dismissInstallBanner()" aria-label="Hinweis schließen">×</button>
+      <div class="install-banner-title">
+        <img src="icon-192.png" alt="" class="install-banner-icon">
+        <span>App zum Home-Bildschirm hinzufügen</span>
+      </div>
+      <p class="install-banner-body">
+        Damit du den Begleiter nicht vergisst: Leg ein Icon auf deinen Startbildschirm. Dann ist die App wie eine richtige App — ein Tipp und du bist drin.
+      </p>
+      <button class="install-banner-toggle" id="install-toggle" onclick="toggleInstallSteps()">So geht's →</button>
+      <div class="install-banner-steps" id="install-steps">
+        <div id="install-steps-content"></div>
+      </div>
+    </section>
 
     <!-- ============ INTRO BANNER ============ -->
     <details class="intro-banner" id="intro-banner" open>
@@ -2566,11 +2712,82 @@
       loadState();
       renderProgress();
       renderWeeks();
+      initInstallBanner();
 
       // Collapse intro on return visits
       if (state.completedDays.length > 0 || Object.keys(state.notes).length > 0 || Object.keys(state.toolData).length > 0) {
         document.getElementById('intro-banner').open = false;
       }
+    }
+
+    // ============================================
+    // INSTALL-BANNER (Home-Bildschirm)
+    // ============================================
+    function isStandalone() {
+      return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;
+    }
+
+    function detectPlatform() {
+      const ua = navigator.userAgent || '';
+      const isiOS = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+      const isiPadDesktop = navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+      const isAndroid = /android/i.test(ua);
+      if (isiOS || isiPadDesktop) return 'ios';
+      if (isAndroid) return 'android';
+      return 'desktop';
+    }
+
+    function initInstallBanner() {
+      // Don't show if already installed
+      if (isStandalone()) return;
+      // Don't show if user dismissed it
+      try {
+        if (localStorage.getItem('nichtalle_install_dismissed') === '1') return;
+      } catch (e) {}
+
+      const banner = document.getElementById('install-banner');
+      const stepsContent = document.getElementById('install-steps-content');
+      const platform = detectPlatform();
+
+      if (platform === 'ios') {
+        stepsContent.innerHTML = `
+          <p><strong>So fügst du die App hinzu (iPhone / iPad):</strong></p>
+          <ol>
+            <li>Tipp unten in Safari auf den <strong>Teilen-Knopf</strong> (Quadrat mit Pfeil nach oben).</li>
+            <li>Scroll nach unten und wähl <strong>„Zum Home-Bildschirm"</strong>.</li>
+            <li>Tipp oben rechts auf <strong>„Hinzufügen"</strong>. Fertig.</li>
+          </ol>
+        `;
+      } else if (platform === 'android') {
+        stepsContent.innerHTML = `
+          <p><strong>So fügst du die App hinzu (Android):</strong></p>
+          <ol>
+            <li>Tipp oben rechts im Browser auf das <strong>Menü</strong> (drei Punkte).</li>
+            <li>Wähl <strong>„App installieren"</strong> oder <strong>„Zum Startbildschirm hinzufügen"</strong>.</li>
+            <li>Bestätigen — und das Icon ist auf deinem Startbildschirm.</li>
+          </ol>
+        `;
+      } else {
+        stepsContent.innerHTML = `
+          <p><strong>Tipp:</strong> Diese App funktioniert am besten auf deinem Handy. Öffne <em>tools.munichpublishing.de/Grenzen_setzen/</em> auf deinem Smartphone und füg sie dann zum Home-Bildschirm hinzu, damit du sie jederzeit dabei hast.</p>
+        `;
+      }
+
+      banner.classList.add('visible');
+    }
+
+    function toggleInstallSteps() {
+      const steps = document.getElementById('install-steps');
+      const toggle = document.getElementById('install-toggle');
+      const isVisible = steps.classList.toggle('visible');
+      toggle.textContent = isVisible ? 'Anleitung einklappen' : "So geht's →";
+    }
+
+    function dismissInstallBanner() {
+      const banner = document.getElementById('install-banner');
+      banner.classList.remove('visible');
+      try { localStorage.setItem('nichtalle_install_dismissed', '1'); } catch (e) {}
     }
 
     init();

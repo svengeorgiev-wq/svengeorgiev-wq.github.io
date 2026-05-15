@@ -1,306 +1,514 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>21-Tage-Tracker – Overthinking bei ADHS</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1838">
+<title>21-Tage-Begleiter — Overthinking bei ADHS</title>
+<meta name="description" content="Kostenlose Web-App zum Buch „ADHS & Overthinking im Erwachsenenalter" von Anna Lorenz. 21 Werkzeuge, Notfall-Button, Fortschritt gespeichert.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f0f4f2; color: #1a1a1a; min-height: 100vh; padding: 0 0 3rem; }
+  :root {
+    --bg:        #0b1838;
+    --bg-deep:   #060f25;
+    --surface:   #15264f;
+    --surface-2: #1c3163;
+    --line:      #2a3f78;
+    --line-soft: #1f3263;
+    --text:      #f4f1e4;
+    --text-dim:  #a8b5d4;
+    --text-mute: #6f7faa;
+    --gold:      #f4c542;
+    --gold-deep: #e0a800;
+    --gold-soft: #f4c54233;
+    --red:       #e8434c;
+    --orange:    #f47b2a;
+    --yellow:    #f4c542;
+    --green:     #4fb874;
+    --blue:      #3e8ec7;
+    --purple:    #8b5bb8;
+    --rainbow: linear-gradient(90deg, #e8434c 0%, #f47b2a 20%, #f4c542 40%, #4fb874 60%, #3e8ec7 80%, #8b5bb8 100%);
+    --rainbow-soft: linear-gradient(90deg, #e8434c33 0%, #f47b2a33 20%, #f4c54233 40%, #4fb87433 60%, #3e8ec733 80%, #8b5bb833 100%);
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --serif:   "Instrument Serif", "Times New Roman", serif;
+    --sans:    "Geist", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  html { background: var(--bg-deep); }
+  body {
+    font-family: var(--sans); font-size: 16px; line-height: 1.55;
+    color: var(--text);
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, color-mix(in oklab, var(--blue) 18%, transparent), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 100% 100%, color-mix(in oklab, var(--purple) 14%, transparent), transparent 70%),
+      var(--bg);
+    background-attachment: fixed; min-height: 100vh; min-height: 100dvh;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; overflow-x: hidden;
+  }
+  ::selection { background: var(--gold); color: var(--bg); }
+  :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+  button { font-family: inherit; cursor: pointer; }
+  h1,h2,h3,h4 { margin: 0; }
+  .shell { max-width: 760px; margin: 0 auto; padding: 0 22px; }
+  @media (min-width: 720px) { .shell { padding: 0 32px; } }
 
-.hero { background: linear-gradient(135deg, #1D9E75 0%, #0F6E56 100%); padding: 2rem 1.25rem 1.5rem; color: #fff; }
-.hero-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; margin-bottom: 6px; }
-.hero-title { font-size: 24px; font-weight: 700; line-height: 1.25; margin-bottom: 6px; }
-.hero-sub { font-size: 13px; opacity: 0.8; line-height: 1.5; }
+  header.top { position: sticky; top: 0; z-index: 40; background: color-mix(in oklab, var(--bg) 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line-soft); }
+  header.top .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 60px; }
+  .brand { display: flex; flex-direction: column; gap: 1px; line-height: 1; min-width: 0; }
+  .brand .b1 { font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: -0.01em; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand .b1 em { font-style: italic; font-weight: 500; color: var(--gold); }
+  .brand .b2 { font-size: 11px; color: var(--text-mute); font-family: var(--sans); letter-spacing: 0.02em; }
+  .sos-btn { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px 9px 12px; background: var(--red); color: #fff; border: 0; border-radius: 999px; font-size: 13px; font-weight: 600; animation: sospulse 2.6s ease-out infinite; white-space: nowrap; transition: transform .12s, background .15s; }
+  .sos-btn:hover { background: #d4353e; }
+  .sos-btn:active { transform: scale(0.96); }
+  .sos-btn .dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; }
+  @keyframes sospulse { 0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--red) 55%, transparent); } 70% { box-shadow: 0 0 0 10px color-mix(in oklab, var(--red) 0%, transparent); } 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--red) 0%, transparent); } }
 
-.sos-bar { background: #fff3cd; border-bottom: 2px solid #E8793A; padding: 0.75rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.sos-text { font-size: 13px; color: #7a4400; font-weight: 500; }
-.sos-btn { background: #E8793A; color: #fff; border: none; border-radius: 8px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-.sos-btn:hover { background: #d06b2e; }
+  section.hero { padding: 36px 0 28px; position: relative; }
+  .hero .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px 6px 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); font-weight: 500; margin-bottom: 18px; }
+  .hero .eyebrow .swatch { width: 10px; height: 10px; border-radius: 2px; background: var(--rainbow); }
+  .hero h1 { font-family: var(--display); font-weight: 700; font-size: clamp(38px, 9vw, 64px); line-height: 0.95; letter-spacing: -0.025em; color: var(--text); text-wrap: balance; margin-bottom: 14px; }
+  .hero h1 .gold { color: var(--gold); font-weight: 800; }
+  .hero h1 .serif { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spacing: -0.01em; }
+  .hero p.lede { color: var(--text-dim); font-size: 17px; max-width: 46ch; margin: 0; }
 
-.sos-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; padding: 1rem; }
-.sos-modal.open { display: flex; }
-.sos-box { background: #fff; border-radius: 14px; padding: 1.5rem; max-width: 440px; width: 100%; }
-.sos-box-title { font-size: 17px; font-weight: 700; color: #E8793A; margin-bottom: 0.5rem; }
-.sos-box-sub { font-size: 13px; color: #666; margin-bottom: 1.25rem; line-height: 1.6; }
-.sos-tool { background: #f0faf6; border-radius: 10px; padding: 1rem; margin-bottom: 10px; cursor: pointer; border: 1.5px solid transparent; transition: all 0.15s; }
-.sos-tool:hover { border-color: #1D9E75; }
-.sos-tool-title { font-size: 14px; font-weight: 600; color: #0F6E56; margin-bottom: 3px; }
-.sos-tool-desc { font-size: 13px; color: #555; line-height: 1.5; }
-.sos-close { width: 100%; margin-top: 1rem; padding: 10px; border-radius: 8px; border: 1.5px solid #ddd; background: #fff; font-size: 13px; color: #666; cursor: pointer; }
+  .how { margin: 28px 0; border: 1px solid var(--line); border-radius: 16px; background: color-mix(in oklab, var(--surface) 60%, transparent); overflow: hidden; }
+  .how summary { list-style: none; cursor: pointer; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; font-weight: 500; user-select: none; }
+  .how summary::-webkit-details-marker { display: none; }
+  .how summary .lbl { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+  .how summary .ico { width: 26px; height: 26px; border-radius: 8px; background: var(--rainbow); display: grid; place-items: center; font-size: 13px; color: var(--bg-deep); font-weight: 700; font-family: var(--display); }
+  .how summary .chev { color: var(--text-mute); transition: transform .2s; }
+  .how[open] summary .chev { transform: rotate(180deg); }
+  .how .body { padding: 0 18px 20px; color: var(--text-dim); font-size: 14px; }
+  .how ol { margin: 0; padding-left: 22px; display: flex; flex-direction: column; gap: 8px; }
+  .how ol li::marker { color: var(--gold); font-weight: 600; }
 
-.wrap { max-width: 480px; margin: 0 auto; padding: 0 1rem; }
+  .progress-card { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); padding: 20px 22px; margin-bottom: 24px; }
+  .progress-card .head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+  .progress-card .num { font-family: var(--display); font-weight: 700; font-size: 38px; line-height: 1; color: var(--gold); letter-spacing: -0.02em; }
+  .progress-card .num .of { color: var(--text-mute); font-size: 18px; font-weight: 500; }
+  .progress-card .lbl { font-size: 13px; color: var(--text-dim); text-align: right; }
+  .bar-track { height: 8px; background: var(--bg-deep); border-radius: 999px; overflow: hidden; position: relative; border: 1px solid var(--line-soft); }
+  .bar-fill { height: 100%; background: var(--rainbow); border-radius: 999px; transition: width .5s cubic-bezier(.2,.7,.2,1); width: 0%; }
 
-.intro { background: #fff; border-radius: 12px; padding: 1.25rem; margin: 1.25rem 0; border-left: 4px solid #1D9E75; }
-.intro-title { font-size: 14px; font-weight: 600; color: #0F6E56; margin-bottom: 0.5rem; }
-.intro-text { font-size: 13px; color: #555; line-height: 1.7; margin-bottom: 0.75rem; }
-.intro-steps { list-style: none; }
-.intro-steps li { font-size: 13px; color: #444; line-height: 1.6; padding: 5px 0; display: flex; gap: 10px; align-items: flex-start; }
-.num { min-width: 22px; height: 22px; border-radius: 50%; background: #1D9E75; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .weeks { display: flex; flex-direction: column; gap: 28px; padding-bottom: 40px; }
+  .week-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+  .week-head .nbox { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 13px; color: var(--bg-deep); flex: 0 0 34px; }
+  .week:nth-child(1) .week-head .nbox { background: linear-gradient(135deg, var(--red), var(--orange)); }
+  .week:nth-child(2) .week-head .nbox { background: linear-gradient(135deg, var(--yellow), var(--green)); }
+  .week:nth-child(3) .week-head .nbox { background: linear-gradient(135deg, var(--blue), var(--purple)); }
+  .week-head .titles { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .week-head .wk { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mute); }
+  .week-head .ti { font-family: var(--display); font-weight: 600; font-size: 18px; color: var(--text); line-height: 1.2; }
 
-.section-header { font-size: 11px; font-weight: 700; color: #1D9E75; letter-spacing: 0.08em; text-transform: uppercase; margin: 1.5rem 0 0.5rem; }
-.progress-bar-wrap { background: #d0e8de; border-radius: 99px; height: 8px; overflow: hidden; margin-bottom: 6px; }
-.progress-bar-fill { height: 8px; border-radius: 99px; background: #1D9E75; width: 0%; transition: width 0.4s ease; }
-.progress-label { font-size: 12px; color: #666; margin-bottom: 0.25rem; }
+  .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
+  @media (max-width: 420px) { .days-grid { gap: 6px; } }
+  .day-tile { aspect-ratio: 1; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; font-family: var(--display); font-weight: 600; color: var(--text-dim); font-size: 14px; cursor: pointer; padding: 0; transition: transform .15s, background .15s, border-color .15s, color .15s; position: relative; overflow: hidden; }
+  .day-tile:hover { transform: translateY(-2px); border-color: var(--text-mute); color: var(--text); }
+  .day-tile:active { transform: translateY(0); }
+  .day-tile .n { font-size: 18px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; }
+  .day-tile .t { font-size: 9px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-mute); }
+  .day-tile.done { background: var(--surface-2); border-color: transparent; color: var(--text); }
+  .day-tile.done::before { content: ""; position: absolute; inset: 0; background: var(--rainbow); opacity: 0.22; pointer-events: none; }
+  .day-tile.done .t { color: var(--gold); }
+  .day-tile.done::after { content: "✓"; position: absolute; top: 6px; right: 8px; font-family: var(--sans); font-size: 10px; font-weight: 700; color: var(--gold); }
+  .day-tile.today { background: var(--gold); color: var(--bg-deep); border-color: var(--gold); box-shadow: 0 0 0 4px color-mix(in oklab, var(--gold) 25%, transparent); }
+  .day-tile.today .t { color: color-mix(in oklab, var(--bg-deep) 70%, transparent); }
+  .day-tile.locked { color: var(--text-mute); border-style: dashed; border-color: var(--line-soft); background: transparent; }
+  .day-tile.placeholder .t { color: var(--orange); opacity: 0.7; }
 
-.week-label { font-size: 11px; font-weight: 700; color: #1D9E75; letter-spacing: 0.07em; text-transform: uppercase; margin: 1.25rem 0 0.5rem; }
-.day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-.day-btn { aspect-ratio: 1/1; border-radius: 8px; border: 1.5px solid #c8ddd6; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: #555; transition: all 0.15s; padding: 0; }
-.day-btn:hover { border-color: #1D9E75; color: #1D9E75; background: #f0faf6; }
-.day-btn.done { background: #1D9E75; border-color: #1D9E75; color: #fff; }
-.day-btn.active { border: 2.5px solid #1D9E75; color: #1D9E75; background: #eaf7f2; font-weight: 700; }
+  footer.bottom { padding: 36px 0 80px; color: var(--text-mute); font-size: 12px; border-top: 1px solid var(--line-soft); margin-top: 20px; }
+  footer .row { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+  footer .links { display: flex; gap: 18px; flex-wrap: wrap; }
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--gold); }
+  footer .reset { background: transparent; color: var(--text-mute); border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 500; }
+  footer .reset:hover { color: var(--red); border-color: var(--red); }
 
-.card { background: #fff; border-radius: 14px; padding: 1.25rem; margin-top: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
-.card-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; }
-.day-badge { min-width: 46px; height: 46px; border-radius: 10px; background: linear-gradient(135deg, #1D9E75, #0F6E56); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0; }
-.card-title { font-size: 17px; font-weight: 700; color: #111; line-height: 1.3; }
-.page-hint { display: inline-block; margin-top: 6px; font-size: 12px; font-weight: 600; color: #0F6E56; background: #E1F5EE; border-radius: 6px; padding: 4px 10px; }
-.divider { border: none; border-top: 1px solid #f0f0ec; margin: 0.875rem 0; }
-.section { margin-top: 0.875rem; }
-.slabel { font-size: 11px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 5px; }
-.slabel.uebung { color: #1D9E75; }
-.slabel.situation { color: #E8793A; }
-.slabel.warum { color: #6B5DD3; }
-.slabel.notiz { color: #888; }
-.section-text { font-size: 14px; color: #444; line-height: 1.7; }
+  .overlay { position: fixed; inset: 0; z-index: 90; background: color-mix(in oklab, var(--bg-deep) 88%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: none; overflow-y: auto; }
+  .overlay.open { display: block; animation: fadein .25s ease-out; }
+  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
+  .overlay .frame { max-width: 760px; margin: 0 auto; min-height: 100%; background: var(--bg); border-left: 1px solid var(--line); border-right: 1px solid var(--line); animation: slideup .35s cubic-bezier(.2,.7,.2,1); }
+  @keyframes slideup { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  .ov-header { position: sticky; top: 0; z-index: 2; background: color-mix(in oklab, var(--bg) 92%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line-soft); padding: 14px 22px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .ov-header .label { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+  .ov-close { background: transparent; border: 0; color: var(--text-dim); width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; font-size: 20px; }
+  .ov-close:hover { background: var(--surface); color: var(--text); }
 
-.notiz-area { width: 100%; margin-top: 5px; padding: 10px 12px; border-radius: 8px; border: 1.5px solid #d0e8de; background: #f9fdfb; font-size: 14px; color: #333; font-family: inherit; line-height: 1.6; resize: none; min-height: 80px; transition: border-color 0.15s; }
-.notiz-area:focus { outline: none; border-color: #1D9E75; }
-.notiz-area::placeholder { color: #bbb; }
-.notiz-saved { font-size: 11px; color: #1D9E75; margin-top: 4px; height: 16px; transition: opacity 0.3s; opacity: 0; }
-.notiz-saved.show { opacity: 1; }
+  .day-view { padding: 24px 22px 120px; }
+  .day-view .num-display { display: inline-flex; align-items: baseline; gap: 8px; font-family: var(--display); color: var(--text-mute); font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .day-view .num-display b { color: var(--gold); font-weight: 700; font-size: 16px; font-family: var(--display); }
+  .day-view h2 { font-family: var(--display); font-size: clamp(28px, 6vw, 40px); line-height: 1.02; letter-spacing: -0.02em; font-weight: 700; color: var(--text); margin-bottom: 12px; text-wrap: balance; }
+  .day-view h2 .serif { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--gold); }
+  .day-view .page-ref { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--gold-soft); color: var(--gold); border-radius: 6px; font-size: 12px; font-weight: 600; margin-bottom: 26px; }
+  .day-view .placeholder-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: color-mix(in oklab, var(--orange) 18%, transparent); color: var(--orange); border: 1px dashed color-mix(in oklab, var(--orange) 50%, transparent); border-radius: 6px; font-size: 11px; font-weight: 600; margin-bottom: 26px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .field-block { margin-bottom: 22px; }
+  .field-block .ti { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; margin-bottom: 8px; }
+  .field-block .bod { font-size: 17px; line-height: 1.5; color: var(--text); }
+  .field-block.why .bod { font-family: var(--serif); font-style: italic; font-size: 19px; color: var(--text-dim); padding-left: 14px; border-left: 3px solid var(--gold); }
 
-.done-btn { width: 100%; margin-top: 1.25rem; padding: 13px; border-radius: 10px; border: none; background: #1D9E75; font-size: 14px; font-weight: 600; color: #fff; cursor: pointer; transition: all 0.15s; }
-.done-btn:hover { background: #178a64; }
-.done-btn.marked { background: #0F6E56; }
+  .notes-block { margin-top: 32px; }
+  .notes-block .ti { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .notes-block .ti .l { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-mute); font-weight: 500; }
+  .notes-block .ti .saved { font-size: 11px; color: var(--green); opacity: 0; transition: opacity .3s; }
+  .notes-block .ti .saved.show { opacity: 1; }
+  .notes-block textarea { width: 100%; min-height: 120px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; font-family: var(--sans); font-size: 15px; color: var(--text); resize: vertical; line-height: 1.5; }
+  .notes-block textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 4px color-mix(in oklab, var(--gold) 18%, transparent); }
 
-.nav { display: flex; gap: 8px; margin-top: 10px; }
-.nav button { flex: 1; padding: 10px; border-radius: 10px; border: 1.5px solid #c8ddd6; background: #f0faf6; font-size: 13px; font-weight: 500; color: #1D9E75; cursor: pointer; transition: all 0.15s; }
-.nav button:hover { background: #d8f0e8; }
-.nav button:disabled { opacity: 0.3; cursor: default; }
+  .day-actions { position: sticky; bottom: 0; background: color-mix(in oklab, var(--bg) 94%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line-soft); padding: 14px 22px calc(14px + env(safe-area-inset-bottom)); display: flex; gap: 10px; align-items: center; }
+  .nav-btn { background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 999px; padding: 12px 16px; font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; transition: background .15s, transform .12s; }
+  .nav-btn:hover:not(:disabled) { background: var(--surface-2); }
+  .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .nav-btn:active:not(:disabled) { transform: scale(0.97); }
+  .complete-btn { flex: 1; background: var(--gold); color: var(--bg-deep); border: 0; border-radius: 999px; padding: 14px 22px; font-size: 15px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background .15s, transform .12s; font-family: var(--sans); }
+  .complete-btn:hover { background: var(--gold-deep); }
+  .complete-btn:active { transform: scale(0.98); }
+  .complete-btn.is-done { background: var(--surface-2); color: var(--gold); border: 1px solid var(--gold); }
+  .complete-btn.is-done:hover { background: var(--surface); }
 
-.streak { font-size: 12px; color: #1D9E75; margin-top: 0.625rem; text-align: center; min-height: 18px; font-weight: 500; }
-.reset-btn { display: block; margin: 1.75rem auto 0; font-size: 12px; color: #bbb; background: none; border: none; cursor: pointer; text-decoration: underline; }
+  .sos-overlay { position: fixed; inset: 0; z-index: 100; background: color-mix(in oklab, var(--bg-deep) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); display: none; overflow-y: auto; }
+  .sos-overlay.open { display: block; animation: fadein .25s ease-out; }
+  .sos-frame { max-width: 580px; margin: 40px auto; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; overflow: hidden; animation: slideup .35s cubic-bezier(.2,.7,.2,1); margin-left: 16px; margin-right: 16px; }
+  @media (min-width: 612px) { .sos-frame { margin-left: auto; margin-right: auto; } }
+  .sos-header { padding: 24px 26px 18px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; background: radial-gradient(ellipse at 0% 0%, color-mix(in oklab, var(--red) 28%, transparent), transparent 60%), var(--surface); }
+  .sos-header .titles h3 { font-family: var(--display); font-size: 26px; font-weight: 700; color: var(--text); line-height: 1.05; margin-bottom: 4px; letter-spacing: -0.02em; }
+  .sos-header .titles p { color: var(--text-dim); font-size: 14px; margin: 0; max-width: 38ch; }
+  .sos-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+  .sos-item { border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; background: var(--surface-2); transition: border-color .15s, transform .15s; }
+  .sos-item:hover { border-color: var(--gold); transform: translateY(-1px); }
+  .sos-item .head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .sos-item .name { font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--text); letter-spacing: -0.01em; }
+  .sos-item .page { font-size: 11px; color: var(--gold); font-weight: 600; background: var(--gold-soft); padding: 3px 8px; border-radius: 5px; }
+  .sos-item .desc { font-size: 14px; color: var(--text-dim); line-height: 1.5; margin: 0; }
+  .sos-item:nth-child(1) { border-left: 3px solid var(--red); }
+  .sos-item:nth-child(2) { border-left: 3px solid var(--green); }
+  .sos-item:nth-child(3) { border-left: 3px solid var(--blue); }
+  .sos-footer { padding: 18px 20px; border-top: 1px solid var(--line); display: flex; justify-content: flex-end; }
+  .sos-footer button { background: var(--text); color: var(--bg-deep); border: 0; border-radius: 999px; padding: 10px 18px; font-size: 14px; font-weight: 600; }
+  .sos-footer button:hover { background: var(--gold); }
 
-.finish-screen { display: none; background: #fff; border-radius: 14px; padding: 2rem 1.25rem; margin-top: 1.25rem; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
-.finish-icon { font-size: 48px; margin-bottom: 1rem; }
-.finish-title { font-size: 22px; font-weight: 700; color: #0F6E56; margin-bottom: 0.75rem; }
-.finish-text { font-size: 14px; color: #555; line-height: 1.7; margin-bottom: 1.25rem; }
-.finish-restart { padding: 12px 24px; border-radius: 10px; border: none; background: #1D9E75; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .completion { margin: 0 0 40px; padding: 36px 28px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); text-align: center; position: relative; overflow: hidden; }
+  .completion::before { content: ""; position: absolute; inset: 0; background: var(--rainbow-soft); opacity: 0.6; pointer-events: none; }
+  .completion > * { position: relative; }
+  .completion .emoji { font-size: 44px; margin-bottom: 14px; line-height: 1; }
+  .completion h2 { font-family: var(--display); font-size: clamp(28px, 6vw, 40px); font-weight: 700; color: var(--text); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 16px; text-wrap: balance; }
+  .completion p { color: var(--text-dim); font-size: 15px; max-width: 50ch; margin: 0 auto 22px; }
+  .completion p .serif { font-family: var(--serif); font-style: italic; color: var(--text); font-size: 17px; }
+
+  @media (max-width: 360px) {
+    .day-tile .n { font-size: 16px; }
+    .day-tile .t { font-size: 8px; }
+    header.top .brand .b1 { font-size: 13px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="hero-label">Overthinking bei ADHS im Erwachsenenalter</div>
-  <div class="hero-title">Dein 21-Tage-Begleiter</div>
-  <div class="hero-sub">Ein Werkzeug pro Tag. Kein Druck, kein Perfektionismus.</div>
-</div>
+<header class="top">
+  <div class="shell row">
+    <div class="brand">
+      <div class="b1">ADHS <em>& Overthinking</em></div>
+      <div class="b2">21-Tage-Begleiter · Anna Lorenz</div>
+    </div>
+    <button class="sos-btn" id="sosOpen" aria-label="Notfall — Sofort-Hilfen öffnen">
+      <span class="dot"></span>
+      Notfall
+    </button>
+  </div>
+</header>
 
-<div class="sos-bar">
-  <div class="sos-text">Kopf gerade zu laut?</div>
-  <button class="sos-btn" id="sosbtn">Sofort-Hilfe</button>
-</div>
+<main class="shell">
+  <section class="hero">
+    <div class="eyebrow"><span class="swatch"></span> App zum Buch · Kostenlos</div>
+    <h1>
+      21 Tage.<br>
+      21 <span class="gold">Werkzeuge.</span><br>
+      <span class="serif">Ein ruhigerer Kopf.</span>
+    </h1>
+    <p class="lede">
+      Der 21-Tage-Plan aus dem Buch — direkt am Handy. Ein konkretes Werkzeug pro Tag.
+      Notiere deine Erfahrung, dein Fortschritt wird automatisch gespeichert.
+    </p>
+  </section>
 
-<div class="sos-modal" id="sosmodal">
-  <div class="sos-box">
-    <div class="sos-box-title">Sofort-Hilfe</div>
-    <div class="sos-box-sub">Diese 3 Werkzeuge helfen dir in wenigen Minuten, deinen Kopf zu beruhigen.</div>
-    <div class="sos-tool" onclick="jumpTo(2)">
-      <div class="sos-tool-title">Dopamin-Pause — S. 17</div>
-      <div class="sos-tool-desc">3 Minuten: Handy weg, kein Input, nur still sitzen. Sofortiger Reset.</div>
+  <details class="how">
+    <summary>
+      <span class="lbl"><span class="ico">?</span> So funktioniert diese App</span>
+      <span class="chev" aria-hidden="true">▾</span>
+    </summary>
+    <div class="body">
+      <ol>
+        <li>Tippe auf eine Tageszahl, um das Werkzeug des Tages zu sehen.</li>
+        <li>Lies die Übung und probiere sie heute aus.</li>
+        <li>Schreib deine Erfahrung ins Notizfeld — alles wird automatisch gespeichert.</li>
+        <li>Tippe auf den goldenen Button wenn du fertig bist — der Tag wird markiert.</li>
+        <li>Wenn dein Kopf gerade zu laut ist: <strong style="color:var(--red)">Notfall-Button</strong> oben rechts.</li>
+      </ol>
     </div>
-    <div class="sos-tool" onclick="jumpTo(3)">
-      <div class="sos-tool-title">5-4-3-2-1-Erdungstechnik — S. 20</div>
-      <div class="sos-tool-desc">5 Dinge sehen, 4 fühlen, 3 hören, 2 riechen, 1 schmecken. Bringt dich sofort ins Jetzt.</div>
+  </details>
+
+  <div class="progress-card">
+    <div class="head">
+      <div class="num" aria-live="polite"><span id="doneN">0</span><span class="of"> / 21</span></div>
+      <div class="lbl">Dein Fortschritt<br><span id="progressLabel" style="color:var(--text-mute)">Start: Tag 1</span></div>
     </div>
-    <div class="sos-tool" onclick="jumpTo(19)">
-      <div class="sos-tool-title">Box-Breathing — S. 120</div>
-      <div class="sos-tool-desc">4 Sek ein, 4 halten, 4 aus, 4 halten. Senkt die Alarmstufe direkt.</div>
+    <div class="bar-track" role="progressbar" aria-valuemin="0" aria-valuemax="21" aria-valuenow="0">
+      <div class="bar-fill" id="barFill"></div>
     </div>
-    <button class="sos-close" onclick="closeSos()">Schließen</button>
+  </div>
+
+  <div id="completionMount"></div>
+  <section class="weeks" id="weeks"></section>
+</main>
+
+<footer class="bottom">
+  <div class="shell row">
+    <div>© Munich Publishing · Anna Lorenz · Overthinking bei ADHS</div>
+    <div class="links">
+      <a href="https://munichpublishing.de/impressum">Impressum</a>
+      <a href="https://munichpublishing.de/Datenschutz">Datenschutz</a>
+    </div>
+    <button class="reset" id="resetBtn">Fortschritt zurücksetzen</button>
+  </div>
+</footer>
+
+<div class="overlay" id="dayOverlay" role="dialog" aria-modal="true" aria-labelledby="dayTitle">
+  <div class="frame">
+    <div class="ov-header">
+      <span class="label" id="dayHeaderLabel">Tag X von 21</span>
+      <button class="ov-close" id="dayClose" aria-label="Schließen">×</button>
+    </div>
+    <div class="day-view" id="dayView"></div>
   </div>
 </div>
 
-<div class="wrap">
-  <div class="intro">
-    <div class="intro-title">So funktioniert diese App</div>
-    <div class="intro-text">Diese App begleitet dich durch den 21-Tage-Plan aus deinem Buch. Jeden Tag ein konkretes Werkzeug — direkt aus dem Buch, sofort anwendbar.</div>
-    <ul class="intro-steps">
-      <li><span class="num">1</span>Tippe auf eine Tageszahl, um das Werkzeug des Tages zu sehen.</li>
-      <li><span class="num">2</span>Lies die Übung und probiere sie heute aus.</li>
-      <li><span class="num">3</span>Schreib deine Erfahrung ins Notizfeld — alles wird automatisch gespeichert.</li>
-      <li><span class="num">4</span>Tippe auf den grünen Button wenn du fertig bist — der Tag wird markiert.</li>
-      <li><span class="num">5</span>Wenn dein Kopf gerade zu laut ist: Notfall-Button oben rechts.</li>
-    </ul>
-  </div>
-
-  <div class="section-header">Dein Fortschritt</div>
-  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="pbar"></div></div>
-  <div class="progress-label" id="plabel">0 von 21 Tagen abgeschlossen</div>
-
-  <div class="week-label">Woche 1 — Sofort weniger Kopf</div>
-  <div class="day-grid" id="week1"></div>
-  <div class="week-label">Woche 2 — Alltag &amp; Beziehungen stabilisieren</div>
-  <div class="day-grid" id="week2"></div>
-  <div class="week-label">Woche 3 — Job, Gender &amp; Bürokratie</div>
-  <div class="day-grid" id="week3"></div>
-
-  <div class="card" id="maincard">
-    <div class="card-top">
-      <div class="day-badge" id="badge">T1</div>
-      <div>
-        <div class="card-title" id="ctitle"></div>
-        <div class="page-hint" id="cpage"></div>
+<div class="sos-overlay" id="sosOverlay" role="dialog" aria-modal="true" aria-labelledby="sosTitle">
+  <div class="sos-frame">
+    <div class="sos-header">
+      <div class="titles">
+        <h3 id="sosTitle">Kopf gerade zu laut?</h3>
+        <p>Drei Werkzeuge, die dir in wenigen Minuten helfen, ruhiger zu werden.</p>
       </div>
+      <button class="ov-close" id="sosClose" aria-label="Schließen">×</button>
     </div>
-    <hr class="divider">
-    <div class="section"><div class="slabel uebung">Übung</div><div class="section-text" id="ctool"></div></div>
-    <div class="section"><div class="slabel situation">Alltagssituation</div><div class="section-text" id="csit"></div></div>
-    <div class="section"><div class="slabel warum">Warum das funktioniert</div><div class="section-text" id="cwhy"></div></div>
-    <div class="section">
-      <div class="slabel notiz">Meine Notiz zum Tag</div>
-      <textarea class="notiz-area" id="notizfeld" placeholder="Was hast du heute ausprobiert? Wie hat es sich angefühlt?"></textarea>
-      <div class="notiz-saved" id="notiz-saved">Gespeichert ✓</div>
+    <div class="sos-body" id="sosBody"></div>
+    <div class="sos-footer">
+      <button id="sosCloseBtn">Schließen</button>
     </div>
-    <button class="done-btn" id="donebtn">Als erledigt markieren</button>
-    <div class="nav">
-      <button id="prevbtn">&#8592; Zurück</button>
-      <button id="nextbtn">Weiter &#8594;</button>
-    </div>
-    <div class="streak" id="streak"></div>
   </div>
-
-  <div class="finish-screen" id="finishscreen">
-    <div class="finish-icon">🎉</div>
-    <div class="finish-title">Du hast alle 21 Tage geschafft!</div>
-    <div class="finish-text">Das ist keine Kleinigkeit. Gerade mit ADHS ist Durchhalten schwer — du hast dir 21 Mal bewusst Zeit für dich genommen. Dein Gehirn hat neue Wege kennengelernt.<br><br>Schau dir deine Notizen an. Welche Tools haben dir am meisten geholfen? Die bleiben bei dir — auch nach diesen 21 Tagen.</div>
-    <button class="finish-restart" onclick="restart()">Von vorne starten</button>
-  </div>
-
-  <button class="reset-btn" id="resetbtn">Fortschritt zurücksetzen</button>
 </div>
 
-<script>
-var DAYS = [
-  {title:"Stärken-Detektive",page:"Im Buch nachschlagen — S. 4",tool:"Schreib 1 Mini-Erfolg in 3 Spalten: Situation / ADHS-Anteil / Beweis.",sit:"Du liegst abends im Bett und dein Kopf spielt den Tag als Highlight-Reel ab. Du sammelst 1 Gegenbeweis statt zu grübeln.",why:"Fakten entkräften den Negativfilter und bremsen die Schamspirale."},
-  {title:"Narrativer Kritiker",page:"Im Buch nachschlagen — S. 7",tool:"Gib der Kritikerstimme einen Namen und sag: Ah, das ist wieder [Name].",sit:"Nach einem Fehler startet sofort die Stimme: Du bist unfähig. Du erkennst: Das ist ein Gedankensender, nicht die Wahrheit.",why:"Benennen schafft Distanz und reduziert die emotionale Wucht."},
-  {title:"Dopamin-Pause",page:"Im Buch nachschlagen — S. 17",tool:"3 Minuten Timer: Handy weg, kein Input, nur still sitzen.",sit:"Du feilst ewig an einer Nachricht oder scrollst, weil dein Kopf zu laut ist. Du machst einen Reset.",why:"Reiz-Entzug senkt Überstimulation und nimmt dem Grübeln den Treibstoff."},
-  {title:"5-4-3-2-1-Erdungstechnik",page:"Im Buch nachschlagen — S. 20",tool:"5 Dinge sehen, 4 fühlen, 3 hören, 2 riechen, 1 schmecken.",sit:"Im Supermarkt oder Büro wird alles zu viel und du kippst in Overload. Du holst dich zurück in die Gegenwart.",why:"Sinnesfokus verdrängt Gedankenschleifen, weil er Kapazität im Gehirn bindet."},
-  {title:"Sensorik-Audit",page:"Im Buch nachschlagen — S. 30",tool:"Notiere 3 Stress-Reize (Licht, Geräusch, Kleidung) und entferne 1 sofort.",sit:"Du bist grundlos gereizt. Tatsächlich stresst dich z. B. kratzende Kleidung oder grelles Licht permanent.",why:"Weniger Reize bedeutet weniger Dauerstress und weniger Overthinking als Notfallreaktion."},
-  {title:"Safe-Space-Box",page:"Im Buch nachschlagen — S. 31",tool:"Lege 2 Dinge griffbereit: z. B. Ohrstöpsel und Fidget.",sit:"Nach einem sozialen Tag bist du kurz vor Shutdown. Du greifst zur Box statt dich zusammenzureißen.",why:"Du brauchst keine Willenskraft, sondern sofortige Reizreduktion."},
-  {title:"Ideen-Schleuse",page:"Im Buch nachschlagen — S. 43",tool:"Schreib 5 kreisende Gedanken als 1-Satz-Parkplatz auf und setz eine Sichtungszeit (z. B. 19:00).",sit:"Beim Arbeiten kommen dauernd neue Ideen und du springst weg. Du parkst, statt zu jagen.",why:"Externalisieren entlastet dein Arbeitsgedächtnis und reduziert den inneren Druck."},
-  {title:"Analoges Mind-Mapping",page:"Im Buch nachschlagen — S. 44",tool:"5 Minuten Mindmap: Thema in die Mitte, 5 Äste, fertig.",sit:"Du fühlst dich überfordert, weil alles zusammenklebt. Du machst den Knoten sichtbar.",why:"Sichtbarkeit macht Chaos sortierbar und senkt mentale Überlastung."},
-  {title:"Unmasking-Ampel",page:"Im Buch nachschlagen — S. 53",tool:"Ordne 3 Kontexte in Grün / Gelb / Rot ein: Maske ab / locker / auf.",sit:"Du bist nach Treffen leer und grübelst stundenlang. Du erkennst: zu viel Rot ohne Erholung.",why:"Du steuerst Energie über passende soziale Zonen statt über Durchhalten."},
-  {title:"SOS-Technik bei RSD",page:"Im Buch nachschlagen — S. 55",tool:"Sag: Das könnte RSD sein. Notiere 2 neutrale Erklärungen. Entscheide: Ich warte bis morgen.",sit:"Jemand antwortet nicht oder wirkt kurz. Dein Kopf macht daraus Ablehnung.",why:"Du stoppst Interpretation und schaffst eine Zeitbremse gegen Impulsreaktionen."},
-  {title:"Time-Out-Geste",page:"Im Buch nachschlagen — S. 66",tool:"Lege Satz und Rückkehrzeit fest: Time-out, ich komme um __ Uhr zurück.",sit:"Ein Gespräch kippt und du merkst körperlich: gleich eskaliert es. Du gehst raus bevor du Schaden machst.",why:"Pause senkt den Stresspegel, damit dein Gehirn wieder steuerbar wird."},
-  {title:"Dopamin-Check-in",page:"Im Buch nachschlagen — S. 68",tool:"3 Fragen: Was war gut? Was war schwer? Was brauche ich?",sit:"Die Beziehung wird zu Orga und Problemlösen. Du grübelst über uns. Du erzeugst wieder Verbindung.",why:"Positive Momente bekommen bewusst Platz und reduzieren Beziehungs-Overthinking."},
-  {title:"System der minimalen Reibung",page:"Im Buch nachschlagen — S. 79",tool:"Wähle 1 Stelle, die nie funktioniert, und mach sie sichtbarer oder zugänglicher.",sit:"Schlüssel oder Post scheitern immer wieder und triggern Scham. Du baust die Hürde ab.",why:"Weniger Reibung bedeutet mehr Umsetzung und weniger Schamspiralen."},
-  {title:"15-Minuten-Blitz-Routine",page:"Im Buch nachschlagen — S. 81",tool:"5 Minuten Timer: 1 Fläche frei oder 10 Dinge weg.",sit:"Chaos wirkt riesig, du vermeidest und grübelst. Du machst einen schnellen sichtbaren Reset.",why:"Ein kleiner sichtbarer Erfolg senkt Stress und erhöht das Handlungsgefühl."},
-  {title:"Eat the Frog (ADHS-Variante)",page:"Im Buch nachschlagen — S. 93",tool:"Schreib den Frosch auf und definiere den kleinsten Startschritt (max. 1 Minute).",sit:"Du bist beschäftigt mit Kleinkram, aber das Wichtigste bleibt liegen. Du startest mikro-klein.",why:"Mini-Start erzeugt Momentum und umgeht Startwiderstand."},
-  {title:"Fokus-Timer & Body Doubling",page:"Im Buch nachschlagen — S. 94",tool:"Starte einen 5–10 Minuten Fokus-Sprint mit Timer. Body Double optional.",sit:"Du willst anfangen, driftest aber ins Scrollen. Der Sprint bringt dich in Bewegung.",why:"Zeitlimit macht den Einstieg klein und reduziert Überforderung."},
-  {title:"Cycle-Planner",page:"Im Buch nachschlagen — S. 106",tool:"Markiere Energie: low / medium / high. Passe 1 Erwartung daran an.",sit:"Rund um Low-Phasen wird alles lauter im Kopf und du wertest dich ab. Du planst passend statt zu kämpfen.",why:"Planung nach Energie reduziert Selbstvorwürfe und Overthinking-Druck."},
-  {title:"Ernährung & Dopamin-Stabilisierung",page:"Im Buch nachschlagen — S. 108",tool:"Plane 1 Stabilizer: Wasser + Protein-Snack oder fester Snack-Slot.",sit:"Nachmittags-Crash führt zu mehr Grübeln und Reizbarkeit. Du stabilisierst statt zu kompensieren.",why:"Stabilere Energie senkt die innere Unruhe, die Grübeln antreibt."},
-  {title:"Physisches Entladen",page:"Im Buch nachschlagen — S. 118",tool:"90 Sekunden: 10 Kniebeugen + 20 Sek Shake/Gehen + 10 Kniebeugen.",sit:"Du spürst Wut oder Impuls und willst sofort reagieren. Du entlädst, bevor du sprichst oder schreibst.",why:"Körperlicher Stressabbau reduziert Impulsreaktionen und das Nach-Grübeln."},
-  {title:"Box-Breathing",page:"Im Buch nachschlagen — S. 120",tool:"2 Minuten: 4 Sek einatmen, 4 halten, 4 ausatmen, 4 halten.",sit:"Vor Telefonat oder Behördengang steigt Alarm im Körper. Du regulierst, bevor du vermeidest.",why:"Atmung wirkt direkt aufs Nervensystem und senkt die Alarmstufe."},
-  {title:"Drei-Kisten + Telefon-Skript",page:"Im Buch nachschlagen — S. 144 + 146",tool:"Sortiere 1 Brief in Jetzt / Warten / Archiv und schreibe 3 Sätze fürs Telefonat.",sit:"Mahnung liegt seit Wochen ungeöffnet, Anruf blockiert dich. Du zerlegst die Hürde statt Kopfkino zu machen.",why:"Weniger Entscheidungslast senkt die Schwelle, überhaupt zu handeln."}
-];
-
-var current=0, done=[], notes={};
-function load(){
-  try{
-    var d=localStorage.getItem('a21d');if(d)done=JSON.parse(d);
-    var c=localStorage.getItem('a21c');if(c!==null)current=parseInt(c)||0;
-    var n=localStorage.getItem('a21n');if(n)notes=JSON.parse(n);
-  }catch(e){}
-}
-function save(){
-  try{
-    localStorage.setItem('a21d',JSON.stringify(done));
-    localStorage.setItem('a21c',String(current));
-    localStorage.setItem('a21n',JSON.stringify(notes));
-  }catch(e){}
-}
-function has(i){return done.indexOf(i)!==-1;}
-
-function renderGrid(){
-  var ids=['week1','week2','week3'];
-  for(var w=0;w<3;w++){
-    var el=document.getElementById(ids[w]);
-    el.innerHTML='';
-    var s=w*7;
-    for(var i=s;i<s+7;i++){
-      var b=document.createElement('button');
-      b.className='day-btn'+(has(i)?' done':'')+(i===current?' active':'');
-      b.textContent=String(i+1);
-      (function(x){b.onclick=function(){current=x;save();renderAll();};})(i);
-      el.appendChild(b);
-    }
-  }
-}
-
-var saveTimer=null;
-function renderCard(){
-  var d=DAYS[current];
-  document.getElementById('badge').textContent='T'+(current+1);
-  document.getElementById('ctitle').textContent=d.title;
-  document.getElementById('cpage').textContent=d.page;
-  document.getElementById('ctool').textContent=d.tool;
-  document.getElementById('csit').textContent=d.sit;
-  document.getElementById('cwhy').textContent=d.why;
-
-  var notizfeld=document.getElementById('notizfeld');
-  notizfeld.value=notes[current]||'';
-  notizfeld.oninput=function(){
-    notes[current]=notizfeld.value;
-    if(saveTimer)clearTimeout(saveTimer);
-    saveTimer=setTimeout(function(){
-      save();
-      var saved=document.getElementById('notiz-saved');
-      saved.classList.add('show');
-      setTimeout(function(){saved.classList.remove('show');},1500);
-    },800);
-  };
-
-  var btn=document.getElementById('donebtn');
-  if(has(current)){btn.textContent='✓ Erledigt';btn.classList.add('marked');}
-  else{btn.textContent='Als erledigt markieren';btn.classList.remove('marked');}
-  document.getElementById('prevbtn').disabled=current===0;
-  document.getElementById('nextbtn').disabled=current===20;
-  document.getElementById('pbar').style.width=Math.round(done.length/21*100)+'%';
-  document.getElementById('plabel').textContent=done.length+' von 21 Tagen abgeschlossen';
-  var streak=0;
-  for(var i=0;i<21;i++){if(has(i))streak++;else break;}
-  document.getElementById('streak').textContent=streak>1?streak+' Tage hintereinander — weiter so!':'';
-
-  var finished=done.length===21;
-  document.getElementById('maincard').style.display=finished?'none':'block';
-  document.getElementById('finishscreen').style.display=finished?'block':'none';
-}
-
-function renderAll(){renderGrid();renderCard();}
-
-document.getElementById('donebtn').onclick=function(){
-  var idx=done.indexOf(current);
-  if(idx!==-1){done.splice(idx,1);}
-  else{
-    done.push(current);
-    if(current<20){setTimeout(function(){current++;save();renderAll();},400);}
-  }
-  save();renderAll();
-};
-document.getElementById('prevbtn').onclick=function(){if(current>0){current--;save();renderAll();}};
-document.getElementById('nextbtn').onclick=function(){if(current<20){current++;save();renderAll();}};
-document.getElementById('resetbtn').onclick=function(){if(confirm('Fortschritt wirklich zurücksetzen?')){done=[];notes={};current=0;save();renderAll();}};
-document.getElementById('sosbtn').onclick=function(){document.getElementById('sosmodal').classList.add('open');};
-
-function closeSos(){document.getElementById('sosmodal').classList.remove('open');}
-function jumpTo(i){current=i;save();renderAll();closeSos();document.getElementById('maincard').scrollIntoView({behavior:'smooth'});}
-function restart(){done=[];notes={};current=0;save();renderAll();}
-
-document.getElementById('sosmodal').onclick=function(e){if(e.target===this)closeSos();};
-
-load();renderAll();
-</script>
+<script src="data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
+data.js
+/* ─────────────────────────────────────────────────────────────
+   21-TAGE-DATEN — Overthinking bei ADHS · Anna Lorenz
+   Inhalte aus dem Buch (S. 4–146).
+   ───────────────────────────────────────────────────────────── */
+
+const WEEKS = [
+  { num: 1, title: 'Sofort weniger Kopf' },
+  { num: 2, title: 'Alltag & Beziehungen stabilisieren' },
+  { num: 3, title: 'Job, Gender & Bürokratie' },
+];
+
+const SOS_TOOLS = [
+  {
+    name: 'Dopamin-Pause',
+    page: 17,
+    desc: '3 Minuten Timer: Handy weg, kein Input, nur still sitzen oder stehen. Sofortiger Reset für ein überreiztes System.'
+  },
+  {
+    name: '5-4-3-2-1-Erdungstechnik',
+    page: 20,
+    desc: '5 Dinge sehen, 4 fühlen, 3 hören, 2 riechen, 1 schmecken. Bringt dich sofort zurück ins Jetzt.'
+  },
+  {
+    name: 'Box-Breathing',
+    page: 120,
+    desc: '2 Minuten: 4 Sek ein, 4 halten, 4 aus, 4 halten. Senkt die Alarmstufe direkt — auch mitten am Tag.'
+  }
+];
+
+const DAYS = [
+  /* WOCHE 1 — Sofort weniger Kopf */
+  {
+    day: 1,
+    tool: 'Stärken-Detektive',
+    page: 4,
+    exercise: 'Schreib 1 Mini-Erfolg in 3 Spalten: Situation / ADHS-Anteil / Beweis.',
+    situation: 'Du liegst abends im Bett und dein Kopf spielt den Tag wie ein peinliches Highlight-Reel ab („Warum hab ich das gesagt?") — du sammelst bewusst 1 Gegenbeweis, statt weiter zu grübeln.',
+    why: 'Fakten entkräften den Negativfilter und bremsen die Schamspirale.'
+  },
+  {
+    day: 2,
+    tool: 'Narrative Externalisierung: Gib dem Kritiker einen Namen',
+    page: 7,
+    exercise: 'Gib der Kritikerstimme einen Namen und sag einmal: „Ah, das ist wieder [Name]."',
+    situation: 'Nach einem kleinen Fehler startet sofort „Du bist unfähig" — du erkennst: Das ist ein Gedankensender, nicht die Wahrheit.',
+    why: 'Benennen schafft Distanz und reduziert die emotionale Wucht des Gedankens.'
+  },
+  {
+    day: 3,
+    tool: 'Dopamin-Pause',
+    page: 17,
+    exercise: '3 Minuten Timer: Handy weg, kein Input, nur still sitzen oder stehen.',
+    situation: 'Du feilst ewig an einer Nachricht oder scrollst, weil dein Kopf zu laut ist — du machst einen Reset vor der nächsten Aktion.',
+    why: 'Reiz-Entzug senkt die Überstimulation und nimmt dem Grübeln den Treibstoff.'
+  },
+  {
+    day: 4,
+    tool: '5-4-3-2-1-Erdungstechnik',
+    page: 20,
+    exercise: '5 Dinge sehen, 4 fühlen, 3 hören, 2 riechen, 1 schmecken (oder Kurzform 3–2–1).',
+    situation: 'Im Supermarkt, ÖPNV oder Office wird alles zu viel und du kippst in Overload — du holst dich in die Gegenwart zurück.',
+    why: 'Sinnesfokus verdrängt Gedankenschleifen, weil er Kapazität im Gehirn bindet.'
+  },
+  {
+    day: 5,
+    tool: 'Sensorik-Audit',
+    page: 30,
+    exercise: 'Notiere 3 Stress-Reize (Licht, Geräusch, Kleidung, Chaos) und entferne 1 sofort.',
+    situation: 'Du bist „grundlos" gereizt — tatsächlich stresst dich z. B. kratzende Kleidung oder grelles Licht permanent.',
+    why: 'Weniger Reize = weniger Dauerstress = weniger Overthinking als Notfallreaktion.'
+  },
+  {
+    day: 6,
+    tool: 'Safe-Space-Box',
+    page: 31,
+    exercise: 'Lege 2 Dinge griffbereit bereit (z. B. Ohrstöpsel + Schlafmaske oder Duftanker + Fidget).',
+    situation: 'Nach einem sozialen Tag bist du kurz vor Shutdown oder Meltdown — du greifst zur Box, statt dich „zusammenzureißen".',
+    why: 'Du brauchst keine Willenskraft, sondern sofortige Reizreduktion.'
+  },
+  {
+    day: 7,
+    tool: 'Ideen-Schleuse',
+    page: 43,
+    exercise: 'Schreib 5 kreisende Gedanken als 1-Satz-Parkplatz auf und setz eine Sichtungszeit (z. B. 19:00 Uhr).',
+    situation: 'Beim Arbeiten kommen dauernd neue Ideen oder To-dos und du springst weg — du parkst, statt zu jagen.',
+    why: 'Externalisieren entlastet dein Arbeitsgedächtnis und reduziert den inneren Druck.'
+  },
+
+  /* WOCHE 2 — Alltag & Beziehungen stabilisieren */
+  {
+    day: 8,
+    tool: 'Analoges Mind-Mapping',
+    page: 44,
+    exercise: '5 Minuten Mindmap: Thema in die Mitte, 5 Äste, fertig.',
+    situation: 'Du fühlst dich überfordert, weil alles zusammenklebt (Job, Haushalt, Beziehung) — du machst den Knoten sichtbar.',
+    why: 'Sichtbarkeit macht Chaos sortierbar und senkt mentale Überlastung.'
+  },
+  {
+    day: 9,
+    tool: 'Unmasking-Ampel',
+    page: 53,
+    exercise: 'Ordne 3 Kontexte in Grün / Gelb / Rot ein (Maske ab / locker / auf).',
+    situation: 'Du bist nach Treffen leer und grübelst danach stundenlang — du erkennst: zu viel „Rot" ohne Erholung.',
+    why: 'Du steuerst Energie über passende soziale Zonen statt über Durchhalten.'
+  },
+  {
+    day: 10,
+    tool: 'SOS-Technik bei RSD',
+    page: 55,
+    exercise: 'Sag „Das könnte RSD sein", notiere 2 neutrale Erklärungen, entscheide „Ich warte bis morgen".',
+    situation: 'Jemand antwortet nicht oder wirkt kurz — dein Kopf macht daraus Ablehnung.',
+    why: 'Du stoppst die Interpretation und schaffst eine Zeitbremse gegen Impulsreaktionen.'
+  },
+  {
+    day: 11,
+    tool: 'Time-Out-Geste',
+    page: 66,
+    exercise: 'Lege Satz + Rückkehrzeit fest: „Time-out, ich komme um __ zurück."',
+    situation: 'Ein Gespräch kippt und du merkst körperlich: gleich eskaliert es — du gehst raus, bevor du Schaden machst.',
+    why: 'Pause senkt den Stresspegel, damit dein Gehirn wieder steuerbar wird.'
+  },
+  {
+    day: 12,
+    tool: 'Dopamin-Check-in',
+    page: 68,
+    exercise: 'Notiere 3 Fragen: „Was war gut? Was war schwer? Was brauche ich?"',
+    situation: 'Beziehung wird zu Orga und Problemlösen und du grübelst über „uns" — du erzeugst wieder Verbindung.',
+    why: 'Positive Momente bekommen bewusst Platz und reduzieren Beziehungs-Overthinking.'
+  },
+  {
+    day: 13,
+    tool: 'System der minimalen Reibung',
+    page: 79,
+    exercise: 'Wähle 1 Stelle, die nie funktioniert, und mach sie „dümmer" (sichtbar, offen, nah dran).',
+    situation: 'Schlüssel, Post oder Wäsche scheitern immer wieder und triggern Scham — du baust die Hürde ab.',
+    why: 'Weniger Reibung = mehr Umsetzung = weniger Schamspiralen.'
+  },
+  {
+    day: 14,
+    tool: '15-Minuten-Blitz-Routine',
+    page: 81,
+    exercise: '5 Minuten Timer: 1 Fläche frei machen oder 10 Dinge wegräumen.',
+    situation: 'Chaos wirkt riesig, du vermeidest und grübelst — du machst einen schnellen sichtbaren Reset.',
+    why: 'Ein kleiner sichtbarer Erfolg senkt Stress und erhöht das Handlungsgefühl.'
+  },
+
+  /* WOCHE 3 — Job, Gender & Bürokratie */
+  {
+    day: 15,
+    tool: 'Eat the Frog (ADHS-modifiziert)',
+    page: 93,
+    exercise: 'Schreib den „Frosch" auf und definiere den kleinsten Startschritt (max. 1 Minute).',
+    situation: 'Du bist beschäftigt mit Kleinkram, aber das Wichtigste bleibt liegen — du startest mikro-klein statt zu prokrastinieren.',
+    why: 'Mini-Start erzeugt Momentum und umgeht Startwiderstand.'
+  },
+  {
+    day: 16,
+    tool: 'Fokus-Timer & Body Doubling',
+    page: 94,
+    exercise: 'Starte einen 5–10 Minuten Fokus-Sprint mit Timer (Body Double optional).',
+    situation: 'Du willst anfangen, driftest aber ins Scrollen oder Herumlaufen — der Sprint bringt dich in Bewegung.',
+    why: 'Zeitlimit macht den Einstieg klein und reduziert Überforderung.'
+  },
+  {
+    day: 17,
+    tool: 'Cycle-Planner',
+    page: 106,
+    exercise: 'Markiere „Energie: low / medium / high" und passe 1 Erwartung daran an.',
+    situation: 'Rund um PMS- oder Low-Phasen wird alles lauter im Kopf und du wertest dich ab — du planst passend, statt zu kämpfen.',
+    why: 'Planung nach Energie reduziert Selbstvorwürfe und Overthinking-Druck.'
+  },
+  {
+    day: 18,
+    tool: 'Ernährung & Supplements zur Dopamin-Unterstützung',
+    page: 108,
+    exercise: 'Plane 1 Stabilizer: Wasser + Protein-Snack (oder fester Snack-Slot).',
+    situation: 'Nachmittags-Crash → mehr Grübeln, Reizbarkeit, Impuls-Scrollen — du stabilisierst, statt zu kompensieren.',
+    why: 'Stabilere Energie senkt die innere Unruhe, die Grübeln antreibt.'
+  },
+  {
+    day: 19,
+    tool: 'Physisches Entladen',
+    page: 118,
+    exercise: '90 Sekunden: 10 Kniebeugen + 20 Sek Shake/Gehen + 10 Kniebeugen.',
+    situation: 'Du spürst Wut oder Impuls und willst sofort reagieren — du entlädst, bevor du sprichst oder schreibst.',
+    why: 'Körperlicher Stressabbau reduziert Impulsreaktionen und das Nach-Grübeln.'
+  },
+  {
+    day: 20,
+    tool: 'Box-Breathing',
+    page: 120,
+    exercise: '2 Minuten Box-Breathing: 4 ein, 4 halten, 4 aus, 4 halten.',
+    situation: 'Vor Telefonat, Feedback oder Behörde steigt der Alarm im Körper — du regulierst, bevor du vermeidest.',
+    why: 'Atmung wirkt direkt aufs Nervensystem und senkt die Alarmstufe.'
+  },
+  {
+    day: 21,
+    tool: 'Drei-Kisten-Sortiersystem + Telefon-Skript',
+    page: 144,
+    exercise: 'Sortiere 1 Brief in „Jetzt / Warten / Archiv" und schreibe 3 Sätze fürs Telefonat: „Ich rufe an wegen… / Aktenzeichen… / Ich brauche…" (Skript S. 146).',
+    situation: 'Mahnung liegt seit Wochen ungeöffnet, der Anruf blockiert dich — du zerlegst die Hürde in Sortieren + Skript statt Kopfkino.',
+    why: 'Du reduzierst Entscheidungslast und senkst die Schwelle, überhaupt zu handeln.'
+  },
+];

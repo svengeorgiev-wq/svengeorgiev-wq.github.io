@@ -140,8 +140,8 @@ h2 {
 }
 
 h1 {
-  max-width: 720px;
-  font-size: clamp(3rem, 8vw, 6.9rem);
+  max-width: 650px;
+  font-size: clamp(3rem, 6.2vw, 5.35rem);
 }
 
 .subtitle {

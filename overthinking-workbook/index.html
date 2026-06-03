@@ -1,0 +1,101 @@
+﻿<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f2a83a">
+    <title>Schluss mit Overthinking - 30 Tage Workbook</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="hero">
+        <div class="hero__art" aria-hidden="true">
+          <img src="assets/cover.png" alt="">
+        </div>
+        <div class="hero__copy">
+          <p class="eyebrow">30-Tage-Praxis-Plan</p>
+          <h1>Schluss mit Overthinking</h1>
+          <p class="subtitle">Nervensystem dann Mindset. Dein interaktives Workbook aus dem Buch.</p>
+          <div class="hero__actions">
+            <button class="primary-action" id="continueButton" type="button">Weiter machen</button>
+            <button class="ghost-action" id="exportButton" type="button">Notizen exportieren</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar" aria-label="Challenge Navigation">
+          <section class="progress-panel">
+            <div class="progress-panel__top">
+              <span>Dein Fortschritt</span>
+              <strong id="progressText">0/30</strong>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <span id="progressFill"></span>
+            </div>
+            <p id="streakText">Starte mit Tag 1. Kein Druck, nur ein kleiner Schritt.</p>
+          </section>
+
+          <nav class="week-tabs" aria-label="Wochen">
+            <button class="week-tab is-active" type="button" data-week="all">Alle</button>
+            <button class="week-tab" type="button" data-week="1">Woche 1</button>
+            <button class="week-tab" type="button" data-week="2">Woche 2</button>
+            <button class="week-tab" type="button" data-week="3">Woche 3</button>
+            <button class="week-tab" type="button" data-week="4">Woche 4</button>
+            <button class="week-tab" type="button" data-week="5">Finale</button>
+          </nav>
+
+          <div class="day-list" id="dayList" aria-label="Tage"></div>
+        </aside>
+
+        <section class="day-detail" aria-live="polite">
+          <div class="day-detail__header">
+            <div>
+              <p class="week-label" id="weekLabel">Woche 1</p>
+              <h2 id="dayTitle">Tag 1</h2>
+            </div>
+            <div class="day-number" id="dayNumber">01</div>
+          </div>
+
+          <div class="content-grid">
+            <article class="practice-panel">
+              <span class="panel-kicker">Mini-Impuls</span>
+              <p id="impulseText"></p>
+            </article>
+            <article class="practice-panel">
+              <span class="panel-kicker">Übung</span>
+              <p id="exerciseText"></p>
+            </article>
+          </div>
+
+          <form class="journal" id="journalForm">
+            <label class="check-row">
+              <input id="doneCheck" type="checkbox">
+              <span>Übung heute gemacht</span>
+            </label>
+
+            <label class="field-label" for="ratingRange">Hat es geholfen?</label>
+            <div class="rating-row">
+              <span>Nein</span>
+              <input id="ratingRange" type="range" min="0" max="5" step="1" value="0">
+              <span>Ja</span>
+              <strong id="ratingValue">0/5</strong>
+            </div>
+
+            <label class="field-label" for="reflectionInput">Reflexion</label>
+            <p class="reflection-prompt" id="reflectionPrompt"></p>
+            <textarea id="reflectionInput" rows="7" placeholder="Schreib ein paar ehrliche Zeilen. Stichpunkte reichen."></textarea>
+
+            <div class="journal__actions">
+              <button class="ghost-action" id="prevButton" type="button">Zurück</button>
+              <button class="primary-action" id="nextButton" type="button">Nächster Tag</button>
+            </div>
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

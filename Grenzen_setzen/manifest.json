@@ -1,11 +1,11 @@
 {
-  "name": "Grenzen-App — Nicht alle. Nicht immer. Nicht alles.",
+  "name": "Grenzen-App \u2014 Nicht alle. Nicht immer. Nicht alles.",
   "short_name": "Grenzen-App",
   "description": "Dein 21-Tage-Begleiter zum Buch von Lea Hoffmann",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#F5E6E0",
-  "theme_color": "#E85E3E",
+  "background_color": "#F8F0EA",
+  "theme_color": "#F8F0EA",
   "orientation": "portrait",
   "icons": [
     {

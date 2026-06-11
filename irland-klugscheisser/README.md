@@ -2,6 +2,8 @@
 
 Statische Companion-App fuer das Amazon-Listing `B0FDKCF6BM`: interaktive Irland-Karte, Fun Facts, Quiz, Favoriten und lokale Reise-Notizen.
 
+Live-URL: `https://tools.munichpublishing.de/irland-klugscheisser/`
+
 ## Lokal starten
 
 Die App kann direkt ueber `index.html` geoeffnet werden. Fuer eine lokale Vorschau mit Server:

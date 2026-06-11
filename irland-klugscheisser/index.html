@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#133c2f">
+  <title>Irland-Klugscheißer Bonus-App</title>
+  <meta name="description" content="Interaktive Bonus-App mit Insider-Karte, Irland-Fakten, Quiz und Reise-Notizen zum Buch.">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@650;750;850&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero" aria-labelledby="app-title">
+      <div class="hero__copy">
+        <p class="eyebrow">Bonus-App zum Buch</p>
+        <h1 id="app-title"><span>Irland-</span><span>Klugscheißer</span></h1>
+        <p class="subtitle">Insider-Karte, Fun Facts und ein kleines Pub-Quiz fuer alle, die beim naechsten Irland-Gespraech nicht nur Guinness sagen wollen.</p>
+        <div class="hero__actions">
+          <button class="primary-action" type="button" id="startRouteButton">
+            <span data-lucide="map"></span>
+            Route starten
+          </button>
+          <button class="ghost-action" type="button" id="randomFactButton">
+            <span data-lucide="shuffle"></span>
+            Zufallsfakt
+          </button>
+        </div>
+      </div>
+      <figure class="hero__art">
+        <img src="assets/ireland-hero.png" alt="Illustrierte Irlandkarte in einem Reise-Notizbuch">
+      </figure>
+    </section>
+
+    <section class="stats-row" aria-label="Fortschritt">
+      <div class="stat">
+        <span class="stat__label">Entdeckt</span>
+        <strong id="visitedCount">0/0</strong>
+      </div>
+      <div class="stat">
+        <span class="stat__label">Favoriten</span>
+        <strong id="favoriteCount">0</strong>
+      </div>
+      <div class="stat">
+        <span class="stat__label">Quizpunkte</span>
+        <strong id="scoreText">0</strong>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Irland-Bonus-App">
+      <nav class="mode-tabs" aria-label="App-Bereiche">
+        <button class="tab-button is-active" type="button" data-view="map">
+          <span data-lucide="map-pinned"></span>
+          Karte
+        </button>
+        <button class="tab-button" type="button" data-view="quiz">
+          <span data-lucide="circle-help"></span>
+          Quiz
+        </button>
+        <button class="tab-button" type="button" data-view="notes">
+          <span data-lucide="notebook-pen"></span>
+          Notizen
+        </button>
+        <button class="tab-button" type="button" data-view="saved">
+          <span data-lucide="star"></span>
+          Favoriten
+        </button>
+      </nav>
+
+      <section class="view is-active" id="mapView" data-panel="map">
+        <aside class="route-list" aria-label="Stationen">
+          <div class="route-list__head">
+            <p class="panel-label">Insider-Karte</p>
+            <button class="icon-button" type="button" id="resetButton" aria-label="Fortschritt zuruecksetzen">
+              <span data-lucide="rotate-ccw"></span>
+            </button>
+          </div>
+          <div class="station-buttons" id="stationList"></div>
+        </aside>
+
+        <article class="map-panel">
+          <div class="map-layout">
+            <div class="ireland-map" aria-label="Interaktive Irlandkarte">
+              <div class="map-shape"></div>
+              <div class="pin-layer" id="pinLayer"></div>
+            </div>
+
+            <div class="fact-panel">
+              <p class="panel-label" id="spotMeta">County</p>
+              <h2 id="spotTitle">Station</h2>
+              <p class="fact-text" id="spotFact"></p>
+              <div class="detail-grid">
+                <div>
+                  <span class="detail-label">Klugscheißer-Satz</span>
+                  <p id="spotLine"></p>
+                </div>
+                <div>
+                  <span class="detail-label">Mini-Mission</span>
+                  <p id="spotMission"></p>
+                </div>
+              </div>
+              <div class="panel-actions">
+                <button class="primary-action" type="button" id="nextSpotButton">
+                  <span data-lucide="arrow-right"></span>
+                  Weiter
+                </button>
+                <button class="ghost-action" type="button" id="favoriteButton">
+                  <span data-lucide="star"></span>
+                  Merken
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="view" id="quizView" data-panel="quiz">
+        <article class="quiz-panel">
+          <div class="quiz-topline">
+            <p class="panel-label" id="quizMeta">Frage 1</p>
+            <span id="quizProgress">0/0</span>
+          </div>
+          <h2 id="quizQuestion">Quizfrage</h2>
+          <div class="answer-grid" id="answerGrid"></div>
+          <div class="quiz-feedback" id="quizFeedback" hidden></div>
+          <div class="panel-actions">
+            <button class="primary-action" type="button" id="nextQuestionButton">
+              <span data-lucide="arrow-right"></span>
+              Naechste Frage
+            </button>
+            <button class="ghost-action" type="button" id="restartQuizButton">
+              <span data-lucide="refresh-cw"></span>
+              Neu starten
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section class="view" id="notesView" data-panel="notes">
+        <article class="notes-panel">
+          <p class="panel-label">Reise-Notiz</p>
+          <h2>Was bleibt haengen?</h2>
+          <textarea id="notesInput" rows="10" placeholder="Lieblingsort, Fun Fact, Pub-Tipp oder ein Satz, den du spaeter unbedingt fallen lassen willst."></textarea>
+          <p class="save-state" id="saveState">Automatisch lokal gespeichert.</p>
+        </article>
+      </section>
+
+      <section class="view" id="savedView" data-panel="saved">
+        <article class="saved-panel">
+          <div class="saved-head">
+            <div>
+              <p class="panel-label">Gemerkte Fakten</p>
+              <h2>Dein Spickzettel</h2>
+            </div>
+            <button class="ghost-action" type="button" id="clearFavoritesButton">
+              <span data-lucide="trash-2"></span>
+              Leeren
+            </button>
+          </div>
+          <div class="saved-list" id="savedList"></div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

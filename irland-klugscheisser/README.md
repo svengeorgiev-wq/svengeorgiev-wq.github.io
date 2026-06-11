@@ -23,6 +23,7 @@ http://localhost:4173
 - `index.html` enthaelt die App-Struktur.
 - `styles.css` setzt den hellen Irland-Reise-Look.
 - `app.js` enthaelt Stationen, Fakten, Quizlogik und lokale Speicherung.
-- `assets/ireland-hero.png` ist das neu generierte Hero-Artwork fuer die App.
+- `assets/book-cover.png` ist das sichtbare Buchcover im Hero.
+- `assets/ireland-hero.png` ist das neu generierte Companion-Artwork fuer die App.
 - `index.deploy.html` ist die deploybare Einzeldatei mit eingebettetem CSS, JS und Hero-Bild.
 - `cover-deploy.webp` sowie `cover-*.webp` sind die optimierten Deploy-Bildvarianten.

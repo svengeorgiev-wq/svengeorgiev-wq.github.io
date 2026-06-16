@@ -24,11 +24,11 @@
   --teal: #147d82;
   --rose: #a54a72;
   --paper: #f7f8fb;
-  --glass: rgba(255, 255, 255, 0.62);
-  --glass-strong: rgba(255, 255, 255, 0.78);
-  --line: rgba(16, 32, 51, 0.13);
-  --line-strong: rgba(16, 32, 51, 0.22);
-  --shadow: 0 22px 70px rgba(13, 31, 53, 0.18);
+  --glass: rgba(255, 255, 255, 0.34);
+  --glass-strong: rgba(255, 255, 255, 0.58);
+  --line: rgba(255, 255, 255, 0.62);
+  --line-strong: rgba(255, 255, 255, 0.78);
+  --shadow: 0 24px 80px rgba(13, 31, 53, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.78);
   --title: "Playfair Display", Georgia, serif;
   --sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -47,10 +47,8 @@ body {
   color: var(--ink);
   font-family: var(--sans);
   background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.68), rgba(232, 241, 247, 0.74)),
-    radial-gradient(circle at 10% 10%, rgba(242, 122, 0, 0.18), transparent 31%),
-    radial-gradient(circle at 87% 18%, rgba(20, 125, 130, 0.2), transparent 30%),
-    radial-gradient(circle at 75% 82%, rgba(165, 74, 114, 0.17), transparent 34%),
+    linear-gradient(132deg, rgba(255, 255, 255, 0.72) 0%, rgba(235, 243, 250, 0.72) 32%, rgba(255, 245, 232, 0.78) 62%, rgba(239, 248, 248, 0.74) 100%),
+    linear-gradient(42deg, rgba(242, 122, 0, 0.16) 0%, transparent 27%, rgba(20, 125, 130, 0.16) 54%, transparent 74%, rgba(165, 74, 114, 0.12) 100%),
     #f4f6fa;
   overflow-x: hidden;
 }
@@ -61,9 +59,20 @@ body::before {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.55), transparent 40%),
-    repeating-linear-gradient(110deg, rgba(13, 31, 53, 0.035) 0 1px, transparent 1px 28px);
+    linear-gradient(116deg, transparent 0 15%, rgba(255, 255, 255, 0.42) 15% 16%, transparent 16% 47%, rgba(255, 255, 255, 0.28) 47% 48%, transparent 48%),
+    repeating-linear-gradient(110deg, rgba(13, 31, 53, 0.035) 0 1px, transparent 1px 30px);
   mask-image: linear-gradient(#000, rgba(0, 0, 0, 0.55));
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(78deg, transparent 0 9%, rgba(255, 255, 255, 0.34) 9% 16%, transparent 16% 61%, rgba(255, 255, 255, 0.22) 61% 67%, transparent 67%),
+    linear-gradient(155deg, rgba(13, 31, 53, 0.04), transparent 42%, rgba(242, 122, 0, 0.06));
 }
 
 button,
@@ -101,11 +110,54 @@ button:disabled {
 .input-card,
 .task-panel,
 .script-card {
+  position: relative;
   border: 1px solid var(--line);
-  background: var(--glass);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.24) 42%, rgba(255, 255, 255, 0.42)),
+    var(--glass);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(20px) saturate(135%);
-  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(30px) saturate(155%);
+  -webkit-backdrop-filter: blur(30px) saturate(155%);
+}
+
+.hero::after,
+.stat::after,
+.workspace::after,
+.daily-card::after,
+.journey-panel::after,
+.planner-panel::after,
+.energy-panel::after,
+.scripts-panel::after,
+.glass-block::after,
+.input-card::after,
+.task-panel::after,
+.script-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(118deg, rgba(255, 255, 255, 0.52), transparent 28%, transparent 66%, rgba(255, 255, 255, 0.18)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.26), transparent 42%);
+  opacity: 0.68;
+}
+
+.hero > *,
+.stat > *,
+.workspace > *,
+.daily-card > *,
+.journey-panel > *,
+.planner-panel > *,
+.energy-panel > *,
+.scripts-panel > *,
+.glass-block > *,
+.input-card > *,
+.task-panel > *,
+.script-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .hero {
@@ -116,6 +168,9 @@ button:disabled {
   align-items: center;
   padding: clamp(22px, 5vw, 58px);
   overflow: hidden;
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.2) 48%, rgba(255, 255, 255, 0.44)),
+    linear-gradient(42deg, rgba(242, 122, 0, 0.12), transparent 35%, rgba(20, 125, 130, 0.12));
 }
 
 .hero__copy {
@@ -204,8 +259,11 @@ h2 {
 
 .primary-action {
   color: #fff;
-  background: linear-gradient(135deg, var(--blue), var(--blue-2));
-  box-shadow: 0 14px 30px rgba(13, 31, 53, 0.24);
+  border-color: rgba(255, 255, 255, 0.38);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.2), transparent 38%),
+    linear-gradient(135deg, rgba(13, 31, 53, 0.95), rgba(23, 59, 93, 0.9));
+  box-shadow: 0 14px 30px rgba(13, 31, 53, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.28);
 }
 
 .ghost-action,
@@ -214,7 +272,10 @@ h2 {
 .complete-toggle {
   color: var(--blue);
   border-color: var(--line);
-  background: rgba(255, 255, 255, 0.56);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.34)),
+    rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
 }
 
 .primary-action:hover,
@@ -242,8 +303,9 @@ h2 {
   content: "";
   position: absolute;
   inset: 8% -7% -6% 13%;
-  background: linear-gradient(135deg, rgba(242, 122, 0, 0.34), rgba(20, 125, 130, 0.2));
-  filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.56);
+  background: linear-gradient(135deg, rgba(242, 122, 0, 0.24), rgba(20, 125, 130, 0.18));
+  filter: blur(14px);
 }
 
 .hero__cover img {
@@ -253,7 +315,7 @@ h2 {
   aspect-ratio: 141 / 200;
   object-fit: cover;
   border: 1px solid rgba(255, 255, 255, 0.72);
-  box-shadow: 0 26px 58px rgba(13, 31, 53, 0.26);
+  box-shadow: 0 26px 58px rgba(13, 31, 53, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
 .stats-row {
@@ -264,6 +326,7 @@ h2 {
 }
 
 .stat {
+  overflow: hidden;
   min-height: 88px;
   padding: 17px;
 }
@@ -278,6 +341,7 @@ h2 {
 }
 
 .workspace {
+  position: relative;
   overflow: hidden;
 }
 
@@ -287,7 +351,11 @@ h2 {
   gap: 8px;
   padding: 10px;
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.36);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0.22)),
+    rgba(255, 255, 255, 0.24);
+  backdrop-filter: blur(26px) saturate(150%);
+  -webkit-backdrop-filter: blur(26px) saturate(150%);
 }
 
 .tab-button {
@@ -297,8 +365,10 @@ h2 {
 
 .tab-button.is-active {
   color: #fff;
-  background: var(--blue);
-  border-color: var(--blue);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.18), transparent 42%),
+    rgba(13, 31, 53, 0.88);
+  border-color: rgba(255, 255, 255, 0.34);
 }
 
 .view {
@@ -347,10 +417,13 @@ h2 {
 .day-button,
 .journey-card,
 .task-item {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.58);
   border-radius: 8px;
   color: var(--ink);
-  background: rgba(255, 255, 255, 0.54);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.28)),
+    rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68);
 }
 
 .day-button {
@@ -364,8 +437,10 @@ h2 {
 }
 
 .day-button.is-active {
-  border-color: rgba(13, 31, 53, 0.4);
-  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(255, 255, 255, 0.88);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.42)),
+    rgba(255, 255, 255, 0.44);
 }
 
 .day-button.is-complete .day-number,
@@ -413,12 +488,18 @@ h2 {
   border-right: 0;
   border-bottom: 0;
   box-shadow: none;
-  background: rgba(255, 255, 255, 0.42);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.54), rgba(255, 255, 255, 0.2)),
+    rgba(255, 255, 255, 0.22);
+  overflow: hidden;
 }
 
 .complete-toggle.is-complete {
   color: #fff;
-  background: var(--teal);
+  border-color: rgba(255, 255, 255, 0.36);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.22), transparent 40%),
+    rgba(20, 125, 130, 0.9);
 }
 
 .daily-card h2 {
@@ -435,6 +516,7 @@ h2 {
   min-height: 190px;
   padding: 20px;
   box-shadow: none;
+  overflow: hidden;
 }
 
 .glass-block--wide {
@@ -454,7 +536,10 @@ input {
   border: 1px solid var(--line-strong);
   border-radius: 8px;
   color: var(--ink);
-  background: rgba(255, 255, 255, 0.72);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.4)),
+    rgba(255, 255, 255, 0.36);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
   outline: 0;
 }
 
@@ -512,8 +597,10 @@ input:focus {
 }
 
 .journey-card.is-active {
-  border-color: rgba(242, 122, 0, 0.55);
-  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(255, 255, 255, 0.88);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.42)),
+    rgba(242, 122, 0, 0.08);
 }
 
 .planner-grid {
@@ -526,6 +613,7 @@ input:focus {
   display: block;
   padding: 16px;
   box-shadow: none;
+  overflow: hidden;
 }
 
 .task-columns {
@@ -539,6 +627,7 @@ input:focus {
   min-height: 250px;
   padding: 16px;
   box-shadow: none;
+  overflow: hidden;
 }
 
 .quick-add {
@@ -568,7 +657,9 @@ input:focus {
   height: 26px;
   border: 1px solid var(--line-strong);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.58);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.74), rgba(255, 255, 255, 0.35)),
+    rgba(255, 255, 255, 0.34);
 }
 
 .task-item.is-done .task-check {
@@ -587,10 +678,13 @@ input:focus {
   min-height: 54px;
   border-radius: 8px;
   color: #fff;
-  background: linear-gradient(135deg, var(--orange), var(--orange-2));
+  border: 1px solid rgba(255, 255, 255, 0.44);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.24), transparent 38%),
+    linear-gradient(135deg, rgba(242, 122, 0, 0.94), rgba(255, 159, 54, 0.88));
   font-weight: 900;
   font-size: 1.45rem;
-  box-shadow: 0 14px 28px rgba(242, 122, 0, 0.22);
+  box-shadow: 0 14px 28px rgba(242, 122, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.38);
 }
 
 .timer-controls {
@@ -613,7 +707,10 @@ input:focus {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.56);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3)),
+    rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .slider-grid input {
@@ -640,7 +737,10 @@ input:focus {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 10px;
-  background: rgba(255, 255, 255, 0.56);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.28)),
+    rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.68);
 }
 
 .energy-day strong {
@@ -673,6 +773,7 @@ input:focus {
 .script-card {
   min-height: 260px;
   box-shadow: none;
+  overflow: hidden;
 }
 
 .script-card h3 {

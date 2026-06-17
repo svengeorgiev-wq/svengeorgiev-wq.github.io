@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#082843">
+  <title>Schluss mit Overthinking - Kopf-Leiser-App</title>
+  <meta name="description" content="Kostenlose Companion-App zum Buch Schluss mit Overthinking mit 30-Tage-Praxisplan, Reset-Tools, Sorgen-Buero, Abendroutine und Notfallkarte.">
+  <link rel="canonical" href="https://tools.munichpublishing.de/kopf-leiser/">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero" aria-labelledby="app-title">
+      <div class="hero__copy">
+        <p class="eyebrow">Bonus-App zum Buch</p>
+        <h1 id="app-title">Schluss mit Overthinking</h1>
+        <p class="subtitle">Dein 30-Tage-Board für ein ruhigeres Nervensystem: kurze Reset-Übungen, Sorgenzeiten, Abend-Entlastung und ein Kopf, der Schritt für Schritt leiser wird.</p>
+        <div class="hero__actions">
+          <button class="primary-action" type="button" id="startTodayButton">
+            <span data-lucide="sparkles"></span>
+            Heute runterfahren
+          </button>
+          <button class="ghost-action" type="button" id="openTimerButton">
+            <span data-lucide="timer"></span>
+            2-Minuten-Reset
+          </button>
+        </div>
+      </div>
+      <figure class="hero__cover">
+        <img src="assets/overthinking-cover.webp" alt="Cover Schluss mit Overthinking">
+      </figure>
+    </section>
+
+    <section class="stats-row" aria-label="Fortschritt">
+      <div class="stat">
+        <span class="stat__label">Tage abgeschlossen</span>
+        <strong id="completedCount">0/30</strong>
+      </div>
+      <div class="stat">
+        <span class="stat__label">Aktueller Tag</span>
+        <strong id="activeDayStat">1</strong>
+      </div>
+      <div class="stat">
+        <span class="stat__label">Ruhe heute</span>
+        <strong id="energyStat">-</strong>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Kopf-Leiser-App">
+      <nav class="mode-tabs" aria-label="App-Bereiche">
+        <button class="tab-button is-active" type="button" data-view="today">
+          <span data-lucide="sun"></span>
+          Heute
+        </button>
+        <button class="tab-button" type="button" data-view="journey">
+          <span data-lucide="calendar-check"></span>
+          30 Tage
+        </button>
+        <button class="tab-button" type="button" data-view="planner">
+          <span data-lucide="layout-list"></span>
+          Reset
+        </button>
+        <button class="tab-button" type="button" data-view="energy">
+          <span data-lucide="activity"></span>
+          Körper
+        </button>
+        <button class="tab-button" type="button" data-view="scripts">
+          <span data-lucide="message-square-text"></span>
+          Notfall
+        </button>
+      </nav>
+
+      <section class="view is-active" id="todayView" data-panel="today">
+        <aside class="day-rail" aria-label="Tage">
+          <div class="rail-head">
+            <p class="panel-label">Praxisplan</p>
+            <button class="icon-button" type="button" id="resetButton" aria-label="Fortschritt zurücksetzen">
+              <span data-lucide="rotate-ccw"></span>
+            </button>
+          </div>
+          <div class="day-buttons" id="dayButtons"></div>
+        </aside>
+
+        <article class="daily-card">
+          <div class="daily-topline">
+            <p class="panel-label" id="dayMeta">Tag 1</p>
+            <button class="complete-toggle" type="button" id="completeDayButton">
+              <span data-lucide="check"></span>
+              Abschließen
+            </button>
+          </div>
+          <h2 id="dayTitle">Die Notbremse</h2>
+          <div class="daily-grid">
+            <section class="glass-block">
+              <span class="block-kicker">Impuls</span>
+              <p id="dayImpulse"></p>
+            </section>
+            <section class="glass-block">
+              <span class="block-kicker">Übung</span>
+              <p id="dayExercise"></p>
+            </section>
+            <section class="glass-block glass-block--wide">
+              <span class="block-kicker">Reflexion</span>
+              <p id="dayQuestion"></p>
+              <textarea id="dayNotes" rows="6" placeholder="Was hat deinen Kopf heute ein Stück leiser gemacht?"></textarea>
+              <p class="save-state" id="noteState">Lokal gespeichert.</p>
+            </section>
+          </div>
+        </article>
+      </section>
+
+      <section class="view" id="journeyView" data-panel="journey">
+        <article class="journey-panel">
+          <div class="section-head">
+            <div>
+              <p class="panel-label">30-Tage-Challenge</p>
+              <h2>Dein sichtbarer Verlauf</h2>
+            </div>
+            <button class="ghost-action" type="button" id="nextOpenButton">
+              <span data-lucide="arrow-right"></span>
+              Nächster offener Tag
+            </button>
+          </div>
+          <div class="journey-grid" id="journeyGrid"></div>
+        </article>
+      </section>
+
+      <section class="view" id="plannerView" data-panel="planner">
+        <article class="planner-panel">
+          <div class="section-head">
+            <div>
+              <p class="panel-label">Reset-Container</p>
+              <h2>Erst landen. Dann sortieren.</h2>
+            </div>
+            <div class="timer-chip" id="timerText">25:00</div>
+          </div>
+
+          <div class="planner-grid">
+            <label class="input-card">
+              <span>Landung</span>
+              <textarea id="resultInput" rows="4" placeholder="Welches Signal braucht dein Nervensystem gerade?"></textarea>
+            </label>
+            <label class="input-card">
+              <span>Sorgen-Büro</span>
+              <textarea id="containerInput" rows="4" placeholder="Welche Sorge bekommt später einen festen Termin?"></textarea>
+            </label>
+            <label class="input-card">
+              <span>Kleinstschritt</span>
+              <textarea id="firstStepInput" rows="4" placeholder="Was ist die kleinste Handlung in den nächsten 2 Minuten?"></textarea>
+            </label>
+          </div>
+
+          <div class="task-columns">
+            <section class="task-panel">
+              <div class="task-head">
+                <p class="panel-label">Heute</p>
+                <button class="icon-button" type="button" id="addTodayTask" aria-label="Heute-Aufgabe hinzufügen">
+                  <span data-lucide="plus"></span>
+                </button>
+              </div>
+              <div class="quick-add">
+                <input id="todayTaskInput" type="text" placeholder="Ein Reset, nicht sieben Baustellen">
+              </div>
+              <div class="task-list" id="todayTasks"></div>
+            </section>
+            <section class="task-panel">
+              <div class="task-head">
+                <p class="panel-label">Später</p>
+                <button class="icon-button" type="button" id="addLaterTask" aria-label="Nicht-heute-Aufgabe hinzufügen">
+                  <span data-lucide="plus"></span>
+                </button>
+              </div>
+              <div class="quick-add">
+                <input id="laterTaskInput" type="text" placeholder="Parken, nicht gründlich zerdenken">
+              </div>
+              <div class="task-list" id="laterTasks"></div>
+            </section>
+          </div>
+
+          <div class="timer-controls" aria-label="Timer">
+            <button class="primary-action" type="button" id="startTimerButton">
+              <span data-lucide="play"></span>
+              Start
+            </button>
+            <button class="ghost-action" type="button" id="pauseTimerButton">
+              <span data-lucide="pause"></span>
+              Pause
+            </button>
+            <button class="ghost-action" type="button" id="resetTimerButton">
+              <span data-lucide="timer-reset"></span>
+              Reset
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <section class="view" id="energyView" data-panel="energy">
+        <article class="energy-panel">
+          <div class="section-head">
+            <div>
+              <p class="panel-label">Körperkarte</p>
+              <h2>Fokus, Stimmung, Ruhe</h2>
+            </div>
+            <button class="ghost-action" type="button" id="saveEnergyButton">
+              <span data-lucide="save"></span>
+              Speichern
+            </button>
+          </div>
+          <div class="slider-grid">
+            <label>
+              <span>Fokus</span>
+              <input id="focusRange" type="range" min="1" max="5" value="3">
+              <strong id="focusValue">3</strong>
+            </label>
+            <label>
+              <span>Stimmung</span>
+              <input id="moodRange" type="range" min="1" max="5" value="3">
+              <strong id="moodValue">3</strong>
+            </label>
+            <label>
+              <span>Ruhe</span>
+              <input id="energyRange" type="range" min="1" max="5" value="3">
+              <strong id="energyValue">3</strong>
+            </label>
+          </div>
+          <textarea id="warningSigns" rows="4" placeholder="Warnzeichen: Woran merkst du, dass dein Sicherheitsgurt zu eng wird?"></textarea>
+          <div class="energy-map" id="energyMap"></div>
+        </article>
+      </section>
+
+      <section class="view" id="scriptsView" data-panel="scripts">
+        <article class="scripts-panel">
+          <div class="section-head">
+            <div>
+              <p class="panel-label">Notfall-Koffer</p>
+              <h2>Sätze, bevor dein Kopf improvisieren muss</h2>
+            </div>
+          </div>
+          <div class="script-grid" id="scriptGrid"></div>
+        </article>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

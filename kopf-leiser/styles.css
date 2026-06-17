@@ -317,6 +317,12 @@ h2 {
   box-shadow: 0 34px 72px rgba(8, 40, 67, 0.28), 0 0 0 10px rgba(255, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.55);
 }
 
+.hero__cover a {
+  position: relative;
+  display: block;
+  color: inherit;
+}
+
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

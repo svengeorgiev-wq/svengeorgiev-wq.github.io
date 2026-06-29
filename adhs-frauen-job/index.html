@@ -1040,7 +1040,7 @@ input:focus {
           <div class="section-head">
             <div>
               <p class="panel-label">FOKUS-Container</p>
-              <h2>Ein Ergebnis. Eine Kante. Ein Anfang.</h2>
+              <h2>Fünf Schritte. Ein Fokusblock.</h2>
             </div>
             <div class="timer-chip" id="timerText">25:00</div>
           </div>
@@ -1057,6 +1057,14 @@ input:focus {
             <label class="input-card">
               <span>K - Klein anfangen</span>
               <textarea id="firstStepInput" rows="4" placeholder="Was ist die kleinste körperliche Handlung?"></textarea>
+            </label>
+            <label class="input-card">
+              <span>U - Umsetzen</span>
+              <textarea id="implementationInput" rows="4" placeholder="Wann und wie setzt du den Fokusblock um?"></textarea>
+            </label>
+            <label class="input-card">
+              <span>S - Schließen</span>
+              <textarea id="shutdownInput" rows="4" placeholder="Welches Schlusszeichen beendet den Block?"></textarea>
             </label>
           </div>
 
@@ -1369,6 +1377,8 @@ const elements = {
   resultInput: document.querySelector("#resultInput"),
   containerInput: document.querySelector("#containerInput"),
   firstStepInput: document.querySelector("#firstStepInput"),
+  implementationInput: document.querySelector("#implementationInput"),
+  shutdownInput: document.querySelector("#shutdownInput"),
   todayTaskInput: document.querySelector("#todayTaskInput"),
   laterTaskInput: document.querySelector("#laterTaskInput"),
   addTodayTask: document.querySelector("#addTodayTask"),
@@ -1432,7 +1442,13 @@ function bindEvents() {
     flashSave(elements.noteState, "Gespeichert.");
   });
 
-  [elements.resultInput, elements.containerInput, elements.firstStepInput].forEach((input) => {
+  [
+    elements.resultInput,
+    elements.containerInput,
+    elements.firstStepInput,
+    elements.implementationInput,
+    elements.shutdownInput
+  ].forEach((input) => {
     input.addEventListener("input", savePlanner);
   });
 
@@ -1547,12 +1563,16 @@ function hydratePlanner() {
   elements.resultInput.value = state.data.planner.result;
   elements.containerInput.value = state.data.planner.container;
   elements.firstStepInput.value = state.data.planner.firstStep;
+  elements.implementationInput.value = state.data.planner.implementation;
+  elements.shutdownInput.value = state.data.planner.shutdown;
 }
 
 function savePlanner() {
   state.data.planner.result = elements.resultInput.value;
   state.data.planner.container = elements.containerInput.value;
   state.data.planner.firstStep = elements.firstStepInput.value;
+  state.data.planner.implementation = elements.implementationInput.value;
+  state.data.planner.shutdown = elements.shutdownInput.value;
   saveState();
 }
 
@@ -1807,7 +1827,9 @@ function loadState() {
     planner: {
       result: "",
       container: "",
-      firstStep: ""
+      firstStep: "",
+      implementation: "",
+      shutdown: ""
     },
     tasks: {
       today: [],

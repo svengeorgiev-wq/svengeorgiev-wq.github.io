@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffb21d">
+  <title>Sommer Rätselstudio</title>
+  <meta name="description" content="Bunter Rätselgenerator im Sommer-Rätselbuch-Stil mit Glassmorphism, Stickern und druckbaren Kinder-Rätseln.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app">
+    <section class="hero" aria-labelledby="app-title">
+      <div class="hero__backdrop" aria-hidden="true"></div>
+      <div class="leaf leaf--left" aria-hidden="true">🌴</div>
+      <div class="leaf leaf--right" aria-hidden="true">🌴</div>
+      <div class="sticker sticker--ice" aria-hidden="true">🍦</div>
+      <div class="sticker sticker--ball" aria-hidden="true">🏖️</div>
+      <div class="sticker sticker--bucket" aria-hidden="true">🪣</div>
+
+      <div class="hero__content glass">
+        <p class="wood-label">Das knifflige</p>
+        <h1 id="app-title" aria-label="Sommer Rätselstudio"><span>Sommer</span><span>Rätselstudio</span></h1>
+        <p class="hero__text">Erstelle bunte Kinder-Rätsel mit Strandgefühl: Geheimschrift, Wortsuche, Zahlenrätsel, Logik und Kreativseiten.</p>
+        <div class="hero__actions">
+          <button class="primary-action" type="button" id="generateTop">Neues Rätsel</button>
+          <button class="secondary-action" type="button" id="printTop">Drucken</button>
+        </div>
+      </div>
+
+      <figure class="cover-card glass">
+        <img src="assets/cover-style-reference.png" alt="Cover-Stilreferenz Sommer Rätselbuch">
+      </figure>
+    </section>
+
+    <section class="studio" aria-label="Rätselgenerator">
+      <aside class="controls glass">
+        <div class="panel-title">
+          <span>🎲</span>
+          <h2>Generator</h2>
+        </div>
+
+        <label>
+          <span>Rätselart</span>
+          <select id="puzzleType">
+            <option value="code">Geheimschrift</option>
+            <option value="wordsearch">Wortsuche</option>
+            <option value="math">Zahlenrätsel</option>
+            <option value="logic">Logikrätsel</option>
+            <option value="draw">Kreativseite</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Sommer-Thema</span>
+          <select id="theme">
+            <option value="strand">Strand & Meer</option>
+            <option value="eis">Eis & Ferien</option>
+            <option value="natur">Natur-Detektive</option>
+            <option value="abenteuer">Spiele & Abenteuer</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Eigene Wörter</span>
+          <textarea id="words" rows="4" placeholder="Muschel, Sonne, Eis, Palme, Strand"></textarea>
+        </label>
+
+        <div class="control-grid">
+          <label>
+            <span>Alter</span>
+            <select id="age">
+              <option>8</option>
+              <option selected>9</option>
+              <option>10</option>
+              <option>11</option>
+            </select>
+          </label>
+          <label>
+            <span>Schwere</span>
+            <select id="level">
+              <option value="leicht">Leicht</option>
+              <option value="mittel" selected>Mittel</option>
+              <option value="knifflig">Knifflig</option>
+            </select>
+          </label>
+        </div>
+
+        <label class="toggle">
+          <input id="solution" type="checkbox">
+          <span>Lösung anzeigen</span>
+        </label>
+
+        <button class="primary-action primary-action--wide" type="button" id="generate">Rätsel zaubern</button>
+      </aside>
+
+      <section class="worksheet-wrap glass" aria-label="Rätselvorschau">
+        <div class="worksheet-toolbar">
+          <div>
+            <p>Live-Vorschau</p>
+            <h2 id="sheetTitle">Geheimschrift am Strand</h2>
+          </div>
+          <div class="badge">ab 8 Jahren</div>
+        </div>
+        <article class="worksheet" id="worksheet"></article>
+      </section>
+
+      <aside class="picture-strip" aria-label="Sommerbilder">
+        <div class="picture-tile glass"><span>🐰</span><strong>Ferien-Freund</strong></div>
+        <div class="picture-tile glass"><span>🕶️</span><strong>Cooler Detektiv</strong></div>
+        <div class="picture-tile glass"><span>⭐</span><strong>Strand-Fund</strong></div>
+        <div class="picture-tile glass"><span>✏️</span><strong>Kreativ-Mission</strong></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

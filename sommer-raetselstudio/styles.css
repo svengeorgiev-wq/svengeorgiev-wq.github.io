@@ -1,0 +1,567 @@
+:root {
+  color-scheme: light;
+  --sun: #ffb21d;
+  --sun-dark: #d97706;
+  --aqua: #00aeb7;
+  --aqua-dark: #02727d;
+  --coral: #ff684f;
+  --cream: #fff2d4;
+  --sand: #f7cf86;
+  --ink: #38210d;
+  --glass: rgba(255, 255, 255, 0.34);
+  --glass-strong: rgba(255, 255, 255, 0.58);
+  --line: rgba(255, 255, 255, 0.74);
+  --shadow: 0 28px 70px rgba(104, 48, 0, 0.24);
+  --round: 8px;
+  --display: "Baloo 2", "Fredoka", system-ui, sans-serif;
+  --body: "Fredoka", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--body);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), transparent 36%),
+    radial-gradient(circle at 18% 20%, rgba(255, 232, 120, 0.84), transparent 24%),
+    radial-gradient(circle at 85% 18%, rgba(0, 174, 183, 0.42), transparent 26%),
+    linear-gradient(180deg, #8ed8f3 0%, #fff4d7 48%, #f5bd63 100%);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: auto 0 0;
+  height: 34vh;
+  pointer-events: none;
+  background:
+    repeating-radial-gradient(ellipse at 50% 120%, rgba(120, 74, 20, 0.18) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, transparent, rgba(189, 109, 34, 0.28));
+}
+
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+select {
+  cursor: pointer;
+}
+
+.app {
+  position: relative;
+  width: min(1320px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 18px 0 42px;
+}
+
+.glass {
+  border: 1px solid var(--line);
+  border-radius: var(--round);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.22)),
+    var(--glass);
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+}
+
+.hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 390px);
+  gap: 18px;
+  min-height: 570px;
+  align-items: center;
+  padding: clamp(18px, 4vw, 48px);
+  border-radius: var(--round);
+  overflow: hidden;
+}
+
+.hero__backdrop {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 244, 213, 0.5)),
+    url("assets/cover-style-reference.png") center / cover;
+  filter: blur(8px) saturate(1.22);
+  transform: scale(1.04);
+  opacity: 0.48;
+}
+
+.leaf,
+.sticker {
+  position: absolute;
+  z-index: 2;
+  filter: drop-shadow(0 12px 18px rgba(64, 36, 8, 0.24));
+}
+
+.leaf {
+  font-size: clamp(5.5rem, 12vw, 10rem);
+}
+
+.leaf--left {
+  top: -36px;
+  left: -22px;
+  rotate: -28deg;
+}
+
+.leaf--right {
+  top: -36px;
+  right: -18px;
+  scale: -1 1;
+  rotate: 24deg;
+}
+
+.sticker {
+  display: grid;
+  place-items: center;
+  width: 86px;
+  height: 86px;
+  border: 6px solid rgba(255, 255, 255, 0.82);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.54);
+  font-size: 3rem;
+  backdrop-filter: blur(12px);
+}
+
+.sticker--ice {
+  left: 28px;
+  top: 150px;
+}
+
+.sticker--ball {
+  right: 32px;
+  bottom: 30px;
+}
+
+.sticker--bucket {
+  left: 42%;
+  bottom: 36px;
+}
+
+.hero__content,
+.cover-card {
+  position: relative;
+  z-index: 3;
+}
+
+.hero__content {
+  padding: clamp(20px, 4vw, 42px);
+}
+
+.wood-label {
+  width: fit-content;
+  margin: 0 0 12px;
+  padding: 8px 28px;
+  border: 2px solid rgba(95, 43, 11, 0.5);
+  border-radius: var(--round);
+  color: #fff;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16), transparent),
+    linear-gradient(180deg, #b94e20, #8f3517);
+  box-shadow: 0 10px 20px rgba(95, 43, 11, 0.24);
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 3vw, 2rem);
+  font-weight: 800;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  display: grid;
+  gap: 0;
+  margin: 0 0 16px;
+  font-family: var(--display);
+  font-size: clamp(3.15rem, 7.2vw, 6.35rem);
+  line-height: 0.84;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1 span:first-child {
+  color: var(--sun);
+  text-shadow: 0 5px 0 #ad6500, 0 16px 22px rgba(75, 38, 0, 0.3);
+}
+
+h1 span:last-child {
+  color: var(--aqua);
+  font-size: 0.86em;
+  text-shadow: 0 5px 0 var(--aqua-dark), 0 16px 22px rgba(0, 74, 80, 0.26);
+}
+
+.hero__text {
+  max-width: 650px;
+  margin-bottom: 24px;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.45;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.primary-action,
+.secondary-action {
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--round);
+  padding: 0 18px;
+  color: #fff;
+  font-weight: 800;
+  box-shadow: 0 14px 24px rgba(112, 56, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+}
+
+.primary-action {
+  background: linear-gradient(180deg, #ffcf52, #ff8a00);
+}
+
+.secondary-action {
+  background: linear-gradient(180deg, #31d8de, #028391);
+}
+
+.primary-action--wide {
+  width: 100%;
+}
+
+.cover-card {
+  justify-self: center;
+  width: min(100%, 340px);
+  padding: 10px;
+  rotate: 2deg;
+}
+
+.cover-card img {
+  display: block;
+  width: 100%;
+  border-radius: var(--round);
+  box-shadow: 0 20px 42px rgba(54, 32, 12, 0.28);
+}
+
+.studio {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 180px;
+  gap: 14px;
+  margin-top: 14px;
+  align-items: start;
+}
+
+.controls,
+.worksheet-wrap,
+.picture-tile {
+  padding: 16px;
+}
+
+.panel-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.panel-title span {
+  font-size: 2.4rem;
+}
+
+.panel-title h2,
+.worksheet-toolbar h2 {
+  margin: 0;
+  color: var(--aqua-dark);
+  font-family: var(--display);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+label {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+select,
+textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: var(--round);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  outline: 0;
+}
+
+select {
+  min-height: 44px;
+  padding: 0 10px;
+}
+
+textarea {
+  min-height: 112px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.control-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 10px;
+  border-radius: var(--round);
+  background: rgba(255, 255, 255, 0.36);
+}
+
+.toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--coral);
+}
+
+.worksheet-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.worksheet-toolbar p {
+  margin-bottom: 4px;
+  color: #8f4e0a;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 104px;
+  min-height: 104px;
+  border: 7px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(180deg, #05bec5, #02808a);
+  font-family: var(--display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
+  box-shadow: 0 14px 26px rgba(0, 86, 94, 0.24);
+}
+
+.worksheet {
+  min-height: 620px;
+  padding: clamp(18px, 4vw, 34px);
+  border: 4px solid rgba(255, 255, 255, 0.82);
+  border-radius: var(--round);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(255, 251, 237, 0.76)),
+    rgba(255, 255, 255, 0.62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.sheet-head {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.sheet-icon {
+  display: grid;
+  place-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #fff, #ffe29a);
+  font-size: 3rem;
+  box-shadow: 0 12px 24px rgba(117, 63, 0, 0.16);
+}
+
+.sheet-head h3 {
+  margin: 0;
+  color: var(--coral);
+  font-family: var(--display);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 0.9;
+}
+
+.task-box {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  padding: 16px;
+  border: 3px dashed rgba(56, 33, 13, 0.28);
+  border-radius: var(--round);
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.word-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.word-pills span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(180deg, var(--aqua), var(--aqua-dark));
+  font-weight: 800;
+}
+
+.answer-line {
+  min-height: 34px;
+  border-bottom: 3px solid rgba(56, 33, 13, 0.38);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 6px;
+  max-width: 520px;
+}
+
+.grid span {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--aqua-dark);
+  font-weight: 800;
+  box-shadow: inset 0 0 0 2px rgba(0, 128, 138, 0.18);
+}
+
+.picture-strip {
+  display: grid;
+  gap: 12px;
+}
+
+.picture-tile {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  min-height: 132px;
+  text-align: center;
+}
+
+.picture-tile span {
+  font-size: 3.5rem;
+}
+
+@media (max-width: 1080px) {
+  .hero,
+  .studio {
+    grid-template-columns: 1fr;
+  }
+
+  .picture-strip {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .app {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .hero {
+    min-height: 0;
+    padding: 14px;
+  }
+
+  .hero__content,
+  .controls,
+  .worksheet-wrap {
+    padding: 14px;
+  }
+
+  h1 {
+    font-size: clamp(2.85rem, 15vw, 4.4rem);
+  }
+
+  .cover-card {
+    width: min(100%, 260px);
+    rotate: 0deg;
+  }
+
+  .picture-strip,
+  .control-grid,
+  .worksheet-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .picture-strip {
+    display: grid;
+  }
+
+  .sticker {
+    width: 62px;
+    height: 62px;
+    font-size: 2.2rem;
+  }
+
+  .badge {
+    min-width: 82px;
+    min-height: 82px;
+    font-size: 1rem;
+  }
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .hero,
+  .controls,
+  .picture-strip,
+  .worksheet-toolbar {
+    display: none;
+  }
+
+  .app,
+  .studio,
+  .worksheet-wrap {
+    display: block;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .worksheet {
+    min-height: 100vh;
+    border: 2px solid #222;
+    box-shadow: none;
+  }
+}

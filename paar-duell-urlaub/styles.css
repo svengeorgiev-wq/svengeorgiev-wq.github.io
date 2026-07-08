@@ -360,10 +360,26 @@ textarea {
   border-radius: var(--radius);
 }
 
+.chapter-chip span,
+.chapter-chip b,
+.chapter-chip small {
+  display: block;
+}
+
 .chapter-chip span {
   min-width: 0;
-  font-weight: 800;
   line-height: 1.2;
+}
+
+.chapter-chip b {
+  font-weight: 800;
+}
+
+.chapter-chip small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  line-height: 1.25;
 }
 
 .play-panel {

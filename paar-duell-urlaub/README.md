@@ -5,6 +5,7 @@ Statische Bonus-App zur Urlaubs-Edition des Paar-Duell-Buchs.
 ## Zweck
 
 - editionsgebundener Bonusbereich nur fuer die Urlaubs-Edition
+- neue Revanche-Module statt einer digitalen Kopie der Buchkapitel
 - Revanche-Runden aus kuratierten Urlaubsduellen
 - Ein-Handy-Spielleiter fuer zwei Personen
 - Sofa-, Tisch- und Zugmodus

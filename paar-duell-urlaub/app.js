@@ -1,14 +1,14 @@
 const STORAGE_KEY = "paar-duell-urlaub-revanche-v1";
 
 const chapters = [
-  { id: "all", number: "Alle", label: "Alle Kapitel" },
-  { id: "koffer", number: "1", label: "Koffer-Kampf" },
-  { id: "unterwegs", number: "2", label: "Unterwegs-Arena" },
-  { id: "hotel", number: "3", label: "Hotelzimmer-Herrschaft" },
-  { id: "strand", number: "4", label: "Strand, Stadt oder Sofa?" },
-  { id: "restaurant", number: "5", label: "Restaurant-Radar" },
-  { id: "katastrophen", number: "6", label: "Wetter, Wege & kleine Katastrophen" },
-  { id: "memory", number: "7", label: "Reise-Memory & letzter Abend" }
+  { id: "all", number: "Alle", label: "Alle Bonusmodule", bookLabel: "Urlaubsduell" },
+  { id: "koffer", number: "1", label: "Packlisten-Gericht", bookLabel: "Koffer-Kampf" },
+  { id: "unterwegs", number: "2", label: "Plan-B-Zentrale", bookLabel: "Unterwegs-Arena" },
+  { id: "hotel", number: "3", label: "Zimmercheck-Protokoll", bookLabel: "Hotelzimmer-Herrschaft" },
+  { id: "strand", number: "4", label: "Tagesplan-Duell", bookLabel: "Strand, Stadt oder Sofa?" },
+  { id: "restaurant", number: "5", label: "Menü-Orakel", bookLabel: "Restaurant-Radar" },
+  { id: "katastrophen", number: "6", label: "Urlaubs-Krisenstab", bookLabel: "Wetter, Wege & kleine Katastrophen" },
+  { id: "memory", number: "7", label: "Letzter-Abend-Finale", bookLabel: "Reise-Memory & letzter Abend" }
 ];
 
 const roundModes = [
@@ -247,7 +247,7 @@ const duelDeck = [
     type: "Diplomatie",
     minutes: 4,
     title: "Der Tisch nebenan hört mit",
-    prompt: "Formuliert verdeckt einen höflichen Satz, mit dem ihr sagt: Das Essen ist nicht schlimm, aber auch nicht das Kapitelhighlight.",
+    prompt: "Formuliert verdeckt einen höflichen Satz, mit dem ihr sagt: Das Essen ist nicht schlimm, aber auch nicht das Tageshighlight.",
     scoring: ["2 Punkte für Diplomatie", "2 Punkte für Wahrheit ohne Gemeinheit", "1 Punkt für den Satz, den ihr wirklich sagen könntet"],
     twist: "Passive Aggression muss leider draußen warten."
   },
@@ -323,7 +323,7 @@ const duelDeck = [
     level: "locker",
     type: "Titelrunde",
     minutes: 3,
-    title: "Kapitelüberschrift gesucht",
+    title: "Urlaubstitel gesucht",
     prompt: "Gebt eurem heutigen Urlaubstag verdeckt einen Buchtitel mit Untertitel. Beispiel: 'Die Rückkehr der falschen Abzweigung - eine Studie in drei Snacks'.",
     scoring: ["2 Punkte für Treffgenauigkeit", "2 Punkte für Humor", "1 Punkt, wenn der Titel morgen noch zitiert wird"],
     twist: "Der Untertitel muss mindestens ein konkretes Detail enthalten."
@@ -404,13 +404,16 @@ function renderStaticControls() {
   els.levelOptions.innerHTML = levelModes.map((mode) => optionButton(mode.id, mode.label)).join("");
 
   els.chapterSelect.innerHTML = chapters.map((chapter) => (
-    `<option value="${chapter.id}">${chapter.number}. ${escapeHtml(chapter.label)}</option>`
+    `<option value="${chapter.id}">${escapeHtml(chapter.label)}</option>`
   )).join("");
 
   els.chapterList.innerHTML = chapters.filter((chapter) => chapter.id !== "all").map((chapter) => `
     <div class="chapter-chip">
       <strong>${escapeHtml(chapter.number)}</strong>
-      <span>${escapeHtml(chapter.label)}</span>
+      <span>
+        <b>${escapeHtml(chapter.label)}</b>
+        <small>Buchbezug: ${escapeHtml(chapter.bookLabel)}</small>
+      </span>
     </div>
   `).join("");
 }

@@ -374,7 +374,9 @@ const els = {
   prevButton: document.querySelector("#prevButton"),
   nextButton: document.querySelector("#nextButton"),
   printButton: document.querySelector("#printButton"),
-  resumeButton: document.querySelector("#resumeButton"),
+  helpButton: document.querySelector("#helpButton"),
+  helpModal: document.querySelector("#helpModal"),
+  helpCloseButton: document.querySelector("#helpCloseButton"),
   resetScoresButton: document.querySelector("#resetScoresButton"),
   playerOneName: document.querySelector("#playerOneName"),
   playerTwoName: document.querySelector("#playerTwoName"),
@@ -446,7 +448,14 @@ function bindEvents() {
   els.prevButton.addEventListener("click", () => moveDuel(-1));
   els.nextButton.addEventListener("click", () => moveDuel(1));
   els.printButton.addEventListener("click", () => window.print());
-  els.resumeButton.addEventListener("click", () => render());
+  els.helpButton.addEventListener("click", openHelp);
+  els.helpCloseButton.addEventListener("click", closeHelp);
+  els.helpModal.addEventListener("click", (event) => {
+    if (event.target === els.helpModal) closeHelp();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !els.helpModal.hidden) closeHelp();
+  });
   els.resetScoresButton.addEventListener("click", resetScores);
   els.timerStartButton.addEventListener("click", toggleTimer);
   els.timerResetButton.addEventListener("click", resetTimer);
@@ -470,6 +479,16 @@ function bindSegment(container, key) {
     persist();
     renderControlState();
   });
+}
+
+function openHelp() {
+  els.helpModal.hidden = false;
+  els.helpCloseButton.focus();
+}
+
+function closeHelp() {
+  els.helpModal.hidden = true;
+  els.helpButton.focus();
 }
 
 function createSession() {

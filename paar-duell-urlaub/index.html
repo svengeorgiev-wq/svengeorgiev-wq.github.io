@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20260708-modules">
+  <link rel="stylesheet" href="styles.css?v=20260708-help">
 </head>
 <body>
   <main class="app-shell">
@@ -19,8 +19,9 @@
         <h1>Urlaubsduell Revanche</h1>
       </div>
       <div class="topbar__actions">
-        <button class="icon-button" type="button" id="resumeButton" title="Fortsetzen" aria-label="Aktuelle Runde fortsetzen">
-          <span data-lucide="play"></span>
+        <button class="help-action" type="button" id="helpButton" title="Erklärung öffnen" aria-label="Erklärung öffnen">
+          <span data-lucide="circle-help"></span>
+          Erklärung
         </button>
         <button class="icon-button" type="button" id="printButton" title="Drucken" aria-label="Aktuelle Runde drucken">
           <span data-lucide="printer"></span>
@@ -160,6 +161,47 @@
     </section>
   </main>
 
+  <section class="help-modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+    <div class="help-card">
+      <div class="help-head">
+        <div>
+          <p class="eyebrow">Kurzanleitung</p>
+          <h2 id="helpTitle">So spielt ihr mit einem Handy</h2>
+        </div>
+        <button class="icon-button" type="button" id="helpCloseButton" title="Schließen" aria-label="Erklärung schließen">
+          <span data-lucide="x"></span>
+        </button>
+      </div>
+
+      <div class="help-grid">
+        <section>
+          <h3>1. Handy als Spielleiter</h3>
+          <p>Legt das Handy in die Mitte oder haltet es kurz gemeinsam im Blick. Die App ersetzt nicht das Buch, sondern mischt neue Revanche-Duelle zur Urlaubs-Edition.</p>
+        </section>
+        <section>
+          <h3>2. Runde wählen</h3>
+          <p>Wählt Länge, Spielweise, Anspruch und ein Revanche-Modul. Mit <strong>Revanche mischen</strong> entsteht eine neue Runde aus passenden Bonusduellen.</p>
+        </section>
+        <section>
+          <h3>3. Verdeckt antworten</h3>
+          <p>Beide schreiben oder entscheiden verdeckt: im Buch, auf Papier oder mündlich mit Augen zu. Danach gleichzeitig aufdecken.</p>
+        </section>
+        <section>
+          <h3>4. Auswertung öffnen</h3>
+          <p>Der Button <strong>Auswertung</strong> zeigt Punkte, Twist und Wertungslogik. Punkte könnt ihr direkt in der App eintragen.</p>
+        </section>
+        <section>
+          <h3>5. Timer optional</h3>
+          <p>Der Timer gehört immer zum aktuellen Duell. Ihr könnt ihn nutzen, müsst aber nicht. Bei entspannten Runden einfach ignorieren.</p>
+        </section>
+        <section>
+          <h3>6. Drucken oder sichern</h3>
+          <p>Über das Drucksymbol wird die aktuelle Runde druckbar. Export/Import sichert euren Spielstand, falls ihr später weitermachen wollt.</p>
+        </section>
+      </div>
+    </div>
+  </section>
+
   <template id="duelTemplate">
     <div class="duel-head">
       <span class="duel-type"></span>
@@ -172,6 +214,6 @@
   </template>
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <script src="app.js?v=20260708-modules"></script>
+  <script src="app.js?v=20260708-help"></script>
 </body>
 </html>

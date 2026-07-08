@@ -112,6 +112,7 @@ h3 {
 
 .icon-button,
 .icon-action,
+.help-action,
 .primary-action,
 .ghost-action {
   display: inline-flex;
@@ -133,6 +134,14 @@ h3 {
 .icon-button {
   color: var(--sea);
   background: #fff;
+}
+
+.help-action {
+  min-width: 0;
+  padding: 0 14px;
+  color: var(--sea);
+  background: #fff;
+  font-weight: 800;
 }
 
 .icon-action {
@@ -636,6 +645,66 @@ textarea {
   margin: 0;
 }
 
+.help-modal[hidden] {
+  display: none;
+}
+
+.help-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(23, 49, 58, 0.58);
+}
+
+.help-card {
+  width: min(860px, 100%);
+  max-height: min(760px, calc(100vh - 36px));
+  overflow: auto;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+}
+
+.help-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--sea), #17313a);
+}
+
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+
+.help-grid section {
+  min-width: 0;
+  padding: 14px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.help-grid h3 {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.help-grid p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
 @media (max-width: 1120px) {
   .workbench {
     grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
@@ -689,6 +758,14 @@ textarea {
   .player-score span {
     grid-column: 1 / -1;
   }
+
+  .help-action {
+    width: 100%;
+  }
+
+  .help-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media print {
@@ -697,6 +774,7 @@ textarea {
   }
 
   .topbar,
+  .help-modal,
   .controls-panel,
   .session-panel,
   .score-strip,

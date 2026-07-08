@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#125c7a">
+  <title>Urlaubsduell Revanche</title>
+  <meta name="description" content="Bonus-App zur Urlaubs-Edition von Paar-Duell: Revanche-Runden, Timer, Punktekarte und druckbare Extra-Duelle.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700;800&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar" aria-label="Urlaubsduell Revanche">
+      <div class="brand-block">
+        <p class="eyebrow">Bonusbereich zur Urlaubs-Edition</p>
+        <h1>Urlaubsduell Revanche</h1>
+      </div>
+      <div class="topbar__actions">
+        <button class="icon-button" type="button" id="resumeButton" title="Fortsetzen" aria-label="Aktuelle Runde fortsetzen">
+          <span data-lucide="play"></span>
+        </button>
+        <button class="icon-button" type="button" id="printButton" title="Drucken" aria-label="Aktuelle Runde drucken">
+          <span data-lucide="printer"></span>
+        </button>
+      </div>
+    </header>
+
+    <section class="score-strip" aria-label="Punktestand">
+      <label class="player-score">
+        <span>Spieler 1</span>
+        <input id="playerOneName" type="text" value="Spieler 1" aria-label="Name Spieler 1">
+        <strong id="scoreOne">0</strong>
+      </label>
+      <div class="versus-badge">gegen</div>
+      <label class="player-score">
+        <span>Spieler 2</span>
+        <input id="playerTwoName" type="text" value="Spieler 2" aria-label="Name Spieler 2">
+        <strong id="scoreTwo">0</strong>
+      </label>
+    </section>
+
+    <section class="workbench" aria-label="Revanche Generator">
+      <aside class="controls-panel">
+        <form id="roundForm" class="control-stack">
+          <fieldset>
+            <legend>Runde</legend>
+            <div class="segmented" id="roundOptions"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Spielweise</legend>
+            <div class="segmented compact" id="seatOptions"></div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Anspruch</legend>
+            <div class="segmented compact" id="levelOptions"></div>
+          </fieldset>
+
+          <label class="field">
+            <span>Kapitel-Fokus</span>
+            <select id="chapterSelect"></select>
+          </label>
+
+          <div class="button-row">
+            <button class="primary-action" type="submit">
+              <span data-lucide="shuffle"></span>
+              Revanche mischen
+            </button>
+            <button class="ghost-action" type="button" id="resetScoresButton">
+              <span data-lucide="rotate-ccw"></span>
+              Punkte nullen
+            </button>
+          </div>
+        </form>
+
+        <nav class="chapter-nav" aria-label="Kapitel aus dem Buch">
+          <h2>Kapitel</h2>
+          <div id="chapterList" class="chapter-list"></div>
+        </nav>
+
+        <section class="save-panel" aria-label="Spielstand sichern">
+          <h2>Sichern</h2>
+          <div class="button-row">
+            <button class="ghost-action" type="button" id="exportButton">
+              <span data-lucide="download"></span>
+              Export
+            </button>
+            <button class="ghost-action" type="button" id="importButton">
+              <span data-lucide="upload"></span>
+              Import
+            </button>
+          </div>
+          <textarea id="saveCode" rows="4" aria-label="Speichercode"></textarea>
+        </section>
+      </aside>
+
+      <section class="play-panel" aria-label="Aktuelle Revanche">
+        <div class="round-toolbar">
+          <div>
+            <p class="eyebrow" id="roundKicker">Revanche</p>
+            <h2 id="roundTitle">Runde bereit</h2>
+          </div>
+          <div class="round-meta">
+            <span id="duelCounter">0/0</span>
+            <span id="chapterBadge">Urlaub</span>
+          </div>
+        </div>
+
+        <article id="duelStage" class="duel-stage" aria-live="polite"></article>
+
+        <div class="play-actions">
+          <button class="icon-action" type="button" id="prevButton" title="Vorheriges Duell" aria-label="Vorheriges Duell">
+            <span data-lucide="arrow-left"></span>
+          </button>
+          <button class="primary-action" type="button" id="revealButton">
+            <span data-lucide="eye"></span>
+            Auswertung
+          </button>
+          <button class="icon-action" type="button" id="nextButton" title="Nächstes Duell" aria-label="Nächstes Duell">
+            <span data-lucide="arrow-right"></span>
+          </button>
+        </div>
+      </section>
+
+      <aside class="session-panel" aria-label="Rundenplan">
+        <div class="timer-box">
+          <div>
+            <p class="eyebrow">Timer</p>
+            <strong id="timerDisplay">00:00</strong>
+          </div>
+          <div class="timer-actions">
+            <button class="icon-button" type="button" id="timerStartButton" title="Start" aria-label="Timer starten">
+              <span data-lucide="timer"></span>
+            </button>
+            <button class="icon-button" type="button" id="timerResetButton" title="Reset" aria-label="Timer zurücksetzen">
+              <span data-lucide="square"></span>
+            </button>
+          </div>
+        </div>
+
+        <section class="session-list-wrap">
+          <h2>Rundenplan</h2>
+          <ol id="sessionList" class="session-list"></ol>
+        </section>
+
+        <section class="quality-box">
+          <h2>Prüfung</h2>
+          <ul>
+            <li>Urlaubsbezug</li>
+            <li>klare Wertung</li>
+            <li>kein Peinlichkeitszwang</li>
+            <li>Sofa- oder Tischmodus</li>
+          </ul>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <template id="duelTemplate">
+    <div class="duel-head">
+      <span class="duel-type"></span>
+      <span class="duel-time"></span>
+    </div>
+    <h3></h3>
+    <p class="duel-prompt"></p>
+    <div class="duel-fields"></div>
+    <div class="reveal-box" hidden></div>
+  </template>
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

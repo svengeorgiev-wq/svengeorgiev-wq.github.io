@@ -1,4 +1,5 @@
 const STORAGE_KEY = "paar-duell-urlaub-revanche-v1";
+const INTRO_DISMISSED_KEY = "paar-duell-urlaub-intro-dismissed-v1";
 
 const chapters = [
   { id: "all", number: "Alle", label: "Alle Bonusmodule", bookLabel: "Urlaubsduell" },
@@ -377,6 +378,9 @@ const els = {
   helpButton: document.querySelector("#helpButton"),
   helpModal: document.querySelector("#helpModal"),
   helpCloseButton: document.querySelector("#helpCloseButton"),
+  introHint: document.querySelector("#introHint"),
+  introHelpButton: document.querySelector("#introHelpButton"),
+  introDismissButton: document.querySelector("#introDismissButton"),
   resetScoresButton: document.querySelector("#resetScoresButton"),
   playerOneName: document.querySelector("#playerOneName"),
   playerTwoName: document.querySelector("#playerTwoName"),
@@ -397,6 +401,7 @@ function init() {
   restoreState();
   bindEvents();
   if (!state.session.length) createSession();
+  renderIntroHint();
   render();
 }
 
@@ -449,6 +454,8 @@ function bindEvents() {
   els.nextButton.addEventListener("click", () => moveDuel(1));
   els.printButton.addEventListener("click", () => window.print());
   els.helpButton.addEventListener("click", openHelp);
+  els.introHelpButton.addEventListener("click", openHelp);
+  els.introDismissButton.addEventListener("click", dismissIntroHint);
   els.helpCloseButton.addEventListener("click", closeHelp);
   els.helpModal.addEventListener("click", (event) => {
     if (event.target === els.helpModal) closeHelp();
@@ -489,6 +496,15 @@ function openHelp() {
 function closeHelp() {
   els.helpModal.hidden = true;
   els.helpButton.focus();
+}
+
+function dismissIntroHint() {
+  localStorage.setItem(INTRO_DISMISSED_KEY, "true");
+  renderIntroHint();
+}
+
+function renderIntroHint() {
+  els.introHint.hidden = localStorage.getItem(INTRO_DISMISSED_KEY) === "true";
 }
 
 function createSession() {

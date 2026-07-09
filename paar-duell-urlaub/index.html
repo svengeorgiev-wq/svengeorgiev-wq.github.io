@@ -29,6 +29,22 @@
       </div>
     </header>
 
+    <section class="intro-hint" id="introHint" aria-label="Kurzstart">
+      <div>
+        <strong>Erster Start?</strong>
+        <span>Ein Handy reicht: Aufgabe anzeigen, verdeckt antworten, gemeinsam auswerten.</span>
+      </div>
+      <div class="intro-hint__actions">
+        <button class="ghost-action" type="button" id="introHelpButton">
+          <span data-lucide="circle-help"></span>
+          Erklärung
+        </button>
+        <button class="icon-button" type="button" id="introDismissButton" title="Kurzstart ausblenden" aria-label="Kurzstart ausblenden">
+          <span data-lucide="x"></span>
+        </button>
+      </div>
+    </section>
+
     <section class="score-strip" aria-label="Punktestand">
       <label class="player-score">
         <span>Spieler 1</span>
@@ -214,6 +230,6 @@
   </template>
 
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-  <script src="app.js?v=20260708-help"></script>
+  <script src="app.js?v=20260709-start"></script>
 </body>
 </html>

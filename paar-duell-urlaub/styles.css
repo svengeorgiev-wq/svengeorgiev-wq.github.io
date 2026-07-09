@@ -103,7 +103,8 @@ h3 {
 .topbar__actions,
 .button-row,
 .play-actions,
-.timer-actions {
+.timer-actions,
+.intro-hint__actions {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -184,6 +185,38 @@ textarea:focus-visible {
   align-items: stretch;
   gap: 12px;
   margin: 14px 0;
+}
+
+.intro-hint[hidden] {
+  display: none;
+}
+
+.intro-hint {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 2px solid rgba(239, 111, 97, 0.38);
+  border-radius: var(--radius);
+  background: #fff1ed;
+  box-shadow: 0 10px 30px rgba(23, 49, 58, 0.08);
+}
+
+.intro-hint div:first-child {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.intro-hint strong {
+  font-weight: 800;
+}
+
+.intro-hint span {
+  color: var(--muted);
+  line-height: 1.35;
 }
 
 .player-score,
@@ -727,9 +760,19 @@ textarea {
   }
 
   .score-strip,
+  .intro-hint,
   .workbench,
   .duel-fields {
     grid-template-columns: 1fr;
+  }
+
+  .intro-hint {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .intro-hint__actions .ghost-action {
+    flex: 1;
   }
 
   .versus-badge {

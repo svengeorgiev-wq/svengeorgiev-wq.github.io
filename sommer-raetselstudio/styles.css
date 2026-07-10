@@ -106,7 +106,7 @@ input:focus-visible {
   inset: 0;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 244, 213, 0.52)),
-    url("assets/cover-style-reference.png") center / cover;
+    url("assets/cover-current.png") center / cover;
   filter: blur(8px) saturate(1.22);
   transform: scale(1.04);
   opacity: 0.5;

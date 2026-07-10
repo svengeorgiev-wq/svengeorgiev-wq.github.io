@@ -50,7 +50,7 @@ const USE_CASES = {
     label: "Autofahrt-Set",
     duration: "15-25 Minuten",
     childMission: "Leise Knobelmission f\u00fcr unterwegs",
-    parentPromise: "Bildschirmfreie Besch\u00e4ftigung ohne Kleinteile und ohne st\u00e4ndige Erkl\u00e4rungen.",
+    parentPromise: "Ausgedruckt und gel\u00f6st - ohne Bildschirm, ohne Kleinteile und ohne st\u00e4ndige Erkl\u00e4rungen.",
     learning: "Konzentration, visuelle Suche und Ausdauer",
     tip: "Erst suchen, dann schreiben. Wenn du h\u00e4ngst: eine Aufgabe \u00fcberspringen und sp\u00e4ter zur\u00fcckkommen.",
     plan: ["Warm-up: schneller Erfolg", "Suchmission: genau hinschauen", "Knobelschritt: ruhig dranbleiben", "Pause-Aufgabe: leicht abschliessen", "Bonus: eigene Mini-Mission"]
@@ -107,7 +107,6 @@ const EXAMPLES = {
 };
 
 const elements = {
-  deliveryMode: document.querySelector("#deliveryMode"),
   useCase: document.querySelector("#useCase"),
   type: document.querySelector("#puzzleType"),
   theme: document.querySelector("#theme"),
@@ -125,6 +124,8 @@ const elements = {
   generate: document.querySelector("#generate"),
   generateTop: document.querySelector("#generateTop"),
   printTop: document.querySelector("#printTop"),
+  playLink: document.querySelector("#playLink"),
+  playLinkTop: document.querySelector("#playLinkTop"),
   guideTop: document.querySelector("#guideTop"),
   guideModal: document.querySelector("#guideModal"),
   guideClose: document.querySelector("#guideClose"),
@@ -138,7 +139,6 @@ let mazeSelection = new Set();
 let deliverySeed = Math.floor(Date.now() % 997);
 
 [
-  elements.deliveryMode,
   elements.useCase,
   elements.type,
   elements.theme,
@@ -152,6 +152,8 @@ let deliverySeed = Math.floor(Date.now() % 997);
 elements.generate.addEventListener("click", newDelivery);
 elements.generateTop.addEventListener("click", newDelivery);
 elements.printTop.addEventListener("click", () => window.print());
+elements.playLink.addEventListener("click", openPlayMode);
+elements.playLinkTop.addEventListener("click", openPlayMode);
 elements.guideTop.addEventListener("click", openGuide);
 elements.guideClose.addEventListener("click", closeGuide);
 elements.guideModal.addEventListener("click", (event) => {
@@ -180,6 +182,11 @@ function openGuide() {
   elements.guideClose.focus();
 }
 
+function openPlayMode() {
+  document.body.classList.add("mode-play");
+  document.querySelector(".play-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 function closeGuide() {
   elements.guideModal.hidden = true;
   elements.guideTop.focus();
@@ -187,7 +194,6 @@ function closeGuide() {
 
 function createDelivery() {
   const settings = getSettings();
-  document.body.classList.toggle("mode-play", settings.deliveryMode === "play");
   currentPuzzle = buildPuzzle(settings);
   wordSearchSelection = new Set();
   mazeSelection = new Set();
@@ -207,7 +213,6 @@ function getSettings() {
   const words = rotateWords(sourceWords, deliverySeed).slice(0, count);
 
   return {
-    deliveryMode: elements.deliveryMode.value,
     useCase: elements.useCase.value,
     type: elements.type.value,
     theme: elements.theme.value,

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#ffb21d">
   <title>Sommer Extra Aufgaben-Generator</title>
-  <meta name="description" content="Bunter Extra Aufgaben-Generator f&uuml;r Kinder: druckbare Sommer-R&auml;tsel und eine Handy-Spielansicht.">
+  <meta name="description" content="Bunter Extra Aufgaben-Generator f&uuml;r Kinder: druckbare Sommer-R&auml;tsel f&uuml;r ruhige Besch&auml;ftigung unterwegs, zu Hause und an Regentagen.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -28,6 +28,7 @@
           <button class="secondary-action" type="button" id="printTop">Druckbogen drucken</button>
           <button class="ghost-action" type="button" id="guideTop">Anleitung</button>
         </div>
+        <button class="text-link-action" type="button" id="playLinkTop">Handy-Spiel erg&auml;nzend &ouml;ffnen</button>
       </div>
 
       <figure class="cover-card glass">
@@ -45,7 +46,7 @@
           <li>R&auml;tselart, Thema, Umfang und Schwere ausw&auml;hlen.</li>
           <li>Optional eigene W&ouml;rter eintragen, getrennt mit Komma oder Zeilenumbruch.</li>
           <li>Mit <strong>Neue Lieferung</strong> eine neue Variante mit sanfter Lernkurve w&uuml;rfeln.</li>
-          <li>Druckbogen ausdrucken oder im Handy-Modus direkt spielen. F&uuml;r bildschirmfreie Zeit einfach den Druckbogen verwenden.</li>
+          <li>Druckbogen ausdrucken oder den Handy-Modus nur erg&auml;nzend nutzen. Ausgedruckt gel&ouml;st bleibt es ohne Bildschirm.</li>
         </ol>
       </div>
     </div>
@@ -54,16 +55,8 @@
       <aside class="controls glass">
         <div class="panel-title">
           <span aria-hidden="true">01</span>
-          <h2>Lieferung bauen</h2>
+          <h2>Druckbogen erstellen</h2>
         </div>
-
-        <label>
-          <span>Lieferart</span>
-          <select id="deliveryMode">
-            <option value="print" selected>Druckbogen zuerst</option>
-            <option value="play">Handy-Spiel zuerst</option>
-          </select>
-        </label>
 
         <label>
           <span>Wof&uuml;r brauchst du sie?</span>
@@ -137,6 +130,7 @@
         </label>
 
         <button class="primary-action primary-action--wide" type="button" id="generate">Lieferung erstellen</button>
+        <button class="text-link-action text-link-action--wide" type="button" id="playLink">Handy-Spiel erg&auml;nzend &ouml;ffnen</button>
       </aside>
 
       <section class="worksheet-wrap glass priority-print" aria-label="Druckbare R&auml;tselvorschau">
@@ -153,7 +147,7 @@
       <section class="play-wrap glass priority-play" aria-label="Handy-Spielansicht">
         <div class="panel-title panel-title--compact">
           <span aria-hidden="true">02</span>
-          <h2>Am Handy spielen</h2>
+          <h2>Erg&auml;nzend am Handy spielen</h2>
         </div>
         <p class="play-intro" id="playTitle">Tippe die Antworten ein und pr&uuml;fe sie direkt.</p>
         <div class="play-area" id="playArea"></div>
@@ -166,8 +160,8 @@
 
       <aside class="supply-rail" aria-label="Lieferhinweise">
         <div class="picture-tile glass">
-          <strong>Bildschirmfrei</strong>
-          <span>F&uuml;r unterwegs, Wartezeiten und ruhige Minuten ohne Tablet.</span>
+          <strong>Ausgedruckt gel&ouml;st</strong>
+          <span>Ohne Bildschirm, sobald der Druckbogen auf dem Tisch liegt.</span>
         </div>
         <div class="picture-tile glass">
           <strong>Kind startet allein</strong>

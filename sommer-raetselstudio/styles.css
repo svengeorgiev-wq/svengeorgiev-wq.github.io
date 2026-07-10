@@ -240,6 +240,25 @@ h1 span:last-child {
   width: 100%;
 }
 
+.text-link-action {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 10px;
+  border: 0;
+  padding: 0;
+  color: var(--aqua-dark);
+  background: transparent;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  box-shadow: none;
+}
+
+.text-link-action--wide {
+  justify-content: center;
+  width: 100%;
+}
+
 .cover-card {
   justify-self: center;
   width: min(100%, 320px);
@@ -312,13 +331,19 @@ h1 span:last-child {
 
 .studio {
   display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 220px;
+  grid-template-areas:
+    "controls sheet rail";
+  gap: 14px;
+  margin-top: 14px;
+  align-items: start;
+}
+
+.mode-play .studio {
   grid-template-columns: 300px minmax(0, 1fr) 330px;
   grid-template-areas:
     "controls sheet play"
     "rail sheet play";
-  gap: 14px;
-  margin-top: 14px;
-  align-items: start;
 }
 
 .controls {
@@ -331,6 +356,10 @@ h1 span:last-child {
 
 .play-wrap {
   grid-area: play;
+}
+
+body:not(.mode-play) .play-wrap {
+  display: none;
 }
 
 .supply-rail {
@@ -832,6 +861,13 @@ button.maze-cell {
     grid-template-columns: 300px minmax(0, 1fr);
     grid-template-areas:
       "controls sheet"
+      "rail sheet";
+  }
+
+  .mode-play .studio {
+    grid-template-columns: 300px minmax(0, 1fr);
+    grid-template-areas:
+      "controls sheet"
       "play sheet"
       "rail rail";
   }
@@ -856,7 +892,6 @@ button.maze-cell {
     grid-template-areas:
       "controls"
       "sheet"
-      "play"
       "rail";
   }
 

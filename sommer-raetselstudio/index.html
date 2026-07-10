@@ -22,7 +22,7 @@
       <div class="hero__content glass">
         <p class="wood-label">Bonusmaterial zum Buch</p>
         <h1 id="app-title"><span>Extra-R&auml;tsel</span><span>Lieferant</span></h1>
-        <p class="hero__text">Stelle neue Sommer-R&auml;tsel zusammen, drucke sie als Zusatzseiten aus oder lass Kinder sie direkt am Handy spielen.</p>
+        <p class="hero__text">Drucke ruhige Extra-R&auml;tsel f&uuml;r Autofahrt, Restaurant, Wartezimmer oder Regentag: selbst erkl&auml;rend f&uuml;r Kinder und mit verstecktem Lerneffekt.</p>
         <div class="hero__actions" aria-label="Schnellaktionen">
           <button class="primary-action" type="button" id="generateTop">Neue Lieferung</button>
           <button class="secondary-action" type="button" id="printTop">Druckbogen drucken</button>
@@ -37,14 +37,15 @@
 
     <div class="guide-modal" id="guideModal" hidden role="dialog" aria-modal="true" aria-labelledby="guideTitle">
       <div class="guide-card glass">
-        <button class="guide-close" type="button" id="guideClose" aria-label="Anleitung schliessen">×</button>
+        <button class="guide-close" type="button" id="guideClose" aria-label="Anleitung schliessen">&times;</button>
         <p class="wood-label">So funktioniert es</p>
         <h2 id="guideTitle">Anleitung</h2>
         <ol class="guide-list">
+          <li>Situation ausw&auml;hlen: Autofahrt, Restaurant, Regentag, Wartezimmer oder ruhige 20 Minuten.</li>
           <li>R&auml;tselart, Thema, Umfang und Schwere ausw&auml;hlen.</li>
           <li>Optional eigene W&ouml;rter eintragen, getrennt mit Komma oder Zeilenumbruch.</li>
-          <li>Mit <strong>Neue Lieferung</strong> eine neue Variante w&uuml;rfeln.</li>
-          <li>Druckbogen ausdrucken oder im Handy-Modus direkt spielen.</li>
+          <li>Mit <strong>Neue Lieferung</strong> eine neue Variante mit sanfter Lernkurve w&uuml;rfeln.</li>
+          <li>Druckbogen ausdrucken oder im Handy-Modus direkt spielen. F&uuml;r bildschirmfreie Zeit einfach den Druckbogen verwenden.</li>
         </ol>
       </div>
     </div>
@@ -61,6 +62,17 @@
           <select id="deliveryMode">
             <option value="print" selected>Druckbogen zuerst</option>
             <option value="play">Handy-Spiel zuerst</option>
+          </select>
+        </label>
+
+        <label>
+          <span>Wof&uuml;r brauchst du sie?</span>
+          <select id="useCase">
+            <option value="autofahrt">Autofahrt-Set</option>
+            <option value="restaurant">Restaurant-Set</option>
+            <option value="regen">Regentag-Set</option>
+            <option value="wartezimmer">Wartezimmer-Set</option>
+            <option value="ruhe20" selected>Ruhige 20 Minuten</option>
           </select>
         </label>
 
@@ -119,6 +131,11 @@
           <span>L&ouml;sung auf dem Druckbogen anzeigen</span>
         </label>
 
+        <label class="toggle">
+          <input id="kidGuide" type="checkbox" checked>
+          <span>Mit Kinder-Anleitung und Mini-Beispiel</span>
+        </label>
+
         <button class="primary-action primary-action--wide" type="button" id="generate">Lieferung erstellen</button>
       </aside>
 
@@ -149,16 +166,16 @@
 
       <aside class="supply-rail" aria-label="Lieferhinweise">
         <div class="picture-tile glass">
-          <strong>Sofort drucken</strong>
-          <span>PDF-Feeling direkt aus dem Browser.</span>
+          <strong>Bildschirmfrei</strong>
+          <span>F&uuml;r unterwegs, Wartezeiten und ruhige Minuten ohne Tablet.</span>
         </div>
         <div class="picture-tile glass">
-          <strong>Extra-Seiten</strong>
-          <span>Neue Aufgaben passend zum Sommerbuch.</span>
+          <strong>Kind startet allein</strong>
+          <span>Jede Seite bekommt kurze Regeln und ein Mini-Beispiel.</span>
         </div>
         <div class="picture-tile glass">
-          <strong>Handy-Modus</strong>
-          <span>Kurz spielen, Antworten pr&uuml;fen, weiterknobeln.</span>
+          <strong>Sanfte Lernkurve</strong>
+          <span>Warm-up, Hauptmission und Erfolgsschritt statt Fruststart.</span>
         </div>
       </aside>
     </section>

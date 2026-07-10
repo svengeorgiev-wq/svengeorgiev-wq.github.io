@@ -531,6 +531,49 @@ textarea {
   font-weight: 800;
 }
 
+.promise-band {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 14px;
+}
+
+.promise-band div,
+.kid-guide {
+  border-radius: var(--round);
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.56);
+}
+
+.promise-band div {
+  padding: 12px;
+}
+
+.promise-band strong,
+.kid-guide strong,
+.progression-box strong {
+  color: var(--aqua-dark);
+}
+
+.promise-band p {
+  margin: 5px 0 0;
+  color: var(--muted);
+  line-height: 1.32;
+}
+
+.kid-guide {
+  display: grid;
+  gap: 7px;
+  margin: 0 0 14px;
+  padding: 12px;
+  border-left: 6px solid var(--sun);
+  color: var(--ink);
+}
+
+.kid-guide span {
+  line-height: 1.35;
+}
+
 .task-box {
   display: grid;
   gap: 12px;
@@ -539,6 +582,12 @@ textarea {
   border: 3px dashed rgba(56, 33, 13, 0.28);
   border-radius: var(--round);
   background: rgba(255, 255, 255, 0.56);
+}
+
+.progression-box {
+  background:
+    linear-gradient(145deg, rgba(255, 245, 196, 0.72), rgba(255, 255, 255, 0.54)),
+    rgba(255, 255, 255, 0.56);
 }
 
 .task-row {
@@ -842,6 +891,7 @@ button.maze-cell {
 
   .supply-rail,
   .control-grid,
+  .promise-band,
   .worksheet-toolbar,
   .task-row {
     grid-template-columns: 1fr;

@@ -45,14 +45,77 @@ const INTROS = {
   maze: "Finde den Weg vom Start zum Ziel. Auf Papier mit Stift, am Handy per Antippen."
 };
 
+const USE_CASES = {
+  autofahrt: {
+    label: "Autofahrt-Set",
+    duration: "15-25 Minuten",
+    childMission: "Leise Knobelmission f\u00fcr unterwegs",
+    parentPromise: "Bildschirmfreie Besch\u00e4ftigung ohne Kleinteile und ohne st\u00e4ndige Erkl\u00e4rungen.",
+    learning: "Konzentration, visuelle Suche und Ausdauer",
+    tip: "Erst suchen, dann schreiben. Wenn du h\u00e4ngst: eine Aufgabe \u00fcberspringen und sp\u00e4ter zur\u00fcckkommen.",
+    plan: ["Warm-up: schneller Erfolg", "Suchmission: genau hinschauen", "Knobelschritt: ruhig dranbleiben", "Pause-Aufgabe: leicht abschliessen", "Bonus: eigene Mini-Mission"]
+  },
+  restaurant: {
+    label: "Restaurant-Set",
+    duration: "10-20 Minuten",
+    childMission: "Ruhige Tisch-Mission",
+    parentPromise: "Kompakte Aufgaben f\u00fcr leise Wartezeit, ohne dass Eltern dauernd helfen m\u00fcssen.",
+    learning: "Selbststeuerung, Geduld und logisches Denken",
+    tip: "Arbeite von oben nach unten. Kreise ein, schreibe kurz, bleib leise am Platz.",
+    plan: ["Mini-Start: sofort loslegen", "Leise Denkaufgabe", "Such- oder Code-Aufgabe", "Erfolgshaken setzen", "Extra: Tisch-Mission erfinden"]
+  },
+  regen: {
+    label: "Regentag-Set",
+    duration: "25-40 Minuten",
+    childMission: "Sommermission f\u00fcr drinnen",
+    parentPromise: "L\u00e4ngeres analoges Besch\u00e4ftigungspaket mit Kreativanteil und sp\u00fcrbarer Progression.",
+    learning: "Frustrationstoleranz, Planung und Kreativit\u00e4t",
+    tip: "Starte leicht, mache dann die Hauptmission und belohne dich mit der Kreativseite.",
+    plan: ["Warm-up", "Hauptmission 1", "Hauptmission 2", "Kreativpause", "Meisterbonus"]
+  },
+  wartezimmer: {
+    label: "Wartezimmer-Set",
+    duration: "5-12 Minuten",
+    childMission: "Sofort-R\u00e4tsel f\u00fcr kurze Wartezeit",
+    parentPromise: "Kurze Aufgaben mit schnellem Erfolg, auch wenn die Wartezeit pl\u00f6tzlich vorbei ist.",
+    learning: "Aufmerksamkeit, flexible Wechsel und kleine Erfolgserlebnisse",
+    tip: "L\u00f6se zuerst die Aufgabe, die du sofort verstehst. Der Rest ist Bonus.",
+    plan: ["Sofort-Erfolg", "Kleine Suche", "Mini-Code", "Ein-Satz-Aufgabe", "Bonus nur wenn Zeit ist"]
+  },
+  ruhe20: {
+    label: "Ruhige 20 Minuten",
+    duration: "20 Minuten",
+    childMission: "Extra-R\u00e4tselpaket mit Levelkurve",
+    parentPromise: "Ein ausgewogenes Paket f\u00fcr ruhige, selbstst\u00e4ndige Besch\u00e4ftigung.",
+    learning: "Konzentration, Logik und Durchhalteverm\u00f6gen",
+    tip: "Beginne mit dem Warm-up. Danach wird es etwas kniffliger, am Ende wieder leichter.",
+    plan: ["Warm-up", "Level 1", "Level 2", "Erfolg sichern", "Bonus f\u00fcr schnelle Kinder"]
+  }
+};
+
+const EXAMPLES = {
+  code: "Beispiel: 19-15-14-14-5 = SONNE.",
+  wordsearch: "Beispiel: Suche ein Wort in einer Reihe und kreise alle Buchstaben ein.",
+  math: "Beispiel: 8 + 3 = 11.",
+  logic: "Beispiel: Wenn A vor B liegt, kommt A links von B.",
+  draw: "Beispiel: Erst Titel, dann Bild, dann Randmuster.",
+  scramble: "Beispiel: NNSEO wird zu SONNE.",
+  syllables: "Beispiel: SON + NE wird zu SONNE.",
+  sequence: "Beispiel: 2 - 4 - ? - 8. Die fehlende Zahl ist 6.",
+  sudoku: "Beispiel: Jede Zahl von 1 bis 4 darf pro Zeile nur einmal vorkommen.",
+  maze: "Beispiel: Starte bei S und finde einen Weg zu Z."
+};
+
 const elements = {
   deliveryMode: document.querySelector("#deliveryMode"),
+  useCase: document.querySelector("#useCase"),
   type: document.querySelector("#puzzleType"),
   theme: document.querySelector("#theme"),
   packSize: document.querySelector("#packSize"),
   words: document.querySelector("#words"),
   level: document.querySelector("#level"),
   solution: document.querySelector("#solution"),
+  kidGuide: document.querySelector("#kidGuide"),
   worksheet: document.querySelector("#worksheet"),
   title: document.querySelector("#sheetTitle"),
   deliveryMeta: document.querySelector("#deliveryMeta"),
@@ -76,12 +139,14 @@ let deliverySeed = Math.floor(Date.now() % 997);
 
 [
   elements.deliveryMode,
+  elements.useCase,
   elements.type,
   elements.theme,
   elements.packSize,
   elements.words,
   elements.level,
-  elements.solution
+  elements.solution,
+  elements.kidGuide
 ].forEach((input) => input.addEventListener("input", createDelivery));
 
 elements.generate.addEventListener("click", newDelivery);
@@ -143,13 +208,15 @@ function getSettings() {
 
   return {
     deliveryMode: elements.deliveryMode.value,
+    useCase: elements.useCase.value,
     type: elements.type.value,
     theme: elements.theme.value,
     packSize: Number(elements.packSize.value),
     level: elements.level.value,
     seed: deliverySeed,
     words,
-    showSolution: elements.solution.checked
+    showSolution: elements.solution.checked,
+    kidGuide: elements.kidGuide.checked
   };
 }
 
@@ -356,6 +423,8 @@ function basePuzzle(settings) {
     mark: THEME_MARKS[settings.theme],
     packSize: settings.packSize,
     level: settings.level,
+    useCase: USE_CASES[settings.useCase],
+    kidGuide: settings.kidGuide,
     showSolution: settings.showSolution
   };
 }
@@ -372,14 +441,48 @@ function renderWorksheet(puzzle, settings) {
       </div>
     </header>
     <div class="sheet-meta">
+      <span>${escapeHtml(puzzle.useCase.label)}</span>
+      <span>${escapeHtml(puzzle.useCase.duration)}</span>
       <span>${escapeHtml(puzzle.themeName)}</span>
       <span>${escapeHtml(capitalize(puzzle.level))}</span>
       <span>Variante ${settings.seed % 1000}</span>
       <span>Extra-Seite ${settings.packSize > 1 ? "1 von " + settings.packSize : "1"}</span>
     </div>
+    ${renderUseCaseBlock(puzzle)}
+    ${puzzle.kidGuide ? renderKidGuide(puzzle) : ""}
     ${worksheetBody(puzzle)}
     ${settings.packSize > 1 ? renderMiniPages(puzzle, settings.packSize) : ""}
     ${puzzle.showSolution ? renderSolution(puzzle) : ""}
+  `;
+}
+
+function renderUseCaseBlock(puzzle) {
+  return `
+    <section class="promise-band">
+      <div>
+        <strong>Mission f\u00fcr Kinder</strong>
+        <p>${escapeHtml(puzzle.useCase.childMission)}</p>
+      </div>
+      <div>
+        <strong>Warum Eltern sie lieben</strong>
+        <p>${escapeHtml(puzzle.useCase.parentPromise)}</p>
+      </div>
+      <div>
+        <strong>Verstecktes Lernen</strong>
+        <p>${escapeHtml(puzzle.useCase.learning)}</p>
+      </div>
+    </section>
+  `;
+}
+
+function renderKidGuide(puzzle) {
+  return `
+    <section class="kid-guide">
+      <strong>So startest du allein:</strong>
+      <span>${escapeHtml(puzzle.intro)}</span>
+      <span>${escapeHtml(EXAMPLES[puzzle.type])}</span>
+      <span>${escapeHtml(puzzle.useCase.tip)}</span>
+    </section>
   `;
 }
 
@@ -511,19 +614,15 @@ function worksheetBody(puzzle) {
 }
 
 function renderMiniPages(puzzle, packSize) {
-  const extras = [
-    "Bonus-Aufgabe: Schreibe drei eigene Sommerw\u00f6rter auf.",
-    "Bonus-Aufgabe: Erfinde eine Frage zu diesem R\u00e4tsel.",
-    "Bonus-Aufgabe: Tausche das Blatt mit jemandem und prueft euch gegenseitig.",
-    "Bonus-Aufgabe: Male einen kleinen Fund am Rand.",
-    "Bonus-Aufgabe: Gib deiner Lieferung einen lustigen Namen."
-  ];
+  const levels = ["leicht", "leicht+", "mittel", "ruhiger Abschluss", "Bonus"];
+  const plan = puzzle.useCase.plan;
 
   return `
-    <section class="task-box">
-      <p><strong>Weitere Seiten dieser Lieferung</strong></p>
+    <section class="task-box progression-box">
+      <p><strong>Lernkurve dieser Lieferung</strong></p>
+      <p>Der Einstieg bleibt leicht. Danach wird es sp\u00fcrbar kniffliger, aber der Abschluss gibt wieder ein Erfolgserlebnis.</p>
       ${Array.from({ length: packSize - 1 }, (_, index) => `
-        <p><span class="mini-tag">Seite ${index + 2}</span> ${escapeHtml(extras[(index + puzzle.title.length) % extras.length])}</p>
+        <p><span class="mini-tag">Seite ${index + 2}</span> <strong>${escapeHtml(levels[index] || "Bonus")}</strong> - ${escapeHtml(plan[(index + 1) % plan.length])}</p>
         <div class="answer-line"></div>
       `).join("")}
     </section>

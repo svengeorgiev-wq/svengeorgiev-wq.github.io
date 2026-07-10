@@ -254,6 +254,62 @@ h1 span:last-child {
   box-shadow: 0 20px 42px rgba(54, 32, 12, 0.28);
 }
 
+.guide-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(56, 33, 13, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.guide-modal[hidden] {
+  display: none;
+}
+
+.guide-card {
+  position: relative;
+  width: min(620px, 100%);
+  padding: clamp(18px, 4vw, 30px);
+}
+
+.guide-card h2 {
+  margin: 0 0 14px;
+  color: var(--aqua-dark);
+  font-family: var(--display);
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1;
+}
+
+.guide-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 24px;
+  font-size: 1.05rem;
+  line-height: 1.45;
+}
+
+.guide-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(180deg, var(--coral), #d94733);
+  font-size: 1.5rem;
+  font-weight: 800;
+  box-shadow: 0 10px 18px rgba(112, 56, 0, 0.2);
+}
+
 .studio {
   display: grid;
   grid-template-columns: 300px minmax(0, 1fr) 330px;
@@ -845,6 +901,7 @@ button.maze-cell {
 
   body::before,
   .hero,
+  .guide-modal,
   .controls,
   .play-wrap,
   .supply-rail,

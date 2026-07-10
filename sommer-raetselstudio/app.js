@@ -62,6 +62,9 @@ const elements = {
   generate: document.querySelector("#generate"),
   generateTop: document.querySelector("#generateTop"),
   printTop: document.querySelector("#printTop"),
+  guideTop: document.querySelector("#guideTop"),
+  guideModal: document.querySelector("#guideModal"),
+  guideClose: document.querySelector("#guideClose"),
   checkPlay: document.querySelector("#checkPlay"),
   resetPlay: document.querySelector("#resetPlay")
 };
@@ -69,6 +72,7 @@ const elements = {
 let currentPuzzle = null;
 let wordSearchSelection = new Set();
 let mazeSelection = new Set();
+let deliverySeed = Math.floor(Date.now() % 997);
 
 [
   elements.deliveryMode,
@@ -80,9 +84,17 @@ let mazeSelection = new Set();
   elements.solution
 ].forEach((input) => input.addEventListener("input", createDelivery));
 
-elements.generate.addEventListener("click", createDelivery);
-elements.generateTop.addEventListener("click", createDelivery);
+elements.generate.addEventListener("click", newDelivery);
+elements.generateTop.addEventListener("click", newDelivery);
 elements.printTop.addEventListener("click", () => window.print());
+elements.guideTop.addEventListener("click", openGuide);
+elements.guideClose.addEventListener("click", closeGuide);
+elements.guideModal.addEventListener("click", (event) => {
+  if (event.target === elements.guideModal) closeGuide();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !elements.guideModal.hidden) closeGuide();
+});
 elements.checkPlay.addEventListener("click", checkPlay);
 elements.resetPlay.addEventListener("click", () => {
   renderPlay(currentPuzzle);
@@ -90,6 +102,23 @@ elements.resetPlay.addEventListener("click", () => {
 });
 
 createDelivery();
+
+function newDelivery() {
+  deliverySeed += 1;
+  createDelivery();
+  elements.scoreLine.textContent = "Neue Lieferung erstellt.";
+  document.querySelector(".worksheet-wrap").scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function openGuide() {
+  elements.guideModal.hidden = false;
+  elements.guideClose.focus();
+}
+
+function closeGuide() {
+  elements.guideModal.hidden = true;
+  elements.guideTop.focus();
+}
 
 function createDelivery() {
   const settings = getSettings();
@@ -109,7 +138,8 @@ function getSettings() {
     .filter(Boolean);
 
   const count = elements.level.value === "knifflig" ? 8 : elements.level.value === "leicht" ? 5 : 6;
-  const words = (customWords.length ? customWords : WORDS[elements.theme.value]).slice(0, count);
+  const sourceWords = customWords.length ? customWords : WORDS[elements.theme.value];
+  const words = rotateWords(sourceWords, deliverySeed).slice(0, count);
 
   return {
     deliveryMode: elements.deliveryMode.value,
@@ -117,6 +147,7 @@ function getSettings() {
     theme: elements.theme.value,
     packSize: Number(elements.packSize.value),
     level: elements.level.value,
+    seed: deliverySeed,
     words,
     showSolution: elements.solution.checked
   };
@@ -151,10 +182,10 @@ function buildWordSearch(settings) {
   const placed = [];
 
   words.forEach((word, index) => {
-    const horizontal = index % 2 === 0;
+    const horizontal = (index + settings.seed) % 2 === 0;
     const start = horizontal
-      ? { row: (index * 2) % 10, col: Math.max(0, 9 - word.length) }
-      : { row: Math.max(0, 9 - word.length), col: (index * 3) % 10 };
+      ? { row: (index * 2 + settings.seed) % 10, col: Math.max(0, 9 - word.length - (settings.seed % 2)) }
+      : { row: Math.max(0, 9 - word.length - (settings.seed % 2)), col: (index * 3 + settings.seed) % 10 };
 
     for (let i = 0; i < word.length && i < 10; i += 1) {
       const row = horizontal ? start.row : start.row + i;
@@ -174,7 +205,8 @@ function buildWordSearch(settings) {
 }
 
 function buildMath(settings) {
-  const base = settings.level === "knifflig" ? 14 : settings.level === "leicht" ? 8 : 11;
+  const seedOffset = settings.seed % 5;
+  const base = (settings.level === "knifflig" ? 14 : settings.level === "leicht" ? 8 : 11) + seedOffset;
   const modifiers = settings.level === "leicht" ? [3, 4, -2, 5, 2] : settings.level === "knifflig" ? [7, -4, 9, -5, 8, 6] : [5, -3, 7, 4, -2, 6];
   let value = base;
   const rows = modifiers.map((change, index) => {
@@ -196,17 +228,13 @@ function buildMath(settings) {
 
 function buildLogic(settings) {
   const items = settings.words.slice(0, 3);
-  const order = [items[1], items[0], items[2]];
+  const order = settings.seed % 2 === 0 ? [items[1], items[0], items[2]] : [items[2], items[1], items[0]];
 
   return {
     ...basePuzzle(settings),
     items,
     order,
-    clues: [
-      `${items[0]} liegt direkt vor ${items[2]}.`,
-      `${items[1]} liegt nicht in der Mitte.`,
-      `${items[2]} liegt als Letztes.`
-    ]
+    clues: logicClues(order)
   };
 }
 
@@ -226,7 +254,7 @@ function buildScramble(settings) {
   return {
     ...basePuzzle(settings),
     rows: settings.words.slice(0, 7).map((word, index) => ({
-      prompt: shuffleWord(normalizeAnswer(word), index),
+      prompt: shuffleWord(normalizeAnswer(word), index + settings.seed),
       answer: normalizeAnswer(word)
     }))
   };
@@ -237,7 +265,11 @@ function buildSyllables(settings) {
     parts: splitWord(word),
     answer: normalizeAnswer(word)
   }));
-  const bank = rows.flatMap((row) => row.parts).sort((a, b) => a.localeCompare(b));
+  const bank = rotateWords(rows.flatMap((row) => row.parts), settings.seed).sort((a, b) => {
+    const left = (a.length + settings.seed) % 3;
+    const right = (b.length + settings.seed) % 3;
+    return left - right || a.localeCompare(b);
+  });
 
   return {
     ...basePuzzle(settings),
@@ -247,11 +279,11 @@ function buildSyllables(settings) {
 }
 
 function buildSequence(settings) {
-  const start = settings.level === "knifflig" ? 4 : settings.level === "leicht" ? 2 : 3;
-  const steps = settings.level === "knifflig" ? [4, 6, 8, 10] : settings.level === "leicht" ? [2, 3, 4, 5] : [3, 5, 7, 9];
+  const start = (settings.level === "knifflig" ? 4 : settings.level === "leicht" ? 2 : 3) + (settings.seed % 4);
+  const steps = rotateWords(settings.level === "knifflig" ? [4, 6, 8, 10] : settings.level === "leicht" ? [2, 3, 4, 5] : [3, 5, 7, 9], settings.seed);
   const rows = steps.map((step, index) => {
     const values = Array.from({ length: 5 }, (_, spot) => start + index + step * spot);
-    const blankIndex = (index + 2) % values.length;
+    const blankIndex = (index + settings.seed + 2) % values.length;
     return {
       values,
       blankIndex,
@@ -266,7 +298,7 @@ function buildSequence(settings) {
 }
 
 function buildSudoku(settings) {
-  const shift = settings.theme === "eis" ? 1 : settings.theme === "natur" ? 2 : settings.theme === "abenteuer" ? 3 : 0;
+  const shift = ((settings.theme === "eis" ? 1 : settings.theme === "natur" ? 2 : settings.theme === "abenteuer" ? 3 : 0) + settings.seed) % 4;
   const solution = Array.from({ length: 4 }, (_, row) =>
     Array.from({ length: 4 }, (_, col) => ((row * 2 + Math.floor(row / 2) + col + shift) % 4) + 1)
   );
@@ -285,12 +317,13 @@ function buildSudoku(settings) {
 
 function buildMaze(settings) {
   const size = settings.level === "knifflig" ? 8 : 7;
+  const middle = Math.max(2, Math.floor(size / 2) - (settings.seed % 2));
   const path = [];
   for (let col = 0; col < size; col += 1) path.push(`0-${col}`);
   for (let row = 1; row < size; row += 1) path.push(`${row}-${size - 1}`);
-  for (let col = size - 2; col >= Math.floor(size / 2); col -= 1) path.push(`${size - 1}-${col}`);
-  for (let row = size - 2; row >= 2; row -= 1) path.push(`${row}-${Math.floor(size / 2)}`);
-  for (let col = Math.floor(size / 2) - 1; col >= 0; col -= 1) path.push(`2-${col}`);
+  for (let col = size - 2; col >= middle; col -= 1) path.push(`${size - 1}-${col}`);
+  for (let row = size - 2; row >= 2; row -= 1) path.push(`${row}-${middle}`);
+  for (let col = middle - 1; col >= 0; col -= 1) path.push(`2-${col}`);
   for (let row = 3; row < size; row += 1) path.push(`${row}-0`);
   const pathSet = new Set(path);
   const blocked = new Set();
@@ -298,7 +331,7 @@ function buildMaze(settings) {
   for (let row = 0; row < size; row += 1) {
     for (let col = 0; col < size; col += 1) {
       const id = `${row}-${col}`;
-      if (!pathSet.has(id) && (row + col + settings.theme.length) % 3 === 0) blocked.add(id);
+      if (!pathSet.has(id) && (row + col + settings.theme.length + settings.seed) % 3 === 0) blocked.add(id);
     }
   }
 
@@ -341,6 +374,7 @@ function renderWorksheet(puzzle, settings) {
     <div class="sheet-meta">
       <span>${escapeHtml(puzzle.themeName)}</span>
       <span>${escapeHtml(capitalize(puzzle.level))}</span>
+      <span>Variante ${settings.seed % 1000}</span>
       <span>Extra-Seite ${settings.packSize > 1 ? "1 von " + settings.packSize : "1"}</span>
     </div>
     ${worksheetBody(puzzle)}
@@ -737,6 +771,21 @@ function renderMazeCells(puzzle, interactive) {
       return `<button type="button" class="${classes}" data-maze-cell="${id}" aria-label="Labyrinth Feld ${row + 1}-${col + 1}">${label}</button>`;
     }).join("")
   ).join("");
+}
+
+function logicClues(order) {
+  return [
+    `${order[0]} liegt zuerst.`,
+    `${order[1]} liegt direkt nach ${order[0]}.`,
+    `${order[2]} liegt als Letztes.`
+  ];
+}
+
+function rotateWords(items, seed) {
+  if (!items.length) return items;
+  const offset = seed % items.length;
+  const rotated = [...items.slice(offset), ...items.slice(0, offset)];
+  return seed % 2 === 0 ? rotated : rotated.reverse();
 }
 
 function shuffleWord(word, seed) {

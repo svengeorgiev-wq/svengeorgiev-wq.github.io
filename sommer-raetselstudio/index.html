@@ -26,6 +26,7 @@
         <div class="hero__actions" aria-label="Schnellaktionen">
           <button class="primary-action" type="button" id="generateTop">Neue Lieferung</button>
           <button class="secondary-action" type="button" id="printTop">Druckbogen drucken</button>
+          <button class="ghost-action" type="button" id="guideTop">Anleitung</button>
         </div>
       </div>
 
@@ -33,6 +34,20 @@
         <img src="assets/cover-style-reference.png" alt="Cover-Stilreferenz Sommer R&auml;tselbuch">
       </figure>
     </section>
+
+    <div class="guide-modal" id="guideModal" hidden role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+      <div class="guide-card glass">
+        <button class="guide-close" type="button" id="guideClose" aria-label="Anleitung schliessen">×</button>
+        <p class="wood-label">So funktioniert es</p>
+        <h2 id="guideTitle">Anleitung</h2>
+        <ol class="guide-list">
+          <li>R&auml;tselart, Thema, Umfang und Schwere ausw&auml;hlen.</li>
+          <li>Optional eigene W&ouml;rter eintragen, getrennt mit Komma oder Zeilenumbruch.</li>
+          <li>Mit <strong>Neue Lieferung</strong> eine neue Variante w&uuml;rfeln.</li>
+          <li>Druckbogen ausdrucken oder im Handy-Modus direkt spielen.</li>
+        </ol>
+      </div>
+    </div>
 
     <section class="studio" aria-label="Extra-R&auml;tsel Lieferant">
       <aside class="controls glass">

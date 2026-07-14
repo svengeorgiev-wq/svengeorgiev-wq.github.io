@@ -394,6 +394,13 @@ textarea {
   margin-top: 18px;
 }
 
+.save-note {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
 .chapter-list {
   display: grid;
   gap: 8px;

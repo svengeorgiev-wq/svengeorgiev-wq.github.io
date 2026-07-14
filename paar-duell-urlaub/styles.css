@@ -1,15 +1,20 @@
 :root {
-  --ink: #17313a;
-  --muted: #52666d;
-  --paper: #fffaf1;
-  --surface: #ffffff;
-  --line: #d8e2df;
-  --sea: #125c7a;
-  --sea-2: #d8f1f6;
-  --coral: #ef6f61;
-  --sun: #f6c95a;
-  --leaf: #2f8f71;
-  --shadow: 0 18px 45px rgba(23, 49, 58, 0.14);
+  --ink: #17110d;
+  --muted: #5a4b3b;
+  --paper: rgba(255, 255, 255, 0.58);
+  --surface: rgba(255, 255, 255, 0.66);
+  --surface-strong: rgba(255, 255, 255, 0.82);
+  --line: rgba(255, 255, 255, 0.58);
+  --glass-line: rgba(255, 255, 255, 0.72);
+  --sea: #00a8c8;
+  --sea-2: rgba(0, 168, 200, 0.16);
+  --coral: #ff5a2e;
+  --orange: #ff8500;
+  --sun: #ffd21f;
+  --leaf: #008d97;
+  --hot: #ff3d18;
+  --shadow: 0 24px 70px rgba(35, 16, 4, 0.22);
+  --glass-shadow: 0 18px 48px rgba(35, 16, 4, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.54);
   --radius: 8px;
   color-scheme: light;
 }
@@ -24,8 +29,20 @@ body {
   color: var(--ink);
   font-family: "Atkinson Hyperlegible", Arial, sans-serif;
   background:
-    linear-gradient(135deg, rgba(216, 241, 246, 0.92), rgba(255, 250, 241, 0.95) 42%, rgba(246, 201, 90, 0.3)),
-    repeating-linear-gradient(90deg, rgba(18, 92, 122, 0.05) 0 1px, transparent 1px 28px);
+    repeating-conic-gradient(from -18deg at 50% 18%, rgba(255, 255, 255, 0.18) 0deg 10deg, transparent 10deg 23deg),
+    conic-gradient(from 18deg at 50% 20%, #ff6200, #ff9a00, #ffd21f, #ff7621, #ff3d18, #ff8a00, #ff6200);
+  background-attachment: fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    repeating-radial-gradient(circle at 52% 18%, rgba(255, 255, 255, 0.2) 0 14px, rgba(255, 255, 255, 0) 14px 52px),
+    linear-gradient(135deg, rgba(0, 168, 200, 0.28), transparent 32%, rgba(255, 61, 24, 0.24) 78%);
+  pointer-events: none;
 }
 
 button,
@@ -42,13 +59,35 @@ button {
 .app-shell {
   width: min(1440px, 100%);
   margin: 0 auto;
-  padding: 18px;
+  padding: 20px;
 }
 
 .topbar,
 .score-strip,
 .workbench {
   width: 100%;
+}
+
+.topbar,
+.intro-hint,
+.player-score,
+.versus-badge,
+.controls-panel,
+.play-panel,
+.session-panel,
+.segmented button,
+.ghost-action,
+.chapter-chip,
+.round-toolbar,
+.duel-card,
+.play-actions,
+.timer-box,
+.session-list button,
+.quality-box,
+.help-modal,
+.help-card,
+.help-grid section {
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
 }
 
 .topbar {
@@ -58,21 +97,24 @@ button {
   gap: 16px;
   padding: 18px 20px;
   color: #fff;
-  background: linear-gradient(135deg, var(--sea), #1c7b8f 65%, var(--leaf));
-  border: 2px solid rgba(255, 255, 255, 0.55);
+  background:
+    linear-gradient(135deg, rgba(0, 168, 200, 0.74), rgba(255, 90, 46, 0.64) 52%, rgba(255, 210, 31, 0.68)),
+    rgba(255, 255, 255, 0.22);
+  border: 2px solid var(--glass-line);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(22px) saturate(1.55);
 }
 
 .cover-thumb {
   flex: 0 0 auto;
-  width: clamp(86px, 9vw, 132px);
+  width: 118px;
   aspect-ratio: 2 / 3;
   height: auto;
   object-fit: cover;
-  border: 3px solid rgba(255, 255, 255, 0.82);
+  border: 3px solid rgba(255, 255, 255, 0.88);
   border-radius: var(--radius);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.26);
+  box-shadow: 0 18px 32px rgba(16, 8, 4, 0.3), 0 0 0 1px rgba(255, 210, 31, 0.34);
   background: #fff;
 }
 
@@ -105,16 +147,19 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(2rem, 4vw, 4.2rem);
+  font-size: 3.6rem;
   letter-spacing: 0;
+  text-shadow: 0 3px 0 rgba(0, 0, 0, 0.22);
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 h2 {
-  font-size: clamp(1.2rem, 1.7vw, 1.7rem);
+  font-size: 1.45rem;
 }
 
 h3 {
-  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-size: 2rem;
 }
 
 .topbar__actions,
@@ -150,42 +195,48 @@ h3 {
 }
 
 .icon-button {
-  color: var(--sea);
-  background: #fff;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(255, 255, 255, 0.86);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .help-action {
   min-width: 0;
   padding: 0 14px;
-  color: var(--sea);
-  background: #fff;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.84);
+  border-color: rgba(255, 255, 255, 0.88);
   font-weight: 800;
 }
 
 .icon-action {
-  color: var(--ink);
-  background: var(--sun);
+  color: #17110d;
+  background: linear-gradient(135deg, var(--sun), #fff06d);
+  border-color: rgba(255, 255, 255, 0.68);
 }
 
 .primary-action {
   padding: 0 16px;
   color: #fff;
-  background: var(--sea);
-  border-color: #0d465f;
+  background: linear-gradient(135deg, var(--hot), var(--orange) 48%, #f4b400);
+  border-color: rgba(255, 255, 255, 0.72);
   font-weight: 800;
+  box-shadow: 0 10px 24px rgba(255, 90, 46, 0.24);
 }
 
 .ghost-action {
   padding: 0 14px;
-  color: var(--sea);
-  background: #fff;
-  border-color: var(--line);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.68);
+  border-color: var(--glass-line);
   font-weight: 800;
+  backdrop-filter: blur(16px) saturate(1.25);
 }
 
 button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(23, 49, 58, 0.16);
+  box-shadow: 0 12px 28px rgba(35, 16, 4, 0.22);
 }
 
 button:focus-visible,
@@ -215,10 +266,11 @@ textarea:focus-visible {
   gap: 14px;
   margin-top: 14px;
   padding: 12px 14px;
-  border: 2px solid rgba(239, 111, 97, 0.38);
+  border: 2px solid rgba(255, 255, 255, 0.62);
   border-radius: var(--radius);
-  background: #fff1ed;
-  box-shadow: 0 10px 30px rgba(23, 49, 58, 0.08);
+  background: rgba(255, 255, 255, 0.54);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(18px) saturate(1.35);
 }
 
 .intro-hint div:first-child {
@@ -240,8 +292,10 @@ textarea:focus-visible {
 .versus-badge {
   min-width: 0;
   border-radius: var(--radius);
-  border: 2px solid var(--line);
-  background: rgba(255, 255, 255, 0.88);
+  border: 2px solid var(--glass-line);
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 12px 34px rgba(35, 16, 4, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px) saturate(1.3);
 }
 
 .player-score {
@@ -262,7 +316,7 @@ textarea:focus-visible {
   width: 100%;
   min-width: 0;
   border: 0;
-  border-bottom: 2px solid var(--line);
+  border-bottom: 2px solid rgba(0, 168, 200, 0.44);
   color: var(--ink);
   background: transparent;
   font-weight: 800;
@@ -274,18 +328,20 @@ textarea:focus-visible {
   min-width: 44px;
   height: 44px;
   color: #fff;
-  background: var(--coral);
+  background: linear-gradient(135deg, #111, var(--coral) 54%, var(--orange));
   border-radius: var(--radius);
   font-size: 1.4rem;
+  box-shadow: 0 8px 18px rgba(255, 90, 46, 0.28);
 }
 
 .versus-badge {
   display: grid;
   place-items: center;
   padding: 0 14px;
-  color: var(--sea);
+  color: var(--ink);
   font-family: "Patrick Hand", cursive;
   font-size: 1.35rem;
+  background: rgba(255, 210, 31, 0.7);
 }
 
 .workbench {
@@ -299,10 +355,11 @@ textarea:focus-visible {
 .play-panel,
 .session-panel {
   min-width: 0;
-  border: 2px solid var(--line);
+  border: 2px solid var(--glass-line);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(22px) saturate(1.35);
 }
 
 .controls-panel,
@@ -330,7 +387,7 @@ legend,
 .quality-box h2 {
   display: block;
   margin: 0 0 8px;
-  color: var(--muted);
+  color: #3e342a;
   font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -351,16 +408,18 @@ legend,
   min-height: 48px;
   padding: 8px;
   color: var(--ink);
-  background: var(--paper);
-  border: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.48);
+  border: 2px solid rgba(255, 255, 255, 0.62);
   border-radius: var(--radius);
   font-weight: 800;
+  backdrop-filter: blur(12px);
 }
 
 .segmented button[aria-pressed="true"] {
   color: #fff;
-  background: var(--sea);
-  border-color: #0d465f;
+  background: linear-gradient(135deg, #061d23, var(--sea) 54%, #00d4ef);
+  border-color: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 10px 22px rgba(0, 168, 200, 0.24);
 }
 
 .field {
@@ -371,10 +430,11 @@ legend,
 select,
 textarea {
   width: 100%;
-  border: 2px solid var(--line);
+  border: 2px solid rgba(255, 255, 255, 0.64);
   border-radius: var(--radius);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.72);
   color: var(--ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
 }
 
 select {
@@ -412,9 +472,10 @@ textarea {
   gap: 8px;
   align-items: center;
   padding: 8px;
-  border: 2px solid var(--line);
+  border: 2px solid rgba(255, 255, 255, 0.64);
   border-radius: var(--radius);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(14px);
 }
 
 .chapter-chip strong {
@@ -422,8 +483,9 @@ textarea {
   place-items: center;
   height: 34px;
   color: #fff;
-  background: var(--leaf);
+  background: linear-gradient(135deg, var(--leaf), var(--sea));
   border-radius: var(--radius);
+  box-shadow: 0 8px 18px rgba(0, 141, 151, 0.2);
 }
 
 .chapter-chip span,
@@ -459,7 +521,11 @@ textarea {
   gap: 12px;
   padding: 18px;
   color: #fff;
-  background: linear-gradient(135deg, #17313a, var(--sea));
+  background:
+    linear-gradient(135deg, rgba(18, 17, 16, 0.88), rgba(0, 168, 200, 0.78) 48%, rgba(255, 90, 46, 0.82)),
+    rgba(255, 255, 255, 0.12);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(18px) saturate(1.4);
 }
 
 .round-meta {
@@ -483,7 +549,8 @@ textarea {
 
 .round-meta span {
   color: var(--ink);
-  background: var(--sun);
+  background: linear-gradient(135deg, var(--sun), #fff27a);
+  box-shadow: 0 8px 16px rgba(35, 16, 4, 0.16);
 }
 
 .duel-stage {
@@ -491,10 +558,9 @@ textarea {
   min-height: 520px;
   padding: 22px;
   background:
-    linear-gradient(90deg, rgba(18, 92, 122, 0.1) 1px, transparent 1px),
-    linear-gradient(rgba(18, 92, 122, 0.08) 1px, transparent 1px),
-    var(--paper);
-  background-size: 28px 28px;
+    repeating-conic-gradient(from 12deg at 55% 20%, rgba(255, 255, 255, 0.24) 0deg 8deg, transparent 8deg 22deg),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(0, 168, 200, 0.12) 48%, rgba(255, 210, 31, 0.24)),
+    rgba(255, 255, 255, 0.36);
 }
 
 .duel-stage.table-mode .duel-card {
@@ -510,7 +576,7 @@ textarea {
 .duel-stage.table-mode .mirror-copy {
   display: block;
   transform: rotate(180deg);
-  border-top: 3px dashed rgba(23, 49, 58, 0.22);
+  border-top: 3px dashed rgba(23, 17, 13, 0.22);
   padding-top: 18px;
 }
 
@@ -525,12 +591,18 @@ textarea {
 
 .duel-stage.table-mode .center-rule {
   display: grid;
-  border-top: 3px dashed rgba(23, 49, 58, 0.22);
-  border-bottom: 3px dashed rgba(23, 49, 58, 0.22);
+  border-top: 3px dashed rgba(23, 17, 13, 0.22);
+  border-bottom: 3px dashed rgba(23, 17, 13, 0.22);
 }
 
 .duel-card {
   min-height: 100%;
+  padding: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.64);
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62), 0 18px 42px rgba(35, 16, 4, 0.12);
+  backdrop-filter: blur(18px) saturate(1.2);
 }
 
 .duel-main {
@@ -548,18 +620,18 @@ textarea {
 
 .duel-type {
   color: #fff;
-  background: var(--coral);
+  background: linear-gradient(135deg, var(--hot), var(--coral));
 }
 
 .duel-time {
   color: var(--ink);
-  background: var(--sun);
+  background: linear-gradient(135deg, var(--sun), #fff36a);
 }
 
 .duel-prompt {
   margin: 0;
   max-width: 78ch;
-  font-size: clamp(1.05rem, 1.6vw, 1.32rem);
+  font-size: 1.18rem;
   line-height: 1.45;
 }
 
@@ -572,9 +644,10 @@ textarea {
 .answer-pad {
   min-height: 150px;
   padding: 12px;
-  border: 3px solid var(--ink);
+  border: 3px solid rgba(23, 17, 13, 0.8);
   border-radius: var(--radius);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 10px 24px rgba(35, 16, 4, 0.1);
 }
 
 .answer-pad strong {
@@ -595,9 +668,10 @@ textarea {
 
 .reveal-box {
   padding: 14px;
-  border: 3px solid var(--sea);
+  border: 3px solid rgba(0, 168, 200, 0.72);
   border-radius: var(--radius);
-  background: #fff;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 12px 28px rgba(0, 168, 200, 0.14);
 }
 
 .reveal-box h4 {
@@ -625,9 +699,9 @@ textarea {
 .score-buttons button {
   min-height: 40px;
   padding: 0 10px;
-  border: 2px solid var(--line);
+  border: 2px solid rgba(255, 255, 255, 0.66);
   border-radius: var(--radius);
-  background: var(--sea-2);
+  background: rgba(0, 168, 200, 0.16);
   color: var(--ink);
   font-weight: 800;
 }
@@ -635,8 +709,9 @@ textarea {
 .play-actions {
   justify-content: center;
   padding: 16px;
-  background: #fff;
-  border-top: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.52);
+  border-top: 2px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px);
 }
 
 .timer-box {
@@ -645,13 +720,16 @@ textarea {
   justify-content: space-between;
   gap: 12px;
   padding: 12px;
-  border: 2px solid var(--line);
+  border: 2px solid rgba(255, 255, 255, 0.64);
   border-radius: var(--radius);
-  background: var(--paper);
+  background:
+    linear-gradient(135deg, rgba(255, 210, 31, 0.38), rgba(255, 255, 255, 0.5)),
+    rgba(255, 255, 255, 0.44);
+  backdrop-filter: blur(14px);
 }
 
 .timer-box strong {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: 2.7rem;
   line-height: 1;
 }
 
@@ -669,14 +747,15 @@ textarea {
   padding: 8px 10px;
   text-align: left;
   color: var(--ink);
-  background: #fff;
-  border: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.58);
+  border: 2px solid rgba(255, 255, 255, 0.62);
   border-radius: var(--radius);
+  backdrop-filter: blur(14px);
 }
 
 .session-list button[aria-current="true"] {
-  border-color: var(--coral);
-  background: #fff1ed;
+  border-color: rgba(255, 255, 255, 0.82);
+  background: linear-gradient(135deg, rgba(255, 90, 46, 0.28), rgba(255, 210, 31, 0.34), rgba(0, 168, 200, 0.2));
 }
 
 .session-list strong,
@@ -692,7 +771,9 @@ textarea {
 .quality-box {
   padding: 12px;
   border-radius: var(--radius);
-  background: var(--sea-2);
+  border: 2px solid rgba(255, 255, 255, 0.62);
+  background: rgba(0, 168, 200, 0.16);
+  backdrop-filter: blur(14px);
 }
 
 .quality-box ul {
@@ -713,17 +794,21 @@ textarea {
   display: grid;
   place-items: center;
   padding: 18px;
-  background: rgba(23, 49, 58, 0.58);
+  background:
+    repeating-conic-gradient(from 20deg at 50% 30%, rgba(255, 255, 255, 0.14) 0deg 8deg, transparent 8deg 21deg),
+    rgba(23, 17, 13, 0.56);
+  backdrop-filter: blur(10px);
 }
 
 .help-card {
   width: min(860px, 100%);
   max-height: min(760px, calc(100vh - 36px));
   overflow: auto;
-  border: 2px solid rgba(255, 255, 255, 0.72);
+  border: 2px solid rgba(255, 255, 255, 0.78);
   border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+  backdrop-filter: blur(24px) saturate(1.35);
 }
 
 .help-head {
@@ -733,7 +818,7 @@ textarea {
   gap: 14px;
   padding: 18px;
   color: #fff;
-  background: linear-gradient(135deg, var(--sea), #17313a);
+  background: linear-gradient(135deg, rgba(23, 17, 13, 0.86), rgba(0, 168, 200, 0.78), rgba(255, 90, 46, 0.76));
 }
 
 .help-grid {
@@ -746,9 +831,10 @@ textarea {
 .help-grid section {
   min-width: 0;
   padding: 14px;
-  border: 2px solid var(--line);
+  border: 2px solid rgba(255, 255, 255, 0.62);
   border-radius: var(--radius);
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.54);
+  backdrop-filter: blur(14px);
 }
 
 .help-grid h3 {
@@ -763,6 +849,10 @@ textarea {
 }
 
 @media (max-width: 1120px) {
+  h1 {
+    font-size: 3rem;
+  }
+
   .workbench {
     grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
   }
@@ -794,11 +884,11 @@ textarea {
   }
 
   .topbar h1 {
-    font-size: clamp(1.8rem, 9vw, 2.7rem);
+    font-size: 1.82rem;
   }
 
   .cover-thumb {
-    width: min(25vw, 104px);
+    width: 94px;
     align-self: flex-start;
   }
 

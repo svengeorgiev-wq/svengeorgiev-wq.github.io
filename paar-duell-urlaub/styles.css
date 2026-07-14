@@ -108,7 +108,7 @@ button {
 
 .cover-thumb {
   flex: 0 0 auto;
-  width: 118px;
+  width: 164px;
   aspect-ratio: 2 / 3;
   height: auto;
   object-fit: cover;
@@ -853,6 +853,10 @@ textarea {
     font-size: 3rem;
   }
 
+  .cover-thumb {
+    width: 142px;
+  }
+
   .workbench {
     grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
   }
@@ -875,7 +879,7 @@ textarea {
 
   .topbar {
     display: grid;
-    grid-template-columns: minmax(82px, 104px) minmax(0, 1fr);
+    grid-template-columns: 124px minmax(0, 1fr);
     align-items: center;
   }
 
@@ -884,11 +888,11 @@ textarea {
   }
 
   .topbar h1 {
-    font-size: 1.82rem;
+    font-size: 1.76rem;
   }
 
   .cover-thumb {
-    width: 94px;
+    width: 124px;
     align-self: flex-start;
   }
 

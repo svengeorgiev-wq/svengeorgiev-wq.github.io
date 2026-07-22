@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#07143c">
+    <meta name="description" content="Der interaktive 21-Tage-Begleiter zum Buch ADHS & Overthinking bei Erwachsenen von Anna Lorenz.">
+    <meta name="robots" content="index,follow">
+    <meta property="og:title" content="ADHS & Overthinking – 21-Tage-Begleiter">
+    <meta property="og:description" content="21 kleine Schritte, 26 Buchwerkzeuge und schnelle Hilfe für laute Kopf-Momente.">
+    <meta property="og:image" content="assets/cover.webp">
+    <title>ADHS & Overthinking · 21-Tage-Begleiter</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="assets/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="styles.css?v=20260722">
+  </head>
+  <body>
+    <a class="skip-link" href="#mainContent">Zum Inhalt springen</a>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="brand" type="button" data-route="today" aria-label="Zur Heute-Ansicht">
+          <span class="brand__mark" aria-hidden="true">A</span>
+          <span class="brand__copy">
+            <strong>ADHS <em>& Overthinking</em></strong>
+            <small>21-Tage-Begleiter · Anna Lorenz</small>
+          </span>
+        </button>
+
+        <nav class="desktop-nav" aria-label="Hauptnavigation">
+          <button type="button" data-route="today">Heute</button>
+          <button type="button" data-route="plan">21 Tage</button>
+          <button type="button" data-route="tools">Werkzeuge</button>
+          <button type="button" data-route="progress">Verlauf</button>
+        </nav>
+
+        <div class="topbar__actions">
+          <button class="sos-button" type="button" data-route="sos"><span aria-hidden="true">●</span> SOS</button>
+          <button class="icon-button" id="openDataButton" type="button" aria-label="Daten sichern und Einstellungen öffnen">•••</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar" aria-label="Plan-Navigation">
+          <section class="sidebar-progress" id="sidebarProgress"></section>
+          <nav id="sidebarDays" class="sidebar-days" aria-label="21 Tage"></nav>
+          <p class="sidebar-note">Kein Streak-Druck. Pausen sind Teil des Plans.</p>
+        </aside>
+
+        <main id="mainContent" tabindex="-1"></main>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Mobile Hauptnavigation">
+        <button type="button" data-route="today"><span aria-hidden="true">⌂</span>Heute</button>
+        <button type="button" data-route="plan"><span aria-hidden="true">21</span>Plan</button>
+        <button class="mobile-nav__sos" type="button" data-route="sos"><span aria-hidden="true">●</span>SOS</button>
+        <button type="button" data-route="tools"><span aria-hidden="true">◇</span>Tools</button>
+        <button type="button" data-route="progress"><span aria-hidden="true">↗</span>Verlauf</button>
+      </nav>
+    </div>
+
+    <dialog id="dataDialog" class="dialog">
+      <form method="dialog" class="dialog__card">
+        <div class="dialog__head">
+          <div>
+            <span class="eyebrow">Deine Daten</span>
+            <h2>Fortschritt sichern</h2>
+          </div>
+          <button class="icon-button" value="cancel" aria-label="Schließen">×</button>
+        </div>
+        <p>Alles bleibt lokal auf diesem Gerät. Sichere deinen Stand als Datei oder Übertragungscode.</p>
+        <div class="dialog__actions">
+          <button class="button button--primary" id="exportFileButton" type="button">Sicherungsdatei laden</button>
+          <button class="button button--secondary" id="copyCodeButton" type="button">Code kopieren</button>
+          <label class="button button--secondary file-button">Datei importieren<input id="importFileInput" type="file" accept="application/json,.json"></label>
+        </div>
+        <label class="field field--full" for="importCodeInput">
+          <span>Übertragungscode einfügen</span>
+          <textarea id="importCodeInput" rows="3" placeholder="Code hier einfügen"></textarea>
+        </label>
+        <button class="button button--secondary" id="importCodeButton" type="button">Code übernehmen</button>
+        <hr>
+        <button class="text-button text-button--danger" id="resetButton" type="button">Alle lokalen Daten zurücksetzen</button>
+        <p class="privacy-note">Diese App ersetzt keine medizinische, psychotherapeutische oder sonstige professionelle Beratung.</p>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="data.js?v=20260722"></script>
+    <script src="app.js?v=20260722"></script>
+  </body>
+</html>

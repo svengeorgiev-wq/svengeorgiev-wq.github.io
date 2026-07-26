@@ -117,7 +117,7 @@
             <div class="stat-card"><strong>${averageDelta === null ? "–" : formatDelta(averageDelta)}</strong><span>Ø Kopf-Lautstärke</span></div>
           </div>
         </div>
-        <div class="hero-card__art"><img src="assets/cover.webp" alt="Buchcover ADHS & Overthinking bei Erwachsenen"></div>
+        <div class="hero-card__art"><a href="https://www.amazon.de/dp/B0GX7G8Z1B/" target="_blank" rel="noopener noreferrer" aria-label="ADHS & Overthinking bei Erwachsenen bei Amazon ansehen (öffnet in neuem Tab)"><img src="assets/cover.webp" alt="Buchcover ADHS & Overthinking bei Erwachsenen"></a></div>
       </section>
 
       <div class="dashboard-grid">

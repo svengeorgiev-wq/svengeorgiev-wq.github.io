@@ -19,6 +19,7 @@
   function init() {
     if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     document.addEventListener("click", handleClick);
+    document.addEventListener("play", handleAudioPlay, true);
     main.addEventListener("input", handleEntryInput);
     main.addEventListener("change", handleEntryInput);
     window.addEventListener("hashchange", render);
@@ -44,6 +45,7 @@
     else if (route.name === "plan") renderPlan();
     else if (route.name === "tools") renderTools();
     else if (route.name === "tool") renderTool(route.id);
+    else if (route.name === "listen") renderListen();
     else if (route.name === "sos") renderSos(route.id);
     else if (route.name === "progress") renderProgress();
     else renderToday();
@@ -58,7 +60,7 @@
     if (/^day-\d+$/.test(hash)) return { name: "day", id: clamp(Number(hash.split("-")[1]), 1, 21) };
     if (/^tool-\d+$/.test(hash)) return { name: "tool", id: clamp(Number(hash.split("-")[1]), 1, 26) };
     if (hash.startsWith("sos-")) return { name: "sos", id: hash.slice(4) };
-    if (["today", "plan", "tools", "sos", "progress"].includes(hash)) return { name: hash };
+    if (["today", "plan", "tools", "listen", "sos", "progress"].includes(hash)) return { name: hash };
     return { name: "today" };
   }
 
@@ -299,6 +301,30 @@
     </div>`;
   }
 
+  function renderListen() {
+    const audioTracks = window.AUDIO_TRACKS || [];
+    main.innerHTML = `<div class="view audio-view">
+      <header class="page-head audio-head">
+        <div><span class="eyebrow">Vier Impulse für laute Kopf-Momente</span><h1>Zum <span class="gradient-text">Anhören</span></h1><p>Drück auf Play und nimm dir nur den Impuls, der gerade zu deinem Moment passt. Die Audios sind jederzeit und unabhängig vom 21-Tage-Plan verfügbar.</p></div>
+        <div class="audio-head__mark" aria-hidden="true">♫</div>
+      </header>
+      <aside class="audio-notice" aria-label="Gesundheitlicher Hinweis"><span aria-hidden="true">i</span><p><strong>Wichtiger Hinweis:</strong> Diese Audio-Impulse ersetzen keine Diagnose oder Behandlung. Bei anhaltender Belastung wende dich bitte an eine Ärztin, einen Arzt oder eine psychotherapeutische Fachperson.</p></aside>
+      <section class="audio-list" aria-label="Audio-Impulse">
+        ${audioTracks.map(renderAudioTrack).join("")}
+      </section>
+    </div>`;
+  }
+
+  function renderAudioTrack(track, index) {
+    return `<article class="audio-card" id="track-${escapeHtml(track.id)}">
+      <div class="audio-card__number" aria-hidden="true">${String(index + 1).padStart(2, "0")}</div>
+      <div class="audio-card__content">
+        <div class="audio-card__head"><div><h2>${escapeHtml(track.title)}</h2><p>${escapeHtml(track.subtitle)}</p></div><span class="audio-duration">${escapeHtml(track.duration)}</span></div>
+        <audio controls preload="none" src="${escapeHtml(track.file)}" aria-label="${escapeHtml(track.title)} abspielen">Dein Browser unterstützt die Audiowiedergabe nicht. <a href="${escapeHtml(track.file)}">MP3 herunterladen</a>.</audio>
+      </div>
+    </article>`;
+  }
+
   function supportFields(toolId) {
     if (toolId === 21) return [{ key: "activity", label: "Unsere Paralleltätigkeit", type: "text" }, { key: "topic", label: "Worüber möchte ich sprechen?", type: "textarea" }, { key: "when", label: "Wann probieren wir es?", type: "text" }];
     if (toolId === 22) return [{ key: "behavior", label: "Was ich tue", type: "textarea" }, { key: "interpretation", label: "Was du vielleicht denkst", type: "textarea" }, { key: "reality", label: "Was tatsächlich passiert", type: "textarea" }];
@@ -364,6 +390,13 @@
     const timerChoice = event.target.closest("[data-timer-seconds]");
     if (timerChoice) { selectTimerDuration(Number(timerChoice.dataset.timerSeconds)); return; }
     if (event.target.closest("[data-open-data]")) dataDialog.showModal();
+  }
+
+  function handleAudioPlay(event) {
+    if (!(event.target instanceof HTMLAudioElement)) return;
+    document.querySelectorAll("audio").forEach((audio) => {
+      if (audio !== event.target) audio.pause();
+    });
   }
 
   function handleEntryInput(event) {

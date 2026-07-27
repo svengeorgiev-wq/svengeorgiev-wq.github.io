@@ -2,76 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#07143c">
-    <meta name="description" content="The interactive 21-day companion to ADHD & Overthinking for Adults by Anna Lorenz.">
-    <meta name="robots" content="index,follow">
-    <meta property="og:title" content="ADHD & Overthinking · 21-Day Companion">
-    <meta property="og:description" content="Twenty-one small steps, 26 book tools, and quick support for loud-mind moments.">
-    <meta property="og:image" content="../assets/cover.webp">
-    <title>ADHD & Overthinking · 21-Day Companion</title>
-    <link rel="manifest" href="manifest.webmanifest">
-    <link rel="icon" href="../assets/icon-192.png">
-    <link rel="apple-touch-icon" href="../assets/icon-192.png">
-    <link rel="stylesheet" href="../styles.css?v=20260727-en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <link rel="canonical" href="https://tools.munichpublishing.de/Overthinking_ADHD/">
+    <title>Redirecting to the English ADHD Companion</title>
+    <script>
+      const destination = new URL("/Overthinking_ADHD/", window.location.origin);
+      destination.search = window.location.search;
+      destination.hash = window.location.hash || "#today";
+      window.location.replace(destination);
+    </script>
   </head>
   <body>
-    <a class="skip-link" href="#mainContent">Skip to content</a>
-    <div class="app-shell">
-      <header class="topbar">
-        <button class="brand" type="button" data-route="today" aria-label="Go to Today">
-          <span class="brand__mark" aria-hidden="true">A</span>
-          <span class="brand__copy"><strong>ADHD <em>& Overthinking</em></strong><small>21-Day Companion · Anna Lorenz</small></span>
-        </button>
-        <nav class="desktop-nav" aria-label="Main navigation">
-          <button type="button" data-route="today">Today</button>
-          <button type="button" data-route="plan">21 Days</button>
-          <button type="button" data-route="tools">Tools</button>
-          <button type="button" data-route="listen">Listen</button>
-          <button type="button" data-route="progress">Progress</button>
-        </nav>
-        <div class="topbar__actions">
-          <a class="language-link" href="../#today" lang="de" aria-label="Open German version">DE</a>
-          <button class="sos-button" type="button" data-route="sos"><span aria-hidden="true">●</span> SOS</button>
-          <button class="icon-button" id="openDataButton" type="button" aria-label="Open data backup and settings">•••</button>
-        </div>
-      </header>
-      <div class="workspace">
-        <aside class="sidebar" aria-label="Plan navigation">
-          <section class="sidebar-progress" id="sidebarProgress"></section>
-          <nav id="sidebarDays" class="sidebar-days" aria-label="21 days"></nav>
-          <p class="sidebar-note">No streak pressure. Pauses are part of the plan.</p>
-        </aside>
-        <main id="mainContent" tabindex="-1"></main>
-      </div>
-      <nav class="mobile-nav" aria-label="Mobile main navigation">
-        <button type="button" data-route="today"><span aria-hidden="true">⌂</span>Today</button>
-        <button type="button" data-route="plan"><span aria-hidden="true">21</span>Plan</button>
-        <button class="mobile-nav__sos" type="button" data-route="sos"><span aria-hidden="true">●</span>SOS</button>
-        <button type="button" data-route="listen"><span aria-hidden="true">♫</span>Listen</button>
-        <button type="button" data-route="tools"><span aria-hidden="true">◇</span>Tools</button>
-        <button type="button" data-route="progress"><span aria-hidden="true">↗</span>Progress</button>
-      </nav>
-    </div>
-    <dialog id="dataDialog" class="dialog">
-      <form method="dialog" class="dialog__card">
-        <div class="dialog__head"><div><span class="eyebrow">Your data</span><h2>Back up your progress</h2></div><button class="icon-button" value="cancel" aria-label="Close">×</button></div>
-        <p>Everything stays on this device. Back up your progress as a file or transfer code.</p>
-        <div class="dialog__actions">
-          <button class="button button--primary" id="exportFileButton" type="button">Download backup</button>
-          <button class="button button--secondary" id="copyCodeButton" type="button">Copy code</button>
-          <label class="button button--secondary file-button">Import file<input id="importFileInput" type="file" accept="application/json,.json"></label>
-        </div>
-        <label class="field field--full" for="importCodeInput"><span>Paste transfer code</span><textarea id="importCodeInput" rows="3" placeholder="Paste the code here"></textarea></label>
-        <button class="button button--secondary" id="importCodeButton" type="button">Import code</button>
-        <hr>
-        <button class="text-button text-button--danger" id="resetButton" type="button">Reset all local data</button>
-        <p class="privacy-note">This app does not replace medical, psychotherapeutic, or other professional advice.</p>
-      </form>
-    </dialog>
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="data.js?v=20260727-en"></script>
-    <script src="tracks.js?v=20260727-en"></script>
-    <script src="app.js?v=20260727-en"></script>
+    <p><a href="/Overthinking_ADHD/#today">Open the English ADHD Companion</a></p>
   </body>
 </html>

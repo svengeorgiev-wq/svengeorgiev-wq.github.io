@@ -1,5 +1,5 @@
-const CACHE = "adhs-overthinking-v1-20260727-lang";
-const ASSETS = ["./", "./index.html", "./styles.css?v=20260727-lang", "./data.js?v=20260722", "./tracks.js?v=20260726", "./app.js?v=20260726-2", "./manifest.webmanifest", "./assets/cover.webp", "./assets/icon-192.png"];
+const CACHE = "adhd-overthinking-en-v1-20260727";
+const ASSETS = ["./", "./index.html", "../styles.css?v=20260727-en", "./data.js?v=20260727-en", "./tracks.js?v=20260727-en", "./app.js?v=20260727-en", "./manifest.webmanifest", "../assets/cover.webp", "../assets/icon-192.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));
@@ -7,7 +7,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("adhs-overthinking-v1-") && key !== CACHE).map((key) => caches.delete(key)))));
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith("adhd-overthinking-en-") && key !== CACHE).map((key) => caches.delete(key)))));
   self.clients.claim();
 });
 

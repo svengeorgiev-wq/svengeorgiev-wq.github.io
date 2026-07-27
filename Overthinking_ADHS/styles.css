@@ -166,6 +166,9 @@ p { color: var(--muted); line-height: 1.65; }
   gap: 10px;
 }
 
+.language-link { display: grid; min-width: 40px; height: 40px; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,.035); color: var(--muted); font-size: 11px; font-weight: 900; letter-spacing: .06em; text-decoration: none; }
+.language-link:hover { border-color: rgba(255, 186, 8, .34); color: var(--gold); }
+
 .sos-button {
   display: inline-flex;
   align-items: center;
@@ -549,6 +552,7 @@ input[type="range"] { width: 100%; accent-color: var(--week-color); }
   .brand__copy strong { font-size: 13px; }
   .brand__copy small { display: none; }
   .topbar__actions .icon-button { display: none; }
+  .language-link { min-width: 36px; height: 36px; }
   .sos-button { min-height: 40px; padding: 0 13px; }
   .workspace { display: block; min-height: calc(100vh - 66px); }
   .sidebar { display: none; }
@@ -605,7 +609,7 @@ input[type="range"] { width: 100%; accent-color: var(--week-color); }
 }
 
 @media (max-width: 410px) {
-  .brand__copy strong { max-width: 145px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .brand__copy strong { max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .stat-row { grid-template-columns: 1fr 1fr; }
   .stat-row .stat-card:last-child { grid-column: 1 / -1; }
   .choice-grid, .choice-grid--three { grid-template-columns: 1fr; }

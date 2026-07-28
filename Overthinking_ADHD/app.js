@@ -117,7 +117,7 @@
             <div class="stat-card"><strong>${averageDelta === null ? "–" : formatDelta(averageDelta)}</strong><span>avg. mental noise</span></div>
           </div>
         </div>
-        <div class="hero-card__art"><a href="https://www.amazon.de/dp/B0GX7G8Z1B/" target="_blank" rel="noopener noreferrer" aria-label="View ADHD & Overthinking for Adults on Amazon (opens in a new tab)"><img src="../Overthinking_ADHS/assets/cover.webp" alt="Book cover: ADHD & Overthinking for Adults"></a></div>
+        <div class="hero-card__art"><a href="https://www.amazon.de/dp/B0GX7G8Z1B/" target="_blank" rel="noopener noreferrer" aria-label="View ADHD & Overthinking for Adults on Amazon (opens in a new tab)"><img src="assets/cover.webp?v=20260728-en" alt="English book cover: ADHD & Overthinking in Adults"></a></div>
       </section>
 
       <div class="dashboard-grid">

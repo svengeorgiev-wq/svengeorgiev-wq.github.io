@@ -7,7 +7,7 @@ window.APP_DATA = (() => {
 
   const days = [
     {
-      day: 1, week: 1, title: "Stärken-Detektive", page: "4", duration: "5–8 Min.", toolIds: [1],
+      day: 1, week: 1, title: "Stärken-Detektive", page: "20", duration: "5–8 Min.", toolIds: [1],
       purpose: "Dein Gehirn erinnert sich oft besonders deutlich an Fehler, unangenehme Situationen und Dinge, die vermeintlich nicht gut gelaufen sind. Heute suchst du ganz bewusst nach einem Gegenbeweis.",
       step: "Notiere einen kleinen Erfolg des heutigen Tages in drei Spalten. Auch ein sehr kleiner Erfolg zählt.",
       situation: "Du liegst abends im Bett und dein Kopf spielt den Tag wie ein peinliches Highlight-Reel ab. Statt weiterzugrübeln, sammelst du einen konkreten Gegenbeweis.",
@@ -21,7 +21,7 @@ window.APP_DATA = (() => {
       close: "Ich habe heute einen Mini-Erfolg festgehalten.",
     },
     {
-      day: 2, week: 1, title: "Gib deinem Kritiker einen Namen", page: "7", duration: "4 Min.", toolIds: [2],
+      day: 2, week: 1, title: "Gib deinem Kritiker einen Namen", page: "23", duration: "4 Min.", toolIds: [2],
       purpose: "Nicht jeder Gedanke, der laut und überzeugend klingt, ist wahr. Heute schaffst du Abstand zu deiner inneren Kritikerstimme.",
       step: "Gib deiner kritischen Stimme einen Namen, der sie etwas weniger mächtig wirken lässt. Wenn sie auftaucht, sag: „Ah, das ist wieder …“",
       situation: "Nach einem kleinen Fehler startet sofort der innere Kommentar: „Du bist unfähig.“ Heute erkennst du: Das ist ein Gedankensender – nicht automatisch die Wahrheit.",
@@ -34,7 +34,7 @@ window.APP_DATA = (() => {
       close: "Ich habe meine Kritikerstimme heute erkannt.",
     },
     {
-      day: 3, week: 1, title: "Die 3-Minuten-Dopamin-Pause", page: "18", duration: "3 Min.", toolIds: [3],
+      day: 3, week: 1, title: "Die 3-Minuten-Dopamin-Pause", page: "34", duration: "3 Min.", toolIds: [3],
       purpose: "Dein Gehirn bekommt ständig neue Reize. Heute unterbrichst du diesen Kreislauf für drei Minuten.",
       step: "Lege dein Handy weg, konsumiere keine neuen Inhalte, höre keine Musik oder Podcasts und sitze oder stehe einfach still. Du musst nichts lösen.",
       situation: "Du feilst ewig an einer Nachricht, öffnest immer wieder neue Apps oder scrollst, weil dein Kopf zu laut ist. Vor der nächsten Aktion machst du einen kurzen Reset.",
@@ -47,7 +47,7 @@ window.APP_DATA = (() => {
       close: "Ich habe meine 3-Minuten-Pause gemacht.",
     },
     {
-      day: 4, week: 1, title: "5–4–3–2–1: Zurück ins Hier und Jetzt", page: "20", duration: "3–5 Min.", toolIds: [4],
+      day: 4, week: 1, title: "5–4–3–2–1: Zurück ins Hier und Jetzt", page: "37", duration: "3–5 Min.", toolIds: [4],
       purpose: "Wenn alles zu viel wird, kann dein Sinnesfokus dir helfen, wieder Kontakt zur Gegenwart aufzunehmen.",
       step: "Benenne 5 Dinge, die du siehst, 4 die du fühlst, 3 die du hörst, 2 die du riechst und 1 Sache, die du schmeckst. Bei wenig Zeit: 3–2–1.",
       situation: "Im Supermarkt, in öffentlichen Verkehrsmitteln oder im Büro wird plötzlich alles zu viel. Geräusche, Menschen und Gedanken vermischen sich.",
@@ -62,7 +62,7 @@ window.APP_DATA = (() => {
       close: "Ich habe die Erdungstechnik heute ausprobiert.",
     },
     {
-      day: 5, week: 1, title: "Dein persönliches Sensorik-Audit", page: "31", duration: "7 Min.", toolIds: [5],
+      day: 5, week: 1, title: "Dein persönliches Sensorik-Audit", page: "48", duration: "7 Min.", toolIds: [5],
       purpose: "Manche Belastungen wirken klein, begleiten dich aber über Stunden. Heute suchst du nach versteckten Stressquellen.",
       step: "Notiere drei Reize, die dich regelmäßig belasten, und wähle einen davon für eine Sofortmaßnahme.",
       situation: "Du bist scheinbar grundlos gereizt. Tatsächlich kämpft dein Nervensystem vielleicht seit Stunden mit grellem Licht, Lärm oder unangenehmer Kleidung.",
@@ -76,7 +76,7 @@ window.APP_DATA = (() => {
       close: "Ich habe heute mindestens einen Stressreiz reduziert.",
     },
     {
-      day: 6, week: 1, title: "Deine Safe-Space-Box", page: "33", duration: "8 Min.", toolIds: [6],
+      day: 6, week: 1, title: "Deine Safe-Space-Box", page: "49", duration: "8 Min.", toolIds: [6],
       purpose: "In überfordernden Momenten brauchst du keine komplizierte Lösung. Du brauchst Hilfsmittel, die sofort erreichbar sind.",
       step: "Wähle mindestens zwei Dinge für deine persönliche Safe-Space-Box. Sie sollte leicht erreichbar sein – nicht perfekt verstaut.",
       situation: "Nach einem langen sozialen Tag bist du kurz vor einem Shutdown oder Meltdown. Statt dich weiter zusammenzureißen, greifst du zu deiner vorbereiteten Box.",
@@ -89,7 +89,7 @@ window.APP_DATA = (() => {
       close: "Meine Safe-Space-Box ist einsatzbereit.",
     },
     {
-      day: 7, week: 1, title: "Die Ideen-Schleuse", page: "45", duration: "6 Min.", toolIds: [7],
+      day: 7, week: 1, title: "Die Ideen-Schleuse", page: "62", duration: "6 Min.", toolIds: [7],
       purpose: "Neue Ideen und Aufgaben müssen nicht sofort bearbeitet werden. Heute gibst du ihnen einen sicheren Parkplatz.",
       step: "Notiere fünf Gedanken, Ideen oder To-dos jeweils in einem Satz und lege eine feste Sichtungszeit fest. Bis dahin dürfen sie liegen bleiben.",
       situation: "Während der Arbeit tauchen ständig neue Ideen auf. Statt jeder Idee hinterherzulaufen, parkst du sie.",
@@ -103,7 +103,7 @@ window.APP_DATA = (() => {
       close: "Ich habe heute meine Ideen-Schleuse benutzt.",
     },
     {
-      day: 8, week: 2, title: "Analoges Mind-Mapping", page: "47", duration: "5 Min.", toolIds: [8],
+      day: 8, week: 2, title: "Analoges Mind-Mapping", page: "63", duration: "5 Min.", toolIds: [8],
       purpose: "Wenn alles miteinander verknotet wirkt, musst du nicht sofort eine Lösung finden. Zuerst machst du das Chaos sichtbar.",
       step: "Schreibe dein Hauptthema in die Mitte eines Blatts, zeichne fünf Äste und stoppe nach fünf Minuten. Die Mindmap ist dann fertig genug.",
       situation: "Job, Haushalt, Termine und Beziehungen kleben in deinem Kopf zusammen. Die Mindmap macht aus einem großen Knoten erkennbare Bereiche.",
@@ -119,7 +119,7 @@ window.APP_DATA = (() => {
       close: "Ich habe meine 5-Minuten-Mindmap erstellt.",
     },
     {
-      day: 9, week: 2, title: "Die Unmasking-Ampel", page: "57", duration: "7 Min.", toolIds: [9],
+      day: 9, week: 2, title: "Die Unmasking-Ampel", page: "73", duration: "7 Min.", toolIds: [9],
       purpose: "Nicht jede Umgebung fühlt sich gleich sicher an. Heute untersuchst du, wo du dich zeigen kannst und wo du besonders viel Energie verbrauchst.",
       step: "Ordne drei Lebensbereiche einer Ampelfarbe zu: Grün – ich selbst; Gelb – teilweise angepasst; Rot – starke Kontrolle.",
       situation: "Nach einem Treffen bist du völlig leer und analysierst stundenlang, wie du gewirkt hast. Die Ampel macht den Energiepreis sichtbar.",
@@ -133,7 +133,7 @@ window.APP_DATA = (() => {
       close: "Ich habe drei Kontexte eingeordnet.",
     },
     {
-      day: 10, week: 2, title: "SOS bei RSD", page: "58", duration: "4 Min.", toolIds: [10],
+      day: 10, week: 2, title: "SOS bei RSD", page: "75", duration: "4 Min.", toolIds: [10],
       purpose: "Eine kurze Nachricht, ein fehlendes Emoji oder eine verspätete Antwort kann sich wie Ablehnung anfühlen. Heute baust du eine Pause zwischen Gefühl und Reaktion ein.",
       step: "1. Benennen: „Das könnte gerade RSD sein.“ 2. Zwei neutrale Erklärungen finden. 3. Zeitbremse: Morgen entscheiden, ob und wie du reagierst.",
       situation: "Jemand antwortet nicht oder ungewöhnlich kurz. Dein Kopf macht daraus sofort Ablehnung. Heute behandelst du diese Interpretation nicht als Tatsache.",
@@ -147,7 +147,7 @@ window.APP_DATA = (() => {
       close: "Ich habe heute mindestens eine neutrale Erklärung gesucht.",
     },
     {
-      day: 11, week: 2, title: "Die Time-out-Geste", page: "69", duration: "5 Min.", toolIds: [11],
+      day: 11, week: 2, title: "Die Time-out-Geste", page: "87", duration: "5 Min.", toolIds: [11],
       purpose: "Ein Time-out ist kein Weglaufen. Es ist eine bewusste Unterbrechung, bevor ein Gespräch eskaliert.",
       step: "Lege deinen Time-out-Satz, eine Rückkehrzeit und eine einfache Geste fest. Die Rückkehrzeit signalisiert: Das Gespräch wird später fortgesetzt.",
       situation: "Ein Gespräch kippt. Dein Körper wird heiß, das Herz schlägt schneller und du merkst: Gleich sage ich etwas, das mir später leidtut.",
@@ -161,7 +161,7 @@ window.APP_DATA = (() => {
       close: "Ich habe meinen Satz und meine Rückkehrzeit festgelegt.",
     },
     {
-      day: 12, week: 2, title: "Der Dopamin-Check-in", page: "71", duration: "6 Min.", toolIds: [12],
+      day: 12, week: 2, title: "Der Dopamin-Check-in", page: "89", duration: "6 Min.", toolIds: [12],
       purpose: "Beziehungen bestehen nicht nur aus Organisation, Aufgaben und Problemlösung. Heute schaffst du bewusst Raum für Verbindung.",
       step: "Beantworte drei Fragen – allein oder gemeinsam mit einer vertrauten Person: Was war gut? Was war schwer? Was brauche ich gerade?",
       situation: "Eine Beziehung fühlt sich nur noch wie Organisation an. Der Check-in bringt persönliche Wahrnehmung und Verbindung zurück ins Gespräch.",
@@ -175,7 +175,7 @@ window.APP_DATA = (() => {
       close: "Ich habe meinen Dopamin-Check-in gemacht.",
     },
     {
-      day: 13, week: 2, title: "Das System der minimalen Reibung", page: "83", duration: "8 Min.", toolIds: [13],
+      day: 13, week: 2, title: "Das System der minimalen Reibung", page: "102", duration: "8 Min.", toolIds: [13],
       purpose: "Ein gutes Alltagssystem muss nicht schön, clever oder perfekt sein. Es muss für dein tatsächliches Leben funktionieren.",
       step: "Wähle eine Stelle, an der regelmäßig etwas schiefläuft. Heute versuchst du nicht, disziplinierter zu werden – du baust die Hürde ab.",
       situation: "Schlüssel, Briefe oder Wäsche landen am falschen Ort. Jeder neue Fehler löst Scham und Selbstkritik aus.",
@@ -189,7 +189,7 @@ window.APP_DATA = (() => {
       close: "Ich habe heute ein Alltagssystem vereinfacht.",
     },
     {
-      day: 14, week: 2, title: "Der sichtbare Blitz-Reset", page: "85", duration: "5 Min.", toolIds: [14],
+      day: 14, week: 2, title: "Der sichtbare Blitz-Reset", page: "104", duration: "5 Min.", toolIds: [14],
       purpose: "Du musst nicht die ganze Wohnung aufräumen. Heute erzeugst du in kurzer Zeit ein sichtbares Ergebnis.",
       step: "Stelle fünf Minuten und wähle genau eine Mini-Aufgabe. Nicht sortieren, nicht perfektionieren, kein Nebenprojekt – beim Klingeln aufhören.",
       situation: "Das Chaos wirkt so groß, dass du gar nicht beginnst. Ein kleiner sichtbarer Reset beweist deinem Gehirn: Veränderung ist möglich.",
@@ -203,7 +203,7 @@ window.APP_DATA = (() => {
       close: "Ich habe heute meinen Blitz-Reset gemacht.",
     },
     {
-      day: 15, week: 3, title: "Eat the Frog – ADHS-gerecht", page: "97", duration: "3 Min.", toolIds: [15],
+      day: 15, week: 3, title: "Eat the Frog – ADHS-gerecht", page: "117", duration: "3 Min.", toolIds: [15],
       purpose: "Die wichtigste Aufgabe des Tages fühlt sich häufig besonders schwer an. Heute musst du sie nicht erledigen – du musst sie nur beginnen.",
       step: "Definiere einen Startschritt, der höchstens eine Minute dauert: Dokument öffnen, Betreffzeile schreiben, Datei oder Nummer suchen.",
       situation: "Du bist den ganzen Tag mit Kleinigkeiten beschäftigt, während die wichtigste Aufgabe liegen bleibt. Heute machst du den Einstieg winzig.",
@@ -216,7 +216,7 @@ window.APP_DATA = (() => {
       close: "Ich habe meinen Ein-Minuten-Schritt ausgeführt.",
     },
     {
-      day: 16, week: 3, title: "Fokus-Sprint und Body Doubling", page: "99", duration: "5–10 Min.", toolIds: [16],
+      day: 16, week: 3, title: "Fokus-Sprint und Body Doubling", page: "118", duration: "5–10 Min.", toolIds: [16],
       purpose: "Du brauchst nicht immer mehr Motivation. Manchmal brauchst du einen klaren Anfang, eine kurze Zeitspanne und die Anwesenheit einer anderen Person.",
       step: "Wähle eine Aufgabe, eine Sprintdauer und optional ein Body Double. Bearbeite nur diese Aufgabe; Ablenkungen werden notiert, nicht verfolgt.",
       situation: "Du möchtest anfangen, landest aber beim Scrollen, Herumlaufen oder Vorbereiten. Der kurze Sprint begrenzt die Aufgabe zeitlich.",
@@ -231,7 +231,7 @@ window.APP_DATA = (() => {
       close: "Ich habe heute mindestens einen Fokus-Sprint gemacht.",
     },
     {
-      day: 17, week: 3, title: "Plane nach deiner Energie", page: "111", duration: "4 Min.", toolIds: [17],
+      day: 17, week: 3, title: "Plane nach deiner Energie", page: "130", duration: "4 Min.", toolIds: [17],
       purpose: "Nicht jeder Tag bietet dieselbe Energie. Heute passt du mindestens eine Erwartung an deinen tatsächlichen Zustand an.",
       step: "Wähle LOW, MEDIUM oder HIGH. Bei LOW reduzierst du, bei MEDIUM erledigst du Routinen, bei HIGH nutzt du anspruchsvolle oder kreative Aufgaben.",
       situation: "In PMS-, Stress- oder Low-Phasen wird alles lauter. Trotzdem erwartest du dieselbe Leistung wie an einem guten Tag – und verurteilst dich, wenn sie ausbleibt.",
@@ -244,7 +244,7 @@ window.APP_DATA = (() => {
       close: "Ich habe eine Erwartung an mein Energieniveau angepasst.",
     },
     {
-      day: 18, week: 3, title: "Dein Energie-Stabilisator", page: "113", duration: "5 Min.", toolIds: [18],
+      day: 18, week: 3, title: "Dein Energie-Stabilisator", page: "133", duration: "5 Min.", toolIds: [18],
       purpose: "Wenn dein Körper zu wenig Flüssigkeit oder regelmäßige Nahrung bekommt, kann sich auch dein Kopf unruhiger anfühlen. Heute bereitest du eine einfache Stabilisierung vor.",
       step: "Plane einen sichtbaren Flüssigkeitsanker sowie einen Protein-Snack oder eine feste Zwischenmahlzeit für den Tag.",
       situation: "Am Nachmittag kommt der Crash. Du wirst gereizter, grübelst stärker oder suchst schnelle Reize. Heute planst du vorher, statt erst im Tief zu reagieren.",
@@ -259,7 +259,7 @@ window.APP_DATA = (() => {
       close: "Mein Stabilisator ist vorbereitet.",
     },
     {
-      day: 19, week: 3, title: "90 Sekunden physisch entladen", page: "123", duration: "90 Sek.", toolIds: [19],
+      day: 19, week: 3, title: "90 Sekunden physisch entladen", page: "144", duration: "90 Sek.", toolIds: [19],
       purpose: "Starke Anspannung steckt nicht nur in deinen Gedanken. Sie zeigt sich auch im Körper. Heute leitest du diese Energie zuerst körperlich ab.",
       step: "Zehn Kniebeugen, zwanzig Sekunden ausschütteln oder gehen, noch einmal zehn Kniebeugen. Passe alles an deinen Körper und deine Möglichkeiten an.",
       situation: "Du spürst Wut, Frust oder einen starken Impuls und möchtest sofort reagieren. Vorher bewegst du deinen Körper für 90 Sekunden.",
@@ -272,7 +272,7 @@ window.APP_DATA = (() => {
       close: "Ich habe vor meiner Reaktion eine körperliche Pause gemacht.",
     },
     {
-      day: 20, week: 3, title: "Box Breathing", page: "126", duration: "2 Min.", toolIds: [20],
+      day: 20, week: 3, title: "Box Breathing", page: "146", duration: "2 Min.", toolIds: [20],
       purpose: "Vor schwierigen Telefonaten, Feedback oder Behördengängen kann dein Körper bereits Alarm schlagen. Heute regulierst du zuerst deinen Atem.",
       step: "Atme vier Sekunden ein, halte vier, atme vier aus, halte vier. Atme ohne Druck und verkürze die Zeiten, wenn vier Sekunden unangenehm sind.",
       situation: "Vor einem Telefonat, einer Rückmeldung oder einem Behördentermin steigt der Alarm so stark, dass du die Aufgabe vermeidest.",
@@ -284,7 +284,7 @@ window.APP_DATA = (() => {
       close: "Ich habe zwei Minuten bewusst geatmet.",
     },
     {
-      day: 21, week: 3, title: "Drei Kisten und ein Telefon-Skript", page: "150 und 153", duration: "10 Min.", toolIds: [23, 24],
+      day: 21, week: 3, title: "Drei Kisten und ein Telefon-Skript", page: "172 und 174", duration: "10 Min.", toolIds: [23, 24],
       purpose: "Bürokratische Aufgaben werden leichter, wenn du nicht alles gleichzeitig entscheiden musst. Heute trennst du Sortieren und Handeln.",
       step: "Ordne ein Dokument in JETZT, WARTEN oder ARCHIV ein. Schreibe danach drei einfache Sätze für einen möglichen Anruf.",
       situation: "Ein Brief liegt seit Wochen ungeöffnet da. Gleichzeitig blockiert dich der Gedanke an einen möglichen Anruf. Heute zerlegst du beides in kleine Schritte.",
@@ -304,30 +304,30 @@ window.APP_DATA = (() => {
   ];
 
   const tools = [
-    [1, "Stärken-Detektive", "Selbstwert", 1, "Fakten gegen den automatischen Negativfilter sammeln.", "4"],
-    [2, "Kritiker benennen", "Gedanken", 2, "Abstand zwischen dir und der kritischen Stimme schaffen.", "7"],
-    [3, "Dopamin-Pause", "Akut", 3, "Drei Minuten neue Reize stoppen.", "18"],
-    [4, "5–4–3–2–1-Erdung", "Akut", 4, "Aufmerksamkeit über die Sinne ins Jetzt holen.", "20"],
-    [5, "Sensorik-Audit", "Reize", 5, "Versteckte Stressquellen erkennen und reduzieren.", "31"],
-    [6, "Safe-Space-Box", "Reize", 6, "Sofort erreichbare Hilfsmittel vorbereiten.", "33"],
-    [7, "Ideen-Schleuse", "Fokus", 7, "Gedanken sicher parken, statt ihnen sofort zu folgen.", "45"],
-    [8, "Analoges Mind-Mapping", "Fokus", 8, "Einen inneren Knoten sichtbar sortieren.", "47"],
-    [9, "Unmasking-Ampel", "Beziehung", 9, "Den Energiepreis verschiedener Umgebungen erkennen.", "57"],
-    [10, "SOS bei RSD", "Akut", 10, "Beobachtung, Interpretation und Reaktion trennen.", "58"],
-    [11, "Time-out-Geste", "Beziehung", 11, "Eskalation unterbrechen und sicher zurückkehren.", "69"],
-    [12, "Dopamin-Check-in", "Beziehung", 12, "Gutes, Schweres und Bedürfnisse besprechbar machen.", "71"],
-    [13, "Minimale Reibung", "Alltag", 13, "Systeme an das echte Leben anpassen.", "83"],
-    [14, "15-Minuten-Blitz-Routine", "Alltag", 14, "Über einen kurzen sichtbaren Reset ins Handeln kommen.", "85"],
-    [15, "Eat the Frog · ADHS-modifiziert", "Job", 15, "Die Hürde auf einen Ein-Minuten-Start verkleinern.", "97"],
-    [16, "Fokus-Timer & Body Doubling", "Job", 16, "Zeitbegrenzung und äußere Struktur kombinieren.", "99"],
-    [17, "Cycle-Planner", "Energie", 17, "Erwartungen an die aktuelle Energie anpassen.", "111"],
-    [18, "Ernährung & Dopamin-Unterstützung", "Energie", 18, "Einfache, sichtbare Energie-Stabilisatoren planen.", "113"],
-    [19, "Physisches Entladen", "Akut", 19, "Starke körperliche Aktivierung vor einer Reaktion senken.", "123"],
-    [20, "Box Breathing", "Akut", 20, "Über bewusstes Atmen die Alarmstufe senken.", "126"],
+    [1, "Stärken-Detektive", "Selbstwert", 1, "Fakten gegen den automatischen Negativfilter sammeln.", "20"],
+    [2, "Kritiker benennen", "Gedanken", 2, "Abstand zwischen dir und der kritischen Stimme schaffen.", "23"],
+    [3, "Dopamin-Pause", "Akut", 3, "Drei Minuten neue Reize stoppen.", "34"],
+    [4, "5–4–3–2–1-Erdung", "Akut", 4, "Aufmerksamkeit über die Sinne ins Jetzt holen.", "37"],
+    [5, "Sensorik-Audit", "Reize", 5, "Versteckte Stressquellen erkennen und reduzieren.", "48"],
+    [6, "Safe-Space-Box", "Reize", 6, "Sofort erreichbare Hilfsmittel vorbereiten.", "49"],
+    [7, "Ideen-Schleuse", "Fokus", 7, "Gedanken sicher parken, statt ihnen sofort zu folgen.", "62"],
+    [8, "Analoges Mind-Mapping", "Fokus", 8, "Einen inneren Knoten sichtbar sortieren.", "63"],
+    [9, "Unmasking-Ampel", "Beziehung", 9, "Den Energiepreis verschiedener Umgebungen erkennen.", "73"],
+    [10, "SOS bei RSD", "Akut", 10, "Beobachtung, Interpretation und Reaktion trennen.", "75"],
+    [11, "Time-out-Geste", "Beziehung", 11, "Eskalation unterbrechen und sicher zurückkehren.", "87"],
+    [12, "Dopamin-Check-in", "Beziehung", 12, "Gutes, Schweres und Bedürfnisse besprechbar machen.", "89"],
+    [13, "Minimale Reibung", "Alltag", 13, "Systeme an das echte Leben anpassen.", "102"],
+    [14, "15-Minuten-Blitz-Routine", "Alltag", 14, "Über einen kurzen sichtbaren Reset ins Handeln kommen.", "104"],
+    [15, "Eat the Frog · ADHS-modifiziert", "Job", 15, "Die Hürde auf einen Ein-Minuten-Start verkleinern.", "117"],
+    [16, "Fokus-Timer & Body Doubling", "Job", 16, "Zeitbegrenzung und äußere Struktur kombinieren.", "118"],
+    [17, "Cycle-Planner", "Energie", 17, "Erwartungen an die aktuelle Energie anpassen.", "130"],
+    [18, "Ernährung & Dopamin-Unterstützung", "Energie", 18, "Einfache, sichtbare Energie-Stabilisatoren planen.", "133"],
+    [19, "Physisches Entladen", "Akut", 19, "Starke körperliche Aktivierung vor einer Reaktion senken.", "144"],
+    [20, "Box Breathing", "Akut", 20, "Über bewusstes Atmen die Alarmstufe senken.", "146"],
     [21, "Parallel Working", "Beziehung", null, "Wichtige Gespräche bei leichter gemeinsamer Bewegung führen.", "138"],
     [22, "Bedürfnis-Übersetzungs-Liste", "Beziehung", null, "Sichtbares Verhalten und innere Realität gemeinsam übersetzen.", "140"],
-    [23, "Drei-Kisten-Sortiersystem", "Bürokratie", 21, "Post mit nur drei Entscheidungen vorsortieren.", "150"],
-    [24, "Telefon-Skript", "Bürokratie", 21, "Wichtige Sätze vor einem Behördentelefonat festhalten.", "153"],
+    [23, "Drei-Kisten-Sortiersystem", "Bürokratie", 21, "Post mit nur drei Entscheidungen vorsortieren.", "172"],
+    [24, "Telefon-Skript", "Bürokratie", 21, "Wichtige Sätze vor einem Behördentelefonat festhalten.", "174"],
     [25, "Bedürfnis-Manifest", "Selbstvertretung", null, "Eigene Anforderungen konkret und kommunizierbar machen.", "167"],
     [26, "Netzwerkaufbau", "Selbstvertretung", null, "Unterstützung mit niedriger Reizhürde bewusst aufbauen.", "169"],
   ].map(([id, title, category, day, summary, page]) => ({ id, title, category, day, summary, page }));

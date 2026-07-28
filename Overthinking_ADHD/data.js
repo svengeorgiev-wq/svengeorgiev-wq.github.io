@@ -7,7 +7,7 @@ window.APP_DATA = (() => {
 
   const days = [
     {
-      day: 1, week: 1, title: "Strength Detectives", page: "20", duration: "5–8 min", toolIds: [1],
+      day: 1, week: 1, title: "Strength Detectives", page: "4", duration: "5–8 min", toolIds: [1],
       purpose: "Your brain often remembers mistakes, uncomfortable moments, and things that seemed to go wrong especially clearly. Today, you deliberately look for counterevidence.",
       step: "Write down one small success from today in three columns. Even a very small success counts.",
       situation: "You are lying in bed while your mind replays the day like an embarrassing highlight reel. Instead of continuing to ruminate, you collect one concrete piece of counterevidence.",
@@ -21,7 +21,7 @@ window.APP_DATA = (() => {
       close: "I recorded one small success today.",
     },
     {
-      day: 2, week: 1, title: "Give Your Inner Critic a Name", page: "23", duration: "4 min", toolIds: [2],
+      day: 2, week: 1, title: "Give Your Inner Critic a Name", page: "7", duration: "4 min", toolIds: [2],
       purpose: "Not every thought that sounds loud and convincing is true. Today, you create distance from your inner critical voice.",
       step: "Give your critical voice a name that makes it feel a little less powerful. When it appears, say: ‘Ah, there goes … again.’",
       situation: "After a small mistake, the inner commentary starts immediately: ‘You are incapable.’ Today, you recognize it as a thought broadcast—not automatically the truth.",
@@ -34,7 +34,7 @@ window.APP_DATA = (() => {
       close: "I noticed my critical voice today.",
     },
     {
-      day: 3, week: 1, title: "The 3-Minute Dopamine Pause", page: "34", duration: "3 min", toolIds: [3],
+      day: 3, week: 1, title: "The 3-Minute Dopamine Pause", page: "18", duration: "3 min", toolIds: [3],
       purpose: "Your brain is constantly receiving new stimulation. Today, you interrupt that cycle for three minutes.",
       step: "Put your phone away, take in no new content, play no music or podcasts, and simply sit or stand still. You do not have to solve anything.",
       situation: "You keep editing a message, opening new apps, or scrolling because your mind is too loud. Before the next action, you take a short reset.",
@@ -47,7 +47,7 @@ window.APP_DATA = (() => {
       close: "I took my 3-minute pause.",
     },
     {
-      day: 4, week: 1, title: "5–4–3–2–1: Back to the Present", page: "37", duration: "3–5 min", toolIds: [4],
+      day: 4, week: 1, title: "5–4–3–2–1: Back to the Present", page: "20", duration: "3–5 min", toolIds: [4],
       purpose: "When everything becomes too much, focusing on your senses can help you reconnect with the present.",
       step: "Name 5 things you see, 4 you feel, 3 you hear, 2 you smell, and 1 you taste. Short on time? Use 3–2–1.",
       situation: "At the grocery store, on public transport, or at work, everything suddenly becomes too much. Sounds, people, and thoughts blend together.",
@@ -62,7 +62,7 @@ window.APP_DATA = (() => {
       close: "I tried the grounding technique today.",
     },
     {
-      day: 5, week: 1, title: "Your Personal Sensory Audit", page: "48", duration: "7 min", toolIds: [5],
+      day: 5, week: 1, title: "Your Personal Sensory Audit", page: "31", duration: "7 min", toolIds: [5],
       purpose: "Some stressors seem small but stay with you for hours. Today, you look for hidden sources of stress.",
       step: "Write down three forms of input that regularly strain you, and choose one for an immediate adjustment.",
       situation: "You seem irritable for no reason. In reality, your nervous system may have been battling bright light, noise, or uncomfortable clothing for hours.",
@@ -76,7 +76,7 @@ window.APP_DATA = (() => {
       close: "I reduced at least one stress trigger today.",
     },
     {
-      day: 6, week: 1, title: "Your Safe-Space Box", page: "49", duration: "8 min", toolIds: [6],
+      day: 6, week: 1, title: "Your Safe-Space Box", page: "33", duration: "8 min", toolIds: [6],
       purpose: "In overwhelming moments, you do not need a complicated solution. You need aids that are immediately within reach.",
       step: "Choose at least two items for your personal safe-space box. It should be easy to reach—not perfectly stored away.",
       situation: "After a long social day, you are close to shutdown or meltdown. Instead of forcing yourself to keep going, you reach for your prepared box.",
@@ -89,7 +89,7 @@ window.APP_DATA = (() => {
       close: "My safe-space box is ready.",
     },
     {
-      day: 7, week: 1, title: "The Idea Sluice", page: "62", duration: "6 min", toolIds: [7],
+      day: 7, week: 1, title: "The Idea Sluice", page: "45", duration: "6 min", toolIds: [7],
       purpose: "New ideas and tasks do not need immediate attention. Today, you give them a safe place to park.",
       step: "Write down five thoughts, ideas, or to-dos in one sentence each and choose a fixed review time. Until then, they are allowed to wait.",
       situation: "New ideas keep appearing while you work. Instead of chasing each one, you park them.",
@@ -103,7 +103,7 @@ window.APP_DATA = (() => {
       close: "I used my idea sluice today.",
     },
     {
-      day: 8, week: 2, title: "Analog Mind Mapping", page: "63", duration: "5 min", toolIds: [8],
+      day: 8, week: 2, title: "Analog Mind Mapping", page: "47", duration: "5 min", toolIds: [8],
       purpose: "When everything feels tangled together, you do not need an immediate solution. First, you make the chaos visible.",
       step: "Write your main topic in the center of a sheet of paper, draw five branches, and stop after five minutes. The mind map is then complete enough.",
       situation: "Work, household tasks, appointments, and relationships are stuck together in your head. The mind map turns one large knot into recognizable areas.",
@@ -119,7 +119,7 @@ window.APP_DATA = (() => {
       close: "I created my 5-minute mind map.",
     },
     {
-      day: 9, week: 2, title: "The Unmasking Traffic Light", page: "73", duration: "7 min", toolIds: [9],
+      day: 9, week: 2, title: "The Unmasking Traffic Light", page: "57", duration: "7 min", toolIds: [9],
       purpose: "Not every environment feels equally safe. Today, you explore where you can show up as yourself and where you use especially large amounts of energy.",
       step: "Assign three areas of your life a traffic-light color: green—fully myself; yellow—partly adapting; red—strong self-control.",
       situation: "After meeting people, you feel completely drained and spend hours analyzing how you came across. The traffic light makes the energy cost visible.",
@@ -133,7 +133,7 @@ window.APP_DATA = (() => {
       close: "I categorized three settings.",
     },
     {
-      day: 10, week: 2, title: "RSD SOS", page: "75", duration: "4 min", toolIds: [10],
+      day: 10, week: 2, title: "RSD SOS", page: "58", duration: "4 min", toolIds: [10],
       purpose: "A short message, a missing emoji, or a delayed reply can feel like rejection. Today, you build a pause between feeling and response.",
       step: "1. Name it: ‘This might be RSD right now.’ 2. Find two neutral explanations. 3. Add a time brake: decide tomorrow whether and how to respond.",
       situation: "Someone does not reply or responds unusually briefly. Your mind immediately turns it into rejection. Today, you do not treat that interpretation as fact.",
@@ -147,7 +147,7 @@ window.APP_DATA = (() => {
       close: "I looked for at least one neutral explanation today.",
     },
     {
-      day: 11, week: 2, title: "The Time-Out Gesture", page: "87", duration: "5 min", toolIds: [11],
+      day: 11, week: 2, title: "The Time-Out Gesture", page: "69", duration: "5 min", toolIds: [11],
       purpose: "A time-out is not running away. It is a deliberate interruption before a conversation escalates.",
       step: "Choose your time-out sentence, a return time, and a simple gesture. The return time signals that the conversation will continue later.",
       situation: "A conversation starts to tip. Your body heats up, your heart beats faster, and you realize you are about to say something you may regret.",
@@ -161,7 +161,7 @@ window.APP_DATA = (() => {
       close: "I chose my sentence and return time.",
     },
     {
-      day: 12, week: 2, title: "The Dopamine Check-In", page: "89", duration: "6 min", toolIds: [12],
+      day: 12, week: 2, title: "The Dopamine Check-In", page: "71", duration: "6 min", toolIds: [12],
       purpose: "Relationships are not only about logistics, tasks, and problem-solving. Today, you intentionally create space for connection.",
       step: "Answer three questions—alone or with someone you trust: What was good? What was hard? What do I need right now?",
       situation: "A relationship feels like nothing but logistics. The check-in brings personal experience and connection back into the conversation.",
@@ -175,7 +175,7 @@ window.APP_DATA = (() => {
       close: "I completed my dopamine check-in.",
     },
     {
-      day: 13, week: 2, title: "The Minimum-Friction System", page: "102", duration: "8 min", toolIds: [13],
+      day: 13, week: 2, title: "The Minimum-Friction System", page: "83", duration: "8 min", toolIds: [13],
       purpose: "A good everyday system does not need to be beautiful, clever, or perfect. It needs to work for your actual life.",
       step: "Choose one place where things regularly go wrong. Today, you do not try to become more disciplined—you remove the barrier.",
       situation: "Keys, mail, or laundry end up in the wrong place. Every new mistake triggers shame and self-criticism.",
@@ -189,7 +189,7 @@ window.APP_DATA = (() => {
       close: "I simplified one everyday system today.",
     },
     {
-      day: 14, week: 2, title: "The Visible Flash Reset", page: "104", duration: "5 min", toolIds: [14],
+      day: 14, week: 2, title: "The Visible Flash Reset", page: "85", duration: "5 min", toolIds: [14],
       purpose: "You do not have to clean the entire home. Today, you create a visible result in a short amount of time.",
       step: "Set five minutes and choose exactly one mini-task. Do not sort, perfect, or start a side project—stop when the timer rings.",
       situation: "The mess feels so large that you do not start at all. A small, visible reset proves to your brain that change is possible.",
@@ -203,7 +203,7 @@ window.APP_DATA = (() => {
       close: "I completed my flash reset today.",
     },
     {
-      day: 15, week: 3, title: "Eat the Frog—ADHD Style", page: "117", duration: "3 min", toolIds: [15],
+      day: 15, week: 3, title: "Eat the Frog—ADHD Style", page: "97", duration: "3 min", toolIds: [15],
       purpose: "The most important task of the day often feels especially difficult. Today, you do not have to finish it—you only have to begin.",
       step: "Define a starting step that takes no more than one minute: open the document, write the subject line, or find the file or phone number.",
       situation: "You stay busy with small things all day while the most important task remains untouched. Today, you make the entry point tiny.",
@@ -216,7 +216,7 @@ window.APP_DATA = (() => {
       close: "I completed my one-minute step.",
     },
     {
-      day: 16, week: 3, title: "Focus Sprint and Body Doubling", page: "118", duration: "5–10 min", toolIds: [16],
+      day: 16, week: 3, title: "Focus Sprint and Body Doubling", page: "99", duration: "5–10 min", toolIds: [16],
       purpose: "You do not always need more motivation. Sometimes you need a clear beginning, a short time frame, and another person's presence.",
       step: "Choose one task, a sprint duration, and optionally a body double. Work only on that task; record distractions instead of following them.",
       situation: "You want to begin but end up scrolling, wandering around, or preparing. The short sprint gives the task a clear time boundary.",
@@ -231,7 +231,7 @@ window.APP_DATA = (() => {
       close: "I completed at least one focus sprint today.",
     },
     {
-      day: 17, week: 3, title: "Plan Around Your Energy", page: "130", duration: "4 min", toolIds: [17],
+      day: 17, week: 3, title: "Plan Around Your Energy", page: "111", duration: "4 min", toolIds: [17],
       purpose: "Not every day brings the same amount of energy. Today, you adapt at least one expectation to your actual state.",
       step: "Choose LOW, MEDIUM, or HIGH. On LOW, reduce demands; on MEDIUM, handle routines; on HIGH, use your energy for demanding or creative tasks.",
       situation: "During PMS, stress, or low-energy phases, everything gets louder. Yet you expect the same output as on a good day—and judge yourself when it does not happen.",
@@ -244,7 +244,7 @@ window.APP_DATA = (() => {
       close: "I adjusted one expectation to my energy level.",
     },
     {
-      day: 18, week: 3, title: "Your Energy Stabilizer", page: "133", duration: "5 min", toolIds: [18],
+      day: 18, week: 3, title: "Your Energy Stabilizer", page: "113", duration: "5 min", toolIds: [18],
       purpose: "When your body gets too little fluid or regular nourishment, your mind may also feel more unsettled. Today, you prepare a simple stabilizer.",
       step: "Plan a visible hydration anchor and a protein snack or scheduled mini-meal for your day.",
       situation: "The afternoon crash arrives. You become more irritable, ruminate more, or seek quick stimulation. Today, you plan ahead instead of reacting only after the dip.",
@@ -259,7 +259,7 @@ window.APP_DATA = (() => {
       close: "My stabilizer is prepared.",
     },
     {
-      day: 19, week: 3, title: "Release Physically for 90 Seconds", page: "144", duration: "90 sec", toolIds: [19],
+      day: 19, week: 3, title: "Release Physically for 90 Seconds", page: "123", duration: "90 sec", toolIds: [19],
       purpose: "Strong tension does not live only in your thoughts. It also appears in your body. Today, you first channel that energy physically.",
       step: "Do ten squats, shake out or walk for twenty seconds, then do ten more squats. Adapt everything to your body and abilities.",
       situation: "You feel anger, frustration, or a strong impulse and want to react immediately. First, you move your body for 90 seconds.",
@@ -272,7 +272,7 @@ window.APP_DATA = (() => {
       close: "I took a physical pause before responding.",
     },
     {
-      day: 20, week: 3, title: "Box Breathing", page: "146", duration: "2 min", toolIds: [20],
+      day: 20, week: 3, title: "Box Breathing", page: "126", duration: "2 min", toolIds: [20],
       purpose: "Before difficult calls, feedback, or administrative appointments, your body may already sound the alarm. Today, you regulate your breathing first.",
       step: "Breathe in for four seconds, hold for four, breathe out for four, and hold for four. Breathe without forcing it and shorten the counts if four seconds feels uncomfortable.",
       situation: "Before a phone call, feedback, or an appointment with an agency, the alarm rises so high that you avoid the task.",
@@ -284,7 +284,7 @@ window.APP_DATA = (() => {
       close: "I breathed consciously for two minutes.",
     },
     {
-      day: 21, week: 3, title: "Three Boxes and a Phone Script", page: "172 and 174", duration: "10 min", toolIds: [23, 24],
+      day: 21, week: 3, title: "Three Boxes and a Phone Script", page: "150 and 153", duration: "10 min", toolIds: [23, 24],
       purpose: "Administrative tasks become easier when you do not have to decide everything at once. Today, you separate sorting from acting.",
       step: "Sort one document into NOW, WAITING, or ARCHIVE. Then write three simple sentences for a possible phone call.",
       situation: "A letter has been lying unopened for weeks. At the same time, the thought of a possible phone call blocks you. Today, you break both into small steps.",
@@ -304,30 +304,30 @@ window.APP_DATA = (() => {
   ];
 
   const tools = [
-    [1, "Strength Detectives", "Self-worth", 1, "Collect facts against the automatic negativity filter.", "20"],
-    [2, "Name the Critic", "Thoughts", 2, "Create distance between you and the critical voice.", "23"],
-    [3, "Dopamine Pause", "Immediate help", 3, "Stop new stimulation for three minutes.", "34"],
-    [4, "5–4–3–2–1 Grounding", "Immediate help", 4, "Use your senses to bring attention back to the present.", "37"],
-    [5, "Sensory Audit", "Sensory input", 5, "Identify and reduce hidden sources of stress.", "48"],
-    [6, "Safe-Space Box", "Sensory input", 6, "Prepare aids that are immediately within reach.", "49"],
-    [7, "Idea Sluice", "Focus", 7, "Park thoughts safely instead of following them immediately.", "62"],
-    [8, "Analog Mind Mapping", "Focus", 8, "Make an inner knot visible and sortable.", "63"],
-    [9, "Unmasking Traffic Light", "Relationships", 9, "Recognize the energy cost of different environments.", "73"],
-    [10, "RSD SOS", "Immediate help", 10, "Separate observation, interpretation, and response.", "75"],
-    [11, "Time-Out Gesture", "Relationships", 11, "Interrupt escalation and return safely.", "87"],
-    [12, "Dopamine Check-In", "Relationships", 12, "Make good moments, hard moments, and needs discussable.", "89"],
-    [13, "Minimum Friction", "Daily life", 13, "Adapt systems to real life.", "102"],
-    [14, "15-Minute Flash Routine", "Daily life", 14, "Use a short, visible reset to get moving.", "104"],
-    [15, "Eat the Frog · ADHD-Modified", "Work", 15, "Reduce the barrier to a one-minute start.", "117"],
-    [16, "Focus Timer & Body Doubling", "Work", 16, "Combine a time limit with external structure.", "118"],
-    [17, "Cycle Planner", "Energy", 17, "Adapt expectations to your current energy.", "130"],
-    [18, "Nutrition & Dopamine Support", "Energy", 18, "Plan simple, visible energy stabilizers.", "133"],
-    [19, "Physical Release", "Immediate help", 19, "Lower strong physical activation before responding.", "144"],
-    [20, "Box Breathing", "Immediate help", 20, "Use conscious breathing to lower the alarm level.", "146"],
+    [1, "Strength Detectives", "Self-worth", 1, "Collect facts against the automatic negativity filter.", "4"],
+    [2, "Name the Critic", "Thoughts", 2, "Create distance between you and the critical voice.", "7"],
+    [3, "Dopamine Pause", "Immediate help", 3, "Stop new stimulation for three minutes.", "18"],
+    [4, "5–4–3–2–1 Grounding", "Immediate help", 4, "Use your senses to bring attention back to the present.", "20"],
+    [5, "Sensory Audit", "Sensory input", 5, "Identify and reduce hidden sources of stress.", "31"],
+    [6, "Safe-Space Box", "Sensory input", 6, "Prepare aids that are immediately within reach.", "33"],
+    [7, "Idea Sluice", "Focus", 7, "Park thoughts safely instead of following them immediately.", "45"],
+    [8, "Analog Mind Mapping", "Focus", 8, "Make an inner knot visible and sortable.", "47"],
+    [9, "Unmasking Traffic Light", "Relationships", 9, "Recognize the energy cost of different environments.", "57"],
+    [10, "RSD SOS", "Immediate help", 10, "Separate observation, interpretation, and response.", "58"],
+    [11, "Time-Out Gesture", "Relationships", 11, "Interrupt escalation and return safely.", "69"],
+    [12, "Dopamine Check-In", "Relationships", 12, "Make good moments, hard moments, and needs discussable.", "71"],
+    [13, "Minimum Friction", "Daily life", 13, "Adapt systems to real life.", "83"],
+    [14, "15-Minute Flash Routine", "Daily life", 14, "Use a short, visible reset to get moving.", "85"],
+    [15, "Eat the Frog · ADHD-Modified", "Work", 15, "Reduce the barrier to a one-minute start.", "97"],
+    [16, "Focus Timer & Body Doubling", "Work", 16, "Combine a time limit with external structure.", "99"],
+    [17, "Cycle Planner", "Energy", 17, "Adapt expectations to your current energy.", "111"],
+    [18, "Nutrition & Dopamine Support", "Energy", 18, "Plan simple, visible energy stabilizers.", "113"],
+    [19, "Physical Release", "Immediate help", 19, "Lower strong physical activation before responding.", "123"],
+    [20, "Box Breathing", "Immediate help", 20, "Use conscious breathing to lower the alarm level.", "126"],
     [21, "Parallel Working", "Relationships", null, "Have important conversations during light shared movement.", "138"],
     [22, "Needs Translation List", "Relationships", null, "Translate visible behavior and inner reality together.", "140"],
-    [23, "Three-Box Sorting System", "Admin", 21, "Pre-sort mail with only three decisions.", "172"],
-    [24, "Phone Script", "Admin", 21, "Write down key sentences before an administrative call.", "174"],
+    [23, "Three-Box Sorting System", "Admin", 21, "Pre-sort mail with only three decisions.", "150"],
+    [24, "Phone Script", "Admin", 21, "Write down key sentences before an administrative call.", "153"],
     [25, "Needs Manifesto", "Self-advocacy", null, "Make your own requirements concrete and communicable.", "167"],
     [26, "Build a Support Network", "Self-advocacy", null, "Deliberately build low-stimulation support.", "169"],
   ].map(([id, title, category, day, summary, page]) => ({ id, title, category, day, summary, page }));

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f6f0e8">
+  <meta name="description" content="Dein ruhiger 21-Tage-Fokus-Begleiter zum Buch: Timer, Audios, Fortschritt und Notfall-Guide — ohne Konto.">
+  <title>21-Tage-Fokus-Begleiter</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <button class="brand" type="button" data-nav="today" aria-label="Zur Ansicht Heute">
+        <span class="brand-mark" aria-hidden="true">21</span>
+        <span>
+          <strong>Fokus-Begleiter</strong>
+          <small>Frauen mit ADHS</small>
+        </span>
+      </button>
+      <button class="icon-button" id="settingsButton" type="button" aria-label="Einstellungen öffnen" title="Einstellungen">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.86 2.86-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.55v-.1A1.7 1.7 0 0 0 8.5 19.4a1.7 1.7 0 0 0-1.88.34l-.06.06-2.86-2.86.06-.06A1.7 1.7 0 0 0 4.1 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H2.3V9.55h.1A1.7 1.7 0 0 0 4.1 8.5a1.7 1.7 0 0 0-.34-1.88l-.06-.06L6.56 3.7l.06.06A1.7 1.7 0 0 0 8.5 4.1a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1v-.1h4.05v.1A1.7 1.7 0 0 0 15 4.1a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.86 2.86-.06.06A1.7 1.7 0 0 0 19.4 8.5a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4h.1v4.05h-.1A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+      </button>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <section class="view is-active" id="todayView" data-view="today" aria-labelledby="todayHeading"></section>
+      <section class="view" id="daysView" data-view="days" aria-labelledby="daysHeading"></section>
+      <section class="view" id="audiosView" data-view="audios" aria-labelledby="audiosHeading"></section>
+      <section class="view" id="emergencyView" data-view="emergency" aria-labelledby="emergencyHeading"></section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Hauptnavigation">
+      <button class="nav-item is-active" type="button" data-nav="today">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5M9.5 20v-6h5v6"/></svg>
+        <span>Heute</span>
+      </button>
+      <button class="nav-item" type="button" data-nav="days">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M8 2.5v4M16 2.5v4M3 9h18M7 13h2M11 13h2M15 13h2M7 17h2M11 17h2"/></svg>
+        <span>21 Tage</span>
+      </button>
+      <button class="nav-item" type="button" data-nav="audios">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 17V9a7 7 0 0 1 14 0v8"/><path d="M5 14H3.5A1.5 1.5 0 0 0 2 15.5v3A1.5 1.5 0 0 0 3.5 20H5v-6ZM19 14h1.5a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5H19v-6Z"/></svg>
+        <span>Audios</span>
+      </button>
+      <button class="nav-item nav-item--help" type="button" data-nav="emergency">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 2.7 19.5h18.6L12 3Z"/><path d="M12 9v4.5M12 17h.01"/></svg>
+        <span>Notfall-Guide</span>
+      </button>
+    </nav>
+  </div>
+
+  <dialog class="sheet" id="settingsDialog" aria-labelledby="settingsHeading">
+    <form method="dialog" class="sheet-card">
+      <header class="sheet-header">
+        <div>
+          <p class="eyebrow">Nur auf diesem Gerät</p>
+          <h2 id="settingsHeading">Einstellungen</h2>
+        </div>
+        <button class="icon-button" value="cancel" aria-label="Einstellungen schließen">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>
+        </button>
+      </header>
+
+      <section class="settings-section" aria-labelledby="reminderHeading">
+        <h3 id="reminderHeading">Kalender-Erinnerung</h3>
+        <p>Lege einen täglichen Termin für deine 21 Tage an. Dein Kalender erinnert dich auch bei geschlossener App.</p>
+        <label class="field-label" for="reminderTime">Deine Uhrzeit</label>
+        <div class="inline-control">
+          <input id="reminderTime" type="time" value="19:00">
+          <button class="button button--primary" id="calendarButton" type="button">Im Kalender eintragen</button>
+        </div>
+        <details>
+          <summary>Wie funktioniert das?</summary>
+          <p>Die App lädt eine Kalenderdatei. Öffne sie und bestätige den täglich wiederkehrenden Termin. Du kannst ihn später direkt im Kalender ändern oder löschen.</p>
+        </details>
+      </section>
+
+      <section class="settings-section" aria-labelledby="installHeading">
+        <h3 id="installHeading">Als App verwenden</h3>
+        <p id="installHint">Füge den Begleiter deinem Home-Bildschirm hinzu. So ist er schneller erreichbar und funktioniert nach dem ersten Laden auch offline.</p>
+        <button class="button button--secondary" id="installButton" type="button">Installieren</button>
+      </section>
+
+      <section class="settings-section settings-section--quiet">
+        <h3>Datenschutz</h3>
+        <p>Kein Konto, keine E-Mail-Adresse, keine Cloud. Fortschritt und Einstellungen bleiben ausschließlich in diesem Browser auf diesem Gerät.</p>
+        <button class="text-button text-button--danger" id="resetButton" type="button">Lokale Daten zurücksetzen</button>
+      </section>
+    </form>
+  </dialog>
+
+  <dialog class="confirm-dialog" id="resetDialog" aria-labelledby="resetHeading">
+    <form method="dialog">
+      <h2 id="resetHeading">Wirklich zurücksetzen?</h2>
+      <p>Alle Markierungen und Einstellungen auf diesem Gerät werden gelöscht. Das lässt sich nicht rückgängig machen.</p>
+      <div class="dialog-actions">
+        <button class="button button--secondary" value="cancel">Abbrechen</button>
+        <button class="button button--danger" id="confirmResetButton" value="confirm">Zurücksetzen</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>

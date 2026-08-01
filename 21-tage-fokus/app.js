@@ -8,8 +8,13 @@ const NAV_NAMES = Object.freeze({
   emergency: "Notfall-Guide"
 });
 
-const DAY_COUNT = 21;
-const AUDIO_COUNT = 24;
+const content = window.FOKUS_CONTENT;
+if (!content?.days?.length || !content?.audios?.length) {
+  throw new Error("Die Inhaltsdatei content.js fehlt oder ist unvollständig.");
+}
+
+const { days, audios, guideQuestions, guideResults } = content;
+const DAY_COUNT = days.length;
 const DEFAULT_STATE = Object.freeze({
   currentDay: 1,
   markedDays: [],
@@ -17,71 +22,6 @@ const DEFAULT_STATE = Object.freeze({
   minimal: { date: "", enabled: false },
   energyByDay: {}
 });
-
-const days = Array.from({ length: DAY_COUNT }, (_, index) => {
-  const day = index + 1;
-  return {
-    day,
-    title: day === 1 ? "Dein Anker" : `Tag ${day}`,
-    workbookHint: `Trag deine Gedanken auf der Seite für Tag ${day} im Workbook ein.`,
-    routine: "Lege die heutige Workbook-Seite bereit. Starte den Fokus-Timer, sobald du mit der Tagesroutine beginnst.",
-    minimal: "Nimm nur die 60-Sekunden-Variante aus deinem Workbook. Danach darf für heute Schluss sein.",
-    timerSeconds: 300,
-    audio: day
-  };
-});
-
-const guideQuestions = [
-  {
-    title: "Was blockiert dich gerade am stärksten?",
-    options: [
-      { value: "start", label: "Ich komme nicht ins Tun" },
-      { value: "full", label: "Mein Kopf ist zu voll" },
-      { value: "low", label: "Meine Energie ist fast weg" }
-    ]
-  },
-  {
-    title: "Was wäre jetzt leichter?",
-    options: [
-      { value: "move", label: "Einen winzigen Schritt machen" },
-      { value: "settle", label: "Erst kurz runterfahren" }
-    ]
-  },
-  {
-    title: "Wie viel ist gerade realistisch?",
-    options: [
-      { value: "60", label: "60 Sekunden" },
-      { value: "120", label: "2 Minuten" }
-    ]
-  }
-];
-
-const guideResults = {
-  "start-move": {
-    title: "Der kleinstmögliche Einstieg",
-    text: "Bereite nur den ersten sichtbaren Handgriff vor. Du musst die Aufgabe nicht beenden — nur anfangen."
-  },
-  "start-settle": {
-    title: "Erst landen, dann anfangen",
-    text: "Nimm die kurze Pause vollständig. Entscheide erst danach, ob heute noch ein Einstieg möglich ist."
-  },
-  "full-move": {
-    title: "Eine Sache nach außen",
-    text: "Öffne dein Workbook und halte nur die eine Sache fest, die gerade am lautesten ist. Nicht sortieren."
-  },
-  "full-settle": {
-    title: "Reize kurz kleiner machen",
-    text: "Lege das Handy weg, senke Geräusche und bleib für die gewählte Zeit bei genau einem ruhigen Punkt."
-  },
-  "low-move": {
-    title: "Minimalversion zählt",
-    text: "Wähle die kleinste machbare Handlung. Ein kurzer Kontakt mit der Routine ist für heute genug."
-  },
-  "low-settle": {
-    title: "Heute darf klein sein",
-    text: "Mach ausschließlich die Minimalversion. Es gibt nichts nachzuholen und keine verlorene Serie."
-  }
-};
 
 let state = loadState();
 let activeView = readInitialView();
@@ -233,7 +173,7 @@ function renderFullRoutine(day) {
           <p>${escapeHtml(day.routine)}</p>
         </div>
       </div>
-      <p class="placeholder-note"><strong>Inhaltsplatzhalter:</strong> Der genaue Tagesauftrag wird nach dem Abgleich mit dem Manuskript eingesetzt.</p>
+      ${day.placeholder ? '<p class="placeholder-note"><strong>Inhaltsplatzhalter:</strong> Der genaue Tagesauftrag wird nach dem Abgleich mit dem Manuskript eingesetzt.</p>' : ""}
     </section>
   `;
 }
@@ -244,7 +184,7 @@ function renderMinimalRoutine(day) {
       <p class="eyebrow">Minimalversion · Tag ${day.day}</p>
       <h2>60 Sekunden sind genug</h2>
       <p>${escapeHtml(day.minimal)}</p>
-      <p class="placeholder-note"><strong>Inhaltsplatzhalter:</strong> Die genaue 60-Sekunden-Variante wird aus dem Manuskript ergänzt.</p>
+      ${day.placeholder ? '<p class="placeholder-note"><strong>Inhaltsplatzhalter:</strong> Die genaue 60-Sekunden-Variante wird aus dem Manuskript ergänzt.</p>' : ""}
     </section>
   `;
 }
@@ -271,12 +211,15 @@ function renderEnergyCard(day) {
 }
 
 function renderAudioCard(day) {
+  const audio = audios.find((item) => item.number === day.audio) || { number: day.audio, title: `Audio ${day.audio}`, src: "" };
   return `
     <section class="card">
-      <p class="eyebrow">Audio ${day.audio}</p>
+      <p class="eyebrow">Audio ${audio.number}</p>
       <h2>Audio anhören</h2>
-      <p>Hier erscheint die Audio-Begleitung für Tag ${day.day}, sobald die Aufnahme vorliegt.</p>
-      <button class="button button--secondary button--wide" type="button" disabled>Audio folgt</button>
+      <p>${audio.src ? escapeHtml(audio.title) : `Hier erscheint die Audio-Begleitung für Tag ${day.day}, sobald die Aufnahme vorliegt.`}</p>
+      ${audio.src
+        ? `<audio class="audio-player" controls preload="metadata" src="${escapeHtml(audio.src)}">Dein Browser kann dieses Audio nicht abspielen.</audio>`
+        : '<button class="button button--secondary button--wide" type="button" disabled>Audio folgt</button>'}
     </section>
   `;
 }
@@ -347,14 +290,12 @@ function renderAudios() {
       <h1 id="audiosHeading">Audios</h1>
       <p class="hero-copy">Die 24 Audio-Plätze sind vorbereitet. Sobald die Dateien vorliegen, werden Titel und Zuordnung aus dem Manuskript übernommen.</p>
     </article>
-    <section class="audio-list" aria-label="24 Audio-Platzhalter">
-      ${Array.from({ length: AUDIO_COUNT }, (_, index) => {
-        const number = index + 1;
-        const assignment = number <= DAY_COUNT ? `Tag ${number}` : "Zusatz-Audio";
+    <section class="audio-list" aria-label="${audios.length} Audio-Plätze">
+      ${audios.map((audio) => {
         return `
           <article class="audio-item">
-            <span class="audio-number">${number}</span>
-            <div><strong>Audio ${number}</strong><small>${assignment} · folgt</small></div>
+            <span class="audio-number">${audio.number}</span>
+            <div><strong>${escapeHtml(audio.title)}</strong><small>${escapeHtml(audio.assignment)} · ${audio.src ? "verfügbar" : "folgt"}</small></div>
           </article>
         `;
       }).join("")}
@@ -421,7 +362,7 @@ function renderGuideResult(result) {
       <p>${escapeHtml(result.text)}</p>
       <button class="button button--primary button--wide" id="guideTimer" type="button">Jetzt Fokus-Timer starten</button>
     </div>
-    <p class="placeholder-note"><strong>Vorläufiger Weg:</strong> Fragen und sechs Szenarien werden nach dem Abgleich mit dem Notfall-Kapitel final ersetzt.</p>
+    ${content.guidePlaceholder ? '<p class="placeholder-note"><strong>Vorläufiger Weg:</strong> Fragen und sechs Szenarien werden nach dem Abgleich mit dem Notfall-Kapitel final ersetzt.</p>' : ""}
     <button class="text-button" id="guideRestart" type="button" style="margin-top:1rem">Von vorn beginnen</button>
   `;
 }

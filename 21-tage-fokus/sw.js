@@ -1,8 +1,9 @@
-const CACHE_NAME = "fokus-21-v2";
+const CACHE_NAME = "fokus-21-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css",
+  "./content.js",
   "./app.js",
   "./manifest.webmanifest",
   "./icons/icon.svg",

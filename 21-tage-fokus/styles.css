@@ -481,6 +481,7 @@ p { line-height: 1.58; }
 .audio-item strong, .audio-item small { display: block; }
 .audio-item strong { overflow: hidden; font-size: .93rem; text-overflow: ellipsis; white-space: nowrap; }
 .audio-item small { margin-top: .18rem; color: var(--muted); }
+.audio-player { width: 100%; margin-top: .25rem; }
 
 .guide-progress {
   display: flex;

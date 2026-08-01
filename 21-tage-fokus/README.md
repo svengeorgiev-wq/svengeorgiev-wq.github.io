@@ -20,6 +20,8 @@ Statische, offline-fähige Companion-App zu **Frauen mit ADHS: Die 21-Tage-Fokus
 - 24 Audio-Dateien mit Titeln und Zuordnung
 - genaue Workbook-Seitenhinweise
 
+Alle austauschbaren Inhalte liegen zentral in `content.js`. Sobald die endgültigen Texte und Audiodateien vorliegen, müssen weder Navigation noch Timer- oder Speicherlogik geändert werden.
+
 ## Lokal starten
 
 ```powershell

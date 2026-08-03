@@ -1,9 +1,10 @@
-const CACHE_NAME = "fokus-21-v6";
+const CACHE_NAME = "fokus-21-v7";
 const AUDIO_CACHE = "fokus-audios-v1";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./styles.css",
+  "./assets/book-cover.webp",
   "./content.js",
   "./app.js",
   "./manifest.webmanifest",

@@ -1,7 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" rx="116" fill="#d9745f"/>
-  <circle cx="256" cy="256" r="172" fill="#f6f0e8"/>
-  <path d="M161 188c25-47 67-72 117-72 52 0 94 25 118 72" fill="none" stroke="#e6b65f" stroke-width="26" stroke-linecap="round"/>
-  <text x="256" y="322" text-anchor="middle" font-family="Arial, sans-serif" font-size="176" font-weight="700" fill="#253a3a">21</text>
-  <path d="M150 365h212" stroke="#78a79a" stroke-width="22" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="rainbow" x1="70" y1="420" x2="440" y2="80" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ef174c"/>
+      <stop offset=".18" stop-color="#ff7417"/>
+      <stop offset=".35" stop-color="#f6ce00"/>
+      <stop offset=".52" stop-color="#4fbd3f"/>
+      <stop offset=".68" stop-color="#00a9d6"/>
+      <stop offset=".84" stop-color="#0874df"/>
+      <stop offset="1" stop-color="#7623b8"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="#ffd84a"/>
+  <circle cx="256" cy="246" r="182" fill="#fff9df" stroke="#082f67" stroke-width="18"/>
+  <path d="M126 215c32-71 88-111 154-111 58 0 111 31 144 91" fill="none" stroke="url(#rainbow)" stroke-width="32" stroke-linecap="round"/>
+  <path d="M104 336c48 52 104 77 168 77 61 0 113-22 157-67" fill="none" stroke="url(#rainbow)" stroke-width="28" stroke-linecap="round"/>
+  <text x="256" y="326" text-anchor="middle" font-family="Georgia, serif" font-size="186" font-weight="700" fill="#082f67">21</text>
 </svg>

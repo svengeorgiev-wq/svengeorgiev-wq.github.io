@@ -1,4 +1,4 @@
-const CACHE_NAME = "fokus-21-v5";
+const CACHE_NAME = "fokus-21-v6";
 const AUDIO_CACHE = "fokus-audios-v1";
 const APP_SHELL = [
   "./",

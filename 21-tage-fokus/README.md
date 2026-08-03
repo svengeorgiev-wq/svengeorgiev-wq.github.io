@@ -1,26 +1,27 @@
 # 21-Tage-Fokus-Begleiter
 
-Statische, offline-fähige Companion-App zu **Frauen mit ADHS: Die 21-Tage-Fokus-Formel**.
+Statische, installierbare Companion-PWA zu **Frauen mit ADHS: Die 21-Tage-Fokus-Formel**.
+
+## Rollenverteilung
+
+- Das Buch erklärt Hintergründe und die vollständigen Tagesroutinen.
+- Das Workbook nimmt persönliche Beobachtungen und Ergebnisse auf.
+- Die App ergänzt beides mit Audio-Snacks, Fokus-Timer, Kalender-Erinnerung, lokalem Fortschritt und dem interaktiven Notfall-Guide.
 
 ## Enthalten
 
-- 21 lokal gespeicherte Tagesmarkierungen ohne Streak- oder Straflogik
-- Fokus-Timer für 5 Minuten, 2 Minuten, 90 Sekunden und 60 Sekunden
-- tägliche Minimalversion, die die vollständige Routine ausblendet
+- separater Setup-Tag 0 plus Tage 1–21 mit den Titeln aus dem Manuskript
+- fünf Etappen: Anfangen, Zeit und Reize, Kopfvolumen, Energie, Gefühle und Grenzen
+- 5-Minuten-Timer mit den vier wiederkehrenden Zeitabschnitten aus dem Buch
+- taggenaue Minimalversionen zwischen 20 und 90 Sekunden
+- 22 echte MP3-Audio-Snacks für Tag 0–21 inklusive optionalem Offline-Download
+- deutlicher Hinweis, dass die Audio-Snacks keine Hörversion des Buches sind
+- drei neutrale Marker: gemacht, versucht, ausgelassen
 - Energiestufe ab Tag 13
-- 24 vorbereitete Audio-Plätze
-- dreistufiger vorläufiger Notfall-Guide mit sechs Wegen
-- Kalenderdatei mit 21 täglichen Erinnerungen
-- installierbare PWA mit Offline-App-Shell
-
-## Noch einzusetzen
-
-- endgültige Tagesaufträge und Minimalversionen aus dem Manuskript
-- finale Fragen und Wege aus dem Notfall-Kapitel
-- 24 Audio-Dateien mit Titeln und Zuordnung
-- genaue Workbook-Seitenhinweise
-
-Alle austauschbaren Inhalte liegen zentral in `content.js`. Sobald die endgültigen Texte und Audiodateien vorliegen, müssen weder Navigation noch Timer- oder Speicherlogik geändert werden.
+- sechs manuskriptbasierte Wiedereinstiegswege im Notfall-Guide
+- wiederkehrende Kalender-Erinnerung für 21 Tage
+- lokale Sicherung und Wiederherstellung des Fortschritts
+- Offline-App-Shell ohne Konto, E-Mail-Erfassung oder Backend
 
 ## Lokal starten
 

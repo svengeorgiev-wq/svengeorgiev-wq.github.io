@@ -18,16 +18,16 @@ Diese vier Namen werden in App, Buch, Workbook und Mikro-Verweisen wortgleich ve
 
 1. **Heute** — aktueller Tag mit Routine, Timer, Audio und Markierung
 2. **21 Tage** — Übersicht der 21 neutralen Fortschrittskästchen
-3. **Audios** — alle verfügbaren Begleit-Audios
-4. **Notfall-Guide** — drei kurze Fragen mit Weiterleitung in eines von sechs Szenarien
+3. **Audios** — alle verfügbaren Audio-Snacks für Tag 0 bis 21
+4. **Notfall-Guide** — sechs direkte Wiedereinstiegswege aus Kapitel 8
 
 Zusätzliche Einstellungen werden über ein unaufdringliches Symbol geöffnet und sind kein eigener Hauptbereich.
 
 ## Verbindliche Namen auf dem Tagesbildschirm
 
 - **Tag [Nummer]**
-- **Heute nur 60 Sekunden** — Schalter für die Minimalversion
-- **Fokus-Timer** — gemeinsame Bezeichnung für 60 Sekunden, 90 Sekunden, 2 Minuten oder 5 Minuten
+- **Heute nur die Minimalversion** — Schalter für die kurze Variante des jeweiligen Tages
+- **Fokus-Timer** — gemeinsame Bezeichnung für die 5-Minuten-Routine und die kurzen Varianten
 - **Audio anhören**
 - **Tag markieren** / **Markierung entfernen**
 - **Tägliche Erinnerung einrichten**
@@ -73,9 +73,9 @@ Nach der ersten Nutzung soll die Leserin die App über ihr Home-Screen-Symbol ö
 Gespeichert werden ausschließlich:
 
 - aktueller Tag: Zahl von 0 bis 21
-- markierte Tage: Liste von Tagesnummern
+- Marker je Tag: gemacht, versucht oder ausgelassen
 - gewählte Erinnerungszeit: Uhrzeit
-- Minimalversion: Tagesdatum plus Ein-/Aus-Zustand
+- Minimalversion: Tagesdatum plus Ein-/Aus-Zustand; Dauer je Tag laut Manuskript
 - Energiestufe ab Tag 13: Tagesnummer plus Grün, Gelb oder Rot
 
 Der Minimalversions-Schalter gilt nur für den jeweiligen Kalendertag und wird nicht als dauerhaftes persönliches Merkmal gespeichert.
@@ -84,7 +84,7 @@ Das bloße Öffnen oder Wechseln eines Tages markiert ihn nicht automatisch und 
 
 ## Fortschrittsregeln
 
-- Unmarkierte Tage bleiben neutral und leer.
+- Tage ohne Zeichen bleiben neutral und leer.
 - Es gibt keine rote Warnung, verlorene Serie, Flamme, Punktzahl oder Strafsprache.
 - Tage dürfen in beliebiger Reihenfolge markiert und wieder demarkiert werden.
 - Eine Lücke blockiert den nächsten Tag nicht.
@@ -92,32 +92,30 @@ Das bloße Öffnen oder Wechseln eines Tages markiert ihn nicht automatisch und 
 
 ## Minimalversion
 
-Ist **Heute nur 60 Sekunden** aktiviert:
+Ist **Heute nur die Minimalversion** aktiviert:
 
 - verschwindet die vollständige Routine vollständig aus dem Tagesbildschirm;
-- erscheint ausschließlich die 60-Sekunden-Variante;
-- startet der Fokus-Timer mit 60 Sekunden;
+- erscheint ausschließlich die kurze Variante des jeweiligen Tages;
+- startet der Fokus-Timer mit der manuskriptgetreuen Dauer zwischen 20 und 90 Sekunden;
 - bleibt der Tag gleichwertig markierbar.
 
 Es gibt keine ausgegraute oder weiterhin sichtbare Langversion.
 
-## Noch benötigte Inhaltsbausteine
+## Eingesetzte Inhaltsbausteine
 
-Die technische App kann mit Platzhaltern gebaut werden. Vor der Veröffentlichung werden benötigt:
-
-1. Titel, Kurzauftrag und Minimalversion für alle 21 Tage
-2. Zuordnung der Timerdauer je Tag beziehungsweise Werkzeug
-3. drei Fragen und sechs Zielwege des Notfall-Guides
-4. Dateinamen, Titel und Zuordnung der 24 Audios zu den 21 Tagen oder ergänzenden Audio-Plätzen
-5. genaue Workbook-Seitenhinweise pro Tag
+- Titel, Tagesziel, Material, Workbook-Wegweiser und Minimalversion für Tag 0 bis 21
+- fünf Etappen aus der Landkarte des Manuskripts
+- 22 Audio-Snacks für Tag 0 bis 21
+- sechs Wiedereinstiegswege des Notfall-Guides
+- drei neutrale Erfolgsmarker
 
 ## Abnahmekriterien für Version 1
 
 - Die App funktioniert auf Smartphone und Desktop ohne Registrierung.
-- Nach dem ersten Laden funktionieren Tagesansichten, Timer, Fortschritt und bereits geladene Platzhalter offline.
+- Nach dem ersten Laden funktionieren Tagesansichten, Timer, Fortschritt und App-Shell offline; alle Audios können optional vollständig offline gespeichert werden.
 - Beim erneuten Öffnen setzt die App am zuletzt verwendeten Tag fort; `/notfall/` öffnet direkt den Notfall-Guide.
 - Fortschritt, Energiestufe und Erinnerungszeit bleiben nach Neuladen erhalten.
-- Der 60-Sekunden-Schalter blendet die vollständige Routine wirklich aus.
+- Der Minimalversions-Schalter blendet die vollständige 5-Minuten-Begleitung wirklich aus.
 - Die Kalenderdatei enthält eine tägliche Wiederholung und einen Alarm.
 - Kein leerer Tag wird visuell negativ bewertet.
 - Jeder im Buch verwendete Bereichs- und Werkzeugname existiert wortgleich in der App.

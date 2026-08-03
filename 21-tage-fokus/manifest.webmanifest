@@ -1,14 +1,26 @@
 {
   "name": "21-Tage-Fokus-Begleiter",
   "short_name": "Fokus 21",
-  "description": "Der ruhige Fokus-Begleiter für Frauen mit ADHS",
+  "description": "Die ergänzende PWA zur 21-Tage-Fokus-Formel: Fokus-Timer, Audio-Snacks, Fortschritt und Notfall-Guide",
   "lang": "de",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f6f0e8",
   "theme_color": "#f6f0e8",
-  "orientation": "portrait-primary",
+  "orientation": "any",
+  "shortcuts": [
+    {
+      "name": "Audio-Snacks",
+      "short_name": "Audios",
+      "url": "./?view=audios"
+    },
+    {
+      "name": "Notfall-Guide",
+      "short_name": "Notfall",
+      "url": "./?view=emergency"
+    }
+  ],
   "icons": [
     {
       "src": "icons/icon-192.png",

@@ -1,6 +1,8 @@
 "use strict";
 
-const STORAGE_KEY = "fokus-21-state-v1";
+const STORAGE_KEY = "fokus-21-state-v2";
+const LEGACY_STORAGE_KEY = "fokus-21-state-v1";
+const AUDIO_CACHE = "fokus-audios-v1";
 const NAV_NAMES = Object.freeze({
   today: "Heute",
   days: "21 Tage",
@@ -9,15 +11,20 @@ const NAV_NAMES = Object.freeze({
 });
 
 const content = window.FOKUS_CONTENT;
-if (!content?.days?.length || !content?.audios?.length) {
+if (!content?.days?.length || !content?.audios?.length || !content?.phases?.length) {
   throw new Error("Die Inhaltsdatei content.js fehlt oder ist unvollständig.");
 }
 
-const { days, audios, guideQuestions, guideResults } = content;
-const DAY_COUNT = days.length;
+const { days, audios, phases, guidePaths } = content;
+const PROGRAM_DAY_COUNT = 21;
+const MARKERS = Object.freeze({
+  done: { symbol: "✓", label: "gemacht" },
+  tried: { symbol: "○", label: "versucht" },
+  skipped: { symbol: "×", label: "ausgelassen" }
+});
 const DEFAULT_STATE = Object.freeze({
-  currentDay: 1,
-  markedDays: [],
+  currentDay: 0,
+  markers: {},
   reminderTime: "19:00",
   minimal: { date: "", enabled: false },
   energyByDay: {}
@@ -27,15 +34,9 @@ let state = loadState();
 let activeView = readInitialView();
 let deferredInstallPrompt = null;
 let toastTimeout = 0;
-let guideAnswers = [];
-let timer = {
-  day: state.currentDay,
-  duration: days[state.currentDay - 1].timerSeconds,
-  remaining: days[state.currentDay - 1].timerSeconds,
-  endAt: 0,
-  running: false,
-  interval: 0
-};
+let selectedGuidePath = "";
+let timer = { interval: 0 };
+timer = makeTimer(getDay(state.currentDay), false);
 
 const els = {
   today: document.querySelector("#todayView"),
@@ -48,6 +49,8 @@ const els = {
   calendarButton: document.querySelector("#calendarButton"),
   installButton: document.querySelector("#installButton"),
   installHint: document.querySelector("#installHint"),
+  exportButton: document.querySelector("#exportButton"),
+  importInput: document.querySelector("#importInput"),
   resetButton: document.querySelector("#resetButton"),
   resetDialog: document.querySelector("#resetDialog"),
   confirmResetButton: document.querySelector("#confirmResetButton"),
@@ -74,8 +77,17 @@ function bindGlobalEvents() {
     if (navButton) navigate(navButton.dataset.nav);
   });
 
+  document.addEventListener("play", (event) => {
+    if (!(event.target instanceof HTMLMediaElement)) return;
+    document.querySelectorAll("audio").forEach((audio) => {
+      if (audio !== event.target) audio.pause();
+    });
+  }, true);
+
   els.settingsButton.addEventListener("click", () => els.settingsDialog.showModal());
   els.calendarButton.addEventListener("click", createCalendarReminder);
+  els.exportButton?.addEventListener("click", exportProgress);
+  els.importInput?.addEventListener("change", importProgress);
   els.resetButton.addEventListener("click", () => els.resetDialog.showModal());
   els.confirmResetButton.addEventListener("click", resetLocalData);
 
@@ -104,76 +116,79 @@ function renderAll() {
 }
 
 function renderToday() {
-  const day = days[state.currentDay - 1];
-  const marked = state.markedDays.includes(day.day);
+  const day = getDay(state.currentDay);
+  const phase = getPhase(day.phase);
+  const marker = state.markers[String(day.day)] || "";
   const minimal = isMinimalToday();
 
-  if (timer.day !== day.day) resetTimer(minimal ? 60 : day.timerSeconds, day.day, false);
+  if (timer.day !== day.day) timer = makeTimer(day, minimal);
 
   els.today.innerHTML = `
     <article class="hero">
       <div class="day-topline">
         <div>
-          <p class="eyebrow">${escapeHtml(NAV_NAMES.today)} · ${day.day} von ${DAY_COUNT}</p>
-          <h1 id="todayHeading">${escapeHtml(day.title)}</h1>
+          <p class="eyebrow">${escapeHtml(day.day === 0 ? "Setup vor den 21 Tagen" : `${phase.title} · Tag ${day.day} von ${PROGRAM_DAY_COUNT}`)}</p>
+          <h1 id="todayHeading" tabindex="-1">${escapeHtml(day.title)}</h1>
         </div>
         <div class="day-stepper" aria-label="Tag wechseln">
-          <button type="button" id="previousDay" aria-label="Vorheriger Tag" ${day.day === 1 ? "disabled" : ""}>←</button>
-          <button type="button" id="nextDay" aria-label="Nächster Tag" ${day.day === DAY_COUNT ? "disabled" : ""}>→</button>
+          <button type="button" id="previousDay" aria-label="Vorheriger Tag" ${day.day === 0 ? "disabled" : ""}>←</button>
+          <button type="button" id="nextDay" aria-label="Nächster Tag" ${day.day === PROGRAM_DAY_COUNT ? "disabled" : ""}>→</button>
         </div>
       </div>
-      <p class="hero-copy">${escapeHtml(day.workbookHint)}</p>
-      ${marked ? '<span class="status-pill">✓ Für dich markiert</span>' : ""}
+      <p class="hero-copy">${escapeHtml(day.goal)}</p>
+      ${marker ? renderStatusPill(marker) : ""}
     </article>
 
     <div class="content-grid">
       <section class="card card--gold">
         <label class="minimal-switch">
           <span>
-            <strong>Heute nur 60 Sekunden</strong>
-            <small>Die vollständige Routine verschwindet. Die Minimalversion zählt genauso.</small>
+            <strong>Heute nur die Minimalversion</strong>
+            <small>${formatDuration(day.minimalSeconds)} statt fünf Minuten. Das zählt vollständig.</small>
           </span>
           <input id="minimalToggle" type="checkbox" ${minimal ? "checked" : ""}>
           <span class="switch-track" aria-hidden="true"></span>
         </label>
       </section>
 
-      ${minimal ? renderMinimalRoutine(day) : renderFullRoutine(day)}
+      ${minimal ? renderMinimalRoutine(day) : renderCompanionLoop(day)}
       ${day.day >= 13 ? renderEnergyCard(day) : ""}
       ${renderAudioCard(day)}
-      ${renderTimerCard(day, minimal)}
-
-      <section class="card">
-        <h2>Dein Marker</h2>
-        <p>${marked ? "Die Markierung ist gesetzt. Du kannst sie jederzeit wieder entfernen." : "Wenn es für heute genug war, darfst du dieses Kästchen markieren."}</p>
-        <button class="button ${marked ? "button--secondary" : "button--primary"} button--wide" id="markDayButton" type="button">
-          ${marked ? "Markierung entfernen" : "Tag markieren"}
-        </button>
-      </section>
+      ${renderTimerCard(day)}
+      ${renderMarkerCard(day, marker)}
     </div>
   `;
 
   document.querySelector("#previousDay")?.addEventListener("click", () => selectDay(day.day - 1));
   document.querySelector("#nextDay")?.addEventListener("click", () => selectDay(day.day + 1));
   document.querySelector("#minimalToggle")?.addEventListener("change", toggleMinimal);
-  document.querySelector("#markDayButton")?.addEventListener("click", toggleDayMark);
+  document.querySelectorAll("[data-marker]").forEach((button) => button.addEventListener("click", setMarker));
   document.querySelectorAll("[data-energy]").forEach((button) => button.addEventListener("click", setEnergy));
   bindTimerControls();
   paintTimer();
 }
 
-function renderFullRoutine(day) {
+function renderCompanionLoop(day) {
   return `
-    <section class="card" id="routineCard">
-      <div class="routine-copy">
-        <span class="routine-number" aria-hidden="true">${day.day}</span>
-        <div>
-          <p class="eyebrow">Deine heutige Routine</p>
-          <h2>Bereit, wenn du es bist</h2>
-          <p>${escapeHtml(day.routine)}</p>
-        </div>
-      </div>
-      ${day.placeholder ? '<p class="placeholder-note"><strong>Inhaltsplatzhalter:</strong> Der genaue Tagesauftrag wird nach dem Abgleich mit dem Manuskript eingesetzt.</p>' : ""}
+    <section class="card companion-card" id="routineCard">
+      <p class="eyebrow">Buch · App · Workbook</p>
+      <h2>Dein Ablauf für heute</h2>
+      <ol class="companion-loop">
+        <li>
+          <span>1</span>
+          <div><strong>Im Buch</strong><p>Öffne <em>Tag ${day.day}: ${escapeHtml(day.title)}</em>. Dort stehen Erklärung und vollständige 5-Minuten-Routine.</p></div>
+        </li>
+        <li>
+          <span>2</span>
+          <div><strong>In der App</strong><p>Hör den Audio-Snack, wenn Lesen gerade schwer ist, und lass den Fokus-Timer die Zeit für dich halten.</p></div>
+        </li>
+        <li>
+          <span>3</span>
+          <div><strong>Im Workbook · ${escapeHtml(day.workbookTitle)}</strong><p>${escapeHtml(day.workbookCue)}</p></div>
+        </li>
+      </ol>
+      <p class="material-line"><strong>Bereitlegen:</strong> ${escapeHtml(day.material)}</p>
+      <p class="privacy-cue">Deine persönlichen Gedanken bleiben im Workbook. Die App speichert nur Marker, Energiestufe und Einstellungen auf diesem Gerät.</p>
     </section>
   `;
 }
@@ -182,9 +197,9 @@ function renderMinimalRoutine(day) {
   return `
     <section class="card card--sage" id="routineCard">
       <p class="eyebrow">Minimalversion · Tag ${day.day}</p>
-      <h2>60 Sekunden sind genug</h2>
-      <p>${escapeHtml(day.minimal)}</p>
-      ${day.placeholder ? '<p class="placeholder-note"><strong>Inhaltsplatzhalter:</strong> Die genaue 60-Sekunden-Variante wird aus dem Manuskript ergänzt.</p>' : ""}
+      <h2>${formatDuration(day.minimalSeconds)} sind genug</h2>
+      <p class="minimal-action">${escapeHtml(day.minimal)}</p>
+      <p class="quiet-note">Kein Nachholen, kein Zusatzschritt. Danach darf für heute Schluss sein.</p>
     </section>
   `;
 }
@@ -198,9 +213,9 @@ function renderEnergyCard(day) {
   ];
   return `
     <section class="card">
-      <p class="eyebrow">Ab Tag 13</p>
+      <p class="eyebrow">Energie-Tracking ab Tag 13</p>
       <h2>Energiestufe</h2>
-      <p>Was passt heute am ehesten? Die Auswahl bewertet nichts — sie hilft nur bei der Orientierung.</p>
+      <p>Was passt heute? Die Farbe bewertet nichts; sie hilft dir nur, die passende Größe zu wählen.</p>
       <div class="energy-options" role="group" aria-label="Energiestufe für Tag ${day.day}">
         ${options.map(([value, label]) => `
           <button class="energy-option ${selected === value ? "is-active" : ""}" type="button" data-energy="${value}" aria-pressed="${selected === value}">${label}</button>
@@ -211,176 +226,236 @@ function renderEnergyCard(day) {
 }
 
 function renderAudioCard(day) {
-  const audio = audios.find((item) => item.number === day.audio) || { number: day.audio, title: `Audio ${day.audio}`, src: "" };
   return `
-    <section class="card">
-      <p class="eyebrow">Audio ${audio.number}</p>
-      <h2>Audio anhören</h2>
-      <p>${audio.src ? escapeHtml(audio.title) : `Hier erscheint die Audio-Begleitung für Tag ${day.day}, sobald die Aufnahme vorliegt.`}</p>
-      ${audio.src
-        ? `<audio class="audio-player" controls preload="metadata" src="${escapeHtml(audio.src)}">Dein Browser kann dieses Audio nicht abspielen.</audio>`
-        : '<button class="button button--secondary button--wide" type="button" disabled>Audio folgt</button>'}
+    <section class="card audio-focus-card">
+      <p class="eyebrow">Audio-Snack · ${escapeHtml(day.audioDuration)}</p>
+      <h2>${escapeHtml(day.audioTitle)}</h2>
+      <p>Ein kurzer Einstieg in den heutigen Schritt – keine Hörversion des Buchkapitels und keine zusätzliche Pflicht.</p>
+      <audio class="audio-player" controls preload="metadata" src="${escapeHtml(day.audioSrc)}">Dein Browser kann dieses Audio nicht abspielen.</audio>
     </section>
   `;
 }
 
-function renderTimerCard(day, minimal) {
-  const presets = minimal ? [[60, "60 Sek."]] : [[300, "5 Min."], [120, "2 Min."], [90, "90 Sek."]];
+function renderTimerCard(day) {
+  const context = timer.mode === "guide" && timer.context ? timer.context : (timer.mode === "minimal" ? "Minimalversion" : "Deine 5-Minuten-Routine");
   return `
     <section class="card timer-card" aria-labelledby="timerHeading">
-      <p class="eyebrow">Tag ${day.day}</p>
+      <p class="eyebrow">${escapeHtml(context)}</p>
       <h2 id="timerHeading">Fokus-Timer</h2>
       <div class="timer-ring" id="timerRing" role="timer" aria-live="off">
         <span class="timer-time" id="timerTime">${formatTime(timer.remaining)}</span>
         <span class="timer-label" id="timerLabel">${timer.running ? "läuft" : "bereit"}</span>
       </div>
-      <div class="timer-presets" aria-label="Timerdauer">
-        ${presets.map(([seconds, label]) => `<button class="preset-button ${timer.duration === seconds ? "is-active" : ""}" type="button" data-duration="${seconds}" ${timer.running ? "disabled" : ""}>${label}</button>`).join("")}
-      </div>
-      <div class="button-row" style="margin-top:1rem">
+      <p class="timer-phase" id="timerPhase">${escapeHtml(getTimerPhase())}</p>
+      <div class="button-row">
         <button class="button button--primary" id="timerStart" type="button">${timer.running ? "Pause" : timer.remaining < timer.duration ? "Weiter" : "Start"}</button>
         <button class="button button--secondary" id="timerReset" type="button">Neu</button>
       </div>
+      <p class="quiet-note">Wenn die Zeit um ist, hör bewusst auf. Mehr ist heute nicht nötig.</p>
+    </section>
+  `;
+}
+
+function renderMarkerCard(day, marker) {
+  return `
+    <section class="card">
+      <p class="eyebrow">Sichtbarer Gegenbeweis</p>
+      <h2>Dein Erfolgsmarker</h2>
+      <p>Wähle das Zeichen, das heute passt. Jedes Zeichen ist neutral und die Reihe läuft weiter.</p>
+      <div class="marker-options" role="group" aria-label="Erfolgsmarker für Tag ${day.day}">
+        ${Object.entries(MARKERS).map(([value, item]) => `
+          <button class="marker-option marker-option--${value} ${marker === value ? "is-active" : ""}" type="button" data-marker="${value}" aria-pressed="${marker === value}">
+            <span>${item.symbol}</span><strong>${item.label}</strong>
+          </button>
+        `).join("")}
+      </div>
+      <p class="quiet-note">Noch kein Zeichen? Auch das bleibt einfach leer.</p>
     </section>
   `;
 }
 
 function renderDays() {
+  const markedProgramDays = Object.entries(state.markers).filter(([day, marker]) => Number(day) >= 1 && Number(day) <= 21 && MARKERS[marker]).length;
+  const setupMarker = state.markers["0"] || "";
+
   els.days.innerHTML = `
     <article class="hero">
-      <p class="eyebrow">Dein Überblick</p>
+      <p class="eyebrow">Die Landkarte aus dem Buch</p>
       <div class="section-topline">
         <div>
-          <h1 id="daysHeading">21 Tage</h1>
-          <p class="hero-copy">Ein leeres Kästchen ist nur ein leeres Kästchen. Keine verlorene Serie, nichts nachzuholen.</p>
+          <h1 id="daysHeading" tabindex="-1">Deine 21 Tage</h1>
+          <p class="hero-copy">Fünf Etappen bauen aufeinander auf. Lücken sind eingeplant: Du steigst einfach dort wieder ein, wo du gerade bist.</p>
         </div>
-        <div class="progress-summary" aria-label="${state.markedDays.length} von 21 Tagen markiert">
-          <strong>${state.markedDays.length}</strong><span>/ 21</span>
+        <div class="progress-summary" aria-label="${markedProgramDays} von 21 Tagen mit Zeichen">
+          <strong>${markedProgramDays}</strong><span>/ 21</span>
         </div>
       </div>
     </article>
-    <section class="card" style="margin-top:1rem">
-      <div class="day-grid" aria-label="Tage auswählen">
-        ${days.map((day) => {
-          const marked = state.markedDays.includes(day.day);
-          return `<button class="day-cell ${day.day === state.currentDay ? "is-current" : ""} ${marked ? "is-marked" : ""}" type="button" data-day="${day.day}" aria-label="Tag ${day.day}${marked ? ", markiert" : ""}" aria-pressed="${marked}">${day.day}</button>`;
-        }).join("")}
+
+    <section class="setup-row card card--gold">
+      <div>
+        <p class="eyebrow">Vor dem Programm</p>
+        <h2>Tag 0 · Dein Setup-Tag</h2>
+        <p>Startplatz, Minimalmaterial und dein Ausgangspunkt – Tag 0 zählt nicht zu den 21 Tagen.</p>
       </div>
-      <p class="quiet-note">Tippe auf einen Tag, um ihn unter <strong>Heute</strong> zu öffnen. Das öffnet den Tag nur — es markiert ihn nicht.</p>
+      <button class="day-link-button ${setupMarker ? `has-marker marker-${setupMarker}` : ""}" type="button" data-open-day="0">
+        ${setupMarker ? MARKERS[setupMarker].symbol : "0"}<span>Öffnen</span>
+      </button>
     </section>
-    <section class="card card--sage" style="margin-top:1rem">
-      <h2>Ein neuer Einstieg ist immer möglich.</h2>
-      <p>Du darfst Lücken lassen, Tage wiederholen oder dort weitermachen, wo du gerade bist.</p>
-      <button class="button button--secondary" type="button" data-nav="today">Zu Tag ${state.currentDay}</button>
+
+    <div class="phase-list">
+      ${phases.filter((phase) => phase.id !== "setup").map((phase) => renderPhaseGroup(phase)).join("")}
+    </div>
+
+    <section class="card card--sage restart-card">
+      <h2>Heute ist ein neuer Einstieg möglich.</h2>
+      <p>Kein Nachholen, keine gerissene Kette. Öffne einfach den Tag, der jetzt zu dir passt.</p>
+      <button class="button button--secondary" type="button" data-nav="today">Zu ${state.currentDay === 0 ? "Tag 0" : `Tag ${state.currentDay}`}</button>
     </section>
   `;
 
-  els.days.querySelectorAll("[data-day]").forEach((button) => {
+  els.days.querySelectorAll("[data-open-day]").forEach((button) => {
     button.addEventListener("click", () => {
-      selectDay(Number(button.dataset.day));
+      selectDay(Number(button.dataset.openDay));
       navigate("today");
     });
   });
 }
 
+function renderPhaseGroup(phase) {
+  const phaseDays = days.filter((day) => day.phase === phase.id);
+  return `
+    <section class="phase-card" aria-labelledby="phase-${phase.id}">
+      <div class="phase-heading">
+        <span class="phase-index" aria-hidden="true">${phases.indexOf(phase)}</span>
+        <div>
+          <p class="eyebrow">${escapeHtml(phase.range)}</p>
+          <h2 id="phase-${phase.id}">${escapeHtml(phase.title)}</h2>
+          <p>${escapeHtml(phase.description)}</p>
+        </div>
+      </div>
+      <div class="phase-days">
+        ${phaseDays.map((day) => {
+          const marker = state.markers[String(day.day)] || "";
+          return `
+            <button class="phase-day ${day.day === state.currentDay ? "is-current" : ""} ${marker ? `has-marker marker-${marker}` : ""}" type="button" data-open-day="${day.day}" aria-label="Tag ${day.day}: ${escapeHtml(day.title)}${marker ? `, ${MARKERS[marker].label}` : ""}">
+              <span class="phase-day-number">${marker ? MARKERS[marker].symbol : day.day}</span>
+              <span class="phase-day-title">${escapeHtml(day.title)}</span>
+            </button>
+          `;
+        }).join("")}
+      </div>
+    </section>
+  `;
+}
+
 function renderAudios() {
   els.audios.innerHTML = `
     <article class="hero">
-      <p class="eyebrow">Hören statt lesen</p>
-      <h1 id="audiosHeading">Audios</h1>
-      <p class="hero-copy">Die 24 Audio-Plätze sind vorbereitet. Sobald die Dateien vorliegen, werden Titel und Zuordnung aus dem Manuskript übernommen.</p>
+      <p class="eyebrow">Hören, wenn Lesen gerade zu viel ist</p>
+      <h1 id="audiosHeading" tabindex="-1">Audio-Snacks</h1>
+      <p class="hero-copy"><strong>Diese Audio-Snacks sind keine Hörversion des Buches.</strong> Sie erklären nicht das ganze Kapitel, sondern helfen dir in etwa zwei Minuten beim Einstieg in den jeweiligen Tag. Das Buch bleibt für das Warum da, das Workbook für deine persönlichen Ergebnisse.</p>
     </article>
-    <section class="audio-list" aria-label="${audios.length} Audio-Plätze">
-      ${audios.map((audio) => {
+
+    <section class="card audio-offline-card">
+      <div>
+        <p class="eyebrow">Optional · ungefähr 38 MB</p>
+        <h2>Audios offline bereithalten</h2>
+        <p>Lade alle 22 Snacks einmal auf dieses Gerät. Am besten im WLAN. Die App funktioniert auch ohne diesen Download.</p>
+      </div>
+      <button class="button button--secondary" id="offlineAudiosButton" type="button">Alle offline speichern</button>
+    </section>
+
+    <div class="audio-phase-list">
+      ${phases.map((phase) => {
+        const phaseAudios = audios.filter((audio) => audio.phase === phase.id);
         return `
-          <article class="audio-item">
-            <span class="audio-number">${audio.number}</span>
-            <div><strong>${escapeHtml(audio.title)}</strong><small>${escapeHtml(audio.assignment)} · ${audio.src ? "verfügbar" : "folgt"}</small></div>
-          </article>
+          <section class="audio-phase" aria-labelledby="audio-phase-${phase.id}">
+            <div class="audio-phase-heading">
+              <p class="eyebrow">${escapeHtml(phase.range)}</p>
+              <h2 id="audio-phase-${phase.id}">${escapeHtml(phase.title)}</h2>
+            </div>
+            <div class="audio-list">
+              ${phaseAudios.map(renderAudioListItem).join("")}
+            </div>
+          </section>
         `;
       }).join("")}
-    </section>
+    </div>
+  `;
+
+  els.audios.querySelectorAll("[data-open-day]").forEach((button) => {
+    button.addEventListener("click", () => {
+      selectDay(Number(button.dataset.openDay));
+      navigate("today");
+    });
+  });
+  document.querySelector("#offlineAudiosButton")?.addEventListener("click", downloadAudios);
+}
+
+function renderAudioListItem(audio) {
+  const number = String(audio.number).padStart(2, "0");
+  return `
+    <article class="audio-item audio-item--player">
+      <button class="audio-day-button" type="button" data-open-day="${audio.number}" aria-label="${escapeHtml(audio.assignment)} öffnen">${number}</button>
+      <div>
+        <strong>${escapeHtml(audio.title)}</strong>
+        <small>${escapeHtml(audio.assignment)} · ${escapeHtml(audio.duration)}</small>
+        <audio class="audio-player" controls preload="metadata" src="${escapeHtml(audio.src)}">Dein Browser kann dieses Audio nicht abspielen.</audio>
+      </div>
+    </article>
   `;
 }
 
 function renderEmergency() {
-  const step = guideAnswers.length;
-  const done = step >= guideQuestions.length;
-  const result = done ? getGuideResult() : null;
-
+  const path = guidePaths.find((item) => item.id === selectedGuidePath);
   els.emergency.innerHTML = `
     <article class="hero">
-      <p class="eyebrow">Wenn gerade nichts geht</p>
-      <h1 id="emergencyHeading">Notfall-Guide</h1>
-      <p class="hero-copy">Drei kurze Fragen. Kein Analysieren, nur das wählen, was gerade am ehesten passt.</p>
+      <p class="eyebrow">Wenn das System stehen bleibt</p>
+      <h1 id="emergencyHeading" tabindex="-1">Notfall-Guide</h1>
+      <p class="hero-copy">Wähle nur die Situation, die gerade am ehesten passt. Du holst nichts nach; jeder Weg endet bei einem kleinen nächsten Schritt.</p>
     </article>
-    <section class="card" style="margin-top:1rem">
-      <div class="guide-progress" aria-label="${Math.min(step, 3)} von 3 Fragen beantwortet">
-        ${[0, 1, 2].map((index) => `<span class="${index < step ? "is-done" : ""}"></span>`).join("")}
-      </div>
-      ${done ? renderGuideResult(result) : renderGuideQuestion(guideQuestions[step], step)}
+    <section class="card guide-card">
+      ${path ? renderGuideResult(path) : renderGuideChoices()}
     </section>
-    <p class="quiet-note">Dieser Wegweiser ist für festgefahrene Alltagsmomente gedacht und ersetzt keine medizinische oder psychotherapeutische Hilfe.</p>
+    <p class="quiet-note safety-note">Der Notfall-Guide ist für festgefahrene Alltagsmomente gedacht und ersetzt keine medizinische oder psychotherapeutische Hilfe. Wenn eine starke Belastung seit Wochen anhält, hol dir fachliche Unterstützung.</p>
   `;
 
-  els.emergency.querySelectorAll("[data-guide-answer]").forEach((button) => {
+  els.emergency.querySelectorAll("[data-guide-path]").forEach((button) => {
     button.addEventListener("click", () => {
-      guideAnswers.push(button.dataset.guideAnswer);
+      selectedGuidePath = button.dataset.guidePath;
       renderEmergency();
       els.emergency.querySelector("h2")?.focus?.();
     });
   });
-
   document.querySelector("#guideBack")?.addEventListener("click", () => {
-    guideAnswers.pop();
+    selectedGuidePath = "";
     renderEmergency();
   });
-  document.querySelector("#guideRestart")?.addEventListener("click", () => {
-    guideAnswers = [];
-    renderEmergency();
-  });
-  document.querySelector("#guideTimer")?.addEventListener("click", startGuideTimer);
+  document.querySelector("#guideTimer")?.addEventListener("click", () => startGuideTimer(path));
 }
 
-function renderGuideQuestion(question, index) {
+function renderGuideChoices() {
   return `
-    <p class="eyebrow">Frage ${index + 1} von 3</p>
-    <h2 tabindex="-1">${escapeHtml(question.title)}</h2>
+    <p class="eyebrow">Sechs Wege zurück</p>
+    <h2>Was hat dich aus dem System gebracht?</h2>
     <div class="guide-options">
-      ${question.options.map((option) => `<button class="guide-option" type="button" data-guide-answer="${option.value}">${escapeHtml(option.label)}</button>`).join("")}
+      ${guidePaths.map((path) => `<button class="guide-option" type="button" data-guide-path="${path.id}">${escapeHtml(path.label)}</button>`).join("")}
     </div>
-    ${index > 0 ? '<button class="text-button" id="guideBack" type="button" style="margin-top:1rem">Eine Frage zurück</button>' : ""}
   `;
 }
 
-function renderGuideResult(result) {
-  const duration = Number(guideAnswers[2]);
+function renderGuideResult(path) {
   return `
     <div class="guide-result">
-      <span class="result-duration">Dein nächster Schritt · ${duration === 60 ? "60 Sekunden" : "2 Minuten"}</span>
-      <h2 tabindex="-1">${escapeHtml(result.title)}</h2>
-      <p>${escapeHtml(result.text)}</p>
-      <button class="button button--primary button--wide" id="guideTimer" type="button">Jetzt Fokus-Timer starten</button>
+      <span class="result-duration">Dein nächster Schritt · ${formatDuration(path.seconds)}</span>
+      <h2 tabindex="-1">${escapeHtml(path.title)}</h2>
+      <p>${escapeHtml(path.action)}</p>
+      <p class="guide-next"><strong>Danach:</strong> ${escapeHtml(path.next)}</p>
+      <button class="button button--primary button--wide" id="guideTimer" type="button">Diesen Schritt jetzt starten</button>
     </div>
-    ${content.guidePlaceholder ? '<p class="placeholder-note"><strong>Vorläufiger Weg:</strong> Fragen und sechs Szenarien werden nach dem Abgleich mit dem Notfall-Kapitel final ersetzt.</p>' : ""}
-    <button class="text-button" id="guideRestart" type="button" style="margin-top:1rem">Von vorn beginnen</button>
+    <button class="text-button" id="guideBack" type="button">Andere Situation wählen</button>
   `;
-}
-
-function getGuideResult() {
-  return guideResults[`${guideAnswers[0]}-${guideAnswers[1]}`] || guideResults["low-settle"];
-}
-
-function startGuideTimer() {
-  const duration = Number(guideAnswers[2]) || 60;
-  if (duration === 60 && !isMinimalToday()) {
-    state.minimal = { date: todayKey(), enabled: true };
-    saveState();
-  }
-  resetTimer(duration, state.currentDay, true);
-  renderToday();
-  navigate("today");
-  showToast(`${formatDuration(duration)} gestartet.`);
 }
 
 function navigate(view, options = {}) {
@@ -407,11 +482,10 @@ function navigate(view, options = {}) {
 }
 
 function selectDay(dayNumber) {
-  const nextDay = Math.min(DAY_COUNT, Math.max(1, dayNumber));
+  const nextDay = Math.min(PROGRAM_DAY_COUNT, Math.max(0, Number(dayNumber) || 0));
   state.currentDay = nextDay;
   saveState();
-  const seconds = isMinimalToday() ? 60 : days[nextDay - 1].timerSeconds;
-  resetTimer(seconds, nextDay, false);
+  timer = makeTimer(getDay(nextDay), isMinimalToday());
   renderToday();
   renderDays();
 }
@@ -419,23 +493,25 @@ function selectDay(dayNumber) {
 function toggleMinimal(event) {
   state.minimal = { date: todayKey(), enabled: event.target.checked };
   saveState();
-  resetTimer(event.target.checked ? 60 : days[state.currentDay - 1].timerSeconds, state.currentDay, false);
+  timer = makeTimer(getDay(state.currentDay), event.target.checked);
   renderToday();
-  showToast(event.target.checked ? "Minimalversion ist aktiv." : "Vollständige Routine ist sichtbar.");
+  showToast(event.target.checked ? "Minimalversion ist aktiv." : "Die 5-Minuten-Routine ist sichtbar.");
 }
 
 function isMinimalToday() {
   return Boolean(state.minimal.enabled && state.minimal.date === todayKey());
 }
 
-function toggleDayMark() {
-  const day = state.currentDay;
-  if (state.markedDays.includes(day)) {
-    state.markedDays = state.markedDays.filter((item) => item !== day);
-    showToast(`Markierung für Tag ${day} entfernt.`);
+function setMarker(event) {
+  const key = String(state.currentDay);
+  const value = event.currentTarget.dataset.marker;
+  if (!MARKERS[value]) return;
+  if (state.markers[key] === value) {
+    delete state.markers[key];
+    showToast(`Zeichen für Tag ${state.currentDay} entfernt.`);
   } else {
-    state.markedDays = [...state.markedDays, day].sort((a, b) => a - b);
-    showToast(`Tag ${day} ist markiert.`);
+    state.markers[key] = value;
+    showToast(`${MARKERS[value].symbol} ${MARKERS[value].label} für Tag ${state.currentDay}.`);
   }
   saveState();
   renderToday();
@@ -452,11 +528,24 @@ function setEnergy(event) {
 }
 
 function bindTimerControls() {
-  document.querySelectorAll("[data-duration]").forEach((button) => {
-    button.addEventListener("click", () => resetTimer(Number(button.dataset.duration), state.currentDay, false, true));
-  });
   document.querySelector("#timerStart")?.addEventListener("click", toggleTimer);
-  document.querySelector("#timerReset")?.addEventListener("click", () => resetTimer(timer.duration, state.currentDay, false, true));
+  document.querySelector("#timerReset")?.addEventListener("click", () => {
+    const day = getDay(state.currentDay);
+    timer = timer.mode === "guide" ? resetTimer(timer.duration, day.day, false, "guide", timer.context) : makeTimer(day, isMinimalToday());
+    renderToday();
+  });
+}
+
+function makeTimer(day, minimal) {
+  return resetTimer(minimal ? day.minimalSeconds : 300, day.day, false, minimal ? "minimal" : "full", "");
+}
+
+function resetTimer(seconds, day = state.currentDay, autostart = false, mode = "full", context = "") {
+  if (timer?.interval) window.clearInterval(timer.interval);
+  const next = { day, duration: seconds, remaining: seconds, endAt: 0, running: false, interval: 0, mode, context };
+  timer = next;
+  if (autostart) startTimer();
+  return timer;
 }
 
 function toggleTimer() {
@@ -502,24 +591,37 @@ function finishTimer() {
   if (startButton) startButton.textContent = "Nochmal";
 }
 
-function resetTimer(seconds, day = state.currentDay, autostart = false, rerender = false) {
-  window.clearInterval(timer.interval);
-  timer = { day, duration: seconds, remaining: seconds, endAt: 0, running: false, interval: 0 };
-  if (autostart) startTimer();
-  if (rerender) renderToday();
-}
-
 function paintTimer() {
   const time = document.querySelector("#timerTime");
   const label = document.querySelector("#timerLabel");
   const ring = document.querySelector("#timerRing");
+  const phase = document.querySelector("#timerPhase");
   if (!time || !label || !ring) return;
   time.textContent = formatTime(timer.remaining);
   label.textContent = timer.running ? "läuft" : timer.remaining === 0 ? "geschafft" : timer.remaining < timer.duration ? "pausiert" : "bereit";
+  if (phase) phase.textContent = getTimerPhase();
   const elapsed = timer.duration ? (timer.duration - timer.remaining) / timer.duration : 0;
   ring.style.setProperty("--progress", `${Math.max(0, Math.min(1, elapsed)) * 360}deg`);
   ring.setAttribute("aria-label", `${formatTime(timer.remaining)} verbleibend`);
   document.title = timer.running ? `${formatTime(timer.remaining)} · Fokus-Timer` : "21-Tage-Fokus-Begleiter";
+}
+
+function getTimerPhase() {
+  if (timer.mode === "guide") return timer.context || "Bleib nur bei diesem kleinen Schritt.";
+  if (timer.mode === "minimal") return "Minimalversion · genau ein kleiner Handgriff";
+  const elapsed = timer.duration - timer.remaining;
+  if (elapsed < 60) return "Minute 0–1 · Einstieg";
+  if (elapsed < 180) return "Minute 1–3 · ein Hauptschritt";
+  if (elapsed < 240) return "Minute 3–4 · Ergebnis sichtbar machen";
+  return "Minute 4–5 · bewusst aufhören";
+}
+
+function startGuideTimer(path) {
+  if (!path) return;
+  resetTimer(path.seconds, state.currentDay, true, "guide", path.title);
+  renderToday();
+  navigate("today");
+  showToast(`${formatDuration(path.seconds)} gestartet.`);
 }
 
 function playGentleTone() {
@@ -539,6 +641,35 @@ function playGentleTone() {
   } catch {}
 }
 
+async function downloadAudios(event) {
+  const button = event.currentTarget;
+  if (!("caches" in window)) {
+    showToast("Offline-Audios werden von diesem Browser nicht unterstützt.");
+    return;
+  }
+  button.disabled = true;
+  let saved = 0;
+  try {
+    const cache = await caches.open(AUDIO_CACHE);
+    for (const audio of audios) {
+      button.textContent = `Speichere ${saved + 1} von ${audios.length} …`;
+      const url = new URL(audio.src, location.href).href;
+      if (!(await cache.match(url))) {
+        const response = await fetch(url, { cache: "reload" });
+        if (!response.ok || response.status !== 200) throw new Error(`Audio ${audio.number} konnte nicht geladen werden.`);
+        await cache.put(url, response.clone());
+      }
+      saved += 1;
+    }
+    button.textContent = "22 Audios offline gespeichert";
+    showToast("Alle Audio-Snacks sind offline gespeichert.");
+  } catch {
+    button.disabled = false;
+    button.textContent = "Download erneut versuchen";
+    showToast("Der Audio-Download wurde unterbrochen. Bereits geladene Dateien bleiben erhalten.");
+  }
+}
+
 function createCalendarReminder() {
   const time = els.reminderTime.value || "19:00";
   state.reminderTime = time;
@@ -552,7 +683,7 @@ function createCalendarReminder() {
   const stamp = formatIcsDate(new Date(), true);
   const uid = `fokus-21-${Date.now()}@tools.munichpublishing.de`;
   const appUrl = new URL("./", location.href).href.split("?")[0];
-  const description = escapeIcs(`Öffne deinen heutigen Tag im 21-Tage-Fokus-Begleiter. Deine Minimalversion zählt genauso. ${appUrl}`);
+  const description = escapeIcs(`Öffne deinen heutigen Tag im 21-Tage-Fokus-Begleiter. Die Minimalversion zählt vollständig. ${appUrl}`);
 
   const ics = [
     "BEGIN:VCALENDAR",
@@ -577,16 +708,46 @@ function createCalendarReminder() {
     "END:VCALENDAR"
   ].join("\r\n");
 
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  downloadBlob(ics, "21-tage-fokus-erinnerung.ics", "text/calendar;charset=utf-8");
+  showToast("Kalenderdatei erstellt.");
+}
+
+function exportProgress() {
+  const backup = JSON.stringify({ version: 2, savedAt: new Date().toISOString(), state }, null, 2);
+  downloadBlob(backup, "21-tage-fokus-sicherung.json", "application/json;charset=utf-8");
+  showToast("Lokale Sicherung erstellt.");
+}
+
+async function importProgress(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  try {
+    const parsed = JSON.parse(await file.text());
+    state = normalizeState(parsed.state || parsed);
+    saveState();
+    timer = makeTimer(getDay(state.currentDay), isMinimalToday());
+    els.reminderTime.value = state.reminderTime;
+    renderAll();
+    els.settingsDialog.close();
+    navigate("today");
+    showToast("Sicherung wurde eingelesen.");
+  } catch {
+    showToast("Diese Sicherungsdatei konnte nicht gelesen werden.");
+  } finally {
+    event.target.value = "";
+  }
+}
+
+function downloadBlob(value, filename, type) {
+  const blob = new Blob([value], { type });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
-  link.download = "21-tage-fokus-erinnerung.ics";
+  link.download = filename;
   document.body.append(link);
   link.click();
   link.remove();
   window.setTimeout(() => URL.revokeObjectURL(url), 2000);
-  showToast("Kalenderdatei erstellt.");
 }
 
 function configureInstallExperience() {
@@ -611,7 +772,7 @@ function configureInstallExperience() {
     };
   } else if (ios) {
     els.installHint.textContent = "Tippe in Safari auf Teilen und dann auf ‚Zum Home-Bildschirm‘.";
-    els.installButton.textContent = "Anleitung verstanden";
+    els.installButton.textContent = "Installationshinweis";
     els.installButton.onclick = () => showToast("Safari: Teilen → Zum Home-Bildschirm");
   } else {
     els.installHint.textContent = "Nutze im Browsermenü ‚App installieren‘ oder ‚Zum Startbildschirm hinzufügen‘.";
@@ -622,10 +783,11 @@ function configureInstallExperience() {
 
 function resetLocalData() {
   localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(LEGACY_STORAGE_KEY);
   state = cloneDefaultState();
-  guideAnswers = [];
+  selectedGuidePath = "";
   els.reminderTime.value = state.reminderTime;
-  resetTimer(days[0].timerSeconds, 1, false);
+  timer = makeTimer(getDay(0), false);
   renderAll();
   navigate("today");
   els.settingsDialog.close();
@@ -634,18 +796,33 @@ function resetLocalData() {
 
 function loadState() {
   try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    const merged = { ...cloneDefaultState(), ...saved };
-    merged.currentDay = Math.min(DAY_COUNT, Math.max(1, Number(merged.currentDay) || 1));
-    merged.markedDays = Array.isArray(merged.markedDays)
-      ? [...new Set(merged.markedDays.map(Number).filter((day) => day >= 1 && day <= DAY_COUNT))]
-      : [];
-    merged.energyByDay = merged.energyByDay && typeof merged.energyByDay === "object" ? merged.energyByDay : {};
-    merged.minimal = merged.minimal && typeof merged.minimal === "object" ? merged.minimal : { date: "", enabled: false };
-    return merged;
-  } catch {
-    return cloneDefaultState();
-  }
+    const current = localStorage.getItem(STORAGE_KEY);
+    if (current) return normalizeState(JSON.parse(current));
+
+    const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (legacy) {
+      const old = JSON.parse(legacy);
+      const migrated = normalizeState({
+        ...old,
+        markers: Object.fromEntries((old.markedDays || []).map((day) => [String(day), "done"]))
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+      return migrated;
+    }
+  } catch {}
+  return cloneDefaultState();
+}
+
+function normalizeState(value) {
+  const merged = { ...cloneDefaultState(), ...(value && typeof value === "object" ? value : {}) };
+  merged.currentDay = Math.min(PROGRAM_DAY_COUNT, Math.max(0, Number(merged.currentDay) || 0));
+  merged.markers = merged.markers && typeof merged.markers === "object"
+    ? Object.fromEntries(Object.entries(merged.markers).filter(([day, marker]) => Number(day) >= 0 && Number(day) <= 21 && MARKERS[marker]))
+    : {};
+  merged.energyByDay = merged.energyByDay && typeof merged.energyByDay === "object" ? merged.energyByDay : {};
+  merged.minimal = merged.minimal && typeof merged.minimal === "object" ? merged.minimal : { date: "", enabled: false };
+  merged.reminderTime = /^\d{2}:\d{2}$/.test(merged.reminderTime) ? merged.reminderTime : "19:00";
+  return merged;
 }
 
 function saveState() {
@@ -658,6 +835,19 @@ function saveState() {
 
 function cloneDefaultState() {
   return JSON.parse(JSON.stringify(DEFAULT_STATE));
+}
+
+function getDay(dayNumber) {
+  return days.find((day) => day.day === Number(dayNumber)) || days[0];
+}
+
+function getPhase(id) {
+  return phases.find((phase) => phase.id === id) || phases[0];
+}
+
+function renderStatusPill(marker) {
+  const item = MARKERS[marker];
+  return `<span class="status-pill status-pill--${marker}">${item.symbol} ${item.label}</span>`;
 }
 
 function readInitialView() {
@@ -676,6 +866,7 @@ function formatTime(seconds) {
 }
 
 function formatDuration(seconds) {
+  if (seconds < 60) return `${seconds} Sekunden`;
   if (seconds === 60) return "60 Sekunden";
   if (seconds === 90) return "90 Sekunden";
   return `${Math.round(seconds / 60)} Minuten`;
@@ -710,5 +901,5 @@ function showToast(message) {
   window.clearTimeout(toastTimeout);
   els.toast.textContent = message;
   els.toast.classList.add("is-visible");
-  toastTimeout = window.setTimeout(() => els.toast.classList.remove("is-visible"), 2600);
+  toastTimeout = window.setTimeout(() => els.toast.classList.remove("is-visible"), 2800);
 }

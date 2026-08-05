@@ -970,11 +970,27 @@ details p { margin: .6rem 0 0 !important; }
 .toast.is-visible { opacity: 1; transform: translateY(0); }
 
 /* Refined glassmorphism layer */
+body {
+  background:
+    radial-gradient(circle at 13% 7%, rgba(255,250,225,.98) 0, transparent 27%),
+    radial-gradient(circle at 78% 21%, rgba(255,204,69,.68) 0, transparent 29%),
+    radial-gradient(circle at 14% 92%, rgba(8,47,103,.76) 0, transparent 34%),
+    linear-gradient(150deg, #fff2c8 0%, #e9bd51 51%, #85795e 76%, #153d6c 108%);
+  background-attachment: fixed;
+}
+
+.app-header {
+  background: linear-gradient(112deg, rgba(255,251,235,.88) 0 58%, rgba(232,185,72,.58) 78%, rgba(29,65,103,.34) 118%);
+}
+
 .brand-mark {
-  color: #fff8df;
-  background: linear-gradient(145deg, #174b7c 0%, #082f67 58%, #041b3a 100%);
+  width: 36px;
+  height: 52px;
+  color: transparent;
+  background: url("assets/book-cover-v3.webp") center / cover no-repeat;
   border-color: rgba(255, 233, 164, .92);
-  box-shadow: 0 0 0 2px rgba(8,47,103,.92), 0 8px 24px rgba(8,47,103,.28), inset 0 1px 0 rgba(255,255,255,.38);
+  border-radius: 7px;
+  box-shadow: 0 0 0 2px rgba(8,47,103,.92), 0 8px 24px rgba(8,47,103,.28);
 }
 
 .icon-button,
@@ -1012,7 +1028,7 @@ input[type="time"] {
 }
 
 .book-intro {
-  background: linear-gradient(125deg, rgba(255,255,255,.76), rgba(255,242,195,.48) 64%, rgba(217,155,39,.25));
+  background: linear-gradient(125deg, rgba(255,255,255,.82), rgba(255,238,177,.58) 58%, rgba(221,165,45,.52) 78%, rgba(20,59,101,.34) 125%);
 }
 
 .book-intro::after {

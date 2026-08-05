@@ -295,7 +295,7 @@ function renderDays() {
     <section class="setup-row card card--gold">
       <div>
         <p class="eyebrow">Vor dem Programm</p>
-        <h2>Tag 0 · Dein Setup-Tag</h2>
+        <h2>Tag 0 · Dein Setup</h2>
         <p>Startplatz, Minimalmaterial und dein Ausgangspunkt – Tag 0 zählt nicht zu den 21 Tagen.</p>
       </div>
       <button class="day-link-button ${setupMarker ? `has-marker marker-${setupMarker}` : ""}" type="button" data-open-day="0">

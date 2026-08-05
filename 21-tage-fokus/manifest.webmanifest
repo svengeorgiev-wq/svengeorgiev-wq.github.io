@@ -1,7 +1,7 @@
 {
-  "name": "21-Tage-Fokus-Begleiter",
-  "short_name": "Fokus 21",
-  "description": "Die ergänzende PWA zur 21-Tage-Fokus-Formel: Fokus-Timer, Audio-Snacks, Fortschritt und Notfall-Guide",
+  "name": "ADHS bei Frauen – 21 Tage für weniger Chaos im Kopf",
+  "short_name": "ADHS 21 Tage",
+  "description": "ADHS bei Frauen – 21 Tage für weniger Chaos im Kopf: Fokus-Timer, Audio-Snacks, Fortschritt und Notfall-Guide",
   "lang": "de",
   "start_url": "./",
   "scope": "./",
@@ -23,19 +23,19 @@
   ],
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "icons/icon-192-v2.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icons/icon-512-v2.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon.svg",
+      "src": "icons/icon-v2.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

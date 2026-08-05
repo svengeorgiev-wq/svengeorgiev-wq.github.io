@@ -400,7 +400,7 @@ function renderAudioListItem(audio) {
       <button class="audio-day-button" type="button" data-open-day="${audio.number}" aria-label="${escapeHtml(audio.assignment)} öffnen">${number}</button>
       <div>
         <strong>${escapeHtml(audio.title)}</strong>
-        <small>${escapeHtml(audio.assignment)} · ${escapeHtml(audio.duration)}</small>
+        <small>${escapeHtml(audio.assignment)} · Audio-Thema: ${escapeHtml(audio.topic)} · ${escapeHtml(audio.duration)}</small>
         <audio class="audio-player" controls preload="metadata" src="${escapeHtml(audio.src)}">Dein Browser kann dieses Audio nicht abspielen.</audio>
       </div>
     </article>

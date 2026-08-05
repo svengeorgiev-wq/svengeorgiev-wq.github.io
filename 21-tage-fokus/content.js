@@ -17,7 +17,7 @@ const days = [
   {
     day: 0,
     phase: "setup",
-    title: "Dein Setup-Tag",
+    title: "Dein Setup",
     goal: "Du richtest deinen Startplatz ein und benennst deine drei größten Reibungspunkte.",
     material: "Buch, Stift, Timer",
     workbookTitle: "Reibungspunkte-Seite",
@@ -59,7 +59,7 @@ const days = [
   {
     day: 3,
     phase: "anfangen",
-    title: "Abendlicher Nachweis statt endloser Bilanz",
+    title: "Abendlicher Nachweis",
     goal: "Du sammelst abends drei geschaffte Dinge und markierst eine Kleinigkeit als Erfolg.",
     material: "Buch, Stift, Timer",
     workbookTitle: "Checkfeld für Tag 3",
@@ -283,7 +283,7 @@ const days = [
   {
     day: 19,
     phase: "gefuehle-grenzen",
-    title: "Grenzen und Delegation sichtbar machen",
+    title: "Grenzen und Delegation",
     goal: "Du schreibst drei Nein-Sätze auf und legst fest, was du abgibst.",
     material: "Buch, Stift, Timer, Karteikarte",
     workbookTitle: "Nein- und Delegationsfelder",
@@ -381,7 +381,8 @@ window.FOKUS_CONTENT = Object.freeze({
   audios: days.map((day) => ({
     number: day.day,
     phase: day.phase,
-    title: day.audioTitle,
+    title: day.title,
+    topic: day.audioTitle,
     assignment: day.day === 0 ? "Tag 0 · Setup" : `Tag ${day.day}`,
     duration: day.audioDuration,
     src: day.audioSrc

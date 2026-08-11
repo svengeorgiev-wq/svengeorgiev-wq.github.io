@@ -324,12 +324,12 @@ window.APP_DATA = (() => {
     [18, "Ernährung & Dopamin-Unterstützung", "Energie", 18, "Einfache, sichtbare Energie-Stabilisatoren planen.", "133"],
     [19, "Physisches Entladen", "Akut", 19, "Starke körperliche Aktivierung vor einer Reaktion senken.", "144"],
     [20, "Box Breathing", "Akut", 20, "Über bewusstes Atmen die Alarmstufe senken.", "146"],
-    [21, "Parallel Working", "Beziehung", null, "Wichtige Gespräche bei leichter gemeinsamer Bewegung führen.", "138"],
-    [22, "Bedürfnis-Übersetzungs-Liste", "Beziehung", null, "Sichtbares Verhalten und innere Realität gemeinsam übersetzen.", "140"],
+    [21, "Parallel Working", "Beziehung", null, "Wichtige Gespräche bei leichter gemeinsamer Bewegung führen.", "158"],
+    [22, "Bedürfnis-Übersetzungs-Liste", "Beziehung", null, "Sichtbares Verhalten und innere Realität gemeinsam übersetzen.", "161"],
     [23, "Drei-Kisten-Sortiersystem", "Bürokratie", 21, "Post mit nur drei Entscheidungen vorsortieren.", "172"],
     [24, "Telefon-Skript", "Bürokratie", 21, "Wichtige Sätze vor einem Behördentelefonat festhalten.", "174"],
-    [25, "Bedürfnis-Manifest", "Selbstvertretung", null, "Eigene Anforderungen konkret und kommunizierbar machen.", "167"],
-    [26, "Netzwerkaufbau", "Selbstvertretung", null, "Unterstützung mit niedriger Reizhürde bewusst aufbauen.", "169"],
+    [25, "Bedürfnis-Manifest", "Selbstvertretung", null, "Eigene Anforderungen konkret und kommunizierbar machen.", "188"],
+    [26, "Netzwerkaufbau", "Selbstvertretung", null, "Unterstützung mit niedriger Reizhürde bewusst aufbauen.", "191"],
   ].map(([id, title, category, day, summary, page]) => ({ id, title, category, day, summary, page }));
 
   const supportTools = {

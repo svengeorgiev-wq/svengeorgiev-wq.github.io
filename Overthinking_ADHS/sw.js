@@ -1,5 +1,5 @@
-const CACHE = "adhs-overthinking-v1-20260728-pages";
-const ASSETS = ["./", "./index.html", "./styles.css?v=20260727-lang", "./data.js?v=20260728-pages", "./tracks.js?v=20260726", "./app.js?v=20260726-2", "./manifest.webmanifest", "./assets/cover.webp", "./assets/icon-192.png"];
+const CACHE = "adhs-overthinking-v1-20260811-pages";
+const ASSETS = ["./", "./index.html", "./styles.css?v=20260727-lang", "./data.js?v=20260811-pages", "./tracks.js?v=20260726", "./app.js?v=20260726-2", "./manifest.webmanifest", "./assets/cover.webp", "./assets/icon-192.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(ASSETS)));

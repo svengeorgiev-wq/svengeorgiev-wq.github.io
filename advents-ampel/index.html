@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#061225">
+    <meta name="description" content="Die Advents-Ampel: 31 geführte Tage mit täglichem Ampel-Check und Audio-Begleitung zum Buch von Anna Lorenz.">
+    <meta name="robots" content="noindex,nofollow">
+    <meta property="og:title" content="Die Advents-Ampel · 31-Tage-Begleiter">
+    <meta property="og:description" content="Täglicher Ampel-Check, 31 Tageskarten und kurze Audios – ohne Anmeldung.">
+    <meta property="og:image" content="assets/book-cover.webp">
+    <title>Die Advents-Ampel · 31 Tage</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" sizes="32x32" href="icons/favicon-32.png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="stylesheet" href="styles.css?v=2">
+  </head>
+  <body>
+    <a class="skip-link" href="#mainContent">Zum Inhalt springen</a>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="brand" type="button" data-route="today" aria-label="Zur Heute-Ansicht">
+          <span class="brand__signal" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span class="brand__copy">
+            <strong>Die Advents-Ampel</strong>
+            <small>31 Tage · Anna Lorenz</small>
+          </span>
+        </button>
+
+        <nav class="desktop-nav" aria-label="Hauptnavigation">
+          <button type="button" data-route="today">Heute</button>
+          <button type="button" data-route="days">31 Tage</button>
+          <button type="button" data-route="audio">Audios</button>
+          <button type="button" data-route="help">Ampel-Hilfe</button>
+        </nav>
+
+        <button class="icon-button" id="openSettings" type="button" aria-label="Einstellungen und Datensicherung öffnen">•••</button>
+      </header>
+
+      <div class="workspace">
+        <aside class="sidebar" aria-label="Tagesnavigation">
+          <div id="sidebarProgress"></div>
+          <nav id="sidebarDays" class="sidebar-days" aria-label="31 Tage"></nav>
+          <p class="sidebar-note">Kein Nachholen. Kein Neustart. Heute reicht heute.</p>
+        </aside>
+        <main id="mainContent" tabindex="-1"></main>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Mobile Hauptnavigation">
+        <button type="button" data-route="today"><span aria-hidden="true">●</span>Heute</button>
+        <button type="button" data-route="days"><span aria-hidden="true">31</span>Tage</button>
+        <button type="button" data-route="audio"><span aria-hidden="true">♫</span>Audios</button>
+        <button type="button" data-route="help"><span aria-hidden="true">△</span>Hilfe</button>
+      </nav>
+    </div>
+
+    <dialog id="settingsDialog" class="dialog">
+      <form method="dialog" class="dialog__card">
+        <div class="dialog__head">
+          <div>
+            <span class="eyebrow">Nur auf diesem Gerät</span>
+            <h2>App & Daten</h2>
+          </div>
+          <button class="icon-button" value="cancel" aria-label="Schließen">×</button>
+        </div>
+        <p>Deine Ampelstände und Markierungen bleiben lokal. Es gibt kein Konto und keine Cloud.</p>
+        <div class="dialog__actions">
+          <button class="button button--primary" id="installButton" type="button">App installieren</button>
+          <button class="button button--secondary" id="exportButton" type="button">Sicherung laden</button>
+          <label class="button button--secondary file-button">Sicherung importieren<input id="importInput" type="file" accept="application/json,.json"></label>
+          <button class="button button--secondary" id="calendarButton" type="button">Kalender-Erinnerung</button>
+        </div>
+        <label class="field" for="reminderTime">
+          <span>Uhrzeit für die tägliche Kalender-Erinnerung</span>
+          <input id="reminderTime" type="time" value="19:00">
+        </label>
+        <p class="fine-print">Die App erstellt eine Kalenderdatei. Nach dem Öffnen und Bestätigen erinnert dich dein Kalender – auch wenn die App geschlossen ist.</p>
+        <hr>
+        <button class="text-button text-button--danger" id="resetButton" type="button">Alle lokalen Daten zurücksetzen</button>
+        <p class="fine-print">Diese App ersetzt keine ärztliche, psychotherapeutische oder psychiatrische Behandlung.</p>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="data.js?v=2"></script>
+    <script src="app.js?v=3"></script>
+  </body>
+</html>

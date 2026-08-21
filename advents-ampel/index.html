@@ -13,7 +13,7 @@
     <link rel="manifest" href="manifest.webmanifest?v=3">
     <link rel="icon" sizes="32x32" href="icons/favicon-cover-2026.png">
     <link rel="apple-touch-icon" href="icons/apple-touch-cover-2026.png">
-    <link rel="stylesheet" href="styles.css?v=5">
+    <link rel="stylesheet" href="styles.css?v=6">
   </head>
   <body>
     <a class="skip-link" href="#mainContent">Zum Inhalt springen</a>
@@ -32,6 +32,7 @@
           <button type="button" data-route="today">Heute</button>
           <button type="button" data-route="days">31 Tage</button>
           <button type="button" data-route="audio">Audios</button>
+          <button type="button" data-route="book">Buch & App</button>
           <button type="button" data-route="help">Ampel-Hilfe</button>
         </nav>
 
@@ -51,6 +52,7 @@
         <button type="button" data-route="today"><span aria-hidden="true">●</span>Heute</button>
         <button type="button" data-route="days"><span aria-hidden="true">31</span>Tage</button>
         <button type="button" data-route="audio"><span aria-hidden="true">♫</span>Audios</button>
+        <button type="button" data-route="book"><span aria-hidden="true">B</span>Buch</button>
         <button type="button" data-route="help"><span aria-hidden="true">△</span>Hilfe</button>
       </nav>
     </div>
@@ -70,6 +72,7 @@
           <button class="button button--secondary" id="exportButton" type="button">Sicherung laden</button>
           <label class="button button--secondary file-button">Sicherung importieren<input id="importInput" type="file" accept="application/json,.json"></label>
           <button class="button button--secondary" id="calendarButton" type="button">Kalender-Erinnerung</button>
+          <button class="button button--secondary" type="button" data-route="book" value="cancel">Anleitung & Buchstellen</button>
         </div>
         <label class="field" for="reminderTime">
           <span>Uhrzeit für die tägliche Kalender-Erinnerung</span>
@@ -84,7 +87,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-    <script src="data.js?v=3"></script>
-    <script src="app.js?v=5"></script>
+    <script src="data.js?v=4"></script>
+    <script src="app.js?v=6"></script>
   </body>
 </html>

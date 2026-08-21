@@ -3,7 +3,7 @@
 (() => {
   const { phases, days } = window.ADVENTS_AMPEL_CONTENT;
   const STORAGE_KEY = "advents-ampel-state-v1";
-  const ROUTES = new Set(["today", "days", "audio", "help"]);
+  const ROUTES = new Set(["today", "days", "audio", "book", "help"]);
   const TONES = {
     green: { label: "Grün", lead: "Kapazität ist da", text: "Bereite heute vor, was später keine Entscheidung mehr brauchen soll. Arbeite mit der Tageskarte im Workbook." },
     yellow: { label: "Gelb", lead: "Es wird eng", text: "Kürze, statt neu zu planen. Nutze die kleinste Fassung des heutigen Werkzeugs und lass den Rest liegen." },
@@ -86,6 +86,7 @@
 
     if (route === "days") renderDays();
     else if (route === "audio") renderAudio();
+    else if (route === "book") renderBook();
     else if (route === "help") renderHelp();
     else renderToday();
 
@@ -119,6 +120,7 @@
 
   function renderToday() {
     const day = getDay(state.currentDay);
+    const bookRef = bookReference(day);
     const checkedTone = state.checks[String(day.day)] || "";
     const tone = checkedTone ? TONES[checkedTone] : null;
     const completed = completedCount();
@@ -137,7 +139,7 @@
               <button class="button button--secondary" type="button" data-route="help">Ich brauche Ampel-Hilfe</button>
             </div>
           </div>
-          <div class="hero__art"><img src="assets/book-cover-2026.png" alt="Buchcover ADHS und Overthinking bei Erwachsenen von Anna Lorenz"></div>
+          <div class="hero__art"><a class="hero__cover-link" href="#book" data-route="book" aria-label="Buchcover öffnen: Anleitung und genaue Buchstellen"><img src="assets/book-cover-2026.png" alt="Buchcover ADHS und Overthinking bei Erwachsenen von Anna Lorenz"><span>Zum Buch & zur Installation</span></a></div>
         </section>
 
         <div class="stats" aria-label="Fortschritt">
@@ -155,7 +157,7 @@
             <p class="impulse">${escapeHtml(day.impulse)}</p>
             <div class="book-cue">
               <span class="book-cue__icon" aria-hidden="true">B</span>
-              <div><strong>Deine Tageskarte im Workbook</strong><p>${escapeHtml(day.reflection)} Persönliche Gedanken bleiben dort – die App merkt nur Ampelstand und Fortschritt.</p></div>
+              <div><strong>Genaue Fundstelle im Buch</strong><p><b>Kapitel ${day.chapter}: ${escapeHtml(bookRef.chapterTitle)}</b><br>${escapeHtml(bookRef.section)}<br><span class="book-cue__workbook">Workbook: Tageskarte Tag ${day.day} „${escapeHtml(day.title)}“ · Reflexionsfrage: ${escapeHtml(day.reflection)}</span></p></div>
             </div>
             ${day.timer ? renderTimerMarkup(day) : ""}
             ${audioMarkup}
@@ -190,12 +192,12 @@
         <header class="page-head"><div><span class="eyebrow">Dezember ohne Neustartdrama</span><h1>31 Tage</h1><p>Die Tagesnamen entsprechen den Karten im Workbook. Ausgefallene Tage bleiben einfach liegen – du gehst beim heutigen Tag weiter.</p></div><span class="status-pill status-pill--green">${completed}/31 markiert</span></header>
         ${phases.map((phase) => `
           <section class="phase-section">
-            <div class="phase-head" style="--tone:var(--${phase.tone})"><span class="phase-mark">${phase.chapter}</span><div><h2>${escapeHtml(phase.title)}</h2><p>${phase.range} · Kapitel ${phase.chapter}</p></div></div>
+            <div class="phase-head" style="--tone:var(--${phase.tone})"><span class="phase-mark">${phase.chapter}</span><div><h2>${escapeHtml(phase.title)}</h2><p>${phase.range} · Kapitel ${phase.chapter}: ${escapeHtml(phase.bookTitle)}</p></div></div>
             <div class="day-grid">
               ${days.filter((day) => day.chapter === phase.chapter).map((day) => `
                 <button class="day-tile ${state.done[String(day.day)] ? "is-done" : ""}" type="button" data-day="${day.day}">
                   <span class="day-tile__top"><span class="day-tile__number">${String(day.day).padStart(2, "0")}</span><span class="day-tile__status">${state.done[String(day.day)] ? "✓ markiert" : TONES[day.expected].label}</span></span>
-                  <strong>${escapeHtml(day.title)}</strong><small>${escapeHtml(day.tool)}</small>
+                  <strong>${escapeHtml(day.title)}</strong><small>${escapeHtml(day.tool)}</small><span class="day-tile__book">Im Buch: Kapitel ${day.chapter} · ${escapeHtml(bookReference(day).section)}</span>
                 </button>`).join("")}
             </div>
           </section>`).join("")}
@@ -214,10 +216,41 @@
               <span class="audio-card__number">${String(day.day).padStart(2, "0")}</span>
               <div>
                 <div class="audio-card__head"><div><h2>${escapeHtml(day.title)}</h2><p>Tag ${day.day} · ${escapeHtml(day.tool)}</p></div><span class="availability">${day.duration}</span></div>
+                <p class="audio-card__book">Im Buch: Kapitel ${day.chapter} „${escapeHtml(bookReference(day).chapterTitle)}“ → ${escapeHtml(bookReference(day).section)} · Workbook: Tageskarte ${day.day}</p>
                 <audio controls preload="metadata" data-audio-day="${day.day}" src="${day.audio}">Dein Browser unterstützt die Audiowiedergabe nicht.</audio>
               </div>
             </article>`).join("")}
         </div>
+      </div>`;
+  }
+
+  function renderBook() {
+    const day = getDay(state.currentDay);
+    const bookRef = bookReference(day);
+    els.main.innerHTML = `
+      <div class="view book-view">
+        <section class="book-hero">
+          <div class="book-hero__cover"><img src="assets/book-cover-2026.png" alt="Buchcover ADHS und Overthinking bei Erwachsenen von Anna Lorenz"></div>
+          <div><span class="eyebrow">Buch · Workbook · Audio · App</span><h1>Alles greift ineinander.</h1><p>Das Buch erklärt die Hintergründe und Werkzeuge. Das Workbook führt durch die konkrete Tagesübung. Die App merkt Ampelstand und Fortschritt, stellt Timer bereit und bringt dich immer wieder an die passende Buchstelle zurück.</p><div class="hero__actions"><button class="button button--primary" type="button" data-day="${day.day}">Heutigen Tag öffnen</button><button class="button button--secondary" type="button" data-route="audio">Audio ${day.day} öffnen</button></div></div>
+        </section>
+
+        <section class="book-route-card" aria-labelledby="currentBookRoute">
+          <div class="book-route-card__head"><span class="eyebrow">Dein Weg für heute</span><h2 id="currentBookRoute">Tag ${day.day}: ${escapeHtml(day.title)}</h2></div>
+          <div class="book-flow">
+            <article><span>1</span><small>Buch</small><strong>Kapitel ${day.chapter}</strong><p>${escapeHtml(bookRef.chapterTitle)}<br><b>${escapeHtml(bookRef.section)}</b></p></article>
+            <article><span>2</span><small>Workbook</small><strong>Tageskarte ${day.day}</strong><p>„${escapeHtml(day.title)}“<br>${escapeHtml(day.reflection)}</p></article>
+            <article><span>3</span><small>App</small><strong>Heute + Audio ${day.day}</strong><p>Ampel wählen, Audio hören, Tag markieren. Persönliche Notizen bleiben im Workbook.</p></article>
+          </div>
+        </section>
+
+        <section class="install-section" aria-labelledby="installHeading">
+          <div class="install-section__head"><div><span class="eyebrow">Einmal einrichten · danach direkt öffnen</span><h2 id="installHeading">App auf den Home-Bildschirm legen</h2><p>Die Advents-Ampel ist eine Webseite und keine App aus dem Store. Auf dem Startbildschirm sieht sie trotzdem wie eine App aus und startet ohne Browserleiste.</p></div><button class="button button--primary" type="button" data-install-app>App jetzt installieren</button></div>
+          <div class="install-grid">
+            <article class="install-card"><span class="install-card__device" aria-hidden="true">iOS</span><h3>iPhone und iPad</h3><ol><li>Diese Adresse in <b>Safari</b> öffnen.</li><li>Unten auf das Teilen-Symbol tippen – Quadrat mit Pfeil nach oben.</li><li>In der Liste „Zum Home-Bildschirm“ wählen.</li><li>Name bestätigen und oben rechts „Hinzufügen“ tippen.</li></ol></article>
+            <article class="install-card"><span class="install-card__device" aria-hidden="true">A</span><h3>Android</h3><ol><li>Diese Adresse in <b>Chrome</b> öffnen.</li><li>Oben rechts auf die drei Punkte tippen.</li><li>„Zum Startbildschirm hinzufügen“ oder „App installieren“ wählen.</li><li>Bestätigen.</li></ol></article>
+            <article class="install-card"><span class="install-card__device" aria-hidden="true">PC</span><h3>Rechner</h3><p>Ein Lesezeichen genügt. In Chrome und Edge lässt sich die App zusätzlich über das Installieren-Symbol rechts in der Adresszeile installieren.</p><p class="fine-print"><b>Wenn der Menüpunkt fehlt:</b> Auf iPhone/iPad muss die Seite in Safari geöffnet sein. Sonst Seite einmal neu laden oder ein Lesezeichen setzen.</p></article>
+          </div>
+        </section>
       </div>`;
   }
 
@@ -272,6 +305,7 @@
 
     document.querySelector("[data-quick-timer]")?.addEventListener("click", startQuickTimer);
     document.querySelector("[data-open-calendar]")?.addEventListener("click", () => els.settingsDialog.showModal());
+    document.querySelector("[data-install-app]")?.addEventListener("click", installApp);
   }
 
   function bindAudioEvents() {
@@ -375,6 +409,16 @@
     return days.find((day) => day.day === Number(dayNumber)) || days[0];
   }
 
+  function getPhase(chapter) {
+    return phases.find((phase) => phase.chapter === Number(chapter)) || phases[0];
+  }
+
+  function bookReference(day) {
+    const phase = getPhase(day.chapter);
+    const usesToolB = day.day === 31 || (day.day <= 27 && day.day % 3 === 0);
+    return { chapterTitle: phase.bookTitle, section: usesToolB ? phase.bookB : phase.bookA };
+  }
+
   function clampDay(value) {
     return Math.max(1, Math.min(31, Number(value) || 1));
   }
@@ -453,6 +497,8 @@
       installPrompt = null;
       return;
     }
+    if (els.settingsDialog.open) els.settingsDialog.close();
+    if (route !== "book") navigate("book");
     showToast("Im Browser-Menü „Zum Startbildschirm“ oder „App installieren“ wählen.");
   }
 

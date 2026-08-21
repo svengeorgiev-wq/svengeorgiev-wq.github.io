@@ -2,16 +2,16 @@
 
 window.ADVENTS_AMPEL_CONTENT = Object.freeze({
   phases: [
-    { chapter: 1, range: "Tage 1–3", title: "Signale der Advents-Ampel", tone: "green" },
-    { chapter: 2, range: "Tage 4–6", title: "Erwartungen sortieren", tone: "green" },
-    { chapter: 3, range: "Tage 7–9", title: "Zeit rückwärts planen", tone: "green" },
-    { chapter: 4, range: "Tage 10–12", title: "Reize rechtzeitig senken", tone: "yellow" },
-    { chapter: 5, range: "Tage 13–15", title: "Termine begrenzen", tone: "yellow" },
-    { chapter: 6, range: "Tage 16–18", title: "Das Minimal-Gerüst", tone: "yellow" },
-    { chapter: 7, range: "Tage 19–21", title: "Abende halten", tone: "yellow" },
-    { chapter: 8, range: "Tage 22–24", title: "Sätze für den Familientisch", tone: "red" },
-    { chapter: 9, range: "Tage 25–27", title: "Ausstieg mit Rückkehr", tone: "red" },
-    { chapter: 10, range: "Tage 28–31", title: "Sanft zwischen den Jahren", tone: "red" }
+    { chapter: 1, range: "Tage 1–3", title: "Signale der Advents-Ampel", tone: "green", bookTitle: "„Diesmal wird es entspannt“: Warum der Dezember jedes Jahr anders läuft als geplant", bookA: "Werkzeug A: die Signale der Advents-Ampel", bookB: "Werkzeug B: die Wenn-Rot-Zeile" },
+    { chapter: 2, range: "Tage 4–6", title: "Erwartungen sortieren", tone: "green", bookTitle: "Von allen Seiten: Wer im Dezember alles etwas von dir will", bookA: "Werkzeug A: die Erwartungs-Streichliste", bookB: "Werkzeug B: der Aufschub-Satz" },
+    { chapter: 3, range: "Tage 7–9", title: "Zeit rückwärts planen", tone: "green", bookTitle: "„Noch drei Wochen“ ist plötzlich morgen: Zeitblindheit im Advent", bookA: "Werkzeug A: die Rückwärts-Leiste", bookB: "Werkzeug B: die vorentschiedene Ersatzlösung" },
+    { chapter: 4, range: "Tage 10–12", title: "Reize rechtzeitig senken", tone: "yellow", bookTitle: "Lichterketten, Kaufhausmusik, Zimtduft: Reizüberflutung im Dezember", bookA: "Werkzeug A: die 20-Minuten-Reizpause", bookB: "Werkzeug B: der Sechzig-Sekunden-Ausstieg" },
+    { chapter: 5, range: "Tage 13–15", title: "Termine begrenzen", tone: "yellow", bookTitle: "Jahresendspurt: Wenn Arbeit, Feiern und Familie in dieselbe Woche fallen", bookA: "Werkzeug A: die Drei-Termine-Regel", bookB: "Werkzeug B: die Absage-Vorlage" },
+    { chapter: 6, range: "Tage 16–18", title: "Das Minimal-Gerüst", tone: "yellow", bookTitle: "Wenn die Routinen wegbrechen: Schlaf, Essen, Bewegung, Medikation", bookA: "Werkzeug A: das Minimal-Gerüst", bookB: "Werkzeug B: die eine Säule" },
+    { chapter: 7, range: "Tage 19–21", title: "Abende halten", tone: "yellow", bookTitle: "Allein durch eine Zeit, die für Paare gemacht ist", bookA: "Werkzeug A: die Abendklammer", bookB: "Werkzeug B: der feste Anker zur festen Uhrzeit" },
+    { chapter: 8, range: "Tage 22–24", title: "Sätze für den Familientisch", tone: "red", bookTitle: "Zurück am Familientisch: alte Rollen, alte Sätze", bookA: "Werkzeug A: die drei Sätze", bookB: "Werkzeug B: der eine Satz" },
+    { chapter: 9, range: "Tage 25–27", title: "Ausstieg mit Rückkehr", tone: "red", bookTitle: "Wenn ein Kommentar den ganzen Abend kippt: Ablehnungssensibilität an den Feiertagen", bookA: "Werkzeug A: der Zehn-Minuten-Ausstieg", bookB: "Werkzeug B: der Grund, der schon bereitliegt" },
+    { chapter: 10, range: "Tage 28–31", title: "Sanft zwischen den Jahren", tone: "red", bookTitle: "Zwischen den Jahren: die Leere nach dem Fest und die Vorsatz-Falle", bookA: "Werkzeug A: der sanfte Wiedereinstieg", bookB: "Werkzeug B: der eine Punkt für Januar" }
   ],
   days: [
     { day: 1, chapter: 1, title: "Die Signalkarte", expected: "green", tool: "Signale der Advents-Ampel", impulse: "Heute entsteht dein Messgerät für den ganzen Monat. In Grün dauert das zehn Minuten, in Rot entsteht es gar nicht.", reflection: "Welches der drei Signale war heute da?", duration: "2:17", audio: "audio/tag-01.mp3" },

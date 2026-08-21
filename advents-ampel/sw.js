@@ -1,11 +1,11 @@
 "use strict";
 
-const SHELL_CACHE = "advents-ampel-shell-v4";
+const SHELL_CACHE = "advents-ampel-shell-v5";
 const AUDIO_CACHE = "advents-ampel-audio-v1";
 const APP_SHELL = [
   "./",
   "index.html",
-  "styles.css?v=2",
+  "styles.css?v=3",
   "data.js?v=2",
   "app.js?v=3",
   "manifest.webmanifest",

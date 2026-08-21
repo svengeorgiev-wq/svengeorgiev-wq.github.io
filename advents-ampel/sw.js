@@ -1,19 +1,19 @@
 "use strict";
 
-const SHELL_CACHE = "advents-ampel-shell-v5";
+const SHELL_CACHE = "advents-ampel-shell-v6";
 const AUDIO_CACHE = "advents-ampel-audio-v1";
 const APP_SHELL = [
   "./",
   "index.html",
-  "styles.css?v=3",
+  "styles.css?v=4",
   "data.js?v=2",
-  "app.js?v=3",
-  "manifest.webmanifest",
-  "assets/book-cover.webp",
-  "icons/favicon-32.png",
-  "icons/apple-touch-icon.png",
-  "icons/icon-192.png",
-  "icons/icon-512.png"
+  "app.js?v=4",
+  "manifest.webmanifest?v=2",
+  "assets/book-cover-2026.png",
+  "icons/favicon-cover-2026.png",
+  "icons/apple-touch-cover-2026.png",
+  "icons/icon-192-cover-2026.png",
+  "icons/icon-512-cover-2026.png"
 ];
 
 self.addEventListener("install", (event) => {

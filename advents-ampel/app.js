@@ -138,7 +138,7 @@
               <button class="button button--secondary" type="button" data-route="help">Ich brauche Ampel-Hilfe</button>
             </div>
           </div>
-          <div class="hero__art"><img src="assets/book-cover.webp" alt="Buchcover ADHS und Overthinking bei Erwachsenen von Anna Lorenz"></div>
+          <div class="hero__art"><img src="assets/book-cover-2026.png" alt="Buchcover ADHS und Overthinking bei Erwachsenen von Anna Lorenz"></div>
         </section>
 
         <div class="stats" aria-label="Fortschritt">

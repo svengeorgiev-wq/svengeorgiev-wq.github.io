@@ -687,7 +687,7 @@ body::before {
   border-color: rgba(244, 185, 46, .28);
   background:
     linear-gradient(90deg, rgba(3, 13, 28, .96) 0%, rgba(5, 20, 36, .94) 62%, rgba(3, 13, 27, .72) 100%),
-    url("assets/book-cover.webp") right 28% center / 310px auto no-repeat;
+    url("assets/book-cover-2026.png") right 28% center / 310px auto no-repeat;
   box-shadow: var(--shadow);
 }
 
@@ -749,7 +749,7 @@ body::before {
   .audio-hero, .help-hero {
     background:
       linear-gradient(110deg, rgba(3, 13, 28, .97), rgba(5, 20, 36, .91)),
-      url("assets/book-cover.webp") right center / 180px auto no-repeat;
+      url("assets/book-cover-2026.png") right center / 180px auto no-repeat;
   }
 }
 

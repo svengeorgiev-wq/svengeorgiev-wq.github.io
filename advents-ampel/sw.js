@@ -1,14 +1,14 @@
 "use strict";
 
-const SHELL_CACHE = "advents-ampel-shell-v6";
+const SHELL_CACHE = "advents-ampel-shell-v7";
 const AUDIO_CACHE = "advents-ampel-audio-v1";
 const APP_SHELL = [
   "./",
   "index.html",
-  "styles.css?v=4",
+  "styles.css?v=5",
   "data.js?v=2",
   "app.js?v=4",
-  "manifest.webmanifest?v=2",
+  "manifest.webmanifest?v=3",
   "assets/book-cover-2026.png",
   "icons/favicon-cover-2026.png",
   "icons/apple-touch-cover-2026.png",

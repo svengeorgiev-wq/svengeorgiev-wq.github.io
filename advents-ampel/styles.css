@@ -756,3 +756,239 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   .hero::after { animation: none; }
 }
+
+/* Christmas redesign v2 — red, evergreen and gold are now the base */
+:root {
+  --ink: #fffaf0;
+  --muted: #d3cbbd;
+  --muted-2: #a99f91;
+  --navy-950: #020403;
+  --navy-900: #050704;
+  --navy-850: #09110c;
+  --navy-800: #102018;
+  --panel: rgba(9, 19, 12, .93);
+  --panel-soft: rgba(255, 234, 176, .07);
+  --line: rgba(242, 182, 42, .2);
+  --line-strong: rgba(255, 211, 101, .42);
+  --gold: #f0b629;
+  --gold-soft: #ffe39a;
+  --green: #23864c;
+  --green-soft: #9ce2b1;
+  --yellow: #dfa722;
+  --yellow-soft: #ffe290;
+  --red: #c53737;
+  --red-soft: #ffaaa0;
+  --shadow: 0 28px 80px rgba(0, 0, 0, .58), 0 0 0 1px rgba(255, 211, 100, .035);
+}
+
+body {
+  background:
+    radial-gradient(circle at 4% 18%, rgba(179, 29, 35, .38), transparent 25rem),
+    radial-gradient(circle at 96% 24%, rgba(20, 117, 59, .36), transparent 28rem),
+    radial-gradient(circle at 18% 92%, rgba(130, 20, 27, .22), transparent 24rem),
+    radial-gradient(circle at 82% 96%, rgba(19, 99, 53, .24), transparent 26rem),
+    linear-gradient(115deg, #090304 0%, #030504 47%, #021008 100%);
+}
+
+body::before {
+  opacity: .62;
+  background-image:
+    radial-gradient(circle, rgba(249, 193, 55, .9) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(215, 45, 47, .66) 0 1.4px, transparent 2.2px),
+    radial-gradient(circle, rgba(47, 153, 84, .7) 0 1.3px, transparent 2.1px),
+    radial-gradient(circle, rgba(255, 250, 229, .52) 0 1px, transparent 1.7px),
+    repeating-linear-gradient(62deg, transparent 0 24px, rgba(42, 106, 65, .035) 25px 26px, transparent 27px 52px);
+  background-position: 13px 17px, 52px 72px, 91px 29px, 38px 118px, 0 0;
+  background-size: 89px 103px, 137px 151px, 173px 167px, 211px 197px, 52px 52px;
+}
+
+.topbar {
+  border-bottom-color: rgba(240, 182, 41, .4);
+  background:
+    radial-gradient(circle at 5% 50%, rgba(183, 32, 35, .2), transparent 20%),
+    radial-gradient(circle at 95% 50%, rgba(25, 120, 61, .2), transparent 22%),
+    rgba(3, 6, 4, .95);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .5);
+}
+
+.topbar::before {
+  position: absolute;
+  right: 0;
+  bottom: 3px;
+  left: 0;
+  height: 6px;
+  opacity: .55;
+  background-image:
+    radial-gradient(circle at 12% 50%, #d23b3b 0 2px, transparent 3px),
+    radial-gradient(circle at 50% 50%, #f3bd36 0 2px, transparent 3px),
+    radial-gradient(circle at 88% 50%, #38a361 0 2px, transparent 3px);
+  background-size: 86px 6px;
+  content: "";
+  filter: drop-shadow(0 0 4px rgba(248, 190, 47, .7));
+}
+
+.brand__signal {
+  background: #090c08;
+  box-shadow: inset 0 0 18px rgba(255, 216, 108, .08), 0 0 24px rgba(225, 170, 30, .13);
+}
+
+.workspace {
+  background: linear-gradient(90deg, rgba(122, 18, 24, .06), transparent 29%, transparent 71%, rgba(15, 92, 47, .07));
+}
+
+.sidebar {
+  border-right-color: rgba(240, 182, 41, .23);
+  background:
+    radial-gradient(circle at 0 14%, rgba(160, 26, 31, .25), transparent 32%),
+    radial-gradient(circle at 100% 86%, rgba(16, 101, 50, .25), transparent 38%),
+    rgba(4, 9, 6, .94);
+  box-shadow: inset -16px 0 36px rgba(0, 0, 0, .22);
+}
+
+.sidebar-day:hover {
+  background: linear-gradient(90deg, rgba(164, 29, 32, .15), rgba(27, 116, 61, .12));
+}
+
+.sidebar-day.is-active {
+  border: 1px solid rgba(240, 182, 41, .17);
+  background: linear-gradient(90deg, rgba(158, 26, 31, .22), rgba(240, 182, 41, .07) 52%, rgba(21, 106, 54, .19));
+}
+
+#mainContent {
+  background:
+    linear-gradient(135deg, rgba(135, 22, 27, .035), transparent 38%),
+    linear-gradient(315deg, rgba(17, 95, 49, .045), transparent 42%);
+}
+
+.hero {
+  border-color: rgba(243, 187, 49, .46);
+  background:
+    radial-gradient(circle at 9% 74%, rgba(184, 29, 35, .52), transparent 36%),
+    radial-gradient(circle at 91% 70%, rgba(20, 124, 60, .5), transparent 38%),
+    linear-gradient(110deg, rgba(34, 5, 8, .98), rgba(3, 6, 4, .97) 48%, rgba(3, 34, 17, .98));
+  box-shadow: 0 30px 90px rgba(0, 0, 0, .64), inset 0 0 90px rgba(245, 190, 50, .04);
+}
+
+.hero::before {
+  background:
+    radial-gradient(circle at 28% 17%, rgba(255, 207, 91, .25), transparent 26%),
+    radial-gradient(circle at 9% 72%, rgba(255, 206, 84, .95) 0 1.2px, transparent 2.2px),
+    radial-gradient(circle at 46% 22%, rgba(255, 249, 229, .76) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 73% 80%, rgba(255, 201, 74, .85) 0 1.2px, transparent 2.2px);
+  background-size: auto, 77px 83px, 119px 109px, 151px 137px;
+}
+
+.hero__art::before {
+  background: radial-gradient(circle, rgba(244, 184, 40, .32), rgba(20, 123, 59, .24) 34%, rgba(169, 28, 33, .15) 55%, transparent 72%);
+}
+
+.hero__art img {
+  border-color: rgba(255, 210, 94, .5);
+  box-shadow: 0 36px 84px rgba(0, 0, 0, .72), -18px 4px 45px rgba(176, 29, 34, .18), 18px 4px 45px rgba(25, 124, 61, .18);
+}
+
+.button--secondary {
+  border-color: rgba(240, 182, 41, .26);
+  background: linear-gradient(100deg, rgba(145, 24, 29, .16), rgba(255, 238, 193, .05) 50%, rgba(18, 101, 50, .16));
+}
+
+.stat-card, .card, .day-tile, .audio-card {
+  border-color: rgba(240, 182, 41, .23);
+  background: linear-gradient(145deg, rgba(13, 26, 16, .96), rgba(5, 9, 6, .96));
+  box-shadow: inset 0 1px 0 rgba(255, 230, 163, .04), 0 18px 45px rgba(0, 0, 0, .2);
+}
+
+.stat-card:nth-child(1) { background: linear-gradient(145deg, rgba(74, 12, 17, .94), rgba(14, 8, 7, .97)); }
+.stat-card:nth-child(2) { background: linear-gradient(145deg, rgba(49, 36, 9, .94), rgba(12, 10, 6, .97)); }
+.stat-card:nth-child(3) { background: linear-gradient(145deg, rgba(8, 59, 29, .94), rgba(6, 12, 7, .97)); }
+.stat-card:nth-child(1)::before { background: #d63b3d; }
+.stat-card:nth-child(2)::before { background: #f0b629; }
+.stat-card:nth-child(3)::before { background: #36a460; }
+
+.today-grid > .card:first-child {
+  background:
+    radial-gradient(circle at 0 0, rgba(173, 28, 33, .22), transparent 36%),
+    linear-gradient(145deg, rgba(13, 24, 15, .98), rgba(6, 9, 6, .98));
+}
+
+.today-grid > .card:last-child {
+  background:
+    radial-gradient(circle at 100% 100%, rgba(25, 121, 60, .22), transparent 38%),
+    linear-gradient(145deg, rgba(13, 24, 15, .98), rgba(6, 9, 6, .98));
+}
+
+.day-tile:nth-child(3n + 1) {
+  background: linear-gradient(145deg, rgba(70, 12, 17, .93), rgba(9, 11, 7, .97));
+  box-shadow: inset 3px 0 0 rgba(211, 57, 58, .88);
+}
+.day-tile:nth-child(3n + 2) {
+  background: linear-gradient(145deg, rgba(7, 57, 27, .94), rgba(7, 12, 7, .97));
+  box-shadow: inset 3px 0 0 rgba(48, 158, 87, .86);
+}
+.day-tile:nth-child(3n) {
+  background: linear-gradient(145deg, rgba(51, 37, 8, .94), rgba(10, 11, 6, .97));
+  box-shadow: inset 3px 0 0 rgba(239, 179, 39, .88);
+}
+
+.phase-mark {
+  box-shadow: inset 0 0 18px color-mix(in srgb, var(--tone) 14%, transparent), 0 0 22px color-mix(in srgb, var(--tone) 12%, transparent);
+}
+
+.audio-hero, .help-hero {
+  border-color: rgba(243, 187, 49, .42);
+  background:
+    linear-gradient(90deg, rgba(33, 5, 8, .96) 0%, rgba(5, 8, 5, .91) 54%, rgba(4, 42, 20, .72) 100%),
+    url("assets/book-cover-2026.png") right 28% center / 310px auto no-repeat;
+}
+
+.audio-hero::before, .help-hero::before {
+  background:
+    radial-gradient(circle at 88% 35%, rgba(35, 147, 75, .38), transparent 29%),
+    radial-gradient(circle at 10% 92%, rgba(190, 34, 37, .34), transparent 36%);
+}
+
+.audio-card:nth-child(odd) {
+  background: linear-gradient(105deg, rgba(69, 11, 16, .94), rgba(8, 13, 8, .96) 54%);
+  box-shadow: inset 3px 0 0 rgba(215, 58, 59, .9);
+}
+.audio-card:nth-child(even) {
+  background: linear-gradient(105deg, rgba(7, 55, 27, .94), rgba(8, 13, 8, .96) 54%);
+  box-shadow: inset 3px 0 0 rgba(49, 158, 87, .88);
+}
+
+.help-card--green { background: linear-gradient(145deg, rgba(8, 69, 33, .96), rgba(7, 12, 7, .98)); }
+.help-card--yellow { background: linear-gradient(145deg, rgba(68, 48, 8, .95), rgba(10, 11, 6, .98)); }
+.help-card--red { background: linear-gradient(145deg, rgba(82, 13, 18, .96), rgba(12, 8, 7, .98)); }
+
+.dialog {
+  border-color: rgba(243, 187, 49, .42);
+  background:
+    radial-gradient(circle at 0 0, rgba(162, 26, 31, .2), transparent 34%),
+    radial-gradient(circle at 100% 100%, rgba(19, 111, 55, .22), transparent 38%),
+    #09110c;
+}
+
+.toast {
+  border-color: rgba(243, 187, 49, .38);
+  background: linear-gradient(100deg, #491015, #151307 52%, #0a4525);
+}
+
+.mobile-nav {
+  background:
+    linear-gradient(90deg, rgba(117, 18, 23, .28), transparent 34%, transparent 66%, rgba(14, 86, 43, .3)),
+    rgba(3, 6, 4, .98);
+}
+
+@media (max-width: 760px) {
+  .hero {
+    background:
+      radial-gradient(circle at 0 34%, rgba(184, 29, 35, .42), transparent 40%),
+      radial-gradient(circle at 100% 78%, rgba(20, 124, 60, .42), transparent 44%),
+      linear-gradient(145deg, rgba(23, 4, 7, .99), rgba(3, 13, 7, .99));
+  }
+  .audio-hero, .help-hero {
+    background:
+      linear-gradient(110deg, rgba(34, 5, 8, .97), rgba(4, 31, 15, .9)),
+      url("assets/book-cover-2026.png") right center / 180px auto no-repeat;
+  }
+}

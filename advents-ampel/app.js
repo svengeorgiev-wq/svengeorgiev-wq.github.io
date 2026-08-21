@@ -122,9 +122,8 @@
     const checkedTone = state.checks[String(day.day)] || "";
     const tone = checkedTone ? TONES[checkedTone] : null;
     const completed = completedCount();
-    const audioMarkup = day.audio
-      ? `<div class="audio-inline"><span class="eyebrow">Tages-Audio · ${day.duration}</span><audio controls preload="metadata" data-audio-day="${day.day}" src="${day.audio}">Dein Browser unterstützt die Audiowiedergabe nicht.</audio></div>`
-      : `<div class="audio-unavailable">Audio ${day.day} ist vorbereitet und wird ergänzt, sobald die Datei vorliegt.</div>`;
+    const audioCount = days.filter((item) => item.audio).length;
+    const audioMarkup = `<div class="audio-inline"><span class="eyebrow">Tages-Audio · ${day.duration}</span><audio controls preload="metadata" data-audio-day="${day.day}" src="${day.audio}">Dein Browser unterstützt die Audiowiedergabe nicht.</audio></div>`;
 
     els.main.innerHTML = `
       <div class="view">
@@ -144,7 +143,7 @@
         <div class="stats" aria-label="Fortschritt">
           <div class="stat-card"><small>Markiert</small><strong>${completed}</strong><span>von 31 Tagen</span></div>
           <div class="stat-card"><small>Aktueller Tag</small><strong>${day.day}</strong><span>${escapeHtml(day.title)}</span></div>
-          <div class="stat-card"><small>Audios bereit</small><strong>15</strong><span>von 31 Dateien</span></div>
+          <div class="stat-card"><small>Audios bereit</small><strong>${audioCount}</strong><span>von ${days.length} Dateien</span></div>
         </div>
 
         <div class="today-grid" id="todayCard">
@@ -204,17 +203,18 @@
   }
 
   function renderAudio() {
+    const audioCount = days.filter((day) => day.audio).length;
     els.main.innerHTML = `
       <div class="view">
-        <section class="audio-hero"><div><span class="eyebrow">Kurze Begleitung für unterwegs</span><h1>Tägliche Audios</h1><p>Die Audios begleiten die Tageskarte; sie sind keine vorgelesene Buchfassung. Die ersten 15 Tage sind bereits verfügbar. Ein einmal vollständig geladenes Audio kann die App anschließend offline wiedergeben.</p></div><div class="audio-hero__mark" aria-hidden="true">♫</div></section>
-        <div class="notice"><strong>15 von 31 Audios eingebunden.</strong> Die Plätze für Tag 16–31 stehen schon bereit und werden beim nächsten Inhaltspaket ergänzt.</div>
+        <section class="audio-hero"><div><span class="eyebrow">Kurze Begleitung für unterwegs</span><h1>Tägliche Audios</h1><p>Die Audios begleiten die Tageskarte; sie sind keine vorgelesene Buchfassung. Alle 31 Tage sind verfügbar. Ein einmal vollständig geladenes Audio kann die App anschließend offline wiedergeben.</p></div><div class="audio-hero__mark" aria-hidden="true">♫</div></section>
+        <div class="notice"><strong>${audioCount} von ${days.length} Audios eingebunden.</strong> Alle täglichen Begleitungen stehen jetzt bereit.</div>
         <div class="audio-list">
           ${days.map((day) => `
             <article class="audio-card">
               <span class="audio-card__number">${String(day.day).padStart(2, "0")}</span>
               <div>
-                <div class="audio-card__head"><div><h2>${escapeHtml(day.title)}</h2><p>Tag ${day.day} · ${escapeHtml(day.tool)}</p></div>${day.audio ? `<span class="availability">${day.duration}</span>` : `<span class="availability availability--waiting">folgt</span>`}</div>
-                ${day.audio ? `<audio controls preload="metadata" data-audio-day="${day.day}" src="${day.audio}">Dein Browser unterstützt die Audiowiedergabe nicht.</audio>` : `<div class="audio-unavailable">Audio ${day.day} ist noch nicht eingebunden.</div>`}
+                <div class="audio-card__head"><div><h2>${escapeHtml(day.title)}</h2><p>Tag ${day.day} · ${escapeHtml(day.tool)}</p></div><span class="availability">${day.duration}</span></div>
+                <audio controls preload="metadata" data-audio-day="${day.day}" src="${day.audio}">Dein Browser unterstützt die Audiowiedergabe nicht.</audio>
               </div>
             </article>`).join("")}
         </div>

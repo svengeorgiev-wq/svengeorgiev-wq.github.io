@@ -9,7 +9,7 @@ Last updated: 2026-08-21
 - Repository: `https://github.com/svengeorgiev-wq/svengeorgiev-wq.github.io.git`, branch `main`
 - Live URL: `https://tools.munichpublishing.de/advents-ampel/`
 - Direct Pages URL: `https://svengeorgiev-wq.github.io/advents-ampel/`
-- Published baseline: commit `fc76f35` on `main`
+- Published design baseline: commit `2cf0e18` on `main`
 - Status: published and live-verified on 2026-08-21
 - PWA shell cache: `advents-ampel-shell-v5`
 
@@ -47,8 +47,8 @@ Last updated: 2026-08-21
 
 ## Live verification baseline
 
-- GitHub Raw, direct GitHub Pages, and the custom domain returned the published app after commit `fc76f35`.
-- Live HTML references `styles.css?v=2`, `data.js?v=2`, and `app.js?v=3`.
-- Live service worker reports `advents-ampel-shell-v4` and `advents-ampel-audio-v1`.
+- GitHub Raw, direct GitHub Pages, and the custom domain returned the Christmas redesign after commit `2cf0e18`.
+- Live HTML references `styles.css?v=3`, `data.js?v=2`, and `app.js?v=3`.
+- Live service worker reports `advents-ampel-shell-v5` and `advents-ampel-audio-v1`.
 - Cover and all 15 integrated MP3 files returned `200`; total verified audio size is 26,270,224 bytes.
-- Live desktop browser verification found 31 day buttons, correct navigation, loaded cover and audio metadata, no horizontal overflow, and no console errors.
+- Live desktop browser verification loaded the versioned Christmas stylesheet and cover, found all 31 day buttons, and found no horizontal overflow. Local functional checks also found 31 audio cards, 15 audio players, 31 day tiles, and a working settings dialog.

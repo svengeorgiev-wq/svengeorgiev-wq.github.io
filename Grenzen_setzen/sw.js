@@ -1,4 +1,4 @@
-const CACHE_NAME = 'grenzen-setzen-v5';
+const CACHE_NAME = 'grenzen-setzen-v6';
 const APP_SHELL = [
   './',
   './index.html',

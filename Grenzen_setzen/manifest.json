@@ -1,24 +1,40 @@
 {
-  "name": "Grenzen-App \u2014 Nicht alle. Nicht immer. Nicht alles.",
-  "short_name": "Grenzen-App",
-  "description": "Dein 21-Tage-Begleiter zum Buch von Lea Hoffmann",
+  "id": "/Grenzen_setzen/",
+  "name": "Grenzen setzen \u2014 21-Tage-Begleiter",
+  "short_name": "Grenzen setzen",
+  "description": "21 Übungen und 21 Audio-Snacks zum Buch von Lea Hoffmann",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#F8F0EA",
-  "theme_color": "#F8F0EA",
+  "background_color": "#FBE9DD",
+  "theme_color": "#F25A0A",
   "orientation": "portrait",
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Heute weitermachen",
+      "short_name": "Heute",
+      "url": "./#heute",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Audio-Snacks",
+      "short_name": "Audios",
+      "url": "./#audios",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" }]
     }
   ]
 }

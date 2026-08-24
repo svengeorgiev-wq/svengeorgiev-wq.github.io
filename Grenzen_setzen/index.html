@@ -3,49 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#F8F0EA">
-  <title>21-Tage-Begleiter – Nicht alle. Nicht immer. Nicht alles.</title>
-  <meta name="description" content="Der interaktive Begleiter zum Buch von Lea Hoffmann. Grenzen setzen ohne Schuldgefühle.">
+  <meta name="theme-color" content="#F25A0A">
+  <title>Grenzen setzen – dein 21-Tage-Begleiter</title>
+  <meta name="description" content="21 Übungen und 21 Audio-Snacks zum Buch Nicht alle. Nicht immer. Nicht alles. von Lea Hoffmann.">
 
   <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="manifest" href="manifest.json?v=3">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png?v=3">
+  <link rel="apple-touch-icon" href="icon-180.png?v=3">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Grenzen-App">
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #F8F0EA;
-      --bg-warm: #EFE2DA;
-      --bg-soft: #FFF7F1;
-      --card: #FFFAF5;
-      --card-warm: #FFF8F3;
-      --text: #263031;
-      --text-soft: #344142;
-      --text-mute: #738078;
-      --coral: #C9676C;
-      --coral-light: #D7953D;
-      --coral-soft: #EAD7E0;
-      --coral-bg: #F5E8EC;
-      --sage: #74887B;
-      --sage-soft: #E8EEE8;
-      --gold: #D7953D;
-      --gold-soft: #F4E3C8;
-      --border: #E4D8D2;
-      --border-warm: #EADDD5;
-      --shadow-sm: 0 2px 6px rgba(61, 37, 21, 0.05);
-      --shadow: 0 4px 16px rgba(61, 37, 21, 0.08);
-      --shadow-lg: 0 12px 32px rgba(61, 37, 21, 0.14);
-      --radius: 14px;
-      --radius-sm: 10px;
-      --radius-lg: 20px;
-      --serif: 'Playfair Display', Georgia, serif;
-      --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --bg: #FBE9DD;
+      --bg-warm: #F6D3BE;
+      --bg-soft: #FFF8F3;
+      --card: #FFFCF9;
+      --card-warm: #FFF4EB;
+      --text: #111111;
+      --text-soft: #352E2A;
+      --text-mute: #72645B;
+      --coral: #F25A0A;
+      --coral-light: #FF7A22;
+      --coral-soft: #FFD2B8;
+      --coral-bg: #FFF0E6;
+      --sage: #111111;
+      --sage-soft: #EEE8E3;
+      --gold: #F25A0A;
+      --gold-soft: #FFE0CB;
+      --border: #DECABE;
+      --border-warm: #EAD6C9;
+      --shadow-sm: 0 4px 14px rgba(49, 28, 15, 0.07);
+      --shadow: 0 10px 28px rgba(49, 28, 15, 0.11);
+      --shadow-lg: 0 22px 56px rgba(49, 28, 15, 0.17);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --radius-lg: 28px;
+      --serif: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+      --sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1615,10 +1615,321 @@
       vertical-align: middle;
       margin: 0 2px;
     }
+
+    /* ============ COVER-LED 2026 REDESIGN ============ */
+    body {
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 82% 5%, rgba(242, 90, 10, 0.16), transparent 28rem),
+        linear-gradient(165deg, #fff8f3 0%, var(--bg) 36%, #f8ddcd 100%);
+    }
+
+    .container {
+      max-width: 940px;
+      padding-bottom: 72px;
+    }
+
+    .app-nav {
+      position: sticky;
+      top: 10px;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: max-content;
+      max-width: 100%;
+      margin: 0 auto 16px;
+      padding: 6px;
+      background: rgba(17, 17, 17, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 999px;
+      box-shadow: 0 12px 30px rgba(17, 17, 17, 0.18);
+      backdrop-filter: blur(14px);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .app-nav::-webkit-scrollbar { display: none; }
+    .app-nav a,
+    .app-nav button {
+      flex: 0 0 auto;
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      border-radius: 999px;
+      min-height: 40px;
+      padding: 9px 14px;
+      font: 700 12px/1 var(--sans);
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .app-nav a:hover,
+    .app-nav button:hover,
+    .app-nav a:focus-visible,
+    .app-nav button:focus-visible { background: rgba(255,255,255,.13); outline: none; }
+    .app-nav .nav-install { background: var(--coral); }
+    .app-nav .nav-install:hover { background: #ff6a18; }
+    #heute,
+    #tage-21,
+    #audios,
+    #day-detail-anchor,
+    #notes-overview { scroll-margin-top: 82px; }
+
+    .hero {
+      padding: 30px;
+      background:
+        linear-gradient(120deg, rgba(255,255,255,.72), rgba(255,244,235,.94)),
+        url('assets/cover-2026.jpg?v=3') center/cover;
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: var(--shadow-lg);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(255,248,243,.35), rgba(255,248,243,.92));
+    }
+    .hero-content,
+    .sos-button { position: relative; z-index: 2; }
+    .hero-content { align-items: center; gap: 34px; }
+    .hero-cover-link { width: 190px; }
+    .hero-cover {
+      border-radius: 7px;
+      box-shadow: 0 22px 46px rgba(43, 21, 8, .24), 0 2px 6px rgba(43, 21, 8, .16);
+    }
+    .hero-eyebrow { color: var(--text); font-size: 12px; }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(42px, 7.2vw, 72px);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      line-height: .88;
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+    .hero h1 .blue,
+    .hero h1 .sage,
+    .hero h1 .mauve { color: var(--text); }
+    .hero h1 .gold { color: var(--coral); }
+    .hero-author { font-family: var(--sans); font-style: normal; font-weight: 700; color: var(--text); }
+    .hero-tagline { max-width: 43ch; font-size: 14px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .hero-action {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 11px 17px;
+      border-radius: 999px;
+      border: 1px solid var(--text);
+      background: var(--text);
+      color: #fff;
+      font: 800 13px/1 var(--sans);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .hero-action.secondary { background: rgba(255,255,255,.64); color: var(--text); }
+    .hero-action:hover { transform: translateY(-1px); }
+    .sos-button { background: var(--text); box-shadow: 0 5px 18px rgba(17,17,17,.22); }
+    .sos-button::before { background: var(--coral); }
+
+    .kompass { grid-template-columns: repeat(3, 1fr); }
+    .kompass-pillar {
+      border: 1px solid var(--border-warm);
+      border-top: 5px solid var(--text);
+      border-left-width: 1px;
+      padding: 18px;
+    }
+    .kompass-pillar:nth-child(2) { border-left-color: var(--border-warm); border-top-color: var(--text); }
+    .kompass-pillar:nth-child(3) { border-left-color: var(--border-warm); border-top-color: var(--coral); }
+    .kompass-title { font-size: 24px; font-weight: 900; text-transform: uppercase; }
+
+    .progress-card,
+    .intro-banner,
+    .day-detail,
+    .install-banner,
+    .audio-section,
+    .backup-section { box-shadow: var(--shadow); border-color: rgba(222, 202, 190, .9); }
+    .progress-title,
+    .week-title,
+    .day-detail-title,
+    .notes-title,
+    .audio-title,
+    .backup-title { font-family: var(--serif); font-weight: 800; text-transform: uppercase; letter-spacing: .01em; }
+    .progress-fill { background: linear-gradient(90deg, #111 0%, var(--coral) 100%); }
+
+    .day-grid { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+    .day-card {
+      min-height: 145px;
+      padding: 18px;
+      border-top: 5px solid var(--text);
+    }
+    .day-card:nth-child(3n) { border-top-color: var(--coral); }
+    .day-card.completed { background: linear-gradient(140deg, #fff 0%, #ffe1cf 100%); border-color: var(--coral); }
+    .day-card-title { font-size: 14px; font-weight: 700; }
+    .day-num { font-family: var(--serif); font-size: 42px; font-weight: 900; }
+    .day-pillar-dot { display: none; }
+    .day-detail::before { height: 6px; background: linear-gradient(90deg, #111 0 68%, var(--coral) 68%); }
+
+    .audio-section,
+    .backup-section {
+      margin: 34px 0;
+      padding: 26px;
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius-lg);
+      background: rgba(255,252,249,.94);
+    }
+    .section-kicker {
+      margin-bottom: 5px;
+      color: var(--coral);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .audio-head,
+    .backup-head { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; margin-bottom: 18px; }
+    .audio-title,
+    .backup-title { font-size: clamp(27px, 5vw, 38px); line-height: 1; }
+    .audio-copy,
+    .backup-copy { max-width: 62ch; margin-top: 8px; color: var(--text-soft); font-size: 14px; }
+    .audio-count {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-mute);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .audio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .audio-card {
+      position: relative;
+      min-width: 0;
+      padding: 15px;
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+    .audio-card.available { border-color: rgba(242, 90, 10, .5); background: var(--coral-bg); }
+    .audio-card.listened { box-shadow: inset 4px 0 0 var(--coral); }
+    .audio-card-top { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .audio-day { font: 900 20px/1 var(--serif); text-transform: uppercase; }
+    .audio-status {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: #eee8e3;
+      color: var(--text-mute);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .audio-card.available .audio-status { background: var(--coral); color: #fff; }
+    .audio-card-title { min-height: 38px; color: var(--text-soft); font-size: 12px; font-weight: 700; line-height: 1.45; }
+    .audio-card audio,
+    .day-audio audio { width: 100%; height: 40px; margin-top: 12px; }
+    .audio-locked {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 11px;
+      color: var(--text-mute);
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .day-audio {
+      margin-bottom: 22px;
+      padding: 17px;
+      border: 1px solid var(--border-warm);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, #111 0%, #29221e 100%);
+      color: #fff;
+    }
+    .day-audio .section-label { color: #ffd0b5; }
+    .day-audio .section-label::before { background: var(--coral); }
+    .day-audio p { color: #f4e9e2; font-size: 13px; }
+
+    .backup-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .backup-button,
+    .backup-file-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 10px 15px;
+      border: 1px solid var(--text);
+      border-radius: 999px;
+      background: var(--text);
+      color: #fff;
+      font: 800 12px/1 var(--sans);
+      cursor: pointer;
+    }
+    .backup-file-label { background: #fff; color: var(--text); }
+    .backup-file-label input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .backup-message { min-height: 20px; margin-top: 10px; color: var(--text-mute); font-size: 12px; }
+
+    .install-direct {
+      display: none;
+      margin-top: 12px;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--coral);
+      color: #fff;
+      font: 800 13px/1 var(--sans);
+      cursor: pointer;
+    }
+    .install-direct.visible { display: inline-flex; align-items: center; }
+    .footer-cover { width: 110px; }
+    .footer-buy { color: var(--coral); font-weight: 800; }
+
+    :focus-visible { outline: 3px solid rgba(242, 90, 10, .38); outline-offset: 3px; }
+
+    @media (max-width: 720px) {
+      .app-nav { margin-left: 0; margin-right: 0; width: 100%; justify-content: flex-start; }
+      .hero { padding: 70px 20px 24px; }
+      .hero::after { background: rgba(255, 248, 243, .84); }
+      .hero-content { gap: 18px; align-items: flex-start; }
+      .hero-cover-link { width: 128px; }
+      .hero h1 { font-size: 44px; }
+      .hero-text { padding-top: 0; }
+      .kompass { grid-template-columns: 1fr; }
+      .day-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .audio-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .audio-section,
+      .backup-section { padding: 20px 16px; }
+      .audio-head,
+      .backup-head { display: block; }
+      .audio-count { display: inline-block; margin-top: 12px; }
+    }
+
+    @media (max-width: 470px) {
+      .container { padding-left: 12px; padding-right: 12px; }
+      .hero { padding-left: 16px; padding-right: 16px; }
+      .hero-content { align-items: center; }
+      .hero-cover-link { width: 108px; }
+      .hero h1 { font-size: 36px; }
+      .hero-eyebrow { font-size: 10px; }
+      .hero-tagline { font-size: 12px; }
+      .hero-actions { gap: 7px; }
+      .hero-action { min-height: 42px; padding: 9px 12px; font-size: 11px; }
+      .audio-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
   <div class="container">
+
+    <nav class="app-nav" aria-label="App-Bereiche">
+      <a href="#heute">Heute</a>
+      <a href="#tage-21">21 Tage</a>
+      <a href="#audios">Audios</a>
+      <button class="nav-install" type="button" onclick="handleInstallClick()">Installieren</button>
+    </nav>
 
     <!-- ============ HERO ============ -->
     <header class="hero">
@@ -1626,21 +1937,22 @@
         Sofort-Hilfe
       </button>
       <div class="hero-content">
-        <!-- Cover-Link: Sobald das Buch veröffentlicht ist, ersetze das <div class="hero-cover-link"> durch:
-             <a href="AMAZON-URL-HIER" target="_blank" rel="noopener" class="hero-cover-link" aria-label="Zum Buch auf Amazon"> ... </a>
-             (Bitte den schließenden Tag auch entsprechend auf </a> ändern.) -->
-        <div class="hero-cover-link">
-          <img src="assets/cover.webp" alt="Buchcover: Nicht alle. Nicht immer. Nicht alles." class="hero-cover">
-        </div>
+        <a href="https://munichpublishing.de/Grenzen_setzen" target="_blank" rel="noopener" class="hero-cover-link" aria-label="Zum Buch Nicht alle. Nicht immer. Nicht alles.">
+          <img src="assets/cover-2026.webp?v=3" alt="Buchcover: Nicht alle. Nicht immer. Nicht alles. von Lea Hoffmann" class="hero-cover">
+        </a>
         <div class="hero-text">
-          <div class="hero-eyebrow">Dein 21-Tage-Begleiter</div>
+          <div class="hero-eyebrow">21 Tage · 21 Übungen · 21 Audio-Snacks</div>
           <h1 aria-label="Nicht alle. Nicht immer. Nicht alles.">
-            <span class="line">Nicht <span class="blue">alle.</span></span>
-            <span class="line"><span class="sage">Nicht</span> <span class="gold">immer.</span></span>
-            <span class="line">Nicht <span class="mauve">alles.</span></span>
+            <span class="line">Nicht alle.</span>
+            <span class="line">Nicht immer.</span>
+            <span class="line"><span class="gold">Nicht alles.</span></span>
           </h1>
           <div class="hero-author">von Lea Hoffmann</div>
-          <p class="hero-tagline">Eine konkrete Übung pro Tag. Direkt aus dem Buch. Kein Druck, keine Erinnerungen.</p>
+          <p class="hero-tagline">Dein täglicher Begleiter für ein ruhiges Nein ohne Schuldgefühl. Fünf bis fünfzehn Minuten, ohne Konto und ohne Leistungsdruck.</p>
+          <div class="hero-actions">
+            <button class="hero-action" type="button" onclick="continueJourney()">Heute weitermachen</button>
+            <a class="hero-action secondary" href="#audios">Zu den Audios</a>
+          </div>
         </div>
       </div>
     </header>
@@ -1669,8 +1981,9 @@
         <span>App zum Home-Bildschirm hinzufügen</span>
       </div>
       <p class="install-banner-body">
-        Damit du den Begleiter nicht vergisst: Leg ein Icon auf deinen Startbildschirm. Dann ist die App wie eine richtige App — ein Tipp und du bist drin.
+        Nutze den Begleiter möglichst immer auf demselben Gerät. Auf dem Home-Bildschirm ist er mit einem Tipp erreichbar und dein lokal gespeicherter Fortschritt bleibt an einem Ort.
       </p>
+      <button class="install-direct" id="install-direct" type="button" onclick="handleInstallClick()">App direkt installieren</button>
       <button class="install-banner-toggle" id="install-toggle" onclick="toggleInstallSteps()">So geht's →</button>
       <div class="install-banner-steps" id="install-steps">
         <div id="install-steps-content"></div>
@@ -1694,7 +2007,7 @@
     </details>
 
     <!-- ============ PROGRESS ============ -->
-    <section class="progress-card">
+    <section class="progress-card" id="heute">
       <div class="progress-header">
         <div class="progress-title">Dein Fortschritt</div>
         <div class="progress-count"><strong id="progress-num">0</strong> von 21 Tagen</div>
@@ -1730,23 +2043,49 @@
     </section>
 
     <!-- ============ WEEKS ============ -->
-    <section id="weeks-container"></section>
+    <section id="tage-21" aria-label="21-Tage-Plan">
+      <div id="weeks-container"></div>
+    </section>
+
+    <!-- ============ AUDIO LIBRARY ============ -->
+    <section class="audio-section" id="audios">
+      <div class="audio-head">
+        <div>
+          <div class="section-kicker">Unterwegs hören</div>
+          <h2 class="audio-title">21 Audio-Snacks</h2>
+          <p class="audio-copy">Zu jedem Tag gehört ein kurzer Audio-Impuls. Die Plätze sind schon vorbereitet; sobald die MP3-Dateien ergänzt sind, werden sie automatisch abspielbar.</p>
+        </div>
+        <div class="audio-count" id="audio-count">0 von 21 verfügbar</div>
+      </div>
+      <div class="audio-grid" id="audio-grid" aria-live="polite"></div>
+    </section>
+
+    <!-- ============ LOCAL BACKUP ============ -->
+    <section class="backup-section" aria-labelledby="backup-title">
+      <div class="backup-head">
+        <div>
+          <div class="section-kicker">Nur auf deinem Gerät</div>
+          <h2 class="backup-title" id="backup-title">Fortschritt sichern</h2>
+          <p class="backup-copy">Notizen und Eingaben bleiben privat im Browser. Mit einer Sicherungsdatei kannst du sie nach einem Gerätewechsel oder gelöschtem Browser-Speicher wieder einlesen.</p>
+        </div>
+      </div>
+      <div class="backup-actions">
+        <button class="backup-button" type="button" onclick="exportProgress()">Sicherung herunterladen</button>
+        <label class="backup-file-label">Sicherung einlesen<input type="file" accept="application/json,.json" onchange="importProgress(this.files[0]); this.value=''"></label>
+      </div>
+      <div class="backup-message" id="backup-message" aria-live="polite"></div>
+    </section>
 
     <!-- ============ FOOTER ============ -->
     <footer class="footer">
-      <!-- Cover-Link im Footer: Sobald das Buch veröffentlicht ist, ersetze den <div class="footer-cover-link"> durch:
-           <a href="AMAZON-URL-HIER" target="_blank" rel="noopener" class="footer-cover-link" aria-label="Buch auf Amazon ansehen"> ... </a>
-           Und nimm den Kommentar um den "Buch auf Amazon ansehen"-Button weg. -->
-      <div class="footer-cover-link">
-        <img src="assets/cover.webp" alt="Buchcover" class="footer-cover">
-      </div>
+      <a href="https://munichpublishing.de/Grenzen_setzen" target="_blank" rel="noopener" class="footer-cover-link" aria-label="Zum Buch">
+        <img src="assets/cover-2026.webp?v=3" alt="Buchcover Nicht alle. Nicht immer. Nicht alles." class="footer-cover">
+      </a>
       <p><em>„Nicht alle. Nicht immer. Nicht alles.“</em> von Lea Hoffmann</p>
-      <!-- Sobald das Buch veröffentlicht ist, diesen Block aktivieren:
       <p>
-        <a href="AMAZON-URL-HIER" target="_blank" rel="noopener" class="footer-buy">Buch auf Amazon ansehen →</a>
+        <a href="https://munichpublishing.de/Grenzen_setzen" target="_blank" rel="noopener" class="footer-buy">Zum Buch →</a>
       </p>
-      -->
-      <p>Diese App speichert deine Daten nur lokal auf deinem Gerät. Keine Übermittlung an Server.</p>
+      <p>Diese App speichert deine Notizen und deinen Fortschritt nur lokal auf deinem Gerät. Es ist kein Konto nötig.</p>
       <p>
         <a href="https://munichpublishing.de/impressum" target="_blank" rel="noopener">Impressum</a>
         &nbsp;·&nbsp;
@@ -1801,7 +2140,7 @@
       {
         day: 1, week: 1, pillar: 1,
         title: "Die Bestandsaufnahme deiner Ja-Fallen",
-        chapter: "Einleitung — Schluss mit der Theorie",
+        chapter: "Einleitung — Warum die Theorie dich im Stich lässt",
         exercise: "Nimm dir heute fünf Minuten und notiere jede Situation der letzten Woche, in der du Ja gesagt hast, obwohl dein Bauch Nein gesagt hat. Schreib nicht auf, warum du es getan hast. Schreib nur auf, wann und bei wem.",
         why: "Bevor du etwas verändern kannst, musst du es sehen. Die meisten Ja-Reflexe laufen so schnell ab, dass das Bewusstsein gar nicht mitkommt. Beobachtung ist der erste Schritt zur Steuerung.",
         reflection: "In welchen Momenten spüre ich die größte Diskrepanz zwischen dem, was ich sage, und dem, was ich fühle?",
@@ -1829,7 +2168,7 @@
       {
         day: 3, week: 1, pillar: 1,
         title: "Scan deiner körperlichen Stresssignale",
-        chapter: "Kapitel 1 — Die entscheidenden Sekunden vor dem Ja",
+        chapter: "Kapitel 1 — Die Biologie der Gefälligkeit",
         exercise: "Heute lernst du deinen persönlichen Alarm kennen. Bei der nächsten Bitte achte bewusst auf vier Körperzonen: Kehle, Schultern, Bauch und Hände. Du musst nichts anders machen. Deine einzige Aufgabe ist wahrnehmen.",
         why: "Dein Körper meldet die Diskrepanz zwischen Ja und Nein, bevor dein Kopf sie verarbeitet hat. Allein das Wahrnehmen schiebt einen Keil zwischen Reiz und Reaktion.",
         reflection: "Wo genau in meinem Körper meldet sich das Nein zuerst?",
@@ -2015,8 +2354,8 @@
       },
       {
         day: 15, week: 3, pillar: 1,
-        title: "Gefühle beobachten",
-        chapter: "Kapitel 6 — Wenn das Schuldgefühl piept",
+        title: "Gefühle nach dem Nein beobachten",
+        chapter: "Kapitel 6 — Schuldgefühle entlarven",
         exercise: "Schreib nach jedem Nein, das Schuldgefühle auslöst, zwei Dinge auf: Was genau befürchte ich? Und einen Tag später: Was ist tatsächlich eingetreten? Zwei Minuten, nicht mehr.",
         why: "Erfahrungsgemäß bewahrheiten sich die befürchteten Konsequenzen selten. Das schwarz auf weiß zu sehen, verändert mehr als jede Vernunft-Argumentation.",
         reflection: "Was hat sich an meiner Reaktion verändert, seit ich die Befürchtung neben die Realität gestellt habe?",
@@ -2031,7 +2370,7 @@
       {
         day: 16, week: 3, pillar: 1,
         title: "Dein Mantra für nach dem Nein",
-        chapter: "Kapitel 7 — Erste Hilfe bei Rückschlägen",
+        chapter: "Kapitel 6 — Selbstmitgefühl statt Selbstbestrafung",
         exercise: "Formuliere einen liebevollen Satz, den du dir nach jedem Nein sagst. Er muss sich wahr anfühlen, nicht aufgesetzt. Schreib ihn auf, trag ihn bei dir.",
         why: "Wenn der Rauchmelder piepst, brauchst du keinen klugen Gedanken, sondern einen Ankerpunkt. Ein vorbereiteter Satz ersetzt das innere Suchen genau dann, wenn du keine Kapazität hast.",
         reflection: "Welcher Satz gibt mir Halt, wenn das Schuldgefühl am lautesten ist?",
@@ -2045,7 +2384,7 @@
       {
         day: 17, week: 3, pillar: 1,
         title: "Der Katastrophen-Check",
-        chapter: "Kapitel 7 — Erste Hilfe bei Rückschlägen",
+        chapter: "Kapitel 6 — Selbstmitgefühl statt Selbstbestrafung",
         exercise: "Denk dein schlimmstes „Was wäre wenn“-Szenario zu Ende. Schreib die Befürchtung auf. Dann frag dich: Was wäre dann? Und dann? Und dann? Geh mindestens drei Stufen tief.",
         why: "Das Szenario verliert an Macht, wenn du es ins Licht holst. Meistens endet die Kette weit harmloser als der erste Gedanke. Du schaust das Monster im Schrank bei Licht an.",
         reflection: "Was ist das Schlimmste, das realistisch passiert, wenn meine Befürchtung wahr wird?",
@@ -2061,7 +2400,7 @@
       {
         day: 18, week: 3, pillar: 3,
         title: "Analyse eines Rückfalls",
-        chapter: "Kapitel 7 — Vom Rückschlag zur neuen Routine",
+        chapter: "Kapitel 7 — Die Reue-Falle vermeiden",
         exercise: "Nimm dir ein aktuelles Ja-Versagen und analysiere es ohne Urteil. Du bist Forscherin, nicht Richterin. Drei Fragen, eine Seite, kein Aufsatz.",
         why: "Wenn du die drei Fragen ehrlich beantwortest, stellst du fast immer fest, dass der Rückfall einem Muster folgt. Wenn du das Muster kennst, hast du beim nächsten Mal einen Vorsprung.",
         reflection: "Welches Muster zeigt sich, wenn ich mir die letzten drei Rückfälle nebeneinander anschaue?",
@@ -2095,7 +2434,7 @@
       {
         day: 20, week: 3, pillar: 3,
         title: "Die Role-Model-Übung",
-        chapter: "Kapitel 8 — Vom Plan zur Gewohnheit",
+        chapter: "Kapitel 8 — Identitäts-Design",
         exercise: "Stell dir die Frau vor, die du in sechs Monaten sein willst. Wie sitzt sie? Wie antwortet sie, wenn jemand etwas von ihr will? Wie fühlt sich ihr Sonntag an? Beschreib sie in fünf Sätzen.",
         why: "Identität läuft der Gewohnheit voraus. Wenn du dich als jemand siehst, die ihre Grenzen schützt, wird das Nein zum logischen Ausdruck deines Selbstbilds, statt zum täglichen Kampf.",
         reflection: "Was würde die Frau, die ich in sechs Monaten sein will, heute anders machen als ich?",
@@ -2104,7 +2443,7 @@
       {
         day: 21, week: 3, pillar: 3,
         title: "Dein Abschluss-Ritual",
-        chapter: "Kapitel 8 — Vom Plan zur Gewohnheit",
+        chapter: "Kapitel 8 — Grenzen pflegen",
         exercise: "Formuliere drei persönliche Leitsätze. Drei Sätze, die deine Grenzen beschreiben — so, wie sie jetzt sind. Keine Allgemeinplätze. Sätze aus deiner konkreten Erfahrung der letzten Wochen.",
         why: "Drei Sätze aus deiner Erfahrung sind belastbarer als jedes Mantra aus einem Ratgeber. Sie tragen dich, weil du weißt, wo sie herkommen — und weil du sie wahr gemacht hast.",
         reflection: "Wer bin ich jetzt, nach diesen einundzwanzig Tagen, und was hat sich in meinem Selbstbild verschoben?",
@@ -2122,17 +2461,24 @@
       3: { name: 'NICHT ALLES', color: 'gold' }
     };
 
+    const audioAvailability = Object.fromEntries(daysData.map(day => [day.day, false]));
+
+    function getAudioPath(dayNum) {
+      return `audio/tag-${String(dayNum).padStart(2, '0')}.mp3`;
+    }
+
     // ============================================
     // STATE & STORAGE
     // ============================================
     const STORAGE_KEY = 'nichtalle_data';
-    const STATE_VERSION = 2;
+    const STATE_VERSION = 3;
 
     let state = {
       version: STATE_VERSION,
       completedDays: [],
       notes: {},
       toolData: {}, // per-day tool state: toolData[dayNum] = {...}
+      listenedAudios: [],
       lastVisited: null,
       currentDay: null
     };
@@ -2148,6 +2494,7 @@
           if (!Array.isArray(state.completedDays)) state.completedDays = [];
           if (typeof state.notes !== 'object' || state.notes === null) state.notes = {};
           if (typeof state.toolData !== 'object' || state.toolData === null) state.toolData = {};
+          if (!Array.isArray(state.listenedAudios)) state.listenedAudios = [];
         }
       } catch (e) { console.warn('Load failed:', e); }
     }
@@ -2237,6 +2584,168 @@
       const div = document.createElement('div');
       div.textContent = String(str);
       return div.innerHTML;
+    }
+
+    // ============================================
+    // AUDIO LIBRARY
+    // ============================================
+    function audioPlayerMarkup(day) {
+      const available = audioAvailability[day.day];
+      const listened = state.listenedAudios.includes(day.day);
+      if (!available) {
+        return `
+          <div class="audio-locked" aria-label="Audio für Tag ${day.day} folgt">
+            <span aria-hidden="true">◌</span><span>Audio folgt</span>
+          </div>
+        `;
+      }
+      return `
+        <audio controls preload="none" data-day="${day.day}" onended="markAudioListened(${day.day})">
+          <source src="${getAudioPath(day.day)}" type="audio/mpeg">
+          Dein Browser kann dieses Audio nicht abspielen.
+        </audio>
+        ${listened ? '<div class="audio-locked">✓ Bereits angehört</div>' : ''}
+      `;
+    }
+
+    function renderAudioLibrary() {
+      const grid = document.getElementById('audio-grid');
+      if (!grid) return;
+      const availableCount = Object.values(audioAvailability).filter(Boolean).length;
+      document.getElementById('audio-count').textContent = `${availableCount} von 21 verfügbar`;
+      grid.innerHTML = daysData.map(day => {
+        const available = audioAvailability[day.day];
+        const listened = state.listenedAudios.includes(day.day);
+        const classes = ['audio-card'];
+        if (available) classes.push('available');
+        if (listened) classes.push('listened');
+        return `
+          <article class="${classes.join(' ')}">
+            <div class="audio-card-top">
+              <div class="audio-day">Tag ${day.day}</div>
+              <div class="audio-status">${available ? 'Abspielen' : 'Folgt'}</div>
+            </div>
+            <div class="audio-card-title">${escapeHtml(day.title)}</div>
+            ${audioPlayerMarkup(day)}
+          </article>
+        `;
+      }).join('');
+      bindSingleAudioPlayback();
+    }
+
+    function renderDayAudio(day) {
+      return `
+        <div class="day-audio" data-day-audio="${day.day}">
+          <div class="section-label">Audio-Snack Tag ${day.day}</div>
+          <p>${audioAvailability[day.day]
+            ? 'Hör dir den kurzen Impuls an und starte danach direkt mit der Übung.'
+            : 'Dieser Audioplatz ist vorbereitet. Das Audio wird ergänzt, sobald die Datei vorliegt.'}</p>
+          ${audioPlayerMarkup(day)}
+        </div>
+      `;
+    }
+
+    async function checkAudioAvailability() {
+      await Promise.all(daysData.map(async day => {
+        try {
+          const response = await fetch(getAudioPath(day.day), { method: 'HEAD', cache: 'no-store' });
+          audioAvailability[day.day] = response.ok && (response.headers.get('content-type') || '').includes('audio');
+        } catch (error) {
+          audioAvailability[day.day] = false;
+        }
+      }));
+      renderAudioLibrary();
+      if (state.currentDay) {
+        const day = daysData.find(item => item.day === state.currentDay);
+        const slot = document.querySelector(`[data-day-audio="${state.currentDay}"]`);
+        if (day && slot) slot.outerHTML = renderDayAudio(day);
+      }
+      bindSingleAudioPlayback();
+    }
+
+    function markAudioListened(dayNum) {
+      if (!state.listenedAudios.includes(dayNum)) {
+        state.listenedAudios.push(dayNum);
+        state.listenedAudios.sort((a, b) => a - b);
+        saveState();
+        renderAudioLibrary();
+      }
+    }
+
+    function bindSingleAudioPlayback() {
+      document.querySelectorAll('audio').forEach(player => {
+        if (player.dataset.bound === '1') return;
+        player.dataset.bound = '1';
+        player.addEventListener('play', () => {
+          document.querySelectorAll('audio').forEach(other => {
+            if (other !== player) other.pause();
+          });
+        });
+      });
+    }
+
+    function continueJourney() {
+      const current = Number(state.currentDay);
+      const currentIsOpen = current >= 1 && current <= 21 && !state.completedDays.includes(current);
+      const nextDay = currentIsOpen ? current : (daysData.find(day => !state.completedDays.includes(day.day)) || daysData[20]).day;
+      openDay(nextDay);
+    }
+
+    // ============================================
+    // LOCAL BACKUP / RESTORE
+    // ============================================
+    function showBackupMessage(message, isError = false) {
+      const element = document.getElementById('backup-message');
+      if (!element) return;
+      element.textContent = message;
+      element.style.color = isError ? '#a52a1a' : 'var(--text-mute)';
+    }
+
+    function exportProgress() {
+      saveState();
+      const payload = {
+        app: 'grenzen-setzen',
+        exportedAt: new Date().toISOString(),
+        state
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `grenzen-setzen-sicherung-${new Date().toISOString().slice(0, 10)}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(link.href);
+      showBackupMessage('Sicherung wurde heruntergeladen.');
+    }
+
+    async function importProgress(file) {
+      if (!file) return;
+      try {
+        const payload = JSON.parse(await file.text());
+        const imported = payload && payload.app === 'grenzen-setzen' ? payload.state : payload;
+        if (!imported || !Array.isArray(imported.completedDays) || typeof imported.notes !== 'object' || typeof imported.toolData !== 'object') {
+          throw new Error('Ungültige Sicherungsdatei');
+        }
+        if (!confirm('Diese Sicherung ersetzt den aktuell gespeicherten Fortschritt auf diesem Gerät. Fortfahren?')) return;
+        state = {
+          version: STATE_VERSION,
+          completedDays: imported.completedDays.filter(day => Number.isInteger(day) && day >= 1 && day <= 21),
+          notes: imported.notes || {},
+          toolData: imported.toolData || {},
+          listenedAudios: Array.isArray(imported.listenedAudios) ? imported.listenedAudios : [],
+          lastVisited: imported.lastVisited || null,
+          currentDay: imported.currentDay || null
+        };
+        saveState();
+        renderProgress();
+        renderWeeks();
+        renderAudioLibrary();
+        document.getElementById('day-detail').classList.remove('active');
+        showBackupMessage('Sicherung erfolgreich eingelesen.');
+      } catch (error) {
+        showBackupMessage('Diese Datei ist keine gültige Sicherung der Grenzen-App.', true);
+      }
     }
 
     // ============================================
@@ -2547,6 +3056,8 @@
           <div class="day-detail-chapter">${escapeHtml(day.chapter)}</div>
         </div>
 
+        ${renderDayAudio(day)}
+
         <div class="section">
           <div class="section-label">Übung</div>
           <div class="section-body">${escapeHtml(day.exercise)}</div>
@@ -2583,6 +3094,7 @@
       `;
 
       detail.classList.add('active');
+      bindSingleAudioPlayback();
       setTimeout(() => {
         document.getElementById('day-detail-anchor').scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 60);
@@ -2707,6 +3219,7 @@
         completedDays: [],
         notes: {},
         toolData: {},
+        listenedAudios: [],
         lastVisited: null,
         currentDay: null
       };
@@ -2726,7 +3239,9 @@
       loadState();
       renderProgress();
       renderWeeks();
+      renderAudioLibrary();
       initInstallBanner();
+      checkAudioAvailability();
 
       // Collapse intro on return visits
       if (state.completedDays.length > 0 || Object.keys(state.notes).length > 0 || Object.keys(state.toolData).length > 0) {
@@ -2737,6 +3252,8 @@
     // ============================================
     // INSTALL-BANNER (Home-Bildschirm)
     // ============================================
+    let deferredInstallPrompt = null;
+
     function isStandalone() {
       return window.matchMedia('(display-mode: standalone)').matches
         || window.navigator.standalone === true;
@@ -2754,12 +3271,13 @@
 
     function initInstallBanner() {
       // Don't show if already installed
-      if (isStandalone()) return;
-      // Don't show if user dismissed it
-      try {
-        if (localStorage.getItem('nichtalle_install_dismissed') === '1') return;
-      } catch (e) {}
-
+      if (isStandalone()) {
+        document.querySelectorAll('.nav-install').forEach(button => {
+          button.textContent = 'Installiert';
+          button.disabled = true;
+        });
+        return;
+      }
       const banner = document.getElementById('install-banner');
       const stepsContent = document.getElementById('install-steps-content');
       const platform = detectPlatform();
@@ -2788,7 +3306,29 @@
         `;
       }
 
+      // Keep the instructions populated even after dismissal so the nav button can reopen them.
+      try {
+        if (localStorage.getItem('nichtalle_install_dismissed') === '1') return;
+      } catch (e) {}
+
       banner.classList.add('visible');
+    }
+
+    async function handleInstallClick() {
+      if (isStandalone()) return;
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        await deferredInstallPrompt.userChoice;
+        deferredInstallPrompt = null;
+        document.getElementById('install-direct').classList.remove('visible');
+        return;
+      }
+      const banner = document.getElementById('install-banner');
+      const steps = document.getElementById('install-steps');
+      banner.classList.add('visible');
+      steps.classList.add('visible');
+      document.getElementById('install-toggle').textContent = 'Anleitung einklappen';
+      banner.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     function toggleInstallSteps() {
@@ -2802,6 +3342,30 @@
       const banner = document.getElementById('install-banner');
       banner.classList.remove('visible');
       try { localStorage.setItem('nichtalle_install_dismissed', '1'); } catch (e) {}
+    }
+
+    window.addEventListener('beforeinstallprompt', event => {
+      event.preventDefault();
+      deferredInstallPrompt = event;
+      const button = document.getElementById('install-direct');
+      if (button) button.classList.add('visible');
+    });
+
+    window.addEventListener('appinstalled', () => {
+      deferredInstallPrompt = null;
+      document.getElementById('install-banner').classList.remove('visible');
+      document.querySelectorAll('.nav-install').forEach(button => {
+        button.textContent = 'Installiert';
+        button.disabled = true;
+      });
+    });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js?v=3').catch(error => {
+          console.warn('Service Worker konnte nicht registriert werden:', error);
+        });
+      });
     }
 
     init();

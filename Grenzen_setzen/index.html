@@ -1890,7 +1890,26 @@
     :focus-visible { outline: 3px solid rgba(242, 90, 10, .38); outline-offset: 3px; }
 
     @media (max-width: 720px) {
-      .app-nav { margin-left: 0; margin-right: 0; width: 100%; justify-content: flex-start; }
+      .app-nav {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        overflow: visible;
+        border-radius: 24px;
+      }
+      .app-nav a { padding-inline: 8px; text-align: center; }
+      .app-nav .nav-install {
+        grid-column: 1 / -1;
+        width: 100%;
+        text-align: center;
+      }
+      #heute,
+      #tage-21,
+      #audios,
+      #day-detail-anchor,
+      #notes-overview { scroll-margin-top: 128px; }
       .hero { padding: 70px 20px 24px; }
       .hero::after { background: rgba(255, 248, 243, .84); }
       .hero-content { gap: 18px; align-items: flex-start; }
@@ -1928,7 +1947,7 @@
       <a href="#heute">Heute</a>
       <a href="#tage-21">21 Tage</a>
       <a href="#audios">Audios</a>
-      <button class="nav-install" type="button" onclick="handleInstallClick()">Installieren</button>
+      <button class="nav-install" type="button" onclick="handleInstallClick()">App zum Home-Bildschirm hinzufügen</button>
     </nav>
 
     <!-- ============ HERO ============ -->
@@ -3362,7 +3381,7 @@
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js?v=4').catch(error => {
+        navigator.serviceWorker.register('./sw.js?v=5').catch(error => {
           console.warn('Service Worker konnte nicht registriert werden:', error);
         });
       });

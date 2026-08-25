@@ -1,0 +1,20 @@
+{
+  "id": "/adhs-frauen-job/",
+  "name": "FOKUS-Begleiter",
+  "short_name": "FOKUS",
+  "description": "21-Tage-FOKUS-Workbook, tägliche Audios, Fokusplaner, Energie-Ampel und Job-Skripte.",
+  "lang": "de-DE",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "any",
+  "background_color": "#fff4ec",
+  "theme_color": "#fff4ec",
+  "categories": ["lifestyle", "productivity", "health"],
+  "icons": [
+    { "src": "icon-192.png?v=4", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png?v=4", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

@@ -8,10 +8,10 @@
   <title>FOKUS-Begleiter | Bonus-App zum Buch</title>
   <meta name="description" content="Die installierbare FOKUS-Begleiter-App mit 21-Tage-Workbook, 21 täglichen Audios, FOKUS-Planer, Energie-Ampel und Job-Skripten.">
   <link rel="canonical" href="https://tools.munichpublishing.de/adhs-frauen-job/">
-  <link rel="manifest" href="manifest.webmanifest?v=4">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=4">
-  <link rel="apple-touch-icon" href="icon-180.png?v=4">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="manifest" href="manifest.webmanifest?v=5">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png?v=5">
+  <link rel="apple-touch-icon" href="icon-180.png?v=5">
+  <link rel="stylesheet" href="styles.css?v=5">
 </head>
 <body>
   <a class="skip-link" href="#appMain">Zum Inhalt springen</a>
@@ -63,7 +63,7 @@
               <div class="notes-card__head"><div><p class="kicker">Nur für dich</p><h3>Meine Notizen</h3></div><span class="save-label" id="noteSaveState">Lokal gespeichert</span></div>
               <label class="sr-only" for="dayNotes">Notizen zu diesem Tag</label><textarea id="dayNotes" rows="9" placeholder="Was war heute hilfreich? Was darf leichter werden?"></textarea>
               <button class="complete-button" id="completeDayButton" type="button"><span class="complete-button__check" aria-hidden="true">✓</span><span id="completeDayText">Tag abschließen</span></button>
-              <button class="audio-preview" type="button" data-go-view="audios"><span class="audio-preview__icon" aria-hidden="true">▶</span><span><strong id="todayAudioLabel">Audio zu Tag 1</strong><small>Wird ergänzt, sobald es verfügbar ist</small></span></button>
+              <button class="audio-preview" type="button" data-go-view="audios"><span class="audio-preview__icon" aria-hidden="true">▶</span><span><strong id="todayAudioLabel">Audio zu Tag 1</strong><small>Jetzt im Audio-Bereich anhören</small></span></button>
             </aside>
           </div>
         </section>
@@ -76,8 +76,8 @@
         </section>
 
         <section class="view" data-panel="audios" aria-labelledby="audiosHeading" hidden>
-          <div class="view-heading audio-heading"><div><p class="kicker">21 Tage · 21 Audios</p><h2 id="audiosHeading">Dein täglicher Audio-Impuls</h2><p>Jeder Tag erhält ein eigenes Audio passend zum Workbook. Die Audios werden hier ergänzt, sobald sie vorliegen.</p></div><div class="audio-status"><strong>0</strong><span>von 21<br>verfügbar</span></div></div>
-          <div class="audio-notice" role="note"><span aria-hidden="true">i</span><p><strong>Noch keine Audios hinterlegt.</strong> Du kannst die 21 Tage schon vollständig nutzen. Dein Fortschritt bleibt erhalten, wenn die Audios später ergänzt werden.</p></div>
+          <div class="view-heading audio-heading"><div><p class="kicker">21 Tage · 21 Audios</p><h2 id="audiosHeading">Dein täglicher Audio-Impuls</h2><p>Zu jedem Workbook-Tag findest du hier den passenden kurzen Audio-Impuls.</p></div><div class="audio-status"><strong id="audioAvailableCount">21</strong><span>von 21<br>verfügbar</span></div></div>
+          <div class="audio-notice" role="note"><span aria-hidden="true">✓</span><p><strong>Alle 21 Audios sind verfügbar.</strong> Wähle deinen Tag und starte den Impuls direkt hier in der App.</p></div>
           <div class="audio-grid" id="audioGrid"></div>
         </section>
 
@@ -128,6 +128,6 @@
     <button class="button button--primary dialog-install" id="nativeInstallButton" type="button" hidden>Jetzt direkt installieren</button>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=4" defer></script>
+  <script src="app.js?v=5" defer></script>
 </body>
 </html>

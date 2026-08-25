@@ -240,7 +240,7 @@ const days = [
 const audioCatalog = days.map((day, index) => ({
   title: day.title,
   src: `audios/tag-${String(index + 1).padStart(2, "0")}.mp3`,
-  available: false
+  available: true
 }));
 
 const scripts = [
@@ -280,7 +280,7 @@ const elements = {
   appFrame: $(".app-frame"), navItems: $$(".nav-item"), views: $$(".view"),
   progressRing: $("#progressRing"), progressPercent: $("#progressPercent"), resumeTitle: $("#resumeTitle"), resumeText: $("#resumeText"), resumeButton: $("#resumeButton"),
   dayWeek: $("#dayWeek"), dayNumber: $("#dayNumber"), dayTitle: $("#dayTitle"), dayChapter: $("#dayChapter"), dayImpulse: $("#dayImpulse"), dayImpulseBenefit: $("#dayImpulseBenefit"), dayExercise: $("#dayExercise"), dayExerciseBenefit: $("#dayExerciseBenefit"), dayQuestion: $("#dayQuestion"), dayQuestionBenefit: $("#dayQuestionBenefit"), dayNotes: $("#dayNotes"), noteSaveState: $("#noteSaveState"), todayAudioLabel: $("#todayAudioLabel"), completeDayButton: $("#completeDayButton"), completeDayText: $("#completeDayText"), previousDay: $("#previousDay"), nextDay: $("#nextDay"),
-  weekOneDays: $("#weekOneDays"), weekTwoDays: $("#weekTwoDays"), weekThreeDays: $("#weekThreeDays"), nextOpenButton: $("#nextOpenButton"), audioGrid: $("#audioGrid"),
+  weekOneDays: $("#weekOneDays"), weekTwoDays: $("#weekTwoDays"), weekThreeDays: $("#weekThreeDays"), nextOpenButton: $("#nextOpenButton"), audioGrid: $("#audioGrid"), audioAvailableCount: $("#audioAvailableCount"),
   focusResult: $("#focusResult"), focusContainer: $("#focusContainer"), focusFirstStep: $("#focusFirstStep"), focusImplementation: $("#focusImplementation"), focusShutdown: $("#focusShutdown"),
   todayTaskForm: $("#todayTaskForm"), laterTaskForm: $("#laterTaskForm"), todayTaskInput: $("#todayTaskInput"), laterTaskInput: $("#laterTaskInput"), todayTaskList: $("#todayTaskList"), laterTaskList: $("#laterTaskList"),
   timerPreset: $("#timerPreset"), timerDisplay: $("#timerDisplay"), timerToggle: $("#timerToggle"), timerReset: $("#timerReset"),
@@ -442,6 +442,7 @@ function renderJourneyWeek(container, start, end) {
 
 function renderAudios() {
   elements.audioGrid.replaceChildren();
+  elements.audioAvailableCount.textContent = String(audioCatalog.filter((audio) => audio.available).length);
   audioCatalog.forEach((audio, index) => {
     const card = document.createElement("article");
     card.className = `audio-card${audio.available ? " is-ready" : ""}`;
@@ -704,6 +705,6 @@ function updateOnlineState() {
 
 async function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
-  try { await navigator.serviceWorker.register("sw.js?v=4", { scope: "./" }); }
+  try { await navigator.serviceWorker.register("sw.js?v=5", { scope: "./" }); }
   catch (error) { console.warn("Service Worker konnte nicht registriert werden.", error); }
 }

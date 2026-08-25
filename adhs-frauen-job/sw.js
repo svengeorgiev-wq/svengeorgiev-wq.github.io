@@ -1,17 +1,19 @@
 "use strict";
 
-const CACHE_NAME = "adhs-frauen-job-v4.0.0";
+const CACHE_NAME = "adhs-frauen-job-v5.0.0";
+const AUDIO_FILES = Array.from({ length: 21 }, (_, index) => `./audios/tag-${String(index + 1).padStart(2, "0")}.mp3`);
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=4",
-  "./app.js?v=4",
-  "./manifest.webmanifest?v=4",
-  "./favicon-32.png?v=4",
-  "./icon-180.png?v=4",
-  "./icon-192.png?v=4",
-  "./icon-512.png?v=4",
-  "./assets/book-cover-2026.jpg?v=1"
+  "./styles.css?v=5",
+  "./app.js?v=5",
+  "./manifest.webmanifest?v=5",
+  "./favicon-32.png?v=5",
+  "./icon-180.png?v=5",
+  "./icon-192.png?v=5",
+  "./icon-512.png?v=5",
+  "./assets/book-cover-2026.jpg?v=1",
+  ...AUDIO_FILES
 ];
 
 self.addEventListener("install", (event) => {

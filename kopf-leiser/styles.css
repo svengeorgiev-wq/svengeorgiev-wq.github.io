@@ -776,29 +776,24 @@ input:focus {
 }
 
 .script-card {
-  min-height: 260px;
+  min-height: 150px;
   box-shadow: none;
   overflow: hidden;
 }
 
 .script-card h3 {
-  margin: 0 0 10px;
+  margin: 0 0 18px;
   color: var(--blue);
-  font-size: 1.1rem;
+  font-size: clamp(1.05rem, 1.8vw, 1.28rem);
+  line-height: 1.25;
 }
 
-.script-card p {
-  color: #2c3c50;
-  line-height: 1.55;
-}
-
-.script-card textarea {
-  min-height: 112px;
-}
-
-.script-card .ghost-action {
+.script-card audio {
   width: 100%;
-  margin-top: 12px;
+  min-height: 42px;
+  display: block;
+  border-radius: 8px;
+  filter: drop-shadow(0 12px 24px rgba(8, 40, 67, 0.12));
 }
 
 @media (max-width: 980px) {

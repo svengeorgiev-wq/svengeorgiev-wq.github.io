@@ -214,36 +214,34 @@ const days = [
   }
 ];
 
-const scripts = [
+const emergencyAudios = [
   {
-    title: "2-Minuten-Reset",
-    description: "Für Momente, in denen dein Kopf schneller ist als dein Körper.",
-    text: "Ich halte kurz an. Zwei kurze Atemzüge durch die Nase, ein langes Ausatmen durch den Mund. Dreimal. Danach entscheide ich den nächsten kleinen Schritt."
+    title: "🌙 Ich liege wach und mein Kopf hört nicht auf",
+    file: "audio/01_ich_liege_wach.mp3"
   },
   {
-    title: "Faktencheck",
-    description: "Für Sorgen, die sich wie Wahrheit anfühlen.",
-    text: "Ist das gerade ein Fakt oder eine Hypothese? Wenn es eine Hypothese ist, parke ich sie im Sorgen-Büro und komme später bewusst darauf zurück."
+    title: "🔁 Ich hänge gerade in einer Grübelschleife",
+    file: "audio/02_gruebelschleife.mp3"
   },
   {
-    title: "Sorgen-Büro",
-    description: "Für Grübeln, das den ganzen Tag besetzen will.",
-    text: "Ich nehme dich ernst, aber nicht sofort. Ich notiere diese Sorge und bespreche sie um [Uhrzeit] für 10 Minuten. Bis dahin ist das Büro geschlossen."
+    title: "❤️ Mein Körper ist gerade komplett im Alarm",
+    file: "audio/03_koerper_im_alarm.mp3"
   },
   {
-    title: "Abend-Entlastung",
-    description: "Für die Nachtschicht, wenn der Körper müde ist und der Kopf weitermacht.",
-    text: "Offen ist: [Punkt]. Geparkt ist es auf: [Zeitpunkt]. Der nächste Schritt ist: [kleinste Handlung]. Für heute muss mein Kopf nichts mehr lösen."
+    title: "👥 Ich zerdenke ein Gespräch / Meeting",
+    file: "audio/04_gespraech_meeting.mp3"
   },
   {
-    title: "Werte-Filter",
-    description: "Für Entscheidungen, die zu viele Optionen offenlassen.",
-    text: "Meine Top-Werte sind [Wert 1], [Wert 2], [Wert 3]. Welche Option passt am ehesten dazu? Gut genug reicht."
+    title: "🤯 Ich muss eine Entscheidung treffen und komme nicht weiter",
+    file: "audio/05_entscheidung.mp3"
   },
   {
-    title: "Notfallkarte",
-    description: "Für schlechte Tage, an denen du deine Werkzeuge vergisst.",
-    text: "Meine drei Anker: 1. [Tool] 2. [Tool] 3. [Tool]. Erst Körper beruhigen, dann denken. Erst Nervensystem, dann Mindset."
+    title: "🧠 Ich habe 20 Dinge gleichzeitig im Kopf",
+    file: "audio/06_20_dinge_im_kopf.mp3"
+  },
+  {
+    title: "🌊 Ich brauche einfach gerade 3 Minuten Ruhe",
+    file: "audio/07_drei_minuten_ruhe.mp3"
   }
 ];
 
@@ -577,25 +575,13 @@ function renderEnergyMap() {
 
 function renderScripts() {
   elements.scriptGrid.innerHTML = "";
-  scripts.forEach((script) => {
+  emergencyAudios.forEach((audio) => {
     const card = document.createElement("section");
     card.className = "script-card";
     card.innerHTML = `
-      <h3>${escapeHtml(script.title)}</h3>
-      <p>${escapeHtml(script.description)}</p>
-      <textarea rows="4">${escapeHtml(script.text)}</textarea>
-      <button class="ghost-action" type="button"><span data-lucide="copy"></span>Kopieren</button>
+      <h3>${escapeHtml(audio.title)}</h3>
+      <audio controls preload="none" src="${escapeHtml(audio.file)}"></audio>
     `;
-    const textarea = card.querySelector("textarea");
-    card.querySelector("button").addEventListener("click", async () => {
-      await copyText(textarea.value);
-      card.querySelector("button").innerHTML = '<span data-lucide="check"></span>Kopiert';
-      if (window.lucide) window.lucide.createIcons();
-      window.setTimeout(() => {
-        card.querySelector("button").innerHTML = '<span data-lucide="copy"></span>Kopieren';
-        if (window.lucide) window.lucide.createIcons();
-      }, 1200);
-    });
     elements.scriptGrid.append(card);
   });
 }

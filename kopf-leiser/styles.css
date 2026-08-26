@@ -352,7 +352,7 @@ h2 {
 
 .mode-tabs {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(210px, 1.45fr);
   gap: 8px;
   padding: 10px;
   border-bottom: 1px solid var(--line);
@@ -366,6 +366,9 @@ h2 {
 .tab-button {
   width: 100%;
   min-width: 0;
+  white-space: normal;
+  line-height: 1.15;
+  text-align: center;
 }
 
 .tab-button.is-active {

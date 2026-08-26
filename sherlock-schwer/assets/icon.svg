@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Sherlock Schwer App-Icon">
+  <defs>
+    <radialGradient id="glow" cx="45%" cy="45%" r="68%">
+      <stop offset="0" stop-color="#cb332b"/>
+      <stop offset=".55" stop-color="#7f1f24"/>
+      <stop offset="1" stop-color="#111722"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f2d38e"/><stop offset="1" stop-color="#b77d27"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="104" fill="#111722"/>
+  <rect x="22" y="22" width="468" height="468" rx="88" fill="url(#glow)" stroke="url(#gold)" stroke-width="9"/>
+  <circle cx="246" cy="232" r="118" fill="none" stroke="#0b0f16" stroke-width="33"/>
+  <path d="M330 316l97 97" stroke="#0b0f16" stroke-width="38" stroke-linecap="round"/>
+  <path d="M143 182c17-56 64-85 121-80 45 4 75 25 94 65-41-19-78-18-111 5-36 25-51 64-47 114-39-21-65-58-57-104Z" fill="#0b0f16"/>
+  <path d="M154 158c33-48 84-66 144-52l35 18-65 12-56 31Z" fill="#0b0f16"/>
+  <path d="M88 428h206" stroke="url(#gold)" stroke-width="8" stroke-linecap="round"/>
+  <text x="98" y="405" fill="#fffaf0" font-family="Georgia,serif" font-weight="700" font-size="72">S</text>
+  <text x="150" y="405" fill="#efc976" font-family="Arial,sans-serif" font-weight="800" font-size="34" letter-spacing="5">SCHWER</text>
+</svg>

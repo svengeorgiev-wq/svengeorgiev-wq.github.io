@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#111722">
+    <meta name="description" content="Buchbegleiter und interaktives Bonus-Rätsel zu Sherlock Logikrätsel, Band 4 – Schwer.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sherlock Schwer">
+    <title>Sherlock Schwer – Buchbegleiter</title>
+    <link rel="manifest" href="manifest.webmanifest?v=3">
+    <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="preload" href="assets/sherlock-schwer-cover.jpg" as="image">
+    <link rel="stylesheet" href="styles.css?v=3">
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Zum Inhalt</a>
+
+    <header class="topbar">
+      <a class="brand" href="#start" data-route="start" aria-label="Sherlock Schwer – Startseite">
+        <span class="brand-mark" aria-hidden="true">⌕</span>
+        <span><strong>Sherlock</strong><small>Band 4 · Schwer</small></span>
+      </a>
+      <button id="header-install" class="install-chip" type="button" hidden>App installieren</button>
+    </header>
+
+    <main id="main-content">
+      <section id="start" class="view active" data-view="start" aria-labelledby="start-title">
+        <div class="hero shell">
+          <div class="hero-copy">
+            <p class="eyebrow">Der digitale Ermittlungsbegleiter</p>
+            <h1 id="start-title">Ein klarer Kopf.<br><span>Zwanzig schwere Fälle.</span></h1>
+            <p class="lede">Behalte deinen Buchfortschritt im Blick und löse zusätzlich immer neue, eindeutig geprüfte Bonusfälle auf dem interaktiven Ermittlungsbrett.</p>
+            <div class="hero-actions">
+              <button id="continue-book" class="button button-primary" type="button">Mit Fall 1 starten</button>
+              <button class="button button-ghost" type="button" data-route="bonus">Bonusfall öffnen</button>
+            </div>
+            <div class="trust-row" aria-label="Eigenschaften der App">
+              <span>Ohne Konto</span><span>Offline nutzbar</span><span>Speichert lokal</span>
+            </div>
+          </div>
+          <a class="cover-link" href="https://www.amazon.de/s?k=Sherlock+Logikr%C3%A4tsel+Band+4+Schwer+Sven+Georgiev" target="_blank" rel="noopener" aria-label="Sherlock Logikrätsel Band 4 Schwer auf Amazon suchen">
+            <img src="assets/sherlock-schwer-cover.jpg" alt="Buchcover Sherlock Logikrätsel, Band 4, Schwer">
+            <span>Zum Buch bei Amazon <span aria-hidden="true">↗</span></span>
+          </a>
+        </div>
+
+        <div class="shell dashboard-grid">
+          <article class="progress-card panel">
+            <div class="panel-heading">
+              <div>
+                <p class="kicker">Dein Fallbuch</p>
+                <h2><span id="progress-count">0</span> von 20 gelöst</h2>
+              </div>
+              <div class="progress-ring" aria-hidden="true"><span id="progress-percent">0%</span></div>
+            </div>
+            <div class="progress-track" role="progressbar" aria-label="Buchfortschritt" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0"><span id="progress-bar"></span></div>
+            <p id="next-case-copy" class="muted">Als Nächstes: Fall 1 · Die Spur im Frost</p>
+            <button class="text-button" type="button" data-route="book">Alle Buchfälle ansehen <span aria-hidden="true">→</span></button>
+          </article>
+
+          <article class="panel bonus-teaser">
+            <div class="teaser-icon" aria-hidden="true">✦</div>
+            <div>
+              <p class="kicker">Bonus-Rätsel</p>
+              <h2>Ein neuer Fall wartet</h2>
+              <p>Vier textbasierte Ebenen. Jede Lösung öffnet den nächsten, logisch zwingenden Ermittlungsschritt.</p>
+              <button class="text-button" type="button" data-route="bonus">Ermittlung aufnehmen <span aria-hidden="true">→</span></button>
+            </div>
+          </article>
+        </div>
+
+        <section class="shell book-connection" aria-labelledby="connection-title">
+          <div>
+            <p class="kicker">Buch ↔ App</p>
+            <h2 id="connection-title">So arbeiten beide zusammen</h2>
+          </div>
+          <ol>
+            <li><span>1</span><div><strong>Im Buch lösen</strong><p>Öffne in der App „Buchfälle“ und wähle dieselbe Fallnummer.</p></div></li>
+            <li><span>2</span><div><strong>Fortschritt sichern</strong><p>Markiere den Fall als gelöst. Die App merkt sich deinen Stand auf diesem Gerät.</p></div></li>
+            <li><span>3</span><div><strong>Weitertrainieren</strong><p>Öffne „Bonusfall“ für eine zusätzliche schwere Ermittlung in vier aufeinander aufbauenden Ebenen.</p></div></li>
+          </ol>
+        </section>
+      </section>
+
+      <section id="book" class="view" data-view="book" aria-labelledby="book-title" hidden>
+        <div class="section-head shell">
+          <div>
+            <p class="eyebrow">Buchbegleiter · Fälle 1–20</p>
+            <h1 id="book-title">Deine Ermittlungsakte</h1>
+            <p>Die Seitenangaben führen direkt zur Aufgabe und zum ausführlichen Lösungsweg in „Sherlock Logikrätsel – Band 4: Schwer“.</p>
+          </div>
+          <div class="book-summary"><strong id="book-summary-count">0 / 20</strong><span>abgeschlossen</span></div>
+        </div>
+        <div class="shell case-tools">
+          <div class="filter-group" role="group" aria-label="Fälle filtern">
+            <button class="filter active" type="button" data-filter="all" aria-pressed="true">Alle</button>
+            <button class="filter" type="button" data-filter="open" aria-pressed="false">Offen</button>
+            <button class="filter" type="button" data-filter="done" aria-pressed="false">Gelöst</button>
+          </div>
+          <button id="jump-next" class="button button-small" type="button">Zum nächsten offenen Fall</button>
+        </div>
+        <div id="case-list" class="shell case-list" aria-live="polite"></div>
+      </section>
+
+      <section id="bonus" class="view" data-view="bonus" aria-labelledby="bonus-title" hidden>
+        <div class="section-head shell bonus-head">
+          <div>
+            <p class="eyebrow">Bonus-Rätsel · Schwer · Vier Ebenen</p>
+            <h1 id="bonus-title">Deduktion ohne Sprung</h1>
+            <p>Textbasiert, ohne Tabelle und ohne visuelle Lösungstricks. Löse jede Ebene eindeutig, bevor die nächste Spur geöffnet wird.</p>
+          </div>
+          <button id="reset-bonus" class="button button-small" type="button">Fall neu beginnen</button>
+        </div>
+
+        <div class="shell four-level-case">
+          <article class="panel puzzle-dossier" aria-labelledby="puzzle-title">
+            <div class="briefing-title">
+              <span class="wax-mark" aria-hidden="true">S</span>
+              <div><p class="kicker">Bonus-Akte <span id="bonus-number">NACHTZUG-01</span></p><h2 id="puzzle-title">Das Telegramm im Nachtzug</h2></div>
+            </div>
+            <div class="puzzle-meta" aria-label="Rätselmerkmale">
+              <span>Primärmechanik · Reihenfolgen</span><span>Endantwort · Gegenstand</span><span>4 Ebenen</span>
+            </div>
+            <section aria-labelledby="intro-heading"><h3 id="intro-heading">INTRO</h3><p id="bonus-intro"></p></section>
+            <section aria-labelledby="case-intro-heading"><h3 id="case-intro-heading">EINLEITUNG</h3><p id="bonus-case-intro"></p></section>
+          </article>
+
+          <div class="level-progress panel" aria-label="Fortschritt im Bonusfall">
+            <div><span id="level-progress-copy">Ebene 1 von 4</span><strong id="level-progress-status">Ermittlung begonnen</strong></div>
+            <div class="progress-track" role="progressbar" aria-label="Fortschritt im Vier-Ebenen-Fall" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0"><span id="level-progress-bar"></span></div>
+          </div>
+
+          <div id="level-list" class="level-list" aria-live="polite"></div>
+
+          <article class="panel notes-panel">
+            <label for="detective-notes"><span class="kicker">Watsons Notizbuch</span>Deine Ableitungen</label>
+            <textarea id="detective-notes" rows="4" placeholder="Notiere hier deine Zwischenschritte. Sie bleiben auf diesem Gerät gespeichert."></textarea>
+          </article>
+
+          <article id="solution-panel" class="panel solution-panel" aria-labelledby="solution-heading" hidden>
+            <p class="kicker">Antworten und ausführlicher Lösungsweg</p>
+            <h2 id="solution-heading">Der vollständige Schluss</h2>
+            <div id="solution-steps"></div>
+            <section class="bridge"><h3>ABSCHLUSS / FORTSETZUNGS-BRÜCKE</h3><p id="solution-bridge"></p></section>
+            <section class="outro"><h3>OUTRO</h3><p id="solution-outro"></p></section>
+            <p id="verification-note" class="verification-note"></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="install" class="view" data-view="install" aria-labelledby="install-title" hidden>
+        <div class="section-head shell">
+          <div><p class="eyebrow">Einmal hinzufügen, jederzeit öffnen</p><h1 id="install-title">App zum Home-Bildschirm hinzufügen</h1><p>So fühlt sich der Buchbegleiter wie eine eigene App an und bleibt nach dem ersten Laden auch ohne Internet verfügbar.</p></div>
+        </div>
+        <div class="shell install-grid">
+          <article class="panel install-card featured">
+            <span class="device-badge">Direkt</span><h2>App installieren</h2><p id="install-status">Wenn dein Browser die direkte Installation unterstützt, erscheint hier der Installationsknopf.</p>
+            <button id="install-action" class="button button-primary" type="button">Installation prüfen</button>
+          </article>
+          <article class="panel install-card"><span class="device-badge">iPhone & iPad</span><h2>Mit Safari</h2><ol><li>Diese Seite in <strong>Safari</strong> öffnen.</li><li>Unten auf <strong>Teilen</strong> tippen.</li><li><strong>Zum Home-Bildschirm</strong> wählen.</li><li>Oben rechts mit <strong>Hinzufügen</strong> bestätigen.</li></ol></article>
+          <article class="panel install-card"><span class="device-badge">Android</span><h2>Mit Chrome</h2><ol><li>Diese Seite in <strong>Chrome</strong> öffnen.</li><li>Oben rechts das Menü <strong>⋮</strong> öffnen.</li><li><strong>App installieren</strong> oder <strong>Zum Startbildschirm hinzufügen</strong> wählen.</li><li>Installation bestätigen.</li></ol></article>
+        </div>
+
+        <section class="shell backup panel" aria-labelledby="backup-title">
+          <div><p class="kicker">Lokale Sicherung</p><h2 id="backup-title">Fortschritt mitnehmen</h2><p>Deine Daten bleiben nur auf diesem Gerät. Kopiere den Sicherungscode, wenn du Browserdaten löschst oder das Gerät wechselst.</p></div>
+          <div class="backup-actions"><button id="export-data" class="button button-small" type="button">Sicherungscode kopieren</button><button id="import-toggle" class="button button-ghost button-small" type="button">Code importieren</button></div>
+          <div id="import-panel" class="import-panel" hidden><label for="import-code">Sicherungscode</label><textarea id="import-code" rows="4" placeholder="Code hier einfügen"></textarea><div><button id="import-data" class="button button-small" type="button">Sicherung einlesen</button><button id="reset-data" class="text-button danger-text" type="button">Alle lokalen Daten löschen</button></div></div>
+          <p id="backup-status" class="status-copy" role="status" aria-live="polite"></p>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Hauptnavigation">
+      <button class="nav-item active" type="button" data-route="start" aria-current="page"><span aria-hidden="true">⌂</span><small>Start</small></button>
+      <button class="nav-item" type="button" data-route="book"><span aria-hidden="true">▤</span><small>Buchfälle</small></button>
+      <button class="nav-item" type="button" data-route="bonus"><span aria-hidden="true">◇</span><small>Bonusfall</small></button>
+      <button class="nav-item" type="button" data-route="install"><span aria-hidden="true">⇩</span><small>Installieren</small></button>
+    </nav>
+
+    <script src="engine.js?v=3"></script>
+    <script src="app.js?v=3"></script>
+  </body>
+</html>

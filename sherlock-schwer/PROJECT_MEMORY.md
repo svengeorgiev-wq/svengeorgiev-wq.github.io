@@ -19,8 +19,8 @@
 
 ## Versioning
 
-- Current shell version: `v3`.
-- Service-worker cache: `sherlock-schwer-v3.0.0`.
+- Current shell version: `v4`.
+- Service-worker cache: `sherlock-schwer-v4.0.0`.
 - Cache cleanup is restricted to the `sherlock-schwer-` prefix so this app cannot delete caches belonging to sibling PWAs on the same origin.
 - When shell assets change, bump query versions in `index.html`, registration in `app.js`, manifest link, and `CACHE_NAME`/precache entries in `sw.js` together.
 
@@ -29,7 +29,8 @@
 - Supplied interior: `3.11-Interior-Schwer-Print.pdf`, 154 pages, Canva image-only PDF.
 - The actual solution section starts on printed page 81. One Fall 1 title page says `Lösungswege auf Seite 95`; the companion deliberately uses the actual pages 81–83.
 - The supplied cover is copied to `assets/sherlock-schwer-cover.jpg`.
-- The cover currently links to a conservative Amazon search URL because no exact ASIN was supplied or reliably found.
+- The cover links directly to `https://www.amazon.de/dp/B0FZD79PK5`.
+- The cover is displayed cleanly without an offset backdrop or overlaid Amazon badge; the image itself is the link.
 
 ## Release gate
 

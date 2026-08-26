@@ -451,7 +451,7 @@
     const hashRoute = location.hash.slice(1);
     routeTo(ROUTES.includes(hashRoute) ? hashRoute : state.route, false);
     if ("serviceWorker" in navigator && location.protocol !== "file:") {
-      navigator.serviceWorker.register("sw.js?v=3").catch((error) => console.warn("Offline-Modus konnte nicht aktiviert werden.", error));
+      navigator.serviceWorker.register("sw.js?v=4").catch((error) => console.warn("Offline-Modus konnte nicht aktiviert werden.", error));
     }
   }
 

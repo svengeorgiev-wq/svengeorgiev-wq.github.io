@@ -1,12 +1,12 @@
 const CACHE_PREFIX = "sherlock-schwer-";
-const CACHE_NAME = "sherlock-schwer-v3.0.0";
+const CACHE_NAME = "sherlock-schwer-v4.0.0";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=3",
-  "./engine.js?v=3",
-  "./app.js?v=3",
-  "./manifest.webmanifest?v=3",
+  "./styles.css?v=4",
+  "./engine.js?v=4",
+  "./app.js?v=4",
+  "./manifest.webmanifest?v=4",
   "./assets/sherlock-schwer-cover.jpg",
   "./assets/icon.svg",
   "./assets/icon-192.png",

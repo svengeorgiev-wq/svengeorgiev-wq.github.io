@@ -1,0 +1,25 @@
+{
+  "files": [
+    { "day": 1, "path": "audio/tag-01.mp3" },
+    { "day": 2, "path": "audio/tag-02.mp3" },
+    { "day": 3, "path": "audio/tag-03.mp3" },
+    { "day": 4, "path": "audio/tag-04.mp3" },
+    { "day": 5, "path": "audio/tag-05.mp3" },
+    { "day": 6, "path": "audio/tag-06.mp3" },
+    { "day": 7, "path": "audio/tag-07.mp3" },
+    { "day": 8, "path": "audio/tag-08.mp3" },
+    { "day": 9, "path": "audio/tag-09.mp3" },
+    { "day": 10, "path": "audio/tag-10.mp3" },
+    { "day": 11, "path": "audio/tag-11.mp3" },
+    { "day": 12, "path": "audio/tag-12.mp3" },
+    { "day": 13, "path": "audio/tag-13.mp3" },
+    { "day": 14, "path": "audio/tag-14.mp3" },
+    { "day": 15, "path": "audio/tag-15.mp3" },
+    { "day": 16, "path": "audio/tag-16.mp3" },
+    { "day": 17, "path": "audio/tag-17.mp3" },
+    { "day": 18, "path": "audio/tag-18.mp3" },
+    { "day": 19, "path": "audio/tag-19.mp3" },
+    { "day": 20, "path": "audio/tag-20.mp3" },
+    { "day": 21, "path": "audio/tag-21.mp3" }
+  ]
+}

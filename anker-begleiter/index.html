@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#171512">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Der ANKER-Begleiter zum Buch ADHS & Wechseljahre von Anna Lorenz.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ANKER">
+  <title>Der ANKER-Begleiter</title>
+  <style>html{background:#171512}body{margin:0;min-height:100vh;background:#f5f1e9;color:#24211d}</style>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css?v=5">
+</head>
+<body>
+  <a class="skip-link" href="#app">Zum Inhalt springen</a>
+
+  <header class="app-header" id="app-header">
+    <button class="brand-button" type="button" data-route="today" aria-label="Heute öffnen">
+      <span class="brand-mark" aria-hidden="true">A</span>
+      <span>
+        <strong>ANKER</strong>
+        <small id="route-kicker">Begleiter</small>
+      </span>
+    </button>
+    <button class="night-quick" id="night-quick" type="button" data-route="night" aria-label="Nacht-Notfallplan öffnen">
+      <span aria-hidden="true">◐</span>
+      <span>Nachtplan</span>
+    </button>
+  </header>
+
+  <main id="app" tabindex="-1" aria-live="polite">
+    <section class="loading-screen">
+      <p>Der ANKER-Begleiter wird geöffnet.</p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav" aria-label="Hauptnavigation">
+    <button type="button" data-route="today" data-nav="today"><span aria-hidden="true">Heute</span><span class="sr-only">Heute</span></button>
+    <button type="button" data-route="board" data-nav="board"><span aria-hidden="true">21 Tage</span><span class="sr-only">Das 21-Tage-Board</span></button>
+    <button type="button" data-route="tools" data-nav="tools"><span aria-hidden="true">Werkzeuge</span><span class="sr-only">Die zwölf Werkzeuge</span></button>
+    <button type="button" data-route="tracker" data-nav="tracker"><span aria-hidden="true">Tracker</span><span class="sr-only">Der Tracker</span></button>
+    <button type="button" id="menu-open"><span aria-hidden="true">Bereiche</span><span class="sr-only">Alle Bereiche öffnen</span></button>
+  </nav>
+
+  <dialog id="area-menu" class="area-menu">
+    <div class="dialog-head">
+      <div>
+        <p class="eyebrow">Alle Bereiche</p>
+        <h2>Der ANKER-Begleiter</h2>
+      </div>
+      <button class="icon-button" type="button" data-close-dialog aria-label="Menü schließen">×</button>
+    </div>
+    <nav aria-label="Alle Module" class="area-links">
+      <button type="button" data-route="board"><span>1</span>Das 21-Tage-Board</button>
+      <button type="button" data-route="tools"><span>2</span>Die zwölf Werkzeuge</button>
+      <button type="button" data-route="check"><span>3</span>Der Drei-Stufen-Tagescheck</button>
+      <button type="button" data-route="tracker"><span>4</span>Der Tracker</button>
+      <button type="button" data-route="timer"><span>5</span>Timer</button>
+      <button type="button" data-route="night"><span>6</span>Der Nacht-Notfallplan</button>
+      <button type="button" data-route="protocol"><span>7</span>Das Vier-Wochen-Protokoll</button>
+    </nav>
+    <button class="settings-link" type="button" data-route="settings">Einstellungen</button>
+  </dialog>
+
+  <dialog id="confirm-dialog" class="confirm-dialog">
+    <form method="dialog">
+      <p class="eyebrow">Lokale Daten</p>
+      <h2>Wirklich alles löschen?</h2>
+      <p>Deine Einträge auf diesem Gerät werden vollständig entfernt. Ein vorheriger Export lässt sich später wieder importieren.</p>
+      <div class="button-row">
+        <button value="cancel" class="secondary-button">Abbrechen</button>
+        <button value="confirm" class="danger-button">Alles löschen</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <input id="import-file" type="file" accept="application/json,.json" hidden>
+  <script src="app.js?v=5" defer></script>
+</body>
+</html>

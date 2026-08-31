@@ -1,0 +1,486 @@
+{
+  "buch": {
+    "titel": "ADHS & Wechseljahre – Wenn dein altes System nicht mehr trägt",
+    "untertitel": "Brain Fog, Reizüberflutung, Schlafprobleme – Der 21-Tage-Praxis-Plan, 5 Min. am Tag. Mit Tracker, Audios & Workbook",
+    "autorin": "Anna Lorenz",
+    "verlag": "Munich Publishing",
+    "reihe": "ADHS & Overthinking – die Reihe von Anna Lorenz, Band 4",
+    "app_name": "Der ANKER-Begleiter"
+  },
+  "anker": {
+    "A": "Ansehen",
+    "N": "Nervensystem",
+    "K": "Kernsache",
+    "E": "Entlasten",
+    "R": "Ruhig schließen"
+  },
+  "vier_spuren": [
+    "ADHS-Basis",
+    "Körper und Schlaf",
+    "Stimmung und Stress",
+    "Lebenslast"
+  ],
+  "tagesstufen": [
+    "voller Tag",
+    "halber Tag",
+    "Überlebenstag"
+  ],
+  "tracker_zeilen": [
+    {
+      "id": "nebel",
+      "name": "Kopf im Nebel",
+      "frage": "Wie gut kamst du heute an deine Konzentration und an deine Wörter heran?",
+      "unterzeile": "Konzentration, Wörter",
+      "spur": "ADHS-Basis",
+      "kapitel": [
+        3,
+        4
+      ]
+    },
+    {
+      "id": "nacht",
+      "name": "Die Nacht",
+      "frage": "Wie war die Nacht davor?",
+      "unterzeile": "Schlaf, Wachliegen",
+      "spur": "Körper und Schlaf",
+      "kapitel": [
+        6
+      ]
+    },
+    {
+      "id": "koerper",
+      "name": "Der Körper",
+      "frage": "Hitzewallungen, Schmerzen, Energie: Wie war der Körper heute?",
+      "unterzeile": "Hitze, Schmerz, Energie",
+      "spur": "Körper und Schlaf",
+      "kapitel": [
+        2
+      ]
+    },
+    {
+      "id": "duennhaeutig",
+      "name": "Dünnhäutig",
+      "frage": "Wie nah lag die scharfe Antwort – zu Hause und im Büro?",
+      "unterzeile": "zu Hause und im Büro",
+      "spur": "Stimmung und Stress",
+      "kapitel": [
+        8
+      ]
+    },
+    {
+      "id": "reize",
+      "name": "Zu laut, zu viel",
+      "frage": "Wie voll, wie laut, wie hell war dein Tag?",
+      "unterzeile": "Reize von außen",
+      "spur": "Lebenslast",
+      "kapitel": [
+        5
+      ]
+    },
+    {
+      "id": "kopf",
+      "name": "Alles im Kopf",
+      "frage": "Wie viel musstest du mitdenken, was außer dir niemand sieht?",
+      "unterzeile": "was du mitdenkst",
+      "spur": "Lebenslast",
+      "kapitel": [
+        10
+      ]
+    },
+    {
+      "id": "druck",
+      "name": "Druck",
+      "frage": "Wie viel von heute lief nur, weil die Zeit knapp wurde?",
+      "unterzeile": "was nur unter Zeitdruck lief",
+      "spur": "Stimmung und Stress",
+      "kapitel": [
+        7,
+        9
+      ]
+    }
+  ],
+  "tracker_stufen": [
+    {
+      "zeichen": "+",
+      "bedeutung": "ging gut"
+    },
+    {
+      "zeichen": "o",
+      "bedeutung": "mittel"
+    },
+    {
+      "zeichen": "−",
+      "bedeutung": "war schwer"
+    }
+  ],
+  "kapitel": [
+    {
+      "nr": 1,
+      "titel": "Kapitel 1 – Der Punkt, an dem es kippte",
+      "werkzeug": "Der Standort-Check",
+      "werkzeug_text": "Bevor du irgendetwas umbaust, brauchst du einen Ausgangspunkt. Nicht als Diagnose – die stellt niemand hier – sondern als Antwort auf die Frage, worüber wir eigentlich reden. Solange alles ein diffuses „es läuft nicht mehr“ ist, kannst du nichts davon anpacken.\n\nDer Standort-Check besteht aus drei Fragen. Schreib zu jeder ein Stichwort, keinen Aufsatz. Fünf Minuten, mehr nicht.\n\n1. **Was hat früher zuverlässig funktioniert?** Nenn ein System, nicht eine Eigenschaft. „Der Sonntagabend-Plan.“ „Die Erinnerung zwei Stunden vorher.“ „Die Tasche am Vorabend packen.“\n2. **Was davon greift seit wann nicht mehr?** Ungefähre Zeitangaben reichen. „Seit letztem Herbst.“ „Seit dem Umzug.“ Wenn du keinen Zeitpunkt findest, ist auch das eine Information.\n3. **Was hat sich sonst verändert – körperlich, im Schlaf, in der Reizlage?** Auch hier Stichworte. „Wache gegen vier auf.“ „Radio in der Küche geht nicht mehr.“\n\nGeh die dritte Frage ruhig entlang der vier Spuren durch – Körper, Stimmung, Lebenslast. Dann hast du statt einer Zeile drei und siehst, wie viel gleichzeitig läuft.\n\nDiese Zeilen sind der Rohstoff für alles Weitere. Sie sind außerdem das, was du später mit in ein Arztgespräch nehmen kannst – dazu mehr im Kapitel über die Praxisvorbereitung.\n\n**Und für den Moment, in dem das Wort weg ist:** Sag „Moment“ und atme einmal aus, bevor du weitersprichst. Nicht, um das Wort zu finden – das kommt oder kommt nicht. Sondern um die zwei Sekunden zu haben, in denen sich sonst die Panik einschaltet. Die meisten Aussetzer fallen deutlich weniger auf, als sie sich anfühlen. Was auffällt, ist das hektische Suchen danach.\n\nBei manchen Frauen bringt der Standort-Check sofort Klarheit, weil sich alles auf einen erkennbaren Zeitraum zusammenzieht. Bei anderen kommt bei Frage zwei nichts Brauchbares heraus, weil der Übergang schleichend war und sich nicht datieren lässt. Ich habe lange gedacht, das läge an der Formulierung der Frage, und sie mehrfach umgebaut. Es lag nicht daran. Wenn du keinen Zeitpunkt findest, überspring die Frage und arbeite mit den anderen beiden weiter – der Check funktioniert auch mit zwei Zeilen."
+    },
+    {
+      "nr": 2,
+      "titel": "Kapitel 2 – Kein Tag ist wie der andere",
+      "werkzeug": "Der Drei-Stufen-Tag",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel ist eine Einschätzung, die du einmal am Morgen vornimmst, bevor du irgendetwas anderes tust. Drei Stufen, mehr nicht:\n\n1. **Voller Tag.** Du bist wach, du kommst in Gang, Konzentration ist verfügbar. Der Plan gilt wie geschrieben.\n2. **Halber Tag.** Es geht etwas, aber nicht alles. Konzentration kommt in Wellen. Du machst die Hälfte und lässt die andere ohne Diskussion stehen.\n3. **Überlebenstag.** Fast nichts geht. Die Aufgabe des Tages besteht darin, keinen Schaden anzurichten – keine wichtigen Gespräche, keine Entscheidungen, keine Mails, die man nicht zurückholen kann.\n\nDie Einschätzung selbst dauert dreißig Sekunden. Frag dich beim Zähneputzen: Wenn ich jetzt sofort loslegen müsste – wäre das ein voller, ein halber oder ein Überlebenstag?\n\nDer zweite Teil ist der wichtigere, und er ist der, den die meisten überspringen: **Streich den Plan auf die Stufe zusammen.** Bei einem halben Tag streichst du drei Zeilen. Bei einem Überlebenstag alles bis auf eine. Nicht verschieben, nicht „später gucken“ – streichen, jetzt, bevor der Tag anfängt.\n\nFür heute reicht es, wenn du die Stufe von heute festlegst und drei Zeilen streichst. Was du bei den anderen beiden Stufen streichen würdest, ergibt sich in den nächsten Tagen von selbst, wenn sie vorkommen.\n\n### Welche Zeilen zuerst gehen\n\nDie Frage, die an dieser Stelle kommt, ist immer dieselbe: Woher weiß ich, was ich streiche? Es gibt eine brauchbare Reihenfolge, und sie hat nichts mit Wichtigkeit zu tun, sondern mit Rückholbarkeit.\n\nZuerst geht alles, was du dir selbst aufgeladen hast und was niemand außer dir erwartet. Dann alles, was ohne Schaden auch übermorgen noch geht. Dann alles, was keine klare Kante hat – „die Unterlagen mal durchsehen“, „im Keller Ordnung machen“. Solche Aufgaben verbrauchen an einem halben Tag doppelt so viel Energie, weil dein Kopf erst entscheiden muss, wann sie fertig sind.\n\nStehen bleiben darf, was einen Termin hat, was andere Menschen blockiert und was heute abläuft. Das sind an den meisten Tagen erstaunlich wenige Punkte.\n\nDass sich Streichen trotzdem falsch anfühlt, hat einen Grund, der nichts mit deiner Disziplin zu tun hat. Du liest es als Aufgeben, weil du jahrzehntelang gelernt hast, dass Nachlassen bestraft wird – in der Schule, im Job, vermutlich auch zu Hause. Was tatsächlich passiert, ist eine Zuteilung: Dieselbe Menge Arbeit verteilt sich anders über die Woche, weil sie sich sonst gar nicht verteilt und auf drei überfüllten Tagen liegen bleibt.\n\n**Wenn du Band 2 dieser Reihe kennst:** Das ist nicht die Energie-Ampel. Die schaust du dir mehrmals am Tag an, um zu entscheiden, ob du eine Aufgabe jetzt oder später angehst. Der Drei-Stufen-Tag wird einmal morgens gestellt und gilt für den ganzen Tag. Er entscheidet über die Menge. Die Reihenfolge bleibt dir überlassen.\n\nAm Morgen ist die Einschätzung nicht immer zuverlässig. Es gibt Tage, die um sieben Uhr wie ein Überlebenstag aussehen und sich gegen elf auf einen halben Tag hocharbeiten – und umgekehrt Tage, die gut anfangen und um zwei Uhr zusammenbrechen. Ich habe eine Weile empfohlen, dann mittags nachzujustieren. Das hat bei den meisten Frauen dazu geführt, dass sie sich morgens gar nicht mehr festgelegt haben, weil es ja ohnehin revidierbar war. Deshalb heute: Einmal am Morgen, und die Einschätzung gilt. Ein Tag, an dem du zu wenig eingeplant hast, ist ein guter Tag. Ein Tag, an dem du zu viel eingeplant hast, kostet dich den nächsten."
+    },
+    {
+      "nr": 3,
+      "titel": "Kapitel 3 – Wenn das Wort weg ist",
+      "werkzeug": "Die Wortbrücke",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel besteht aus vier vorbereiteten Sätzen. Der Zweck ist nicht, das Wort schneller zu finden – darauf hast du keinen Einfluss. Der Zweck ist, die Lücke zu überbrücken, ohne dass sie zum Ereignis wird.\n\n1. **Ansagen.** „Moment, das Wort ist gerade weg.“ Gesagt in normalem Tonfall, ohne Entschuldigung. Das klingt nach wenig und ist der wirksamste der vier Sätze, weil er das Suchen sichtbar macht und damit beendet. Was Zuhörer irritiert, ist nicht die Pause. Es ist die Pause, in der jemand offensichtlich nach etwas sucht und so tut, als täte er es nicht.\n2. **Umschreiben.** „Ich meine das, womit man …“ – und dann beschreibst du es einfach. Die meisten Menschen liefern das Wort innerhalb von zwei Sekunden nach, und das Gespräch läuft weiter. In manchen Berufen wirkt das sogar souveräner als der Fachbegriff.\n3. **Weitergeben.** „Wie heißt das noch mal?“ Damit machst du aus deinem Aussetzer eine Frage an die Runde. Menschen beantworten Fragen gern. Niemand merkt sich, wer die Frage gestellt hat.\n4. **Überspringen.** „Ich komme gleich darauf zurück.“ Und dann redest du weiter, ohne zurückzukommen. In neun von zehn Fällen fragt niemand nach. Das Wort fällt dir übrigens meistens drei Sätze später ein, wenn du es nicht mehr brauchst.\n\nFür Situationen, die du kommen siehst – ein Vortrag, ein Jahresgespräch, ein Elternabend –, gibt es eine fünfte Möglichkeit: Schreib die drei bis fünf Begriffe, um die es gehen wird, vorher auf einen Zettel und leg ihn sichtbar hin. Nicht als Spickzettel für den Inhalt. Als Absicherung für genau die Wörter, die im entscheidenden Moment weg sein könnten.\n\nWelche Wörter das sind, weißt du meistens vorher. Es sind selten die alltäglichen. In den Rückmeldungen, die mich erreichen, geht es fast immer um dieselben zwei Sorten: Eigennamen – Personen, Orte, Produkte – und Fachbegriffe, die man nur in einem bestimmten Zusammenhang benutzt. Beide haben gemeinsam, dass sie im Kopf wenig Nachbarn haben, an denen man sich entlanghangeln könnte. „Karten“ hat Nachbarn. Der Nachname der neuen Kollegin hat keine.\n\nDeshalb lohnt sich der Zettel besonders für Namen. Wenn du in ein Gespräch mit vier Menschen gehst, von denen du zwei selten siehst, schreib die vier Namen auf. Das ist keine Kapitulation, das ist Vorbereitung – niemand hält es für auffällig, wenn jemand mit Notizen in ein Gespräch kommt.\n\nIn Situationen mit echtem Machtgefälle – eine Verhandlung, ein Gespräch mit jemandem, der auf Schwäche wartet – fühlen sich alle vier Sätze falsch an, und ich kann nicht guten Gewissens behaupten, dass sie dort nichts kosten. Was ich für solche Fälle empfehle, ist die fünfte Möglichkeit: Vorbereitung statt Reaktion. Und den Termin, wenn du die Wahl hast, auf einen vollen Tag legen."
+    },
+    {
+      "nr": 4,
+      "titel": "Kapitel 4 – Der Kopf hat als Speicher gekündigt",
+      "werkzeug": "Nicht merken, hinlegen",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel ist eine Regel mit drei Teilen. Alle drei sind nötig; mit zweien funktioniert es nicht.\n\n**Erstens: ein Ort.** Nicht der beste, nicht der schönste – ein einziger. Er muss dort sein, wo du meistens bist, und er muss ohne Vorbereitung benutzbar sein. Ein Block, ein Notizbuch, eine Schale für Papierkram, eine Notiz-App: alles geht. Was nicht geht, ist ein Ort, den du erst öffnen, entsperren, suchen oder aufräumen musst, bevor du etwas hineinlegen kannst.\n\nWenn du unterwegs viel erledigst, nimm zwei Orte – einen zu Hause, einen in der Tasche. Mehr als zwei sind wieder ein Verwaltungsproblem.\n\n**Zweitens: der Fünf-Sekunden-Reflex.** In dem Moment, in dem dir etwas einfällt, geht es an den Ort. Nicht nachdem du den Satz zu Ende gedacht hast, nicht nachdem du die Mail fertig geschrieben hast. Sofort, in Stichworten, in der Reihenfolge, die Bettina gefunden hat: erst das Stichwort, dann der Zusammenhang.\n\nDer Satz, den du dir dabei sagst, ist der Name des Werkzeugs: nicht merken, hinlegen.\n\n**Drittens: die Sichtung.** Ein fester Termin pro Woche, an dem du den Ort durchgehst. Zehn Minuten, immer derselbe Wochentag, im Kalender eingetragen wie ein Termin mit einer anderen Person. Beim Durchgehen bekommt jeder Punkt genau eine von drei Behandlungen: sofort erledigen, wenn es unter zwei Minuten dauert; in den Kalender, wenn ein Zeitpunkt dazugehört; streichen, wenn es sich erledigt hat oder inzwischen egal ist. Was keine dieser drei Behandlungen bekommt, bleibt liegen und wird nächste Woche wieder angeschaut – das ist erlaubt und passiert bei jedem. Ohne diesen Teil wird dein Ort innerhalb von drei Wochen eine Halde, und in dem Moment, in dem du ihm nicht mehr traust, fängst du wieder an, dir Dinge zusätzlich zu merken – und dann hast du beides.\n\nEine Sache gehört ausdrücklich **nicht** an diesen Ort: Termine. Die gehören in den Kalender, sofort, mit Alarm. Der Ort ist für alles, was keinen Zeitpunkt hat.\n\nWas hineingehört, ist mehr, als die meisten zuerst denken. Nicht nur Aufgaben – auch die halben Gedanken, die sonst den ganzen Tag mitlaufen. Die Frage, die du der Ärztin stellen willst. Der Name des Buches, das dir jemand empfohlen hat. Der Satz, den du in dem Gespräch hättest sagen sollen und der dich seit Dienstag beschäftigt. All das belegt Platz in demselben kleinen Fenster, und all das lässt sich hinlegen.\n\nEin Hinweis für die ersten Tage: Es wird sich falsch anfühlen, Dinge aufzuschreiben, die du früher mühelos im Kopf hattest. Diese Empfindung ist die eigentliche Hürde bei diesem Werkzeug – nicht der Aufwand, der ist minimal. Es hilft, sich klarzumachen, dass du die Information nur verlagerst. Aufgegeben hast du damit nichts, und niemand sonst sieht, wo sie liegt. Sichtbar wird nur, ob du sie hast.\n\nIch habe lange die digitale Variante empfohlen – eine App auf dem Handy, immer dabei, durchsuchbar, mit Erinnerungsfunktion. Auf dem Papier ist das die überlegene Lösung, und bei einem Teil der Frauen funktioniert sie auch gut. Bei einem anderen Teil scheitert sie an etwas, das ich unterschätzt habe: Das Handy bringt fünf weitere Dinge mit, sobald man es in die Hand nimmt. Man will eine Notiz machen und liest sieben Minuten später Nachrichten. Wenn dir das bekannt vorkommt, nimm Papier. Ein Block bietet nichts anderes an als das leere Blatt."
+    },
+    {
+      "nr": 5,
+      "titel": "Kapitel 5 – Zu laut, zu hell, zu viel",
+      "werkzeug": "Das Reizbudget",
+      "werkzeug_text": "Der zweite Teil ist eine Entscheidung, und zwar genau eine.\n\nNimm aus deiner Liste **einen** Reiz und schalte ihn dauerhaft ab. Nicht drei, nicht alle. Einen, den du tatsächlich in der Hand hast: das Radio in der Küche. Die Benachrichtigungstöne am Handy. Das Deckenlicht gegen eine Lampe auf Augenhöhe. Der defekte Lüfter, der repariert wird.\n\nDer Rest der Woche gehört der Beobachtung, ob es etwas gebracht hat. Wenn ja, nimmst du in der Folgewoche den nächsten. Wenn nein, war es der falsche, und du hast trotzdem etwas gelernt.\n\nDer Grund für die Beschränkung auf einen: Wer fünf Dinge gleichzeitig ändert, weiß am Ende der Woche nicht, welche davon geholfen hat – und behält im Zweifel alle fünf bei, auch die vier unnötigen.\n\nDarin liegt die eigentliche Gefahr bei diesem Thema. Reizvermeidung funktioniert nämlich sofort. Du sagst den Geburtstag ab, und es geht dir besser. Du gehst nicht mehr in den Supermarkt am Samstag, und es geht dir besser. Du hörst auf, Freundinnen zu treffen, weil Cafés zu laut sind, und auch das geht erst mal besser.\n\nNach einem halben Jahr ist der Radius klein geworden, und niemand hat den Moment bemerkt, in dem aus Schutz Rückzug wurde. Ich habe das bei genügend Frauen gesehen, um es hier deutlich zu sagen: Das Ziel ist nicht die reizarme Wohnung. Das Ziel ist, dass du dir die Reize leisten kannst, die dir etwas bedeuten – und dafür die abschaltest, die dir nichts geben. Der Presslufthammer vor der Tür gibt dir nichts. Der Abend mit deiner Schwester schon, auch wenn das Lokal laut ist.\n\nWenn du merkst, dass du gerade eher absagst als umbaust, ist das der Punkt, an dem dieses Kapitel allein nicht mehr reicht. Was dann hilft, steht in den Kapiteln zur Erschöpfung und zum Wiedereinstieg.\n\nNicht jeder Reiz kostet. Das widerspricht allem, was bis hierher in diesem Kapitel steht, und stimmt trotzdem. Für manche Menschen mit ADHS verbessert gleichmäßiger Hintergrundschall die Konzentration messbar – in einer schwedischen Untersuchung schnitten Kinder mit Aufmerksamkeitsproblemen bei einer Gedächtnisaufgabe unter Rauschen besser ab als in Stille.² Ob sich das eins zu eins auf Erwachsene übertragen lässt, ist damit nicht gesagt. Aber es passt zu dem, was viele Frauen berichten: dass sie in einem vollen Café besser arbeiten als am stillen Küchentisch.\n\nDer Unterschied liegt vermutlich in der Art des Reizes. Gleichmäßig und vorhersehbar hilft; unregelmäßig und bedeutungshaltig kostet. Ein Lüfter ist Hintergrund, ein Gespräch in deiner Sprache ist Arbeit. Prüf deshalb bei deiner Liste, ob wirklich der Lärm das Problem war – oder das, was darin verstanden werden wollte."
+    },
+    {
+      "nr": 6,
+      "titel": "Kapitel 6 – Nachts wach, morgens zerschlagen",
+      "werkzeug": "Die Abkühl-Rampe",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel besteht aus einer Abendabfolge und einem Plan für die Nacht.\n\nDie Rampe dauert etwa sechzig Minuten und hat drei Stufen. Wichtig vorweg, weil es sonst nach viel klingt: Das ist keine zusätzliche Stunde. Es ist die Stunde, die du ohnehin wach bist – du verbringst sie nur anders.\n\n1. **Erste Stufe, etwa sechzig Minuten vor dem Bett: Schluss mit Aufgaben.** Keine Mails mehr, keine Anrufe, keine Steuerunterlagen, keine schwierigen Gespräche. Was jetzt noch einfällt, wandert an den Ort aus dem vorigen Kapitel. Genau dafür ist er da.\n2. **Zweite Stufe, etwa dreißig Minuten vorher: Licht runter.** Deckenlicht aus, kleine Lampen an. Bildschirm weg oder wenigstens gedimmt. Was in dieser halben Stunde erlaubt ist, darf ruhig langweilig sein – aufräumen, Wäsche zusammenlegen, duschen.\n3. **Dritte Stufe, die letzten zehn Minuten: dieselbe Sache wie gestern.** Ein paar Seiten lesen, eine Handcreme, das Fenster öffnen. Der Inhalt ist beliebig, die Wiederholung ist der Wirkstoff.\n\nBei Hitzewallungen lohnt sich Vorbereitung statt Reaktion: dünne Lagen statt einer dicken Decke, kühles Wasser in Reichweite, ein Handtuch neben dem Bett. Das verhindert nichts, spart aber das nächtliche Suchen und Aufstehen.\n\nDer Grund für diese Vorbereitung ist weniger die Hitze selbst als das, was auf sie folgt. Eine Hitzewelle weckt dich, du wirfst die Decke zurück, kühlst aus, ziehst sie wieder heran – und in diesen Minuten bist du vollständig wach geworden, obwohl der Auslöser längst vorbei ist. Wer die Lagen vorher so wählt, dass er nur eine wegschieben muss, bleibt näher am Schlaf. In der SWAN-Untersuchung hingen genau diese Beschwerden am engsten mit allen drei Formen von Schlafproblemen zusammen.²\n\n**Der Nacht-Notfallplan** ist der zweite Teil und besteht aus drei Sätzen, die du vorher festlegst, weil du sie um drei Uhr nicht mehr formulieren kannst:\n\n- Wenn ich wach werde, schaue ich nicht auf die Uhr.\n- Wenn ich nach etwa zwanzig Minuten noch wach bin, stehe ich auf und gehe in einen anderen Raum.\n- Ich lese dort etwas, das ich schon kenne, bei kleinem Licht – bis ich müde werde.\n\nWas ausdrücklich nicht dazugehört: aufräumen, Mails lesen, das Handy. Alles, was interessant ist, verlängert die Nacht.\n\nDie Abkühl-Rampe funktioniert bei Frauen, die abends über ihre Zeit verfügen. Wenn du im Schichtdienst arbeitest, ein Kind mit Abendritual hast oder pflegst, kannst du dir keine Stunde reservieren – und ich möchte dir nicht ein Werkzeug hinstellen, das an deiner Lebenslage vorbeigeht. Was in diesem Fall bleibt, ist die dritte Stufe: dieselben zehn Minuten, jeden Abend, egal wie spät. Das ist deutlich weniger wirksam als die volle Rampe. Es ist aber wirksamer als nichts, und es ist machbar."
+    },
+    {
+      "nr": 7,
+      "titel": "Kapitel 7 – Die Rechnung kommt am Tag danach",
+      "werkzeug": "Das Nach-Belastung-Fenster",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel ist eine Kalenderregel. Sie lautet: **Wenn du einen anstrengenden Termin einträgst, trägst du im selben Vorgang die Erholung mit ein.**\n\nNicht danach. Nicht am Abend vorher. Im selben Vorgang – solange du noch den Kalender offen hast.\n\nSo sieht das praktisch aus:\n\n1. **Termin eintragen.** Sommerfest, Samstag, 15 bis 21 Uhr.\n2. **Sofort das Fenster eintragen.** Sonntag, halber Tag, keine Termine. Als Eintrag, nicht als Vorsatz – mit Titel, zum Beispiel „Fenster“.\n3. **Das Fenster verteidigen wie einen Termin.** Wenn jemand fragt, ob du Sonntag Zeit hast, lautet die Antwort „da habe ich schon etwas“ – nicht „eigentlich schon“.\n\nWelche Termine ein Fenster brauchen, weißt du nach zwei Wochen Beobachtung. Als Faustregel: alles mit mehr als vier Menschen, alles über drei Stunden, alles mit Konfliktpotenzial, alles Neue.\n\nDie Größe des Fensters richtet sich nach dem Anlass. Ein Abend mit Freundinnen braucht vielleicht einen ruhigen Vormittag. Eine Hochzeit oder eine Beerdigung braucht den ganzen Folgetag, und in manchen Fällen auch den zweiten.\n\nWas in dem Fenster passiert, ist weniger wichtig, als die meisten denken – es muss keine Erholung im Wellness-Sinn sein. Entscheidend sind drei Verzichte: keine Verabredungen, keine Entscheidungen von Gewicht, keine Aufgaben mit Frist. Alles andere ist erlaubt, auch Serien schauen, auch den Keller aufräumen, wenn dir danach ist. Manche Frauen erholen sich beim Bügeln besser als im Liegen, weil das Liegen den Kopf freilässt und der Kopf dann den Vortag durchgeht.\n\n**Die kleine Version für den Arbeitstag:** Zwischen zwei anstrengenden Terminen gehört eine Lücke, in der nichts stattfindet. Fünf bis zehn Minuten ohne Bildschirm, ohne Gespräch, möglichst mit einem Ortswechsel. In einer Übersichtsarbeit über Kurzpausen zeigte sich für solche Unterbrechungen ein spürbarer Effekt auf Erschöpfung und Vitalität – bei der Leistung fiel er dagegen gering aus, außer bei einfachen Tätigkeiten.² Für uns heißt das: Die kurze Pause ist gut für dich, aber sie ersetzt keine echte Erholung nach einem anstrengenden Tag. Dafür braucht es mehr Zeit.\n\nDas Fenster ist leichter zu beschreiben als zu bekommen. Wer Kinder hat, die am Sonntag zum Sport müssen, oder Eltern pflegt, hat keinen leeren Nachmittag zu vergeben. Für diesen Fall ist die ehrlichste Version die kleinere: Statt den ganzen Tag freizuhalten, streichst du eine Sache – die, die am ehesten verschiebbar ist. Und wenn du gerade in einer Lebenslage bist, in der auch das nicht geht, dann ist das eine Frage der Belastung und keine der Organisation mehr. Darüber musst du mit jemandem sprechen. Nachlesen reicht dafür nicht."
+    },
+    {
+      "nr": 8,
+      "titel": "Kapitel 8 – Dünnhäutig",
+      "werkzeug": "Der 6-Sekunden-Abstand",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel besteht aus zwei Teilen: dem Erkennen und dem Ausstieg.\n\n**Teil eins: die drei Vorzeichen.** Bevor die Reaktion kommt, verändert sich etwas im Körper. Bei den meisten Frauen ist es eines von diesen dreien:\n\n- Die Schultern gehen hoch, oder der Kiefer wird fest.\n- Die Stimme wird höher oder schneller, bevor der Inhalt scharf wird.\n- Ein Gefühl von Enge im Brustkorb oder Hitze, die aufsteigt.\n\nSuch dir das aus, das du am ehesten bemerkst, und merk dir nur dieses eine. Drei Vorzeichen zu beobachten ist eine Aufgabe. Eines zu bemerken ist eine Gewohnheit.\n\nEs gibt daneben ein Vorzeichen, das nicht im Körper liegt und das viele Frauen zuverlässiger erkennen: der Moment, in dem dir alles zu langsam vorkommt. Der Satz deines Gegenübers dauert zu lange. Die Kassiererin tippt zu bedächtig. Das Kind zieht sich zu umständlich an. Diese Ungeduld ist bei vielen der letzte ruhige Moment vor dem lauten.\n\n**Teil zwei: der Ausstiegssatz.** Wenn dein Vorzeichen da ist, sagst du einen vorher festgelegten Satz und gehst aus der Situation – für sechs Sekunden, nicht für eine Stunde. Zum Beispiel:\n\n- „Ich komme in fünf Minuten darauf zurück.“\n- „Warte kurz.“\n- „Ich muss einmal durchatmen, das hat nichts mit dir zu tun.“\n\nDann gehst du zwei Schritte weg, atmest zweimal aus – ausatmen, nicht einatmen – und kommst zurück. Die sechs Sekunden sind kein magischer Wert; sie sind ungefähr die Zeit, die es braucht, damit die erste Reaktionswelle abflaut.\n\nWas den Satz wirksam macht, ist, dass er vorher feststeht. Im Moment selbst formulierst du nichts mehr.\n\nDer Ausstieg funktioniert bei Reizbarkeit, die aus Erschöpfung kommt. Er funktioniert nicht bei einem echten Konflikt, der sich seit Wochen aufbaut – da ist die Lautstärke nicht das Problem, sondern das Ungesagte darunter, und sechs Sekunden Abstand verschieben es nur auf nächste Woche. Wenn du merkst, dass dieselbe Person immer wieder derselbe Auslöser ist, ist das kein Regulationsthema mehr. Dann steht ein Gespräch an, für das du einen vollen Tag und keinen Feierabend brauchst."
+    },
+    {
+      "nr": 9,
+      "titel": "Kapitel 9 – Im Job durchhalten, ohne dich zu erklären",
+      "werkzeug": "Der Leistungs-Übersetzer",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel ist eine Übersetzungstabelle. Links steht, was los ist. Rechts steht, was du sagst.\n\n1. **Du kannst dir Absprachen nicht mehr merken.**\nStatt einer Erklärung: „Schick mir die drei Punkte kurz per Mail, dann habe ich sie beim Umsetzen vor mir.“\n2. **Du brauchst am späten Nachmittag mehr Zeit für alles.**\nStatt einer Erklärung: „Können wir das auf den Vormittag legen? Da bin ich schneller durch.“\n3. **Du kommst im Großraumbüro nicht mehr zurecht.**\nStatt einer Erklärung: „Ich brauche für die Auswertung zwei Stunden ohne Unterbrechung – ich setze mich dafür in den kleinen Raum.“\n4. **Du brauchst nach einem langen Termin eine Pause.**\nStatt einer Erklärung: „Ich lege nach dem Workshop keinen Termin mehr – erfahrungsgemäß bringt das nichts Gutes.“\n5. **Du willst wissen, was wirklich erwartet wird.**\nStatt zu raten: „Damit ich richtig priorisiere – was davon braucht ihr diese Woche?“\n\nZwei Regeln machen diese Sätze wirksam: Sie enthalten kein Wort über deinen Zustand. Und sie enden mit einem Nutzen für den Betrieb, nicht mit einem Bedürfnis von dir.\n\nEs gibt eine dritte Regel, die weniger offensichtlich ist: **Bitte um Vorkehrungen, bevor du sie dringend brauchst.** Wer nach drei Fehlern um eine schriftliche Absprache bittet, bittet um Nachsicht. Wer vorher darum bittet, richtet einen Arbeitsablauf ein. Derselbe Satz, zwei Wochen früher gesagt, hat eine völlig andere Bedeutung – und diese zwei Wochen sind meistens verfügbar, weil du deine schlechten Phasen inzwischen kommen siehst.\n\nUnd noch etwas, das ich in Rückmeldungen immer wieder höre: Frauen erwarten, dass solche Bitten Diskussionen auslösen, und sind überrascht, wenn nichts passiert. Meistens passiert nichts. Kollegen haben eigene Sorgen und nehmen eine sachliche Bitte als das, was sie ist.\n\nWenn du in dieser Reihe schon „ADHS & Overthinking bei Frauen im Job“ gelesen hast, erkennst du die Bewegung wieder – dort heißt sie Job-Schutzschild und arbeitet mit derselben Grundidee. Der Unterschied liegt im Anlass: Dort geht es darum, Überlastung abzuwehren. Hier geht es darum, schwankende Tagesform aufzufangen, ohne sie zum Thema zu machen.\n\nIch will dabei nicht so tun, als sei das eine vollständige Lösung. Es ist eine Notlösung für Verhältnisse, die eigentlich anders sein müssten – in einem guten Betrieb könnte man sagen, dass man gerade schwierige Monate hat, ohne dafür bezahlen zu müssen. Solche Betriebe gibt es, und wenn du in einem arbeitest, nutz das. Ich schreibe dieses Kapitel für die anderen. Und ich schreibe es mit einem gewissen Unbehagen, weil es die Anpassungsleistung wieder bei dir ablädt.\n\nEine Ausnahme von der Zurückhaltung will ich benennen, weil sie mir wichtig ist. Wenn du eine Position hast, in der andere zu dir aufschauen, und du sagst irgendwann einen Satz wie „Ich lege nach solchen Terminen nichts mehr, das funktioniert bei mir nicht mehr gut“ – dann tust du damit etwas für die Frauen um dich herum, das kein Sachbuch leisten kann. Nicht jede kann sich das erlauben. Wer es kann, sollte es erwägen."
+    },
+    {
+      "nr": 10,
+      "titel": "Kapitel 10 – Zuhause: die unsichtbare Grundlast",
+      "werkzeug": "Die Grundlast-Liste",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel besteht aus einer Liste und einem Gespräch. Die Liste ist die Arbeit, das Gespräch ist der kürzere Teil.\n\n**Schritt eins: sammeln, verteilt über die Woche.** Immer wenn dir auffällt, dass du an etwas denkst, was den Haushalt oder die Familie betrifft, schreibst du es an deinen Ort aus dem vierten Kapitel. Nicht was du getan hast – woran du gedacht hast. „Trikot Donnerstag.“ „Rechnung Kieferorthopädie.“ „Geschenk für Elias.“\n\nFünf Minuten am Tag reichen, weil du nur notierst, was ohnehin auftaucht.\n\n**Schritt zwei: sortieren.** Nach einer Woche gehst du die Liste durch und markierst jede Zeile mit einem von drei Zeichen: Muss sein. Kann kleiner werden. Braucht niemand.\n\nDie dritte Kategorie ist größer, als du denkst. Bei den meisten Frauen stehen darauf Dinge, die vor fünf Jahren nötig waren, als die Kinder kleiner waren oder ein anderer Rhythmus galt.\n\n**Schritt drei: drei Posten abgeben – vollständig.** Vollständig heißt: mit dem Vorausdenken und dem Im-Blick-Behalten, nicht nur mit der Ausführung. Nicht „du bringst die Kinder donnerstags zum Sport“, sondern „der Sport gehört dir – die Termine, die Sachen, die Absprachen mit den anderen Eltern“.\n\nDas ist der Punkt, an dem es unbequem wird, und zwar für beide Seiten. Der andere übernimmt etwas Größeres, als er erwartet hat. Und du musst aushalten, dass es anders gemacht wird als von dir.\n\nRechne mit vier bis sechs Wochen, in denen es schlechter läuft als vorher. Termine werden knapp, etwas wird vergessen, du erfährst Dinge später als früher. Das gehört zur Übergabe – niemand übernimmt einen Bereich ohne Anlaufzeit. Der Fehler, der in diesen Wochen fast alle Abgaben scheitern lässt, ist derselbe: Du siehst, dass etwas schiefgeht, und greifst ein. Danach ist die Zuständigkeit wieder bei dir, und beim nächsten Versuch wird es schwerer.\n\nEs hilft, vorher festzulegen, was du in dieser Zeit **nicht** tust: nicht erinnern, nicht nachfragen, nicht heimlich kontrollieren. Und was du sehr wohl tust: den Termin absagen, wenn tatsächlich etwas Wichtiges danebengeht, aber ohne die Zuständigkeit zurückzunehmen.\n\n**Der Satz für das Gespräch** – einer, nicht zehn:\n\n„Ich habe eine Woche lang aufgeschrieben, woran ich täglich denke, damit hier alles läuft. Ich schaffe das gerade nicht mehr allein. Ich möchte, dass du drei Bereiche ganz übernimmst – mit dem Drandenken, nicht nur mit dem Machen. Such dir aus, welche.“\n\nDass der andere aussucht, ist Taktik und nicht Höflichkeit. Was man sich selbst ausgesucht hat, gibt man seltener wieder zurück.\n\nDie Grundlast-Liste setzt voraus, dass jemand da ist, der übernehmen kann – ein Partner, erwachsene Kinder, jemand im Haushalt. Wenn du alleinerziehend bist oder mit jemandem lebst, der nicht mitzieht, hilft dir die Liste trotzdem, aber anders: Sie zeigt dir, was gestrichen werden kann. Die Kategorie „braucht niemand“ wird dann zum eigentlichen Ertrag. Ich weiß, dass das ein schwächerer Trost ist."
+    },
+    {
+      "nr": 11,
+      "titel": "Kapitel 11 – Das Arztgespräch vorbereiten",
+      "werkzeug": "Das Vier-Wochen-Protokoll",
+      "werkzeug_text": "Das erste Werkzeug ist ein Blatt Papier mit vier Zeilenblöcken – einer pro Woche – und drei Spalten. Jeden Abend machst du drei Kreuze. Das dauert weniger als eine Minute.\n\nWenn du die einundzwanzig Tage aus dem Workbook gemacht hast, ist die Arbeit halb getan: Der Tracker dort erfasst dieselben Beobachtungen, nur feiner. Du überträgst ihn auf dieses Blatt und führst ihn eine Woche länger. Wenn du das Workbook nicht gemacht hast, fängst du hier an – das Protokoll steht für sich.\n\nDie drei Spalten:\n\n1. **Schlaf.** Durchgeschlafen / einmal wach / mehrfach wach oder lange wach gelegen.\n2. **Reizlage und Stimmung.** Gut / dünnhäutig / heute war es zu viel.\n3. **Konzentration.** Normal / stellenweise weg / kaum arbeitsfähig.\n\nDazu eine schmale vierte Spalte für Besonderheiten, in die höchstens drei Wörter passen: „Hitzewallungen nachts“, „Migräne“, „Zyklus“.\n\nNach vier Wochen hast du etwas, das keine Erinnerung liefern kann: eine Verteilung. Nicht „mir geht es schlecht“, sondern „in neunzehn von achtundzwanzig Nächten mehrfach wach, an vierzehn Tagen Konzentration stellenweise weg“.\n\nWenn du deinen Zyklus noch hast, trag ihn mit ein. Ein Zusammenhang zwischen Zyklusphase und schlechten Tagen ist eine der wertvollsten Informationen, die du mitbringen kannst.\n\nDer Eintrag, den die meisten Frauen in dieser vierten Spalte unterschätzen, ist medizinisch der wichtigste: Hitzewallungen und nächtliches Schwitzen. In einer australischen Untersuchung mit über achttausend Frauen waren es genau diese Beschwerden, die sich am deutlichsten zwischen den Stadien des Übergangs unterschieden – von knapp neun Prozent vor dem Übergang auf über siebenunddreißig Prozent in der späten Perimenopause. Konzentrations- und Stimmungsbeschwerden verteilten sich dagegen gleichmäßiger über alle Stadien.² Für dein Protokoll heißt das: Wenn du solche Beschwerden hast, gehören sie unbedingt aufs Blatt, auch wenn sie dich weniger stören als der Brain Fog. Sie sind der Teil, der für die ärztliche Einordnung am meisten hergibt.\n\nNimm die vierte Spalte deshalb ernst. Drei Wörter pro Abend, aber die richtigen."
+    },
+    {
+      "nr": 12,
+      "titel": "Kapitel 12 – Wenn du rausfliegst",
+      "werkzeug": "Der 1-Punkt-Neustart",
+      "werkzeug_text": "Das Werkzeug für dieses Kapitel besteht aus einer einzigen Entscheidung, die du **jetzt** triffst – nicht in dem Moment, in dem du sie brauchst.\n\n**Schritt eins: Wähle deinen einen Punkt.** Aus allem, was in diesem Buch steht, suchst du das eine Werkzeug aus, mit dem du nach einer Unterbrechung wieder anfängst. Immer dasselbe. Kriterien: Es muss unter dreißig Sekunden dauern, an einem schlechten Tag machbar sein und keine Vorbereitung brauchen.\n\nFür die meisten Frauen ist es die Tagesstufe aus dem zweiten Kapitel. Es kann auch der Block sein, oder die zehn Minuten am Abend. Welches, ist weniger wichtig als dass es feststeht.\n\n**Schritt zwei: Schreib es auf.** Ein Satz, sichtbar: „Wenn ich rausgefallen bin, fange ich mit der Tagesstufe an.“ Auf die erste Seite des Workbooks, in die App, an den Kühlschrank.\n\n**Schritt drei: Beim Wiedereinstieg nur diesen Punkt.** Nicht alles gleichzeitig. Drei Tage nur die Tagesstufe, dann kommt ein zweites Werkzeug dazu, wenn du willst. Das ist der Teil, an dem fast alle Wiedereinstiege scheitern: Aus schlechtem Gewissen wird das volle Programm wieder aufgenommen, und die Überforderung führt innerhalb einer Woche zum nächsten Abbruch.\n\nUnd noch etwas gehört dazu, so banal es klingt: **Nichts nachholen.** Die ausgelassenen Tage werden nicht nachgearbeitet. Wer bei Tag 11 aufgehört hat, macht bei Tag 12 weiter oder fängt an einer beliebigen anderen Stelle an. Das Workbook ist kein Kalender, in dem Lücken auffallen.\n\nEs gibt Abbrüche, die keine Wiedereinstiegs-Frage sind. Wenn du drei Anläufe hinter dir hast und schon der Gedanke an das Buch dich belastet, ist der Punkt erreicht, an dem du es weglegen darfst – für ein halbes Jahr, für ein Jahr, ganz. Nicht jedes Werkzeug passt zu jeder Phase, und es gibt Lebenslagen, in denen Selbstorganisation nicht das ist, was fehlt. Ein Ratgeber, der dir das nicht zugesteht, verkauft dir eine weitere Verpflichtung."
+    }
+  ],
+  "tage": [
+    {
+      "nr": 1,
+      "woche": "Woche 1 · Sehen, was ist",
+      "thema": "Der Standortpunkt",
+      "impuls": "Bevor du irgendetwas umbaust, halte fest, wovon du ausgehst. Ein Stichwort genügt.",
+      "impuls_nutzen": "macht aus einem diffusen Gefühl einen benennbaren Anfang",
+      "uebung": "Beantworte die erste Frage des Standort-Checks: Was hat früher zuverlässig funktioniert? Zwei, drei Stichworte, keine Sätze. Abends: das erste Mal die sieben Zeilen.",
+      "uebung_nutzen": "erinnert dich daran, dass du funktionierende Systeme gebaut hast",
+      "frage": "Welches meiner Systeme habe ich am längsten benutzt?",
+      "frage_nutzen": "zeigt, worauf du beim Umbauen aufsetzen kannst",
+      "kapitel": "Kapitel 1 – Der Punkt, an dem es kippte",
+      "audio": "Audio 1",
+      "app_modul": "Standort-Check"
+    },
+    {
+      "nr": 2,
+      "woche": "Woche 1 · Sehen, was ist",
+      "thema": "Drei Stufen",
+      "impuls": "Heute geht es darum, den Tag richtig einzuschätzen. Was du schaffst, ergibt sich daraus.",
+      "impuls_nutzen": "löst die Erwartung, dass jeder Tag gleich viel hergeben muss",
+      "uebung": "Leg heute Morgen fest: voller Tag, halber Tag oder Überlebenstag. Schreib die Stufe hier auf.",
+      "uebung_nutzen": "gibt dir eine Größe, mit der du planen kannst",
+      "frage": "Habe ich mich höher oder niedriger eingestuft, als der Tag dann war?",
+      "frage_nutzen": "eicht dein Gefühl für die eigene Kapazität",
+      "kapitel": "Kapitel 2 – Kein Tag ist wie der andere",
+      "audio": "Audio 2",
+      "app_modul": "Tagescheck"
+    },
+    {
+      "nr": 3,
+      "woche": "Woche 1 · Sehen, was ist",
+      "thema": "Streichen statt schieben",
+      "impuls": "Einschätzen allein bringt nichts. Der Nutzen liegt im zweiten Schritt.",
+      "impuls_nutzen": "trennt das Erkennen vom Handeln – und macht das Handeln klein",
+      "uebung": "Stufe festlegen, dann drei Zeilen aus deinem Tagesplan streichen. Nicht verschieben, streichen.",
+      "uebung_nutzen": "verhindert, dass du den heutigen Tag mit dem Plan von gestern bestreitest",
+      "frage": "Was habe ich gestrichen, und was ist dadurch nicht passiert?",
+      "frage_nutzen": "zeigt dir, wie viel von deinem Plan tatsächlich Pflicht war",
+      "kapitel": "Kapitel 2 – Kein Tag ist wie der andere",
+      "audio": "Audio 3",
+      "app_modul": "Tagescheck"
+    },
+    {
+      "nr": 4,
+      "woche": "Woche 1 · Sehen, was ist",
+      "thema": "Die Wortbrücke",
+      "impuls": "Wenn dir ein Wort nicht einfällt, ist das unangenehm. Danach zu suchen, während alle zusehen, ist schlimmer.",
+      "impuls_nutzen": "nimmt dem Aussetzer die Bühne, bevor er eine bekommt",
+      "uebung": "Sag heute einmal „Moment, das Wort ist gerade weg“ – in normalem Ton, ohne Entschuldigung.",
+      "uebung_nutzen": "zeigt dir, wie wenig passiert, wenn du es aussprichst",
+      "frage": "Wie haben die anderen reagiert – und wie hatte ich es erwartet?",
+      "frage_nutzen": "korrigiert die Erwartung, die dich das Verstecken kostet",
+      "kapitel": "Kapitel 3 – Wenn das Wort weg ist",
+      "audio": "Audio 4",
+      "app_modul": "Wortbrücke"
+    },
+    {
+      "nr": 5,
+      "woche": "Woche 1 · Sehen, was ist",
+      "thema": "Ein Ort für alles",
+      "impuls": "Dein Kopf soll heute nichts mehr halten müssen, was auch woanders liegen kann.",
+      "impuls_nutzen": "verlagert Arbeit weg von der Stelle, die gerade am wenigsten hergibt",
+      "uebung": "Entscheide, wo dein Ort ist – Block, Notizbuch oder App –, und leg als Erstes eine Sache hinein.",
+      "uebung_nutzen": "gibt dir eine Adresse für alles, was sonst im Kopf kreist",
+      "frage": "Was war das Erste, das ich hineingelegt habe?",
+      "frage_nutzen": "verrät, was dich im Moment am meisten beschäftigt",
+      "kapitel": "Kapitel 4 – Der Kopf hat als Speicher gekündigt",
+      "audio": "Audio 5",
+      "app_modul": "Ablage"
+    },
+    {
+      "nr": 6,
+      "woche": "Woche 1 · Sehen, was ist",
+      "thema": "Nicht merken, hinlegen",
+      "impuls": "Der Ort funktioniert nur, wenn er ohne Nachdenken benutzt wird.",
+      "impuls_nutzen": "macht aus einer guten Idee eine Gewohnheit",
+      "uebung": "Üb den Reflex: Sobald dir etwas einfällt, geht es sofort an den Ort. Erst das Stichwort, dann der Zusammenhang.",
+      "uebung_nutzen": "spart dir das spätere Raten, worauf sich eine halbe Notiz bezieht",
+      "frage": "Wie oft habe ich heute etwas hingelegt, statt es mir zu merken?",
+      "frage_nutzen": "macht sichtbar, wie viel Kleinkram täglich anfällt",
+      "kapitel": "Kapitel 4 – Der Kopf hat als Speicher gekündigt",
+      "audio": "Audio 6",
+      "app_modul": "Ablage"
+    },
+    {
+      "nr": 7,
+      "woche": "Woche 1 · Sehen, was ist",
+      "thema": "Ruhetag: sichten",
+      "impuls": "Heute kommt nichts Neues dazu. Das ist kein Ausfall, das ist Teil des Plans.",
+      "impuls_nutzen": "verhindert, dass sich in Woche zwei zu viel stapelt",
+      "uebung": "Geh deinen Ort einmal durch – sofort erledigen, in den Kalender, streichen. Dann das Trackerblatt: Vergleich die schlechten Tage in „Kopf im Nebel“ mit der Zeile „Die Nacht“ direkt darunter.",
+      "uebung_nutzen": "hält den Ort brauchbar und zeigt dir die erste Reihenfolge",
+      "frage": "Welcher der vergangenen sechs Tage hat sich am wenigsten nach Aufwand angefühlt?",
+      "frage_nutzen": "zeigt, welches Werkzeug bei dir von selbst läuft",
+      "kapitel": "Kapitel 1 bis 4",
+      "audio": "Audio 7",
+      "app_modul": "Wochenrückblick"
+    },
+    {
+      "nr": 8,
+      "woche": "Woche 2 · Ruhe reinbringen",
+      "thema": "Die teuersten Reize",
+      "impuls": "Nicht der lauteste Reiz kostet am meisten. Der teuerste ist der, nach dem weniger ging.",
+      "impuls_nutzen": "richtet die Aufmerksamkeit auf Kosten statt auf Lautstärke",
+      "uebung": "Notiere heute Abend die drei Dinge, nach denen du merklich weniger konntest als vorher.",
+      "uebung_nutzen": "liefert die erste Zeile deiner Reiz-Inventur",
+      "frage": "War einer dabei, den ich sonst gar nicht bemerke?",
+      "frage_nutzen": "findet die Reize, die im Hintergrund mitlaufen",
+      "kapitel": "Kapitel 5 – Zu laut, zu hell, zu viel",
+      "audio": "Audio 8",
+      "app_modul": "Reizbudget"
+    },
+    {
+      "nr": 9,
+      "woche": "Woche 2 · Ruhe reinbringen",
+      "thema": "Einer weniger",
+      "impuls": "Eine Änderung, nicht fünf. Sonst weißt du am Ende der Woche nicht, was gewirkt hat.",
+      "impuls_nutzen": "macht die Wirkung überhaupt erst erkennbar",
+      "uebung": "Schalte genau einen Reiz dauerhaft ab – Benachrichtigungen, Radio, Deckenlicht, was auch immer auf deiner Liste steht.",
+      "uebung_nutzen": "senkt den Pegel an einer Stelle, die du wirklich in der Hand hast",
+      "frage": "Was hat mich dieser eine Reiz gekostet, bevor ich ihn abgeschaltet habe?",
+      "frage_nutzen": "macht einen Preis sichtbar, den du vorher nicht beziffern konntest",
+      "kapitel": "Kapitel 5 – Zu laut, zu hell, zu viel",
+      "audio": "Audio 9",
+      "app_modul": "Reizbudget"
+    },
+    {
+      "nr": 10,
+      "woche": "Woche 2 · Ruhe reinbringen",
+      "thema": "Die Abkühl-Rampe",
+      "impuls": "Die Stunde vor dem Bett vergeht ohnehin. Es geht nur darum, sie anders zu verbringen.",
+      "impuls_nutzen": "nimmt der Rampe den Anschein von zusätzlicher Arbeit",
+      "uebung": "Schreib deine drei Stufen auf: Was hört eine Stunde vorher auf, was eine halbe Stunde vorher, was sind deine letzten zehn Minuten?",
+      "uebung_nutzen": "legt die Entscheidungen fest, solange du noch wach genug dafür bist",
+      "frage": "Womit verbringe ich diese Stunde bisher?",
+      "frage_nutzen": "zeigt, was du tatsächlich umwidmest",
+      "kapitel": "Kapitel 6 – Nachts wach, morgens zerschlagen",
+      "audio": "Audio 10",
+      "app_modul": "Abkühl-Rampe mit Timer"
+    },
+    {
+      "nr": 11,
+      "woche": "Woche 2 · Ruhe reinbringen",
+      "thema": "Der Plan für drei Uhr",
+      "impuls": "Um drei Uhr nachts triffst du keine guten Entscheidungen. Deshalb triffst du sie jetzt.",
+      "impuls_nutzen": "verlagert die Entscheidung in eine Stunde, in der du klar denkst",
+      "uebung": "Schreib die drei Sätze deines Nacht-Notfallplans auf und leg sie neben dein Bett.",
+      "uebung_nutzen": "gibt dir eine Handlung für den Moment, in dem du sonst rechnest",
+      "frage": "Was mache ich bisher, wenn ich nachts wach werde?",
+      "frage_nutzen": "macht das eigene Muster sichtbar, bevor du es änderst",
+      "kapitel": "Kapitel 6 – Nachts wach, morgens zerschlagen",
+      "audio": "Audio 11",
+      "app_modul": "Nacht-Notfallplan"
+    },
+    {
+      "nr": 12,
+      "woche": "Woche 2 · Ruhe reinbringen",
+      "thema": "Das Fenster",
+      "impuls": "Erholung, die nicht im Kalender steht, findet nicht statt.",
+      "impuls_nutzen": "macht aus einem Vorsatz einen Termin",
+      "uebung": "Such den anstrengendsten Termin der nächsten zwei Wochen und trag dahinter ein Fenster ein – ein halber Tag genügt. Wenn eine Abgabe darunter ist, zählt sie als Termin und bekommt eines mit.",
+      "uebung_nutzen": "sichert dir den Tag danach, bevor ihn jemand anders belegt",
+      "frage": "Woran würde ich merken, dass etwas fertig ist – auch ohne die dritte Durchsicht?",
+      "frage_nutzen": "legt deine Stoppregel fest, solange kein Termindruck sie diktiert",
+      "kapitel": "Kapitel 7 – Die Rechnung kommt am Tag danach",
+      "audio": "Audio 12",
+      "app_modul": "Belastungs-Kalender"
+    },
+    {
+      "nr": 13,
+      "woche": "Woche 2 · Ruhe reinbringen",
+      "thema": "Sechs Sekunden",
+      "impuls": "Zwischen dem Auslöser und dem, was du sagst, liegt ein sehr kurzer Moment. Er reicht – zu Hause wie im Büro.",
+      "impuls_nutzen": "richtet die Aufmerksamkeit auf die Stelle, an der du noch wählen kannst",
+      "uebung": "Leg dein Vorzeichen fest – Schultern, Stimme oder Enge – und deinen Ausstiegssatz. Sprich ihn einmal laut aus, wenn du allein bist. Für den Beruf dazu die Regel: Was du nach halb fünf schreibst, geht erst am nächsten Morgen raus.",
+      "uebung_nutzen": "sorgt dafür, dass der Satz verfügbar ist und die scharfe Mail liegen bleibt",
+      "frage": "Zu welcher Uhrzeit werde ich meistens dünnhäutig – und wen trifft es dann?",
+      "frage_nutzen": "verschiebt den Ansatzpunkt von der Reaktion zur Erschöpfung davor",
+      "kapitel": "Kapitel 8 – Dünnhäutig",
+      "audio": "Audio 13",
+      "app_modul": "6-Sekunden-Timer"
+    },
+    {
+      "nr": 14,
+      "woche": "Woche 2 · Ruhe reinbringen",
+      "thema": "Ruhetag: was bleibt",
+      "impuls": "Zweiter Ruhetag. Nichts Neues, nur ein Blick zurück.",
+      "impuls_nutzen": "gibt dir Gelegenheit auszusortieren, bevor die letzte Woche beginnt",
+      "uebung": "Streich aus den bisherigen dreizehn Tagen die Werkzeuge, die dir nichts gebracht haben. Ohne Begründung. Dann die zwei Trackerblätter nebeneinander: Welche zwei Zeilen kippen gemeinsam, und wie oft steht in „Druck“ ein Minus?",
+      "uebung_nutzen": "macht Platz für das, was funktioniert, und zeigt dir deine Kopplungen",
+      "frage": "Welches Werkzeug benutze ich inzwischen, ohne nachzuschlagen?",
+      "frage_nutzen": "zeigt, was schon zu deinem Alltag gehört",
+      "kapitel": "Kapitel 5 bis 8",
+      "audio": "Audio 14",
+      "app_modul": "Wochenrückblick"
+    },
+    {
+      "nr": 15,
+      "woche": "Woche 3 · Alltag neu bauen",
+      "thema": "Übersetzen",
+      "impuls": "Was du brauchst, lässt sich fast immer sagen, ohne zu erklären, warum.",
+      "impuls_nutzen": "trennt die Bitte von der Begründung",
+      "uebung": "Such dir einen Satz aus dem Leistungs-Übersetzer aus und pass ihn auf eine Situation an, die diese Woche kommt.",
+      "uebung_nutzen": "hält den Satz bereit, bevor du ihn brauchst",
+      "frage": "Was hätte ich früher noch hinterhergeschoben?",
+      "frage_nutzen": "macht sichtbar, wie oft du dich unaufgefordert erklärst",
+      "kapitel": "Kapitel 9 – Im Job durchhalten, ohne dich zu erklären",
+      "audio": "Audio 15",
+      "app_modul": "Leistungs-Übersetzer"
+    },
+    {
+      "nr": 16,
+      "woche": "Woche 3 · Alltag neu bauen",
+      "thema": "Einmal sagen",
+      "impuls": "Der Satz nützt nichts im Notizbuch. Heute geht er nach draußen.",
+      "impuls_nutzen": "macht aus einer Formulierung eine Erfahrung",
+      "uebung": "Sag deinen Satz heute einmal wirklich – zur Kollegin, zum Chef, zur Kundin.",
+      "uebung_nutzen": "zeigt dir, wie wenig Widerstand kommt",
+      "frage": "Habe ich den Satz so gesagt, wie ich ihn mir vorgenommen hatte?",
+      "frage_nutzen": "macht aus einem einmaligen Versuch eine Formulierung, die du wieder benutzt",
+      "kapitel": "Kapitel 9 – Im Job durchhalten, ohne dich zu erklären",
+      "audio": "Audio 16",
+      "app_modul": "Leistungs-Übersetzer"
+    },
+    {
+      "nr": 17,
+      "woche": "Woche 3 · Alltag neu bauen",
+      "thema": "Was du mitdenkst",
+      "impuls": "Nicht was du tust – woran du denkst, damit zu Hause alles läuft.",
+      "impuls_nutzen": "macht die unsichtbare Hälfte der Arbeit sichtbar",
+      "uebung": "Sammle fünf Minuten lang, was dir dazu einfällt. Stichworte, keine Sätze. Die Liste wächst über die Woche weiter.",
+      "uebung_nutzen": "verwandelt ein Gefühl von Zuviel in eine Aufzählung",
+      "frage": "Welcher Punkt auf der Liste hat mich selbst überrascht?",
+      "frage_nutzen": "findet die Posten, die niemand für Arbeit hält",
+      "kapitel": "Kapitel 10 – Zuhause: die unsichtbare Grundlast",
+      "audio": "Audio 17",
+      "app_modul": "Grundlast-Liste"
+    },
+    {
+      "nr": 18,
+      "woche": "Woche 3 · Alltag neu bauen",
+      "thema": "Einen Posten abgeben",
+      "impuls": "Abgeben heißt: mit dem Drandenken, nicht nur mit dem Machen.",
+      "impuls_nutzen": "verhindert, dass die Entlastung eine halbe bleibt",
+      "uebung": "Wähl einen Bereich aus deiner Liste aus und schreib den Satz auf, mit dem du ihn abgibst.",
+      "uebung_nutzen": "bereitet das Gespräch vor, das sonst zwischen Tür und Angel passiert",
+      "frage": "Was fällt mir schwerer – das Abgeben oder das Nicht-Kontrollieren danach?",
+      "frage_nutzen": "benennt die eigentliche Hürde, bevor sie dich einholt",
+      "kapitel": "Kapitel 10 – Zuhause: die unsichtbare Grundlast",
+      "audio": "Audio 18",
+      "app_modul": "Grundlast-Liste"
+    },
+    {
+      "nr": 19,
+      "woche": "Woche 3 · Alltag neu bauen",
+      "thema": "Das Protokoll beginnt",
+      "impuls": "Vier Wochen Kreuze sagen mehr als zwanzig Minuten Erzählen.",
+      "impuls_nutzen": "verwandelt dein Erleben in etwas, das eine Praxis verwerten kann",
+      "uebung": "Leg das Raster an – Schlaf, Reize, Konzentration, Notiz – und setz die ersten drei Kreuze für heute. Wenn du ein Medikament nimmst: rechne heute einmal deinen Vorlauf aus.",
+      "uebung_nutzen": "startet die Sammlung, die dein nächstes Arztgespräch trägt",
+      "frage": "Was steht heute in der Notizspalte – in drei Wörtern?",
+      "frage_nutzen": "übt das Kurzfassen, auf das es später ankommt",
+      "kapitel": "Kapitel 11 – Das Arztgespräch vorbereiten",
+      "audio": "Audio 19",
+      "app_modul": "Vier-Wochen-Protokoll"
+    },
+    {
+      "nr": 20,
+      "woche": "Woche 3 · Alltag neu bauen",
+      "thema": "Dein einer Punkt",
+      "impuls": "Du wirst irgendwann aussteigen. Heute entscheidest du, womit du zurückkommst.",
+      "impuls_nutzen": "trifft die Entscheidung, solange sie leichtfällt",
+      "uebung": "Entscheide dich für das eine Werkzeug, mit dem du wieder anfängst, und notier den Satz vorne in diesem Workbook.",
+      "uebung_nutzen": "erspart dir am schlechten Tag die Wahl zwischen zwölf Möglichkeiten",
+      "frage": "Traue ich diesem Werkzeug zu, dass es auch an einem schlechten Tag noch trägt?",
+      "frage_nutzen": "prüft die Wahl an genau dem Tag, für den du sie triffst",
+      "kapitel": "Kapitel 12 – Wenn du rausfliegst",
+      "audio": "Audio 20",
+      "app_modul": "Neustart-Karte"
+    },
+    {
+      "nr": 21,
+      "woche": "Woche 3 · Alltag neu bauen",
+      "thema": "Was bleibt",
+      "impuls": "Einundzwanzig Tage. Nicht alle davon haben geklappt, und das war eingeplant.",
+      "impuls_nutzen": "schließt den Plan, ohne eine Abrechnung daraus zu machen",
+      "uebung": "Schreib drei Sätze auf: Was hat sich verändert, was benutze ich weiter, was lasse ich. Such auf den drei Trackerblättern deinen besten Tag und schreib dazu, was an ihm anders war. Dann heft die Blätter ab – sie sind die erste Hälfte deines Arztprotokolls.",
+      "uebung_nutzen": "macht aus einem Programm ein paar Gewohnheiten, die dir gehören",
+      "frage": "Was würde ich einer Freundin erzählen, die morgen anfängt?",
+      "frage_nutzen": "bringt in Worte, was in drei Wochen entstanden ist",
+      "kapitel": "Kapitel 12 – Wenn du rausfliegst",
+      "audio": "Audio 21",
+      "app_modul": "Wochenrückblick"
+    }
+  ]
+}

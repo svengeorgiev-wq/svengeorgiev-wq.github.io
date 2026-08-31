@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="ANKER">
+  <rect width="512" height="512" rx="112" fill="#111"/>
+  <circle cx="256" cy="256" r="168" fill="none" stroke="#fff" stroke-width="22"/>
+  <path d="M256 117v270M180 208h152M145 302c18 58 58 88 111 88s93-30 111-88" fill="none" stroke="#fff" stroke-width="25" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="256" cy="126" r="34" fill="#111" stroke="#fff" stroke-width="20"/>
+</svg>

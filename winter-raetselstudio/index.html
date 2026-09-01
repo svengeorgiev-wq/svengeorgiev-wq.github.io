@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b2535">
+  <meta name="description" content="Das kostenlose Winter-Rätselstudio zum Buch: sechs interaktive Zusatzspuren für Kinder von 8 bis 10 Jahren.">
+  <title>Winter-Rätselstudio</title>
+  <link rel="manifest" href="manifest.webmanifest?v=1">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css?v=3">
+</head>
+<body>
+  <a class="skip-link" href="#missionStage">Direkt zum Rätsel</a>
+
+  <header class="topbar">
+    <a class="brand" href="#start" aria-label="Winter-Rätselstudio Startseite">
+      <img src="assets/icon.svg" alt="" width="42" height="42">
+      <span><small>Gratis zum Buch</small>Winter-Rätselstudio</span>
+    </a>
+    <div class="topbar__actions">
+      <button class="quiet-button" id="saveButton" type="button">Spielstand</button>
+      <button class="install-button" id="installButton" type="button" hidden>App installieren</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="start" aria-labelledby="heroTitle">
+      <div class="hero__copy">
+        <p class="eyebrow">Die Winterdetektive brauchen dich</p>
+        <h1 id="heroTitle">Eine neue Spur liegt im Schnee.</h1>
+        <p class="hero__lead">Löse sechs neue Zusatzrätsel, sammle die Fundbuchstaben und knacke das Winterwort. Dein Fortschritt bleibt auf diesem Gerät gespeichert.</p>
+        <div class="hero__actions">
+          <button class="primary-button" id="startButton" type="button">Ermittlung starten</button>
+          <button class="secondary-button" id="bonusPrintButton" type="button">Bonusblatt drucken</button>
+          <a class="text-link" href="#trail">Ermittlungsweg ansehen</a>
+        </div>
+        <p class="privacy-note"><span aria-hidden="true">✓</span> Kein Konto · keine Werbung · offline spielbar</p>
+      </div>
+      <figure class="hero__scene">
+        <img src="assets/winterdetektive.webp?v=2" alt="Drei Winterdetektive untersuchen mit Karte, Kompass und Notizbuch einen verschneiten Weg.">
+        <figcaption>Originale Bildwelt aus dem Buch</figcaption>
+      </figure>
+    </section>
+
+    <section class="case-strip" aria-label="Aktueller Ermittlungsstand">
+      <div>
+        <span class="case-strip__label">Fallakte</span>
+        <strong>Das Rätsel der verlorenen Winterkarte</strong>
+      </div>
+      <div class="progress-copy">
+        <span id="progressText">0 von 6 Spuren gelöst</span>
+        <div class="progress-track" role="progressbar" aria-label="Gelöste Spuren" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0">
+          <span id="progressBar"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="trail" id="trail" aria-labelledby="trailTitle">
+      <div class="section-heading">
+        <p class="eyebrow">Folge der Karte</p>
+        <h2 id="trailTitle">Dein Ermittlungsweg</h2>
+        <p>Beginne bei Spur 1. Jede gelöste Aufgabe öffnet den nächsten Abschnitt.</p>
+      </div>
+
+      <div class="trail-map" id="trailMap" aria-label="Sechs Spuren auf einer Winterkarte">
+        <img class="trail-map__art" src="assets/kartenmission.webp" alt="Die Winterdetektive beraten sich über einer Karte.">
+        <div class="trail-line" aria-hidden="true"></div>
+        <ol class="trail-stops" id="trailStops"></ol>
+      </div>
+    </section>
+
+    <section class="mission-stage" id="missionStage" aria-labelledby="missionTitle">
+      <div class="mission-stage__scene" aria-hidden="true">
+        <img id="missionArt" src="assets/spurensuche.webp" alt="">
+      </div>
+      <article class="case-paper">
+        <header class="case-paper__header">
+          <p id="missionKicker">Spur 1 · Aufwärmen</p>
+          <h2 id="missionTitle">Die richtige Spur</h2>
+          <p id="missionIntro">Untersuche den Fundort und wähle die passende Spur.</p>
+        </header>
+        <div class="case-paper__body" id="puzzleArea"></div>
+        <div class="case-paper__feedback" id="feedback" role="status" aria-live="polite"></div>
+        <div class="case-paper__actions">
+          <button class="hint-button" id="hintButton" type="button">Hinweis ansehen</button>
+          <button class="primary-button" id="checkButton" type="button">Antwort prüfen</button>
+        </div>
+      </article>
+    </section>
+
+    <section class="notebook" aria-labelledby="notebookTitle">
+      <div class="notebook__art">
+        <img src="assets/raetselwerkstatt.webp" alt="Die Winterdetektive lösen gemeinsam Rätsel in ihrer Werkstatt.">
+      </div>
+      <div class="notebook__page">
+        <p class="eyebrow">Dein Spurenprotokoll</p>
+        <h2 id="notebookTitle">Gesammelte Fundbuchstaben</h2>
+        <div class="letter-row" id="letterRow" aria-label="Gesammelte Buchstaben"></div>
+        <p id="notebookMessage">Löse die erste Spur, um den ersten Buchstaben einzutragen.</p>
+        <button class="secondary-button" id="continueButton" type="button">Zur nächsten offenen Spur</button>
+      </div>
+    </section>
+
+    <section class="certificate" id="certificate" aria-labelledby="certificateTitle" hidden>
+      <div class="certificate__inner">
+        <p class="certificate__overline">Winterdetektiv-Zentrale</p>
+        <h2 id="certificateTitle">Ermittlungsurkunde</h2>
+        <p>Diese Urkunde bestätigt, dass</p>
+        <label for="detectiveName">Name der Detektivin / des Detektivs</label>
+        <input id="detectiveName" type="text" maxlength="40" placeholder="Dein Name">
+        <p>alle sechs Zusatzspuren gelöst und das Winterwort <strong>WINTER</strong> gefunden hat.</p>
+        <div class="certificate__seal" aria-hidden="true">6/6</div>
+        <button class="primary-button" id="printButton" type="button">Urkunde drucken</button>
+      </div>
+    </section>
+
+    <section class="print-bonus" id="bonusPrint" aria-label="Druckbares Winter-Rätselstudio Bonusblatt">
+      <article class="print-page print-page--puzzles">
+        <header>
+          <p>Gratis Winter-Rätselstudio · Bonusblatt 1</p>
+          <h2>Die Nachricht aus der Schneehütte</h2>
+          <p>Die Winterdetektive haben drei neue Hinweise gefunden. Löse alle Aufgaben und trage deine Antworten ein.</p>
+        </header>
+        <div class="print-puzzle">
+          <strong>1 · Frostcode</strong>
+          <p>A = 1, B = 2, C = 3 … Z = 26</p>
+          <b>19 – 3 – 8 – 14 – 5 – 5</b>
+          <span>Lösung: __________________________________</span>
+        </div>
+        <div class="print-puzzle">
+          <strong>2 · Buchstaben im Schneesturm</strong>
+          <p>Ordne alle neun Buchstaben zu einem Winterwort.</p>
+          <b>F · L · O · C · K · E · E · I · S</b>
+          <span>Lösung: __________________________________</span>
+        </div>
+        <div class="print-puzzle">
+          <strong>3 · Die Zahlenroute</strong>
+          <p>Setze die Reihe mit zwei Zahlen fort.</p>
+          <b>4 · 8 · 12 · 16 · ____ · ____</b>
+          <span>Regel: ___________________________________</span>
+        </div>
+        <img src="assets/kartenmission.webp" alt="Die Winterdetektive untersuchen gemeinsam eine Karte.">
+        <footer>Name: ____________________________ <span>Viel Erfolg, Winterdetektiv!</span></footer>
+      </article>
+      <article class="print-page print-page--solutions">
+        <header>
+          <p>Gratis Winter-Rätselstudio · Lösungen</p>
+          <h2>Fallakte geprüft</h2>
+        </header>
+        <ol>
+          <li><strong>Frostcode:</strong> SCHNEE</li>
+          <li><strong>Buchstaben im Schneesturm:</strong> EISFLOCKE</li>
+          <li><strong>Zahlenroute:</strong> 20 und 24; die Zahlen werden immer um 4 größer.</li>
+        </ol>
+        <p class="solution-note">Alles richtig? Dann zeichne neben jede Lösung eine kleine Schneeflocke.</p>
+        <img src="assets/winterdetektive.webp?v=2" alt="Die drei Winterdetektive in einer verschneiten Landschaft.">
+      </article>
+    </section>
+
+    <section class="grownups" aria-labelledby="grownupsTitle">
+      <div>
+        <p class="eyebrow">Für Erwachsene</p>
+        <h2 id="grownupsTitle">Sicher und unkompliziert</h2>
+      </div>
+      <p>Die App speichert Fortschritt und Namen ausschließlich lokal im Browser. Über „Spielstand“ lässt sich ein Sicherungscode exportieren oder auf einem anderen Gerät wieder einlesen.</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>Winter-Rätselstudio · Bonusmaterial zum Buch</span>
+    <nav aria-label="Rechtliches">
+      <a href="https://munichpublishing.de/impressum">Impressum</a>
+      <a href="https://munichpublishing.de/Datenschutz">Datenschutz</a>
+    </nav>
+  </footer>
+
+  <dialog class="save-dialog" id="saveDialog" aria-labelledby="saveTitle">
+    <form method="dialog">
+      <button class="dialog-close" value="cancel" aria-label="Fenster schließen">×</button>
+      <p class="eyebrow">Ohne Konto sichern</p>
+      <h2 id="saveTitle">Dein Spielstand</h2>
+      <p>Kopiere den Code und bewahre ihn sicher auf. Du kannst ihn später auf diesem oder einem anderen Gerät einlesen.</p>
+      <label for="saveCode">Sicherungscode</label>
+      <textarea id="saveCode" rows="4" spellcheck="false"></textarea>
+      <div class="dialog-actions">
+        <button class="secondary-button" id="copySaveButton" type="button">Code kopieren</button>
+        <button class="primary-button" id="importSaveButton" type="button">Code einlesen</button>
+      </div>
+      <button class="danger-link" id="resetButton" type="button">Fortschritt zurücksetzen</button>
+      <p class="dialog-status" id="dialogStatus" role="status" aria-live="polite"></p>
+    </form>
+  </dialog>
+
+  <script src="app.js?v=3" defer></script>
+</body>
+</html>

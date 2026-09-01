@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Lupe mit Schneeflocke">
+  <rect width="512" height="512" rx="112" fill="#f7fbfd"/>
+  <circle cx="218" cy="210" r="126" fill="#fff" stroke="#0b2535" stroke-width="34"/>
+  <path d="M308 302 423 417" fill="none" stroke="#0b2535" stroke-width="48" stroke-linecap="round"/>
+  <g fill="none" stroke="#2f88a8" stroke-width="20" stroke-linecap="round">
+    <path d="M218 124v172M143 167l150 86M143 253l150-86"/>
+    <path d="m218 124-20 26m20-26 20 26M218 296l-20-26m20 26 20-26"/>
+  </g>
+</svg>

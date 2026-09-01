@@ -1,11 +1,11 @@
 "use strict";
 
-const CACHE = "anker-begleiter-v1.0.4";
+const CACHE = "anker-begleiter-v1.0.5";
 const SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=5",
-  "./app.js?v=5",
+  "./styles.css?v=6",
+  "./app.js?v=6",
   "./anker-inhalte.json",
   "./audio-manifest.json",
   "./manifest.webmanifest",

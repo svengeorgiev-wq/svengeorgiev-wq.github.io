@@ -14,6 +14,7 @@ const INTRO_DEFAULTS = [
 ];
 const ROUTE_LABELS = {
   today: "Heute",
+  audios: "21 Audio-Impulse",
   board: "Das 21-Tage-Board",
   tools: "Die zwölf Werkzeuge",
   check: "Der Drei-Stufen-Tagescheck",
@@ -191,12 +192,21 @@ function renderOnboarding() {
   }
   return `<section class="screen onboarding">
     ${screenHead("Der ANKER-Begleiter", "Welche Zeile ist bei dir gerade die lauteste?", "Ein Tap genügt. Du kannst diesen Einstieg überspringen.")}
+    ${renderAudioCta("Direkt anhören")}
     <p class="medical-note">${escapeHtml(MEDICAL_NOTE)}</p>
     <div class="choice-list">
       ${content.tracker_zeilen.map((row) => `<button type="button" data-action="onboarding-choice" data-id="${row.id}"><strong>${escapeHtml(row.name)}</strong><small>${escapeHtml(row.unterzeile)}</small></button>`).join("")}
     </div>
     <button class="text-button" type="button" data-action="skip-onboarding">Überspringen und Heute öffnen</button>
   </section>`;
+}
+
+function renderAudioCta(kicker = "Neu im Begleiter") {
+  return `<button class="home-audio-cta" type="button" data-route="audios">
+    <span class="audio-cta-icon" aria-hidden="true">▶</span>
+    <span><small>${escapeHtml(kicker)}</small><strong>21 Audio-Impulse</strong><span>Alle Audios an einem Ort</span></span>
+    <span class="audio-cta-arrow" aria-hidden="true">→</span>
+  </button>`;
 }
 
 function renderReentry() {
@@ -263,6 +273,7 @@ function renderToday() {
   const label = phase === "morning" ? "Morgens" : phase === "day" ? "Tagsüber" : "Abends";
   return `<section class="screen today-screen">
     ${screenHead(label, "Heute", "Es gibt nichts nachzuholen.")}
+    ${renderAudioCta()}
     ${phaseSwitch(phase)}
     ${body}
   </section>`;
@@ -272,8 +283,17 @@ function audioPath(dayNumber) {
   return audioManifest.files.find((item) => item.day === Number(dayNumber))?.path || "";
 }
 
-function renderAudioSlot(day) {
-  return `<div class="audio-slot" data-audio-day="${day.nr}" aria-live="polite"></div>`;
+function renderAudioSlot(day, title = "") {
+  return `<div class="audio-slot" data-audio-day="${day.nr}" data-audio-title="${escapeHtml(title)}" aria-live="polite"></div>`;
+}
+
+function renderAudios() {
+  const weeks = [...new Set(content.tage.map((day) => day.woche))];
+  return `<section class="screen audio-library">
+    ${screenHead("Direkt anhören", "21 Audio-Impulse", "Alle gesprochenen Impulse aus dem 21-Tage-Board an einem Ort. Ein Audio wird beim ersten Abspielen offline gespeichert.")}
+    ${weeks.map((week) => `<section class="audio-week"><h2>${escapeHtml(week)}</h2><div class="audio-list">${content.tage.filter((day) => day.woche === week).map((day) => `<article class="audio-item"><header><span class="day-number">${day.nr}</span><span><strong>${escapeHtml(day.thema)}</strong><small>Audio ${day.nr}</small></span></header>${renderAudioSlot(day, day.thema)}<button class="text-button audio-day-link" type="button" data-route="day/${day.nr}">Tag ${day.nr} im Board öffnen</button></article>`).join("")}</div></section>`).join("")}
+    <div class="button-row"><button class="text-button" type="button" data-route="today">Zurück zu Heute</button></div>
+  </section>`;
 }
 
 function renderDay(dayNumber, embedded = false) {
@@ -494,8 +514,9 @@ function render() {
   document.body.classList.toggle("night-mode", night);
   setHeader(route);
   let html;
-  if (!state.onboardingDone && route !== "night") html = renderOnboarding();
+  if (!state.onboardingDone && route !== "night" && route !== "audios") html = renderOnboarding();
   else if (route === "today") html = renderToday();
+  else if (route === "audios") html = renderAudios();
   else if (route === "board") html = renderBoard();
   else if (route === "day") html = renderDay(parameter);
   else if (route === "tools") html = renderTools();
@@ -515,17 +536,19 @@ function render() {
 }
 
 async function hydrateAudio() {
-  const slot = document.querySelector("[data-audio-day]");
-  if (!slot) return;
-  const day = Number(slot.dataset.audioDay);
-  const path = audioPath(day);
-  try {
-    const response = await fetch(path, { method: "HEAD", cache: "no-store" });
-    if (!response.ok) return;
-    slot.innerHTML = `<div class="audio-control"><button type="button" data-action="audio" data-src="${path}" aria-label="Audio ${day} abspielen">▶</button><span><strong>Audio ${day}</strong><br><small>Impuls von rund zwei Minuten</small></span><audio preload="none" src="${path}"></audio></div>`;
-  } catch {
-    // Kein Player, solange die Datei nicht vorhanden ist.
-  }
+  const slots = [...document.querySelectorAll("[data-audio-day]")];
+  await Promise.all(slots.map(async (slot) => {
+    const day = Number(slot.dataset.audioDay);
+    const title = slot.dataset.audioTitle;
+    const path = audioPath(day);
+    try {
+      const response = await fetch(path, { method: "HEAD", cache: "no-store" });
+      if (!response.ok || !slot.isConnected) return;
+      slot.innerHTML = `<div class="audio-control"><button type="button" data-action="audio" data-src="${path}" aria-label="Audio ${day} abspielen">▶</button><span><strong>${title ? escapeHtml(title) : `Audio ${day}`}</strong><br><small>Audio ${day} · Impuls von rund zwei Minuten</small></span><audio preload="none" src="${path}"></audio></div>`;
+    } catch {
+      // Kein Player, solange die Datei nicht vorhanden ist.
+    }
+  }));
 }
 
 function submitTracker(form) {
@@ -648,13 +671,37 @@ document.addEventListener("click", async (event) => {
   else if (action === "install" && deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; render(); }
   else if (action === "audio") {
     const player = actionButton.closest(".audio-control").querySelector("audio");
-    if (player.paused) { await player.play(); actionButton.textContent = "Ⅱ"; actionButton.setAttribute("aria-label", "Audio anhalten"); }
-    else { player.pause(); actionButton.textContent = "▶"; actionButton.setAttribute("aria-label", "Audio abspielen"); }
+    const day = actionButton.closest("[data-audio-day]")?.dataset.audioDay || "";
+    if (player.paused) {
+      document.querySelectorAll(".audio-control audio").forEach((other) => {
+        if (other === player || other.paused) return;
+        other.pause();
+        const otherButton = other.closest(".audio-control").querySelector("button");
+        const otherDay = other.closest("[data-audio-day]")?.dataset.audioDay || "";
+        otherButton.textContent = "▶";
+        otherButton.setAttribute("aria-label", `Audio ${otherDay} abspielen`);
+      });
+      await player.play();
+      actionButton.textContent = "Ⅱ";
+      actionButton.setAttribute("aria-label", `Audio ${day} anhalten`);
+    } else {
+      player.pause();
+      actionButton.textContent = "▶";
+      actionButton.setAttribute("aria-label", `Audio ${day} abspielen`);
+    }
   }
   else if (action === "continue-reentry") { reentryNeeded = false; saveState(); navigate(`day/${state.currentDay}`); }
   else if (action === "restart-reentry") { reentryRestart = true; render(); }
   else if (action === "finish-reentry") { reentryNeeded = false; reentryRestart = false; saveState(); navigate("today"); }
 });
+
+document.addEventListener("ended", (event) => {
+  if (!event.target.matches(".audio-control audio")) return;
+  const button = event.target.closest(".audio-control").querySelector("button");
+  const day = event.target.closest("[data-audio-day]")?.dataset.audioDay || "";
+  button.textContent = "▶";
+  button.setAttribute("aria-label", `Audio ${day} abspielen`);
+}, true);
 
 document.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -763,7 +810,7 @@ async function init() {
     saveState();
     render();
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-      navigator.serviceWorker.register("sw.js?v=5").catch(() => {});
+      navigator.serviceWorker.register("sw.js?v=6").catch(() => {});
     }
   } catch (error) {
     app.innerHTML = `<section class="screen">${screenHead("Nicht geladen", "Die App konnte nicht geöffnet werden")}<p class="medical-note">Bitte lade die Seite neu. Deine lokalen Einträge bleiben erhalten.</p></section>`;

@@ -184,6 +184,19 @@ dialog::backdrop { background: rgba(0, 0, 0, .55); }
 .choice-list button small, .stage-button small { display: block; margin-top: 3px; color: var(--muted); }
 .onboarding-result { padding: 20px; border-radius: var(--radius); background: var(--accent-soft); }
 
+.home-audio-cta {
+  width: 100%; min-height: 88px; margin: 0 0 18px; padding: 14px 16px;
+  display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; align-items: center; gap: 13px;
+  border: 0; border-radius: var(--radius); background: var(--night); color: var(--night-text);
+  text-align: left; cursor: pointer; box-shadow: var(--shadow);
+}
+.audio-cta-icon { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 50%; background: #eee4d5; color: #171512; font-weight: 900; }
+.home-audio-cta small, .home-audio-cta strong, .home-audio-cta span span { display: block; }
+.home-audio-cta small { margin-bottom: 2px; color: #c6bdae; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.home-audio-cta strong { font-size: 1.18rem; }
+.home-audio-cta span span { color: #d8d0c3; font-size: .88rem; }
+.audio-cta-arrow { font-size: 1.65rem; }
+
 .phase-switch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-bottom: 18px; padding: 5px; border-radius: 14px; background: var(--surface-2); }
 .phase-switch button { min-height: 46px; padding: 7px; border: 0; border-radius: 10px; background: transparent; cursor: pointer; font-weight: 700; }
 .phase-switch button[aria-pressed="true"] { background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
@@ -205,6 +218,16 @@ dialog::backdrop { background: rgba(0, 0, 0, .55); }
 .audio-control { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 14px; background: var(--night); color: var(--night-text); }
 .audio-control button { min-width: var(--tap); min-height: var(--tap); border: 1px solid #665f55; border-radius: 50%; background: #eee4d5; color: #171512; cursor: pointer; font-weight: 800; }
 .audio-control span { flex: 1; }
+
+.audio-week { margin: 28px 0; }
+.audio-week h2 { margin-bottom: 12px; font-size: 1.3rem; }
+.audio-list { display: grid; gap: 12px; }
+.audio-item { padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.audio-item header { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 11px; margin-bottom: 12px; }
+.audio-item header strong, .audio-item header small { display: block; }
+.audio-item header small { margin-top: 2px; color: var(--muted); }
+.audio-item .audio-control { border-radius: 12px; }
+.audio-day-link { min-height: 44px; margin-top: 6px; padding-inline: 2px; }
 
 .week-block { margin: 24px 0; }
 .week-block h2 { margin-bottom: 12px; font-size: 1.35rem; }

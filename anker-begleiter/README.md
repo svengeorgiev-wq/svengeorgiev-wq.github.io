@@ -23,3 +23,5 @@ Dann `http://127.0.0.1:4173/` öffnen.
 Die Inhaltsquelle `anker-inhalte.json` ist unverändert aus der gelieferten Datei übernommen.
 
 Die 21 finalen Audio-Impulse liegen vollständig als `audio/tag-01.mp3` bis `audio/tag-21.mp3` vor.
+
+Auf dem Startscreen führt der prominente Button `21 Audio-Impulse` in eine eigene Übersicht, in der alle Audios direkt abgespielt werden können.

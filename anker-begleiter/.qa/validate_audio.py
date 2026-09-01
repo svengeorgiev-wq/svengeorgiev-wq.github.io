@@ -102,10 +102,10 @@ def main() -> None:
     app = (ROOT / "app.js").read_text(encoding="utf-8")
     worker = (ROOT / "sw.js").read_text(encoding="utf-8")
     assertions = {
-        "index_css_v5": 'styles.css?v=5' in index,
-        "index_js_v5": 'app.js?v=5' in index,
-        "worker_registration_v5": 'sw.js?v=5' in app,
-        "cache_v1_0_4": 'anker-begleiter-v1.0.4' in worker,
+        "index_css_v6": 'styles.css?v=6' in index,
+        "index_js_v6": 'app.js?v=6' in index,
+        "worker_registration_v6": 'sw.js?v=6' in app,
+        "cache_v1_0_5": 'anker-begleiter-v1.0.5' in worker,
         "audio_head_offline_fallback": 'new Request(request.url, { method: "GET" })' in worker,
     }
     if not all(assertions.values()):

@@ -162,6 +162,7 @@ p { line-height: 1.58; }
   gap: .7rem;
   padding: 0;
   text-align: left;
+  text-decoration: none;
   background: transparent;
   border: 0;
   cursor: pointer;
@@ -235,6 +236,9 @@ p { line-height: 1.58; }
   border-radius: 7px;
   box-shadow: 0 10px 24px rgba(8, 47, 103, .24);
 }
+
+.book-intro-link { position: relative; z-index: 1; display: block; border-radius: 7px; }
+.book-intro-link:focus-visible { outline: 3px solid rgba(8,117,225,.48); outline-offset: 4px; }
 
 .book-intro-copy {
   position: relative;
@@ -987,7 +991,7 @@ body {
   width: 36px;
   height: 52px;
   color: transparent;
-  background: url("assets/book-cover-v3.webp") center / cover no-repeat;
+  background: url("assets/book-cover-v4.jpg") center / cover no-repeat;
   border-color: rgba(255, 233, 164, .92);
   border-radius: 7px;
   box-shadow: 0 0 0 2px rgba(8,47,103,.92), 0 8px 24px rgba(8,47,103,.28);

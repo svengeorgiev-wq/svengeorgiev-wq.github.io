@@ -26,4 +26,4 @@ Die 21 finalen Audio-Impulse liegen vollständig als `audio/tag-01.mp3` bis `aud
 
 Auf dem Startscreen führt der prominente Button `21 Audio-Impulse` in eine eigene Übersicht, in der alle Audios direkt abgespielt werden können.
 
-Die veröffentlichte raffinierte Glas-Fassung nutzt ab der Homescreen-Erweiterung `styles.css?v=10`, `app.js?v=10` und den Cache `anker-begleiter-v2.1.1`. Auf der Startseite steht der Button `Auf den Homescreen legen` mit einer ausklappbaren Anleitung für iPhone/iPad, Android und Computer bereit.
+Die veröffentlichte raffinierte Glas-Fassung nutzt `styles.css?v=11`, `app.js?v=11` und den Cache `anker-begleiter-v2.1.2`. Auf der Startseite steht der Button `Auf den Homescreen legen` mit einer ausklappbaren Anleitung für iPhone/iPad, Android und Computer bereit. Die Heute-Startseite zeigt zusätzlich das echte Buchcover in einer kompakten Wiedererkennungskachel.

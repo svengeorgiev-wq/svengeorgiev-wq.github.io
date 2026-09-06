@@ -188,6 +188,17 @@ function renderBookHero(compact = false) {
   </section>`;
 }
 
+function renderHomeBookMark() {
+  return `<section class="home-book-mark" aria-label="Begleiter zum Buch ADHS und Wechseljahre">
+    <img src="assets/book-cover-v1.webp" alt="Buchcover ADHS & Wechseljahre von Anna Lorenz" width="720" height="1031">
+    <div>
+      <p class="eyebrow">Dein Begleiter zum Buch</p>
+      <strong>ADHS &amp; Wechseljahre</strong>
+      <span>Der ANKER-Begleiter</span>
+    </div>
+  </section>`;
+}
+
 function renderOnboarding() {
   const selected = content.tracker_zeilen.find((row) => row.id === state.onboardingChoice);
   if (selected) {
@@ -317,6 +328,7 @@ function renderToday() {
   const day = content.tage.find((item) => item.nr === Number(state.currentDay)) || content.tage[0];
   const used = state.usedDays.length;
   return `<section class="screen today-screen">
+    ${renderHomeBookMark()}
     <header class="today-hero">
       <div><p class="eyebrow">${escapeHtml(label)} · Tag ${day.nr}</p><h1>${escapeHtml(day.thema)}</h1><p>Es gibt nichts nachzuholen.</p></div>
       <div class="progress-seal" aria-label="${used} von 21 Tagen genutzt"><strong>${used}</strong><span>von 21<br>genutzt</span></div>
@@ -881,7 +893,7 @@ async function init() {
     saveState();
     render();
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-      navigator.serviceWorker.register("sw.js?v=10").catch(() => {});
+      navigator.serviceWorker.register("sw.js?v=11").catch(() => {});
     }
   } catch (error) {
     app.innerHTML = `<section class="screen">${screenHead("Nicht geladen", "Die App konnte nicht geöffnet werden")}<p class="medical-note">Bitte lade die Seite neu. Deine lokalen Einträge bleiben erhalten.</p></section>`;

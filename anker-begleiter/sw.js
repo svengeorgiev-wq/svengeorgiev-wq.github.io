@@ -1,14 +1,14 @@
 "use strict";
 
-const CACHE = "anker-begleiter-v2.1.1";
+const CACHE = "anker-begleiter-v2.1.2";
 const SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=10",
-  "./app.js?v=10",
+  "./styles.css?v=11",
+  "./app.js?v=11",
   "./anker-inhalte.json",
   "./audio-manifest.json",
-  "./manifest.webmanifest?v=10",
+  "./manifest.webmanifest?v=11",
   "./assets/book-cover-v1.webp",
   "./icons/icon.svg",
   "./icons/icon-192.png",

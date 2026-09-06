@@ -175,22 +175,38 @@ function screenHead(kicker, title, description = "") {
   return `<header class="screen-head"><p class="eyebrow">${escapeHtml(kicker)}</p><h1>${escapeHtml(title)}</h1>${description ? `<p class="lead">${escapeHtml(description)}</p>` : ""}</header>`;
 }
 
+function renderBookHero(compact = false) {
+  return `<section class="book-hero${compact ? " book-hero--compact" : ""}" aria-label="Begleiter zum Buch ADHS und Wechseljahre">
+    <img src="assets/book-cover-v1.webp" alt="Buchcover ADHS & Wechseljahre von Anna Lorenz" width="720" height="1031">
+    <div class="book-hero-copy">
+      <p class="eyebrow">Kostenlos zum Buch</p>
+      <p class="book-kicker">Der ANKER-Begleiter</p>
+      <h2>Heute nur das, was trägt.</h2>
+      <p>21 Tage, sieben klare Bereiche und ein ruhiger Wiedereinstieg. Ohne Account. Deine Einträge bleiben auf diesem Gerät.</p>
+      <div class="book-promise"><span>5 Min.</span><span>21 Audios</span><span>offline nutzbar</span></div>
+    </div>
+  </section>`;
+}
+
 function renderOnboarding() {
   const selected = content.tracker_zeilen.find((row) => row.id === state.onboardingChoice);
   if (selected) {
     const chapters = selected.kapitel.map((nr) => `Kapitel ${nr}`).join(" und ");
+    const verb = selected.kapitel.length > 1 ? "setzen" : "setzt";
     return `<section class="screen onboarding">
+      ${renderBookHero(true)}
       ${screenHead("Einmaliger Einstieg", "Dein Ausgangspunkt")}
       <div class="onboarding-result">
         <p class="eyebrow">Dort setzt das Buch an</p>
         <h2>${escapeHtml(selected.name)}</h2>
-        <p>${chapters} setzt dort an. Du kannst mit Tag 1 anfangen.</p>
+        <p>${chapters} ${verb} dort an. Du kannst mit Tag 1 anfangen.</p>
       </div>
       <button class="primary-button" type="button" data-action="finish-onboarding">Mit Tag 1 anfangen</button>
       <button class="text-button" type="button" data-action="reset-onboarding-choice">Andere Zeile wählen</button>
     </section>`;
   }
   return `<section class="screen onboarding">
+    ${renderBookHero()}
     ${screenHead("Der ANKER-Begleiter", "Welche Zeile ist bei dir gerade die lauteste?", "Ein Tap genügt. Du kannst diesen Einstieg überspringen.")}
     ${renderAudioCta("Direkt anhören")}
     <p class="medical-note">${escapeHtml(MEDICAL_NOTE)}</p>
@@ -271,8 +287,13 @@ function renderToday() {
   else if (phase === "day") body = renderDay(state.currentDay, true);
   else body = renderTracker(state.currentDay, true);
   const label = phase === "morning" ? "Morgens" : phase === "day" ? "Tagsüber" : "Abends";
+  const day = content.tage.find((item) => item.nr === Number(state.currentDay)) || content.tage[0];
+  const used = state.usedDays.length;
   return `<section class="screen today-screen">
-    ${screenHead(label, "Heute", "Es gibt nichts nachzuholen.")}
+    <header class="today-hero">
+      <div><p class="eyebrow">${escapeHtml(label)} · Tag ${day.nr}</p><h1>${escapeHtml(day.thema)}</h1><p>Es gibt nichts nachzuholen.</p></div>
+      <div class="progress-seal" aria-label="${used} von 21 Tagen genutzt"><strong>${used}</strong><span>von 21<br>genutzt</span></div>
+    </header>
     ${renderAudioCta()}
     ${phaseSwitch(phase)}
     ${body}
@@ -542,8 +563,9 @@ async function hydrateAudio() {
     const title = slot.dataset.audioTitle;
     const path = audioPath(day);
     try {
+      if (!navigator.onLine && "caches" in window && !(await caches.match(path))) return;
       const response = await fetch(path, { method: "HEAD", cache: "no-store" });
-      if (!response.ok || !slot.isConnected) return;
+      if (!response.ok || response.headers.get("X-Audio-Missing") || !slot.isConnected) return;
       slot.innerHTML = `<div class="audio-control"><button type="button" data-action="audio" data-src="${path}" aria-label="Audio ${day} abspielen">▶</button><span><strong>${title ? escapeHtml(title) : `Audio ${day}`}</strong><br><small>Audio ${day} · Impuls von rund zwei Minuten</small></span><audio preload="none" src="${path}"></audio></div>`;
     } catch {
       // Kein Player, solange die Datei nicht vorhanden ist.
@@ -810,7 +832,7 @@ async function init() {
     saveState();
     render();
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-      navigator.serviceWorker.register("sw.js?v=6").catch(() => {});
+      navigator.serviceWorker.register("sw.js?v=9").catch(() => {});
     }
   } catch (error) {
     app.innerHTML = `<section class="screen">${screenHead("Nicht geladen", "Die App konnte nicht geöffnet werden")}<p class="medical-note">Bitte lade die Seite neu. Deine lokalen Einträge bleiben erhalten.</p></section>`;

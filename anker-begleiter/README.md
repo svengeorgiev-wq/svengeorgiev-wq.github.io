@@ -17,11 +17,13 @@ Dann `http://127.0.0.1:4173/` öffnen.
 - Zieladresse: `https://tools.munichpublishing.de/anker-begleiter/`
 - Bereitstellung: zentrales GitHub-Pages-Repository mit Munich-Publishing-Custom-Domain
 - Rechtliches: zentrale Seiten `https://munichpublishing.de/impressum` und `https://munichpublishing.de/Datenschutz`
-- App-Icon: finale reine Schwarzweiß-Ankermarke als SVG sowie 180-, 192- und 512-Pixel-PNG
+- App-Icon: finale Ankermarke in Pflaume, Creme und Gold als SVG sowie 180-, 192- und 512-Pixel-PNG
 - Öffentliche Freigabe für App und 21 MP3-Dateien am 31.08.2026 erteilt
 
-Die Inhaltsquelle `anker-inhalte.json` ist unverändert aus der gelieferten Datei übernommen.
+Die Inhaltsquelle `anker-inhalte.json` ist unverändert aus dem Manuskript übernommen. Die Gestaltung folgt dem finalen Cover vom 06.09.2026: Pflaume, Creme und Gold, mit dem Cover als ruhigem Einstieg.
 
 Die 21 finalen Audio-Impulse liegen vollständig als `audio/tag-01.mp3` bis `audio/tag-21.mp3` vor.
 
 Auf dem Startscreen führt der prominente Button `21 Audio-Impulse` in eine eigene Übersicht, in der alle Audios direkt abgespielt werden können.
+
+Die veröffentlichte raffinierte Glas-Fassung nutzt `styles.css?v=9`, `app.js?v=9` und den Cache `anker-begleiter-v2.1.0`. Sie wurde lokal auf Mobil und Desktop sowie nach dem Push über beide öffentlichen Domains geprüft.

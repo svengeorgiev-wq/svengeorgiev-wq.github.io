@@ -1,14 +1,15 @@
 "use strict";
 
-const CACHE = "anker-begleiter-v1.0.5";
+const CACHE = "anker-begleiter-v2.1.0";
 const SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=6",
-  "./app.js?v=6",
+  "./styles.css?v=9",
+  "./app.js?v=9",
   "./anker-inhalte.json",
   "./audio-manifest.json",
   "./manifest.webmanifest",
+  "./assets/book-cover-v1.webp",
   "./icons/icon.svg",
   "./icons/icon-192.png",
   "./icons/icon-512.png",
@@ -45,7 +46,10 @@ self.addEventListener("fetch", (event) => {
           });
           return new Response(null, { status: 200, headers });
         }
-        return fetch(request);
+        return fetch(request).catch(() => new Response(null, {
+          status: 204,
+          headers: { "X-Audio-Missing": "offline" }
+        }));
       })
     );
     return;

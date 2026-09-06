@@ -201,6 +201,7 @@ function renderOnboarding() {
         <h2>${escapeHtml(selected.name)}</h2>
         <p>${chapters} ${verb} dort an. Du kannst mit Tag 1 anfangen.</p>
       </div>
+      ${renderInstallCta()}
       <button class="primary-button" type="button" data-action="finish-onboarding">Mit Tag 1 anfangen</button>
       <button class="text-button" type="button" data-action="reset-onboarding-choice">Andere Zeile wählen</button>
     </section>`;
@@ -209,6 +210,7 @@ function renderOnboarding() {
     ${renderBookHero()}
     ${screenHead("Der ANKER-Begleiter", "Welche Zeile ist bei dir gerade die lauteste?", "Ein Tap genügt. Du kannst diesen Einstieg überspringen.")}
     ${renderAudioCta("Direkt anhören")}
+    ${renderInstallCta()}
     <p class="medical-note">${escapeHtml(MEDICAL_NOTE)}</p>
     <div class="choice-list">
       ${content.tracker_zeilen.map((row) => `<button type="button" data-action="onboarding-choice" data-id="${row.id}"><strong>${escapeHtml(row.name)}</strong><small>${escapeHtml(row.unterzeile)}</small></button>`).join("")}
@@ -223,6 +225,31 @@ function renderAudioCta(kicker = "Neu im Begleiter") {
     <span><small>${escapeHtml(kicker)}</small><strong>21 Audio-Impulse</strong><span>Alle Audios an einem Ort</span></span>
     <span class="audio-cta-arrow" aria-hidden="true">→</span>
   </button>`;
+}
+
+function isStandalone() {
+  return window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone === true;
+}
+
+function renderInstallCta() {
+  if (isStandalone()) return "";
+  return `<section class="install-card" aria-label="App auf den Homescreen legen">
+    <span class="install-card-icon" aria-hidden="true">＋</span>
+    <div class="install-card-copy">
+      <p class="eyebrow">Schneller wiederfinden</p>
+      <h2>Dein ANKER auf dem Homescreen</h2>
+      <p>Öffne den Begleiter künftig wie eine App – ohne jedes Mal den Link zu suchen.</p>
+    </div>
+    <button class="primary-button install-home-button" type="button" data-action="install">Auf den Homescreen legen</button>
+    <details class="install-guide">
+      <summary>Anleitung anzeigen</summary>
+      <div class="install-guide-body">
+        <p><strong>iPhone oder iPad · Safari</strong><br>Unten auf „Teilen“ tippen, „Zum Home-Bildschirm“ wählen und mit „Hinzufügen“ bestätigen.</p>
+        <p><strong>Android · Chrome</strong><br>Oben rechts das Drei-Punkte-Menü öffnen und „App installieren“ oder „Zum Startbildschirm hinzufügen“ wählen.</p>
+        <p><strong>Computer · Chrome oder Edge</strong><br>Das Installationssymbol rechts in der Adresszeile wählen und „Installieren“ bestätigen.</p>
+      </div>
+    </details>
+  </section>`;
 }
 
 function renderReentry() {
@@ -295,6 +322,7 @@ function renderToday() {
       <div class="progress-seal" aria-label="${used} von 21 Tagen genutzt"><strong>${used}</strong><span>von 21<br>genutzt</span></div>
     </header>
     ${renderAudioCta()}
+    ${renderInstallCta()}
     ${phaseSwitch(phase)}
     ${body}
   </section>`;
@@ -522,7 +550,7 @@ function renderSettings() {
     ${screenHead("Nur auf diesem Gerät", "Einstellungen")}
     <section class="settings-section"><h2>Daten sichern</h2><p>Ohne Account gibt es kein automatisches Backup. Wenn du das Gerät wechselst oder Browserdaten löschst, gehen deine Einträge verloren. Exportiere sie vorher als JSON-Datei.</p><div class="settings-actions"><button class="primary-button" type="button" data-action="export">Daten exportieren</button><button class="secondary-button" type="button" data-action="import">Daten importieren</button><button class="danger-button" type="button" data-action="delete">Alles löschen</button></div></section>
     <section class="settings-section"><h2>Eine Erinnerung</h2><p>Die App sendet keine Push-Nachrichten. Wenn du möchtest, erstellt sie einen einzigen täglichen Termin. Nach dem Öffnen und Bestätigen erinnert dich dein Gerätekalender.</p><label class="toggle-line"><input id="reminder-enabled" type="checkbox" ${state.reminder.enabled ? "checked" : ""}><span>Kalender-Erinnerung ausdrücklich einschalten</span></label><label class="field"><span>Uhrzeit</span><input id="reminder-time" type="time" value="${escapeHtml(state.reminder.time)}"></label><button class="secondary-button" type="button" data-action="calendar" ${state.reminder.enabled ? "" : "disabled"}>Kalenderdatei erstellen</button></section>
-    <section class="settings-section"><h2>Auf den Startbildschirm</h2><p>Die App läuft im Browser; du musst nichts installieren. Für einen festen Platz und leichteren Offline-Zugriff kannst du sie auf den Startbildschirm legen.</p><button id="install-button" class="primary-button" type="button" data-action="install" ${deferredInstallPrompt ? "" : "hidden"}>App zum Home-Bildschirm hinzufügen</button><div class="card-flat"><h3>iPhone und iPad</h3><p>In Safari: Teilen → Zum Home-Bildschirm.</p><h3>Android</h3><p>In Chrome: Drei-Punkte-Menü → Zum Startbildschirm hinzufügen.</p></div></section>
+    <section class="settings-section"><h2>Auf den Startbildschirm</h2><p>Die App läuft im Browser; du musst nichts installieren. Für einen festen Platz und leichteren Offline-Zugriff kannst du sie auf den Startbildschirm legen.</p><button id="install-button" class="primary-button" type="button" data-action="install">Auf den Homescreen legen</button><div class="card-flat"><h3>iPhone und iPad · Safari</h3><p>Teilen → Zum Home-Bildschirm → Hinzufügen.</p><h3>Android · Chrome</h3><p>Drei-Punkte-Menü → App installieren oder Zum Startbildschirm hinzufügen.</p><h3>Computer · Chrome oder Edge</h3><p>Installationssymbol in der Adresszeile → Installieren.</p></div></section>
     <section class="settings-section"><h2>Impressum &amp; Datenschutz</h2><p>Die zentralen Rechtstexte von Munich Publishing öffnen sich in einem neuen Browserfenster.</p><div class="legal-links"><a class="secondary-button" href="https://munichpublishing.de/impressum" target="_blank" rel="noopener">Impressum öffnen</a><a class="secondary-button" href="https://munichpublishing.de/Datenschutz" target="_blank" rel="noopener">Datenschutz öffnen</a></div><p class="privacy-note">Deine Einträge bleiben ausschließlich lokal in diesem Browser. Die App verwendet kein Konto, keine Analyse und lädt keine Ressourcen fremder Anbieter.</p></section>
   </section>`;
 }
@@ -690,7 +718,23 @@ document.addEventListener("click", async (event) => {
   else if (action === "import") importFile.click();
   else if (action === "delete") confirmDialog.showModal();
   else if (action === "calendar") downloadCalendar();
-  else if (action === "install" && deferredInstallPrompt) { deferredInstallPrompt.prompt(); await deferredInstallPrompt.userChoice; deferredInstallPrompt = null; render(); }
+  else if (action === "install") {
+    if (deferredInstallPrompt) {
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      deferredInstallPrompt = null;
+      if (choice.outcome === "accepted") showToast("ANKER wird auf deinem Homescreen abgelegt.");
+      render();
+    } else {
+      const guide = actionButton.closest(".install-card")?.querySelector(".install-guide");
+      if (guide) {
+        guide.open = true;
+        guide.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      } else {
+        showToast("Nutze das Browsermenü und wähle „Zum Home-Bildschirm“ oder „App installieren“.");
+      }
+    }
+  }
   else if (action === "audio") {
     const player = actionButton.closest(".audio-control").querySelector("audio");
     const day = actionButton.closest("[data-audio-day]")?.dataset.audioDay || "";
@@ -810,7 +854,12 @@ importFile.addEventListener("change", async () => {
 window.addEventListener("beforeinstallprompt", (event) => {
   event.preventDefault();
   deferredInstallPrompt = event;
-  if (routeName() === "settings") render();
+  render();
+});
+window.addEventListener("appinstalled", () => {
+  deferredInstallPrompt = null;
+  showToast("ANKER liegt jetzt auf deinem Homescreen.");
+  render();
 });
 window.addEventListener("hashchange", render);
 
@@ -832,7 +881,7 @@ async function init() {
     saveState();
     render();
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
-      navigator.serviceWorker.register("sw.js?v=9").catch(() => {});
+      navigator.serviceWorker.register("sw.js?v=10").catch(() => {});
     }
   } catch (error) {
     app.innerHTML = `<section class="screen">${screenHead("Nicht geladen", "Die App konnte nicht geöffnet werden")}<p class="medical-note">Bitte lade die Seite neu. Deine lokalen Einträge bleiben erhalten.</p></section>`;

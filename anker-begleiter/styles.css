@@ -204,6 +204,47 @@ dialog::backdrop { background: rgba(0, 0, 0, .55); }
   border: 1px solid rgba(223,185,77,.25); border-radius: var(--radius); background: linear-gradient(135deg, rgba(25,8,27,.92), rgba(87,34,74,.84)); color: var(--night-text);
   text-align: left; cursor: pointer; box-shadow: var(--shadow);
 }
+.install-card {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  margin: 0 0 18px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 248, 238, .2);
+  border-radius: var(--radius);
+  background: rgba(75, 29, 68, .62);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(22px) saturate(140%);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+}
+.install-card-icon {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(255, 244, 205, .68);
+  border-radius: 16px;
+  background: linear-gradient(145deg, rgba(241,212,123,.28), rgba(255,255,255,.08));
+  color: var(--accent-strong);
+  font-size: 1.9rem;
+  line-height: 1;
+}
+.install-card-copy h2 { font-size: clamp(1.3rem, 4vw, 1.75rem); }
+.install-card-copy p:last-child { margin: 6px 0 0; color: var(--muted); font-size: .9rem; }
+.install-home-button { grid-column: 1 / -1; width: 100%; }
+.install-guide { grid-column: 1 / -1; border-top: 1px solid rgba(255,248,238,.12); }
+.install-guide summary { min-height: 46px; padding-top: 12px; display: flex; align-items: center; color: var(--accent-strong); cursor: pointer; font-weight: 750; }
+.install-guide summary::marker { content: ""; }
+.install-guide summary::after { margin-left: auto; content: "+"; font-size: 1.25rem; }
+.install-guide[open] summary::after { content: "–"; }
+.install-guide-body { padding: 0 2px 2px; color: var(--muted); font-size: .9rem; }
+.install-guide-body p { margin: 10px 0; }
+.install-guide-body strong { color: var(--text); }
 .audio-cta-icon { display: grid; place-items: center; width: 50px; height: 50px; border: 1px solid #efd16f; border-radius: 50%; background: linear-gradient(135deg, #fff3cc, #d8ad3d); color: #3b1737; font-weight: 900; }
 .home-audio-cta small, .home-audio-cta strong, .home-audio-cta span span { display: block; }
 .home-audio-cta small { margin-bottom: 2px; color: #c6bdae; font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
@@ -400,6 +441,7 @@ body::after {
 .card,
 .card-flat,
 .home-audio-cta,
+.install-card,
 .audio-item,
 .day-row,
 .tool-card,
@@ -440,6 +482,7 @@ body::after {
 .book-hero,
 .card,
 .home-audio-cta,
+.install-card,
 .area-menu,
 .confirm-dialog {
   position: relative;
@@ -449,6 +492,7 @@ body::after {
 .book-hero::before,
 .card::before,
 .home-audio-cta::before,
+.install-card::before,
 .area-menu::before,
 .confirm-dialog::before {
   position: absolute;
@@ -475,6 +519,19 @@ body::after {
   border: 1px solid rgba(231,194,91,.18);
   border-radius: 50%;
   box-shadow: 0 0 52px rgba(223,185,77,.08), inset 0 0 30px rgba(255,255,255,.035);
+  content: "";
+  pointer-events: none;
+}
+.install-card::after {
+  position: absolute;
+  z-index: -1;
+  right: -36px;
+  top: -48px;
+  width: 142px;
+  height: 142px;
+  border: 1px solid rgba(231,194,91,.18);
+  border-radius: 50%;
+  box-shadow: 0 0 42px rgba(223,185,77,.07), inset 0 0 28px rgba(255,255,255,.035);
   content: "";
   pointer-events: none;
 }
@@ -544,7 +601,7 @@ select {
 }
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .app-header, .bottom-nav, .book-hero, .card, .card-flat, .home-audio-cta, .audio-item, .day-row, .tool-card, .tracker-row, .timer-choice button, .medical-note, .info-note, .backup-note, .onboarding-result, .area-menu, .confirm-dialog {
+  .app-header, .bottom-nav, .book-hero, .card, .card-flat, .home-audio-cta, .install-card, .audio-item, .day-row, .tool-card, .tracker-row, .timer-choice button, .medical-note, .info-note, .backup-note, .onboarding-result, .area-menu, .confirm-dialog {
     background-color: #54224c;
   }
   .choice-list button, .stage-button, .area-links button, .mark-options label, .week-selector button, input[type="search"], input[type="text"], input[type="time"], textarea, select {
@@ -576,7 +633,7 @@ select {
 
 @media (max-width: 430px) {
   .app-header, .bottom-nav { backdrop-filter: blur(22px) saturate(150%); -webkit-backdrop-filter: blur(22px) saturate(150%); }
-  .book-hero, .card, .card-flat, .home-audio-cta, .audio-item, .day-row, .tool-card, .tracker-row { backdrop-filter: blur(22px) saturate(140%); -webkit-backdrop-filter: blur(22px) saturate(140%); }
+  .book-hero, .card, .card-flat, .home-audio-cta, .install-card, .audio-item, .day-row, .tool-card, .tracker-row { backdrop-filter: blur(22px) saturate(140%); -webkit-backdrop-filter: blur(22px) saturate(140%); }
 }
 
 @media print {

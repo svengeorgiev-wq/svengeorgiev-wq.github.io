@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#006874">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Die private Begleit-App zu Overthinking beim Dating und in Beziehungen von Lea Hoffmann: Regulations-Ampel, 21 Tage, 22 Werkzeuge und Belege.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Bei dir bleiben">
+  <title>Bei dir bleiben – Begleit-App</title>
+  <link rel="manifest" href="manifest.webmanifest?v=1">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <a class="skip-link" href="#app">Zum Inhalt springen</a>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <button class="brand" type="button" data-route="today" aria-label="Start öffnen">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64"><path d="M12 31c0-10 7-18 17-18 9 0 16 6 17 15 1 8-4 14-11 18-6 4-10 7-13 11-1-6-4-10-8-15-2-3-2-7-2-11Z"/><path d="M36 39c3-7 8-11 14-11 7 0 11 5 11 11 0 9-10 15-25 23-15-8-25-14-25-23 0-6 5-11 11-11 6 0 11 4 14 11Z"/></svg>
+        </span>
+        <span>
+          <strong>Bei dir bleiben</strong>
+          <small id="route-label">Begleit-App</small>
+        </span>
+      </button>
+      <div class="header-actions">
+        <button class="sos-quick" type="button" data-route="check"><span aria-hidden="true">●</span>Ampel</button>
+        <button class="icon-button" id="settings-open" type="button" aria-label="Einstellungen und Installation öffnen">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l-2.8 2.8a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6h-4a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-2.8-2.8a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H3v-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.9l2.8-2.8a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6h4a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l2.8 2.8a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1v4a1.7 1.7 0 0 0-1.6 1Z"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="app" tabindex="-1" aria-live="polite">
+      <section class="loading-screen">
+        <p>Die Begleit-App wird geöffnet.</p>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Hauptnavigation">
+      <button type="button" data-route="today" data-nav="today">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z"/><path d="M9.5 20v-6h5v6"/></svg><span>Heute</span>
+      </button>
+      <button type="button" data-route="days" data-nav="days">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M7 2v4M17 2v4M3 9h18M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01"/></svg><span>21 Tage</span>
+      </button>
+      <button type="button" data-route="tools" data-nav="tools">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="8"/></svg><span>22 Tools</span>
+      </button>
+      <button type="button" data-route="sources" data-nav="sources">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v17H7.5A2.5 2.5 0 0 0 5 21.5v-17Z"/><path d="M5 19h15"/></svg><span>Belege</span>
+      </button>
+    </nav>
+  </div>
+
+  <dialog class="sheet" id="settings-dialog" aria-labelledby="settings-heading">
+    <div class="sheet-card">
+      <header class="sheet-head">
+        <div><p class="eyebrow">Nur auf diesem Gerät</p><h2 id="settings-heading">App &amp; Daten</h2></div>
+        <button class="icon-button" type="button" data-close-dialog aria-label="Schließen">×</button>
+      </header>
+
+      <section class="settings-block install-block">
+        <h3>Auf den Home-Bildschirm</h3>
+        <p>So öffnest du den Begleiter später wie eine App. Nach dem ersten vollständigen Laden funktioniert der Kern auch offline.</p>
+        <button class="button primary" id="install-button" type="button">App installieren</button>
+        <details>
+          <summary>iPhone oder iPad</summary>
+          <p>In Safari unten auf „Teilen“ tippen, „Zum Home-Bildschirm“ wählen und mit „Hinzufügen“ bestätigen.</p>
+        </details>
+        <details>
+          <summary>Android</summary>
+          <p>In Chrome das Menü öffnen und „App installieren“ oder „Zum Startbildschirm hinzufügen“ wählen.</p>
+        </details>
+        <details>
+          <summary>Computer</summary>
+          <p>In Chrome oder Edge das Installationssymbol rechts in der Adresszeile anklicken und bestätigen.</p>
+        </details>
+      </section>
+
+      <section class="settings-block">
+        <h3>Tägliche Kalender-Erinnerung</h3>
+        <p>Die App erstellt eine Kalenderdatei für 21 Tage. Erst dein Kalender übernimmt nach dem Öffnen und Bestätigen die Erinnerung.</p>
+        <label for="reminder-time">Uhrzeit</label>
+        <div class="inline-row"><input id="reminder-time" type="time" value="20:00"><button class="button secondary" id="calendar-button" type="button">Kalenderdatei erstellen</button></div>
+      </section>
+
+      <section class="settings-block">
+        <h3>Fortschritt sichern</h3>
+        <p>Notizen, Markierungen und Entwürfe bleiben lokal. Eine Sicherungsdatei schützt sie bei Gerätewechsel oder geleertem Browser.</p>
+        <div class="button-row"><button class="button secondary" id="export-button" type="button">Sicherung speichern</button><label class="button secondary file-button" for="import-file">Sicherung einlesen</label><input id="import-file" type="file" accept="application/json,.json" hidden></div>
+      </section>
+
+      <section class="settings-block quiet">
+        <h3>Datenschutz</h3>
+        <p>Kein Konto, keine E-Mail, keine Cloud. Alles bleibt in diesem Browser. Diese App ersetzt keine ärztliche oder psychotherapeutische Behandlung.</p>
+        <button class="text-button danger" id="reset-button" type="button">Lokale Daten vollständig löschen</button>
+      </section>
+
+      <footer class="legal-links"><a href="https://munichpublishing.de/impressum" target="_blank" rel="noopener">Impressum</a><a href="https://munichpublishing.de/Datenschutz" target="_blank" rel="noopener">Datenschutz</a></footer>
+    </div>
+  </dialog>
+
+  <dialog class="tool-dialog" id="tool-dialog" aria-labelledby="tool-dialog-heading">
+    <div class="tool-sheet" id="tool-dialog-content"></div>
+  </dialog>
+
+  <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-heading">
+    <form method="dialog">
+      <h2 id="confirm-heading">Lokale Daten löschen?</h2>
+      <p>Alle Notizen, Entwürfe, Markierungen und Checks in diesem Browser werden entfernt.</p>
+      <div class="button-row end"><button class="button secondary" value="cancel">Abbrechen</button><button class="button danger-button" id="confirm-reset" value="confirm">Alles löschen</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="content.js?v=1" defer></script>
+  <script src="app.js?v=1" defer></script>
+</body>
+</html>

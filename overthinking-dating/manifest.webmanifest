@@ -1,0 +1,17 @@
+{
+  "name": "Bei dir bleiben – Overthinking beim Dating",
+  "short_name": "Bei dir bleiben",
+  "description": "Begleit-App zu Overthinking beim Dating und in Beziehungen von Lea Hoffmann",
+  "lang": "de",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#eaf4f1",
+  "theme_color": "#006874",
+  "categories": ["lifestyle", "health", "books"],
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

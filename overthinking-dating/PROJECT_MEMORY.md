@@ -8,5 +8,6 @@
 - Public deployment target: `https://tools.munichpublishing.de/overthinking-dating/` through the central GitHub Pages repository.
 - The user has granted standing authorization and instruction to commit, push, and live-verify every completed PWA release; do not request deployment permission again.
 - Current shell query is `v=1`; service-worker cache is `overthinking-dating-v1.0.0`. Shell changes must advance both.
+- Initial live release commit `a70db9a` was published on 2026-09-08. Cache-busted GitHub Pages and custom-domain checks returned HTTP 200 for HTML, JS, content, manifest, service worker, and the exact cover; browser QA passed at 390×844 and 1365×900 with persistence, offline restart, and zero console errors.
 - The exact supplied cover is `assets/book-cover-v1.png`; app icons use the teal cover palette and white head/heart line motif.
 - Source citations are deduplicated to the manuscript's 66 unique works. DOI enrichment was not performed because external Crossref submission was not authorized; unresolved entries link to a citation-specific Google Scholar search.

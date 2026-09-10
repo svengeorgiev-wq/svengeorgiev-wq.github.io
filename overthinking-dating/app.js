@@ -11,8 +11,19 @@ const ROUTE_LABELS = Object.freeze({
   check: "Regulations-Ampel",
   days: "Das 21-Tage-Workbook",
   tools: "Die SOS-Toolbox",
+  audios: "Audios für typische Situationen",
   sources: "Die Belege zum Buch"
 });
+
+const AUDIO_EPISODES = Object.freeze([
+  { number: 1, title: "Wenn die Nachricht ausbleibt", situation: "Für den Moment, in dem Warten zur Gedankenspirale wird.", duration: "1:59", file: "01-wenn-die-nachricht-ausbleibt.mp3", chapter: "Kapitel 1", tools: [1, 2] },
+  { number: 2, title: "Online – aber keine Antwort", situation: "Wenn der Online-Status plötzlich wie eine eindeutige Botschaft wirkt.", duration: "1:55", file: "02-online-aber-keine-antwort.mp3", chapter: "Kapitel 4", tools: [7, 8] },
+  { number: 3, title: "Wenn Ruhe wie Desinteresse wirkt", situation: "Wenn weniger Kontakt sofort Zweifel an Nähe und Beziehung auslöst.", duration: "1:51", file: "03-wenn-ruhe-wie-desinteresse-wirkt.mp3", chapter: "Kapitel 2", tools: [3, 4] },
+  { number: 4, title: "Bevor du noch einmal fragst", situation: "Für den Drang, nach einer Rückversicherung gleich die nächste zu suchen.", duration: "1:51", file: "04-bevor-du-noch-einmal-fragst.mp3", chapter: "Kapitel 5", tools: [9, 10] },
+  { number: 5, title: "Bevor du die wütende Nachricht sendest", situation: "Wenn Aktivierung sich als scharfe Nachricht entladen will.", duration: "1:46", file: "05-bevor-du-die-wuetende-nachricht-sendest.mp3", chapter: "Kapitel 6", tools: [11, 12] },
+  { number: 6, title: "Wenn du im Streit leer wirst", situation: "Wenn Worte verschwinden und dein System auf Rückzug schaltet.", duration: "1:52", file: "06-wenn-du-im-streit-leer-wirst.mp3", chapter: "Kapitel 7", tools: [13, 14] },
+  { number: 7, title: "Ein Bedürfnis ohne Angriff aussprechen", situation: "Für ein klares Gespräch, das Nähe sucht, ohne Druck zu machen.", duration: "1:55", file: "07-ein-beduerfnis-ohne-angriff-aussprechen.mp3", chapter: "Kapitel 11", tools: [21, 22] }
+]);
 
 const CHECK_QUESTIONS = Object.freeze([
   { key: "tempo", label: "Tempo", options: [
@@ -139,7 +150,7 @@ function nextOpenDay() {
 function render() {
   const route = routeFromHash();
   setActiveNavigation(route);
-  const renderers = { today: renderToday, check: renderCheck, days: renderDays, tools: renderTools, sources: renderSources };
+  const renderers = { today: renderToday, check: renderCheck, days: renderDays, tools: renderTools, audios: renderAudios, sources: renderSources };
   app.innerHTML = `<section class="view">${renderers[route]()}</section>`;
   app.dataset.currentRoute = route;
   if (route === "sources") renderSourceList();
@@ -210,6 +221,15 @@ function renderToday() {
         <textarea data-draft="unsent" aria-label="Ungesendeter Nachrichtenentwurf" placeholder="Hier darf es stehen, ohne gesendet zu werden …">${escapeHtml(state.drafts.unsent)}</textarea>
         <div class="button-row"><button class="text-button" type="button" data-clear-draft="unsent">Entwurf leeren</button></div>
         <p class="save-hint">Automatisch nur in diesem Browser gespeichert</p>
+      </article>
+
+      <article class="glass-card audio-callout">
+        <div>
+          <p class="eyebrow">Neu · Sieben geführte Impulse</p>
+          <h3>Wenn Lesen gerade zu viel ist</h3>
+          <p>Wähle die Situation, die dich gerade beschäftigt. Jede Folge verbindet eine kurze Regulation mit den passenden Kapiteln und Werkzeugen im Buch.</p>
+        </div>
+        <button class="button primary" type="button" data-route="audios">Audios für typische Situationen</button>
       </article>
     </div>`;
 }
@@ -378,6 +398,32 @@ function renderToolCards(tools) {
       </div>
       <button class="favorite-button ${state.favoriteTools.includes(tool.number) ? "is-active" : ""}" type="button" data-favorite-tool="${tool.number}" aria-label="${state.favoriteTools.includes(tool.number) ? "Aus Favoriten entfernen" : "Als Favorit markieren"}" aria-pressed="${state.favoriteTools.includes(tool.number)}">★</button>
     </article>`).join("");
+}
+
+function renderAudios() {
+  return `
+    <div class="audio-intro">
+      <p class="eyebrow">7 geführte Audio-Impulse</p>
+      <h1>Audios für typische Situationen</h1>
+      <p class="lede">Wähle, was gerade wirklich passiert. Jede Folge hilft dir zuerst beim Regulieren und verweist hörbar auf die passenden Kapitel und Werkzeuge im Buch.</p>
+      <p class="quiet-copy">Die Audios starten nur nach deinem Tipp. Beim ersten Start wird die jeweilige Folge zugleich für spätere Offline-Nutzung gespeichert.</p>
+    </div>
+    <div class="audio-grid">
+      ${AUDIO_EPISODES.map((episode) => {
+        const episodeTools = episode.tools.map((number) => content.tools[number - 1]);
+        return `
+          <article class="glass-card audio-card">
+            <header class="audio-card-head">
+              <span class="audio-number">${episode.number}</span>
+              <div><h2>${escapeHtml(episode.title)}</h2><p class="audio-card-copy">${escapeHtml(episode.situation)}</p></div>
+              <span class="audio-duration">${episode.duration} Min.</span>
+            </header>
+            <audio class="audio-player" controls preload="metadata" src="audio/${escapeHtml(episode.file)}" aria-label="Audio ${episode.number}: ${escapeHtml(episode.title)}">Dein Browser kann dieses Audio nicht abspielen.</audio>
+            <p class="audio-reference"><strong>Im Buch:</strong> ${episode.chapter} · ${episodeTools.map((tool) => `Tool ${tool.number} „${escapeHtml(tool.title)}“`).join(" · ")}</p>
+            <div class="audio-tools">${episodeTools.map((tool) => `<button class="chip" type="button" data-tool="${tool.number}">Tool ${tool.number} öffnen</button>`).join("")}</div>
+          </article>`;
+      }).join("")}
+    </div>`;
 }
 
 function renderSources() {
@@ -626,6 +672,15 @@ document.addEventListener("change", (event) => {
   if (event.target.id === "source-chapter") { sourceChapter = event.target.value; renderSourceList(); }
 });
 
+document.addEventListener("play", (event) => {
+  if (!event.target.matches("audio")) return;
+  const player = event.target;
+  document.querySelectorAll("audio").forEach((other) => { if (other !== player) other.pause(); });
+  if (player.dataset.offlineWarmed) return;
+  player.dataset.offlineWarmed = "true";
+  fetch(player.currentSrc || player.src).catch(() => { player.dataset.offlineWarmed = ""; });
+}, true);
+
 document.querySelector("#settings-open").addEventListener("click", () => {
   document.querySelector("#reminder-time").value = state.reminderTime || "20:00";
   settingsDialog.showModal();
@@ -651,7 +706,7 @@ window.addEventListener("keydown", (event) => { if (event.key === "Tab") documen
 window.addEventListener("pointerdown", () => document.body.classList.remove("keyboard-navigation"));
 window.addEventListener("hashchange", render);
 window.addEventListener("load", () => {
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js?v=1").catch(() => {});
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js?v=2").catch(() => {});
 });
 
 setInterval(tickTimers, 1000);

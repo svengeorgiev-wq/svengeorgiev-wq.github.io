@@ -1,0 +1,17 @@
+{
+  "name": "RUHE-Begleiter – Achtsamkeit & Gelassenheit für normale Leute",
+  "short_name": "RUHE-Begleiter",
+  "description": "Begleit-App zu „Achtsamkeit & Gelassenheit für normale Leute“ von Sarah L. Baumann: zwölf Werkzeuge, Timer und 21-Tage-Übersicht.",
+  "lang": "de",
+  "start_url": "./#today",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#eaf4fc",
+  "theme_color": "#0a4a86",
+  "categories": ["lifestyle", "health", "books"],
+  "icons": [
+    {"src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

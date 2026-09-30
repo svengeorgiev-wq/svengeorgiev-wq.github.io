@@ -1,13 +1,13 @@
 "use strict";
 
-const CACHE = "ruhe-begleiter-v1.0.1";
+const CACHE = "ruhe-begleiter-v1.1.0";
 const SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=2",
-  "./content.js?v=2",
-  "./app.js?v=2",
-  "./manifest.webmanifest?v=2",
+  "./styles.css?v=3",
+  "./content.js?v=3",
+  "./app.js?v=3",
+  "./manifest.webmanifest?v=3",
   "./assets/book-cover-v1.webp",
   "./assets/book-cover-240.webp",
   "./icons/favicon-64.png",

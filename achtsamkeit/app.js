@@ -17,6 +17,16 @@ const ROUTE_LABELS = Object.freeze({
 const LABEL_OPTIONS = ["Nachspielen", "Sorgen", "Bewerten", "Rechtfertigen", "Planen"];
 const FEELING_OPTIONS = ["gekränkt", "verunsichert", "ärgerlich", "beschämt", "müde"];
 
+// Geführte Audios (Eleven v4, Stimme Ramona) nur für die Werkzeuge, bei denen man
+// mit geschlossenen Augen oder nach innen gewandt übt und das Buch das Handy nicht weglegt.
+const TOOL_AUDIOS = Object.freeze({
+  1: { file: "01-ruhe-stopp.mp3", length: "2 Min." },
+  2: { file: "02-langes-ausatmen.mp3", length: "2 Min." },
+  3: { file: "03-gedanken-etikett.mp3", length: "2 Min." },
+  4: { file: "04-fuenf-minuten-sitzung.mp3", length: "5½ Min." },
+  9: { file: "09-freundliche-pause.mp3", length: "2 Min." }
+});
+
 const DEFAULT_STATE = Object.freeze({
   completedDays: [],
   selectedDay: null,
@@ -295,7 +305,7 @@ function renderTools() {
           <div>
             <h3>${escapeHtml(tool.title)}</h3>
             <p>${escapeHtml(tool.summary)}</p>
-            <div class="tool-meta">${stepPill(tool.step)}<span class="duration-pill">${escapeHtml(tool.duration)}</span></div>
+            <div class="tool-meta">${stepPill(tool.step)}<span class="duration-pill">${escapeHtml(tool.duration)}</span>${TOOL_AUDIOS[tool.number] ? '<span class="audio-pill">Audio</span>' : ""}</div>
             <button class="tool-open" type="button" data-tool="${tool.number}">Öffnen</button>
           </div>
           <button class="favorite-button ${state.favoriteTools.includes(tool.number) ? "is-active" : ""}" type="button" data-favorite-tool="${tool.number}" aria-label="${state.favoriteTools.includes(tool.number) ? "Aus Favoriten entfernen" : "Als Favorit markieren"}" aria-pressed="${state.favoriteTools.includes(tool.number)}">★</button>
@@ -313,12 +323,14 @@ function renderTimer() {
         <p class="eyebrow">Werkzeug 2 · U · Umschalten</p>
         <h2>Das lange Ausatmen</h2>
         <p>Vier Zähler ein, sechs bis acht aus. Fünf bis acht Runden, also etwa sechs Atemzüge pro Minute.</p>
+        <p class="quiet-copy">Lieber mit Stimme? <button class="text-button" type="button" data-tool="2">Geführtes Audio öffnen</button></p>
         ${renderBreathPacer()}
       </article>
       <article class="timer-card">
         <p class="eyebrow">Werkzeug 4 · H · Hinschauen</p>
         <h2>Die Fünf-Minuten-Sitzung</h2>
         <p>Drei Atemzüge mit dem langen Ausatmen, dann bleibst du an einer Stelle, an der du den Atem spürst. An schlechten Tagen eine Minute.</p>
+        <p class="quiet-copy">Lieber mit Stimme? <button class="text-button" type="button" data-tool="4">Geführtes Audio öffnen</button></p>
         ${renderSittingTimer()}
       </article>
       <article class="timer-card wide">
@@ -689,15 +701,26 @@ function renderToolAction(tool) {
   return "";
 }
 
+function toolAudio(tool) {
+  const audio = TOOL_AUDIOS[tool.number];
+  if (!audio) return "";
+  return `<div class="audio-note"><strong>Geführt anhören · ${audio.length}</strong><p>Eine Stimme führt dich durch die Schritte, mit Pausen zum Mitmachen. Startet nur auf deinen Tipp.</p><audio controls preload="metadata" src="audio/${audio.file}" data-tool-audio="${tool.number}" aria-label="${escapeHtml(tool.title)}, geführtes Audio">Dein Browser kann dieses Audio nicht abspielen.</audio></div>`;
+}
+
 function openTool(number) {
   const tool = toolByNumber(number);
   if (!tool) return;
+  // Viele Klicks bauen das Fenster neu auf (Etikett wählen, Timer starten).
+  // Der Player wird synchron umgehängt, damit ein laufendes Audio weiterspielt.
+  const keptAudio = openToolNumber === number ? toolDialogContent.querySelector(`audio[data-tool-audio="${number}"]`) : null;
+  const keptScroll = keptAudio ? toolDialogContent.scrollTop : 0;
   openToolNumber = number;
   const sources = content.sources.filter((source) => source.chapter === tool.chapter);
   toolDialogContent.innerHTML = `
     <header class="tool-sheet-head"><div><p class="eyebrow">Werkzeug ${tool.number} · Kapitel ${tool.chapter} · ${escapeHtml(tool.duration)}</p><h2 id="tool-dialog-heading">${escapeHtml(tool.title)}</h2></div><button class="icon-button" type="button" data-close-dialog aria-label="Schließen">×</button></header>
     <div class="tool-meta" style="margin-bottom:.8rem">${stepPill(tool.step)}<button class="favorite-button" style="position:static;width:auto;height:auto;padding:.2rem .4rem" type="button" data-favorite-tool="${tool.number}" aria-pressed="${state.favoriteTools.includes(tool.number)}">${state.favoriteTools.includes(tool.number) ? "★ Favorit" : "☆ Favorit"}</button></div>
     <p class="tool-intro">${escapeHtml(tool.intro)}</p>
+    ${toolAudio(tool)}
     <ol class="tool-steps">${tool.steps.map((step) => `<li><strong>${escapeHtml(step.title)}</strong> ${escapeHtml(step.text)}</li>`).join("")}</ol>
     <div class="minimal-note"><strong>Für schlechte Tage</strong>${escapeHtml(tool.minimal)}</div>
     ${tool.tip ? `<p class="caution-note">${escapeHtml(tool.tip)}</p>` : ""}
@@ -708,8 +731,9 @@ function openTool(number) {
     <p class="tool-reference">Im Workbook: Tag ${tool.workbookDays.join(" und ")}. Im Buch: Kapitel ${tool.chapter} – ${escapeHtml(tool.chapterTitle)}.</p>
     <p class="tool-reference">${escapeHtml(tool.today)}</p>
     <div class="button-row"><button class="button ${state.usedTools.includes(number) ? "secondary" : "primary"}" type="button" data-used-tool="${number}">${state.usedTools.includes(number) ? "Als ausprobiert markiert" : "Als ausprobiert markieren"}</button>${tool.workbookDays.map((day) => `<button class="button ghost" type="button" data-day="${day}" data-close-first>Tag ${day} öffnen</button>`).join("")}</div>`;
+  if (keptAudio) toolDialogContent.querySelector(`audio[data-tool-audio="${number}"]`)?.replaceWith(keptAudio);
   if (!toolDialog.open) toolDialog.showModal();
-  toolDialogContent.scrollTop = 0;
+  toolDialogContent.scrollTop = keptScroll;
   tickTimers();
 }
 
@@ -776,12 +800,12 @@ document.addEventListener("click", (event) => {
   const routeButton = event.target.closest("button[data-route], a[data-route]");
   if (routeButton) { state.selectedDay = null; saveState(); go(routeButton.dataset.route); return; }
   const closeButton = event.target.closest("[data-close-dialog]");
-  if (closeButton) { closeButton.closest("dialog")?.close(); return; }
+  if (closeButton) { closeButton.closest("dialog")?.querySelectorAll("audio").forEach((player) => player.pause()); closeButton.closest("dialog")?.close(); return; }
   if (event.target.closest("[data-open-settings]")) { settingsDialog.showModal(); return; }
   if (event.target.closest("[data-dismiss-install]")) { state.installHintDismissed = true; saveState(); render(); return; }
   const dayButton = event.target.closest("[data-day]");
   if (dayButton) {
-    if (dayButton.hasAttribute("data-close-first") && toolDialog.open) toolDialog.close();
+    if (dayButton.hasAttribute("data-close-first") && toolDialog.open) { toolDialog.querySelectorAll("audio").forEach((player) => player.pause()); toolDialog.close(); }
     state.selectedDay = Number(dayButton.dataset.day); state.currentDay = state.selectedDay; saveState(); go("days"); return;
   }
   if (event.target.closest("[data-days-overview]")) { state.selectedDay = null; saveState(); render(); return; }
@@ -872,14 +896,14 @@ document.querySelector("#export-button").addEventListener("click", exportState);
 document.querySelector("#import-file").addEventListener("change", (event) => { if (event.target.files?.[0]) importState(event.target.files[0]); event.target.value = ""; });
 document.querySelector("#reset-button").addEventListener("click", () => confirmDialog.showModal());
 document.querySelector("#confirm-reset").addEventListener("click", () => { localStorage.removeItem(STORAGE_KEY); state = cloneDefault(); settingsDialog.close(); render(); showToast("Lokale Daten wurden gelöscht."); });
-toolDialog.addEventListener("close", () => { openToolNumber = null; render(); });
+toolDialog.addEventListener("close", () => { toolDialog.querySelectorAll("audio").forEach((player) => player.pause()); openToolNumber = null; render(); });
 
 window.addEventListener("beforeinstallprompt", (event) => { event.preventDefault(); deferredInstallPrompt = event; });
 window.addEventListener("keydown", (event) => { if (event.key === "Tab") document.body.classList.add("keyboard-navigation"); });
 window.addEventListener("pointerdown", () => document.body.classList.remove("keyboard-navigation"));
 window.addEventListener("hashchange", render);
 window.addEventListener("load", () => {
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js?v=2").catch(() => {});
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js?v=3").catch(() => {});
 });
 
 setInterval(tickTimers, 250);

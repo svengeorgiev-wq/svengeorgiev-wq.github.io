@@ -279,6 +279,11 @@ dialog::backdrop { background: rgba(6,47,87,.45); backdrop-filter: blur(7px); }
 .tool-block .quiet-copy { margin-bottom: .4rem; }
 .minimal-note { margin-top: .9rem; padding: .9rem 1rem; color: var(--sea-950); background: linear-gradient(135deg, #fff6c8, #ffe97a); border: 1px solid rgba(201,166,0,.35); border-radius: 16px; font-size: .9rem; }
 .minimal-note strong { display: block; margin-bottom: .2rem; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: #7d6600; }
+.audio-note { margin-top: .9rem; padding: .9rem 1rem; color: var(--ink); background: var(--sea-50); border: 1px solid var(--sea-100); border-radius: 16px; font-size: .88rem; }
+.audio-note strong { display: block; margin-bottom: .2rem; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; color: var(--sea-700); }
+.audio-note p { margin: 0 0 .6rem; color: var(--muted); }
+.audio-note audio { display: block; width: 100%; }
+.audio-pill { padding: .12rem .5rem; color: var(--sea-800); background: var(--sea-50); border: 1px solid var(--sea-100); border-radius: 999px; font-size: .7rem; font-weight: 800; }
 .caution-note { margin-top: .8rem; padding: .8rem 1rem; color: var(--muted); background: rgba(255,255,255,.55); border-left: 4px solid var(--sea-700); border-radius: 12px; font-size: .82rem; }
 .tool-faq { margin-top: .9rem; }
 .tool-faq summary { padding: .5rem 0; color: var(--sea-900); cursor: pointer; font-weight: 850; }

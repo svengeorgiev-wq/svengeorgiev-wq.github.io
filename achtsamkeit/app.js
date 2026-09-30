@@ -157,11 +157,11 @@ function renderToday() {
   return `
     <div class="home-grid">
       <article class="book-card">
-        <img class="book-cover" src="assets/book-cover-240.webp" width="240" height="384" alt="Buchcover Achtsamkeit &amp; Gelassenheit für normale Leute von Sarah L. Baumann">
+        <img class="book-cover" src="assets/book-cover-240.webp" width="240" height="384" alt="Buchcover Achtsamkeit &amp; Gelassenheit für normale Leute von Sven Georgiev">
         <div class="book-card-copy">
           <p class="eyebrow">Begleit-App zum Buch</p>
           <h2>Achtsamkeit &amp; Gelassenheit für normale Leute</h2>
-          <p>Sarah L. Baumann · Munich Publishing</p>
+          <p>Sven Georgiev · Munich Publishing</p>
           <p>Alle zwölf Werkzeuge aus dem Buch, ein Timer für das lange Ausatmen und die Fünf-Minuten-Sitzung und die 21-Tage-Übersicht. Was du einträgst, bleibt auf deinem Gerät.</p>
         </div>
       </article>
@@ -879,7 +879,7 @@ window.addEventListener("keydown", (event) => { if (event.key === "Tab") documen
 window.addEventListener("pointerdown", () => document.body.classList.remove("keyboard-navigation"));
 window.addEventListener("hashchange", render);
 window.addEventListener("load", () => {
-  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js?v=1").catch(() => {});
+  if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js?v=2").catch(() => {});
 });
 
 setInterval(tickTimers, 250);

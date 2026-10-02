@@ -177,8 +177,8 @@
     {
       "nr": 11,
       "titel": "Kapitel 11 – Das Arztgespräch vorbereiten",
-      "werkzeug": "Das Vier-Wochen-Protokoll",
-      "werkzeug_text": "Das erste Werkzeug ist ein Blatt Papier mit vier Zeilenblöcken – einer pro Woche – und drei Spalten. Jeden Abend machst du drei Kreuze. Das dauert weniger als eine Minute.\n\nWenn du die einundzwanzig Tage aus dem Workbook gemacht hast, ist die Arbeit halb getan: Der Tracker dort erfasst dieselben Beobachtungen, nur feiner. Du überträgst ihn auf dieses Blatt und führst ihn eine Woche länger. Wenn du das Workbook nicht gemacht hast, fängst du hier an – das Protokoll steht für sich.\n\nDie drei Spalten:\n\n1. **Schlaf.** Durchgeschlafen / einmal wach / mehrfach wach oder lange wach gelegen.\n2. **Reizlage und Stimmung.** Gut / dünnhäutig / heute war es zu viel.\n3. **Konzentration.** Normal / stellenweise weg / kaum arbeitsfähig.\n\nDazu eine schmale vierte Spalte für Besonderheiten, in die höchstens drei Wörter passen: „Hitzewallungen nachts“, „Migräne“, „Zyklus“.\n\nNach vier Wochen hast du etwas, das keine Erinnerung liefern kann: eine Verteilung. Nicht „mir geht es schlecht“, sondern „in neunzehn von achtundzwanzig Nächten mehrfach wach, an vierzehn Tagen Konzentration stellenweise weg“.\n\nWenn du deinen Zyklus noch hast, trag ihn mit ein. Ein Zusammenhang zwischen Zyklusphase und schlechten Tagen ist eine der wertvollsten Informationen, die du mitbringen kannst.\n\nDer Eintrag, den die meisten Frauen in dieser vierten Spalte unterschätzen, ist medizinisch der wichtigste: Hitzewallungen und nächtliches Schwitzen. In einer australischen Untersuchung mit über achttausend Frauen waren es genau diese Beschwerden, die sich am deutlichsten zwischen den Stadien des Übergangs unterschieden – von knapp neun Prozent vor dem Übergang auf über siebenunddreißig Prozent in der späten Perimenopause. Konzentrations- und Stimmungsbeschwerden verteilten sich dagegen gleichmäßiger über alle Stadien.² Für dein Protokoll heißt das: Wenn du solche Beschwerden hast, gehören sie unbedingt aufs Blatt, auch wenn sie dich weniger stören als der Brain Fog. Sie sind der Teil, der für die ärztliche Einordnung am meisten hergibt.\n\nNimm die vierte Spalte deshalb ernst. Drei Wörter pro Abend, aber die richtigen."
+      "werkzeug": "Das Drei-Wochen-Protokoll",
+      "werkzeug_text": "Das erste Werkzeug ist ein Blatt Papier mit drei Zeilenblöcken – einer pro Woche – und drei Spalten. Jeden Abend machst du drei Kreuze. Das dauert weniger als eine Minute.\n\nWenn du die einundzwanzig Tage aus dem Workbook gemacht hast, ist die Arbeit schon getan: Der Tracker dort erfasst dieselben Beobachtungen, nur feiner. Du überträgst ihn auf dieses Blatt. Wenn du das Workbook nicht gemacht hast, fängst du hier an – das Protokoll steht für sich.\n\nDie drei Spalten:\n\n1. **Schlaf.** Durchgeschlafen / einmal wach / mehrfach wach oder lange wach gelegen.\n2. **Reizlage und Stimmung.** Gut / dünnhäutig / heute war es zu viel.\n3. **Konzentration.** Normal / stellenweise weg / kaum arbeitsfähig.\n\nDazu eine schmale vierte Spalte für Besonderheiten, in die höchstens drei Wörter passen: „Hitzewallungen nachts“, „Migräne“, „Zyklus“.\n\nNach drei Wochen hast du etwas, das keine Erinnerung liefern kann: eine Verteilung. Nicht „mir geht es schlecht“, sondern „in vierzehn von einundzwanzig Nächten mehrfach wach, an elf Tagen Konzentration stellenweise weg“.\n\nWenn du deinen Zyklus noch hast, trag ihn mit ein. Ein Zusammenhang zwischen Zyklusphase und schlechten Tagen ist eine der wertvollsten Informationen, die du mitbringen kannst.\n\nDer Eintrag, den die meisten Frauen in dieser vierten Spalte unterschätzen, ist medizinisch der wichtigste: Hitzewallungen und nächtliches Schwitzen. In einer australischen Untersuchung mit über achttausend Frauen waren es genau diese Beschwerden, die sich am deutlichsten zwischen den Stadien des Übergangs unterschieden – von knapp neun Prozent vor dem Übergang auf über siebenunddreißig Prozent in der späten Perimenopause. Konzentrations- und Stimmungsbeschwerden verteilten sich dagegen gleichmäßiger über alle Stadien.² Für dein Protokoll heißt das: Wenn du solche Beschwerden hast, gehören sie unbedingt aufs Blatt, auch wenn sie dich weniger stören als der Brain Fog. Sie sind der Teil, der für die ärztliche Einordnung am meisten hergibt.\n\nNimm die vierte Spalte deshalb ernst. Drei Wörter pro Abend, aber die richtigen."
     },
     {
       "nr": 12,
@@ -444,7 +444,7 @@
       "nr": 19,
       "woche": "Woche 3 · Alltag neu bauen",
       "thema": "Das Protokoll beginnt",
-      "impuls": "Vier Wochen Kreuze sagen mehr als zwanzig Minuten Erzählen.",
+      "impuls": "Drei Wochen Kreuze sagen mehr als zwanzig Minuten Erzählen.",
       "impuls_nutzen": "verwandelt dein Erleben in etwas, das eine Praxis verwerten kann",
       "uebung": "Leg das Raster an – Schlaf, Reize, Konzentration, Notiz – und setz die ersten drei Kreuze für heute. Wenn du ein Medikament nimmst: rechne heute einmal deinen Vorlauf aus.",
       "uebung_nutzen": "startet die Sammlung, die dein nächstes Arztgespräch trägt",
@@ -452,7 +452,7 @@
       "frage_nutzen": "übt das Kurzfassen, auf das es später ankommt",
       "kapitel": "Kapitel 11 – Das Arztgespräch vorbereiten",
       "audio": "Audio 19",
-      "app_modul": "Vier-Wochen-Protokoll"
+      "app_modul": "Drei-Wochen-Protokoll"
     },
     {
       "nr": 20,

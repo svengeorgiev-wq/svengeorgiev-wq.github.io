@@ -9,7 +9,7 @@ const DEFAULT_NIGHT_LINES = [
 ];
 const INTRO_DEFAULTS = [
   "Seit etwa einem Jahr schlafe ich schlecht durch, und meine Konzentration hat deutlich nachgelassen.",
-  "Ich habe das vier Wochen lang protokolliert, ich habe das Blatt dabei.",
+  "Ich habe das drei Wochen lang protokolliert, ich habe das Blatt dabei.",
   "Ich möchte wissen, was davon abgeklärt werden sollte."
 ];
 const ROUTE_LABELS = {
@@ -21,7 +21,7 @@ const ROUTE_LABELS = {
   tracker: "Der Tracker",
   timer: "Timer",
   night: "Der Nacht-Notfallplan",
-  protocol: "Das Vier-Wochen-Protokoll",
+  protocol: "Das Drei-Wochen-Protokoll",
   settings: "Einstellungen"
 };
 
@@ -526,7 +526,7 @@ function protocolOptions(field, value) {
 }
 
 function renderProtocolRows(editable = true) {
-  return Array.from({ length: 28 }, (_, index) => {
+  return Array.from({ length: 21 }, (_, index) => {
     const day = index + 1;
     const week = Math.ceil(day / 7);
     const weekDay = ((day - 1) % 7) + 1;
@@ -543,13 +543,13 @@ function introValue(index) {
 
 function renderProtocol() {
   return `<section class="screen protocol-screen">
-    ${screenHead("Fürs Arztgespräch", "Das Vier-Wochen-Protokoll", "Die ersten drei Wochen übernehmen deine passenden Trackerzeichen. Du kannst jeden Eintrag ändern.")}
+    ${screenHead("Fürs Arztgespräch", "Das Drei-Wochen-Protokoll", "Alle drei Wochen übernehmen deine passenden Trackerzeichen. Du kannst jeden Eintrag ändern.")}
     <div class="protocol-actions"><button class="primary-button" type="button" data-action="print-protocol">Auf eine A4-Seite drucken</button></div>
     <section class="card-flat stack"><h2>Der Drei-Sätze-Einstieg</h2>${["Seit wann", "Was ich mitbringe", "Was ich möchte"].map((label, index) => `<label class="field"><span>${label}</span><textarea data-intro="${index}" rows="2" placeholder="${escapeHtml(INTRO_DEFAULTS[index])}">${escapeHtml(state.intro[index])}</textarea></label>`).join("")}</section>
-    ${[1,2,3,4].map((week) => `<section class="protocol-week"><h2>Woche ${week}</h2><div class="protocol-table-wrap"><table class="protocol-table"><thead><tr><th>Tag</th><th>Schlaf</th><th>Reize</th><th>Konzentration</th><th>Notiz</th></tr></thead><tbody>${renderProtocolRows(true).split("</tr>").slice((week - 1) * 7, week * 7).map((row) => row ? `${row}</tr>` : "").join("")}</tbody></table></div></section>`).join("")}
+    ${[1,2,3].map((week) => `<section class="protocol-week"><h2>Woche ${week}</h2><div class="protocol-table-wrap"><table class="protocol-table"><thead><tr><th>Tag</th><th>Schlaf</th><th>Reize</th><th>Konzentration</th><th>Notiz</th></tr></thead><tbody>${renderProtocolRows(true).split("</tr>").slice((week - 1) * 7, week * 7).map((row) => row ? `${row}</tr>` : "").join("")}</tbody></table></div></section>`).join("")}
     <p class="medical-note">${escapeHtml(MEDICAL_NOTE)}</p>
     <section class="print-sheet" aria-hidden="true">
-      <header class="print-head"><div><p>ADHS &amp; Wechseljahre</p><h1>Vier-Wochen-Protokoll</h1></div><p>Stand: ${new Intl.DateTimeFormat("de-DE").format(new Date())}</p></header>
+      <header class="print-head"><div><p>ADHS &amp; Wechseljahre</p><h1>Drei-Wochen-Protokoll</h1></div><p>Stand: ${new Intl.DateTimeFormat("de-DE").format(new Date())}</p></header>
       <div class="print-intro">${["Seit wann", "Was ich mitbringe", "Was ich möchte"].map((label, index) => `<div><strong>${label}</strong>${escapeHtml(introValue(index))}</div>`).join("")}</div>
       <table class="print-protocol"><thead><tr><th class="week-cell">Woche</th><th class="day-cell">Tag</th><th>Schlaf</th><th>Reize</th><th>Konzentration</th><th class="note-cell">Notiz</th></tr></thead><tbody>${renderProtocolRows(false)}</tbody></table>
       <p class="print-medical">${escapeHtml(MEDICAL_NOTE)}</p>

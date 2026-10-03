@@ -308,11 +308,29 @@
         <div><span class="eyebrow">Vier Impulse für laute Kopf-Momente</span><h1>Zum <span class="gradient-text">Anhören</span></h1><p>Drück auf Play und nimm dir nur den Impuls, der gerade zu deinem Moment passt. Die Audios sind jederzeit und unabhängig vom 21-Tage-Plan verfügbar.</p></div>
         <div class="audio-head__mark" aria-hidden="true">♫</div>
       </header>
+      ${renderAudiobookCard()}
       <aside class="audio-notice" aria-label="Gesundheitlicher Hinweis"><span aria-hidden="true">i</span><p><strong>Wichtiger Hinweis:</strong> Diese Audio-Impulse ersetzen keine Diagnose oder Behandlung. Bei anhaltender Belastung wende dich bitte an eine Ärztin, einen Arzt oder eine psychotherapeutische Fachperson.</p></aside>
       <section class="audio-list" aria-label="Audio-Impulse">
         ${audioTracks.map(renderAudioTrack).join("")}
       </section>
     </div>`;
+  }
+
+  function renderAudiobookCard() {
+    const book = window.AUDIOBOOK;
+    if (!book || !book.url) return "";
+    const offerEnd = book.offerUntil ? new Date(`${book.offerUntil}T23:59:59`) : null;
+    const offerActive = offerEnd && !Number.isNaN(offerEnd.getTime()) && new Date() <= offerEnd;
+    const note = offerActive ? book.offerText : book.fallbackText;
+    return `<section class="audiobook-card" aria-label="Hörbuch">
+      <div class="audiobook-card__copy">
+        <span class="eyebrow">${escapeHtml(book.eyebrow || "Hörbuch")}</span>
+        <div class="audiobook-card__head"><h2>${escapeHtml(book.title)}</h2>${book.duration ? `<span class="audio-duration">${escapeHtml(book.duration)}</span>` : ""}</div>
+        <p>${escapeHtml(book.text)}</p>
+        ${note ? `<p class="audiobook-card__note">${escapeHtml(note)}</p>` : ""}
+      </div>
+      <a class="button button--primary audiobook-card__button" href="${escapeHtml(book.url)}" target="_blank" rel="noopener">${escapeHtml(book.buttonLabel || "Hörprobe anhören")} <span aria-hidden="true">↗</span></a>
+    </section>`;
   }
 
   function renderAudioTrack(track, index) {

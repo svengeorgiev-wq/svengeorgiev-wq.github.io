@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3f1733">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Der Strick-Begleiter: die kostenlose Begleit-App zu „Dein Strick-Adventskalender zum Mitstricken“ von Munich Publishing. Alle 24 Türchen mit Farbfotos, Reihen- und Maschenzähler, Schnelle Hilfe und Spickzettel. Ohne Account, ohne Abo, ohne Download.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Strick-Begleiter">
+  <meta property="og:title" content="Strick-Begleiter – Begleit-App zum Strick-Adventskalender">
+  <meta property="og:description" content="Alle 24 Türchen mit Farbfotos, Reihenzähler und Schnelle Hilfe. Ohne Account, ohne Abo, ohne Download.">
+  <meta property="og:image" content="https://tools.munichpublishing.de/strick-advent/assets/book-cover.jpg">
+  <meta property="og:url" content="https://tools.munichpublishing.de/strick-advent/">
+  <title>Strick-Begleiter – Begleit-App zum Strick-Adventskalender</title>
+  <link rel="manifest" href="manifest.webmanifest?v=1">
+  <link rel="icon" href="icons/favicon-64.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+  <a class="skip-link" href="#app">Zum Inhalt springen</a>
+
+  <div class="app-shell">
+    <header class="app-header">
+      <button class="brand" type="button" data-route="heute" aria-label="Startseite öffnen">
+        <img class="brand-mark" src="icons/favicon-64.png" alt="" width="40" height="40">
+        <span>
+          <strong>Strick-Begleiter</strong>
+          <small id="route-label">Noch eine Masche bis Weihnachten</small>
+        </span>
+      </button>
+      <button class="icon-button" id="mehr-open" type="button" aria-label="Vor dem Start, App und Daten öffnen">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </header>
+
+    <main id="app" tabindex="-1">
+      <section class="loading"><p>Der Strick-Begleiter wird geöffnet.</p></section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Hauptnavigation">
+      <button type="button" data-route="heute" data-nav="heute">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 11.5 12 5l8 6.5V20H4v-8.5Z"/><path d="M9.5 20v-6h5v6"/></svg><span>Heute</span>
+      </button>
+      <button type="button" data-route="tuerchen" data-nav="tuerchen">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg><span>Türchen</span>
+      </button>
+      <button type="button" data-route="zaehler" data-nav="zaehler">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M12 12v6M9 15h6"/></svg><span>Zähler</span>
+      </button>
+      <button type="button" data-route="hilfe" data-nav="hilfe">
+        <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.6 2.6 0 1 1 3.6 2.4c-.7.3-1.1.9-1.1 1.6v.5M12 17h.01"/></svg><span>Hilfe</span>
+      </button>
+    </nav>
+  </div>
+
+  <dialog class="sheet" id="mehr-dialog" aria-labelledby="mehr-heading">
+    <div class="sheet-card">
+      <header class="sheet-head">
+        <div><p class="eyebrow">Strick-Begleiter</p><h2 id="mehr-heading">Vor dem Start &amp; App</h2></div>
+        <button class="icon-button" type="button" data-close-dialog aria-label="Schließen">×</button>
+      </header>
+      <section class="settings-block">
+        <h3>Vor dem Start</h3>
+        <div class="link-list" id="vorab-links"></div>
+      </section>
+      <section class="settings-block install-block">
+        <h3>Die App auf den Startbildschirm legen</h3>
+        <p>Danach öffnest du den Strick-Begleiter wie jede andere App über das Symbol auf deinem Startbildschirm. Nach dem ersten Öffnen eines Türchens sind seine Fotos auch offline da.</p>
+        <button class="button primary" id="install-button" type="button" hidden>Auf den Startbildschirm legen</button>
+        <details><summary>iPhone (Safari)</summary><p>Öffne die Adresse in Safari. Tippe unten auf das Teilen-Symbol, das Quadrat mit dem Pfeil nach oben. Wähle „Zum Home-Bildschirm“ und bestätige mit „Hinzufügen“.</p></details>
+        <details><summary>Android (Chrome)</summary><p>Öffne die Adresse in Chrome. Tippe oben rechts auf die drei Punkte. Wähle „Zum Startbildschirm hinzufügen“ oder „App installieren“ und bestätige.</p></details>
+        <details><summary>Computer</summary><p>In Chrome oder Edge das Installationssymbol rechts in der Adresszeile anklicken und bestätigen.</p></details>
+      </section>
+      <section class="settings-block">
+        <h3>Häkchen und Notizen sichern</h3>
+        <p>Was du abhakst und notierst, wird nur auf diesem Gerät gespeichert. Wenn du den Browserverlauf löschst oder das Handy wechselst, sind die Einträge dort nicht mehr vorhanden. Eine Sicherungsdatei nimmt sie mit.</p>
+        <div class="button-row"><button class="button secondary" id="export-button" type="button">Sicherung speichern</button><label class="button secondary" for="import-file">Sicherung einlesen</label><input id="import-file" type="file" accept="application/json,.json" hidden></div>
+      </section>
+      <section class="settings-block">
+        <h3>Zum Nachschlagen</h3>
+        <div class="link-list"><button class="list-link" type="button" data-route="quellen" data-close-dialog>Quellen und Bildnachweis</button><button class="list-link" type="button" data-route="seite/abschluss" data-close-dialog>Nach dem letzten Türchen</button></div>
+      </section>
+      <section class="settings-block quiet">
+        <h3>Datenschutz</h3>
+        <p>Kein Account, keine E-Mail, keine Cloud. Alles bleibt in diesem Browser.</p>
+        <button class="text-button danger" id="reset-button" type="button">Lokale Daten vollständig löschen</button>
+        <p>Fragen zum Buch oder zur App: <a href="mailto:info@munichpublishing.de">info@munichpublishing.de</a></p>
+      </section>
+      <footer class="legal-links"><a href="https://munichpublishing.de/impressum" target="_blank" rel="noopener">Impressum</a><a href="https://munichpublishing.de/Datenschutz" target="_blank" rel="noopener">Datenschutz</a></footer>
+    </div>
+  </dialog>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Foto vergrößert">
+    <button class="icon-button lightbox-close" type="button" data-close-dialog aria-label="Schließen">×</button>
+    <figure><img id="lightbox-img" alt=""><figcaption id="lightbox-cap"></figcaption></figure>
+  </dialog>
+
+  <dialog class="confirm-dialog" id="confirm-dialog" aria-labelledby="confirm-heading">
+    <form method="dialog">
+      <h2 id="confirm-heading">Wirklich?</h2>
+      <p id="confirm-text"></p>
+      <div class="button-row end"><button class="button secondary" value="cancel">Abbrechen</button><button class="button danger-button" value="confirm" id="confirm-ok">Ja</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="content.js?v=1" defer></script>
+  <script src="app.js?v=1" defer></script>
+</body>
+</html>

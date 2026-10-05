@@ -200,3 +200,46 @@ dialog::backdrop { background: rgba(30, 10, 25, .55); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 .quick { display: flex; flex-direction: column; justify-content: flex-start; }
 [hidden] { display: none !important; }
+
+/* ---------- Weihnachtliches Design (05.10.2026): Kranz, Schnee, Adventstürchen, Girlanden aus dem Buch ---------- */
+:root { --rot: #9b1c2c; --tanne: #1f4d36; --gold-hell: #e8c468; }
+body { background-color: var(--cream); background-image: radial-gradient(rgba(195, 154, 69, .16) 1.2px, transparent 1.7px); background-size: 24px 24px; }
+.app-header { background-image: radial-gradient(rgba(255, 255, 255, .13) 1px, transparent 1.6px), linear-gradient(135deg, var(--plum-2), var(--plum)); background-size: 19px 19px, auto; border-bottom: 3px solid var(--gold); }
+.eyebrow { color: var(--rot); }
+.button.primary { background: var(--rot); }
+.button.gold { background: linear-gradient(180deg, #ecca72, #c39a45); color: #3a1229; box-shadow: 0 4px 12px rgba(0, 0, 0, .25); }
+.bottom-nav button.active { color: var(--rot); }
+.girlande { display: block; width: min(100%, 440px); height: auto; margin: 2px auto 10px; }
+.bildkarte { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; margin: 0 0 14px; box-shadow: var(--shadow); }
+.card .bildkarte { box-shadow: none; }
+/* Startseite: Kranz mit Countdown auf dunkler Karte, leiser Schnee */
+.hero-advent { position: relative; overflow: hidden; text-align: center; border: 0; padding: 14px 18px 22px; color: #f6eee6;
+  background: radial-gradient(ellipse at 50% 18%, #6d2b58, #3f1733 58%, #290e21); }
+.hero-advent h1 { color: #fff; margin-top: 2px; }
+.hero-advent .lead { color: #ead9e3; }
+.hero-advent .eyebrow { color: var(--gold-hell); }
+.kranz-wrap { position: relative; width: min(100%, 330px); margin: 0 auto 2px; }
+.kranz { width: 100%; height: auto; filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .35)); }
+.kranz-zahl { position: absolute; left: 0; right: 0; top: 27%; display: grid; justify-items: center; gap: 2px; color: var(--gold-hell); text-shadow: 0 2px 10px rgba(0, 0, 0, .55); }
+.kranz-zahl b { font: 700 clamp(44px, 13vw, 62px)/1 var(--serif); }
+.kranz-zahl span { font-size: 12.5px; font-weight: 750; letter-spacing: .03em; line-height: 1.25; color: #f4e6c0; }
+.schnee > * { position: relative; z-index: 1; }
+.schnee::before, .schnee::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.schnee::before { background-image: radial-gradient(#fff 1.5px, transparent 2.2px); background-size: 72px 72px; opacity: .45; animation: schnee-a 26s linear infinite; }
+.schnee::after { background-image: radial-gradient(rgba(255, 255, 255, .85) 1px, transparent 1.7px); background-size: 41px 41px; background-position: 17px 9px; opacity: .35; animation: schnee-b 40s linear infinite; }
+@keyframes schnee-a { from { background-position: 0 0; } to { background-position: 72px 576px; } }
+@keyframes schnee-b { from { background-position: 17px 9px; } to { background-position: -24px 501px; } }
+/* Türchen wie ein Adventskalender */
+.tuer { border: 2px solid var(--gold); box-shadow: inset 0 0 0 3px rgba(0, 0, 0, .18), inset 0 0 0 4px rgba(232, 196, 104, .55), 0 4px 10px rgba(63, 23, 51, .18); }
+.tuer.rot { background: radial-gradient(circle at 50% 38%, #b52a3e, #7a1324 78%); }
+.tuer.gruen { background: radial-gradient(circle at 50% 38%, #2e6b49, #173b28 78%); }
+.tuer.pflaume { background: radial-gradient(circle at 50% 38%, #6a2a55, #3a1530 78%); }
+.tuer::before { content: "✦"; position: absolute; top: 5px; left: 8px; z-index: 3; font-size: 11px; color: rgba(244, 230, 192, .75); }
+.tuer .zahl { color: #f4e6c0; }
+.tuer.offen img { opacity: .6; }
+.tuer.heute { box-shadow: 0 0 0 3px var(--gold-hell), 0 0 18px rgba(232, 196, 104, .75); }
+/* Türchen-Seite: Nummer im Kranz */
+.tuer-kopf { grid-template-columns: 96px 1fr; }
+.badge-kranz { position: relative; width: 96px; display: grid; place-items: center; }
+.badge-kranz img { width: 96px; height: auto; display: block; }
+.badge-kranz b { position: absolute; inset: 0; display: grid; place-items: center; padding-bottom: 9px; font: 700 26px/1 var(--serif); color: var(--plum); }

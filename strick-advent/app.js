@@ -60,6 +60,8 @@ function chips(nummern) {
 }
 
 /* ---------- Ansichten ---------- */
+const kranz = (zahl, zeile) => `<div class="kranz-wrap" aria-hidden="true"><img class="kranz" src="assets/deko/kranz.webp" alt="" width="760" height="499"><div class="kranz-zahl"><b>${zahl}</b><span>${zeile}</span></div></div>`;
+const girlande = () => `<img class="girlande" src="assets/deko/girlande.webp" alt="" width="900" height="199" aria-hidden="true">`;
 function ansichtHeute() {
   const h = heuteNr();
   const weiter = naechstesOffen();
@@ -67,33 +69,34 @@ function ansichtHeute() {
   let oben = "";
   if (h) {
     const t = T[h - 1];
-    oben = `<article class="card hero-card"><span class="nummer">${h}</span>${foto(t.fotoErgebnis, { ohneText: true })}
-      <div class="hero-body"><p class="eyebrow">Heute, ${h}. Dezember</p><h1>${esc(t.titel)}</h1><p class="lead">${esc(t.imBlick)}</p>
-      <button class="button primary" type="button" data-route="tuer/${h}">Türchen ${h} öffnen</button></div></article>`;
+    oben = `<article class="card hero-advent schnee">${kranz(h, "Dezember")}
+      <div class="hero-text"><p class="eyebrow">✦ Heute ✦</p><h1>${esc(t.titel)}</h1><p class="lead">${esc(t.imBlick)}</p>
+      <button class="button gold" type="button" data-route="tuer/${h}">Türchen ${h} öffnen</button></div></article>`;
   } else if (tageBisDezember() > 0) {
     const tage = tageBisDezember();
-    oben = `<article class="card"><p class="eyebrow">Noch ${tage} ${tage === 1 ? "Tag" : "Tage"} bis zum ersten Türchen</p>
-      <h1>Alle 24 Türchen sind schon da</h1><p class="lead">Du kannst am 1. Dezember beginnen oder heute schon das erste Türchen ausprobieren. Ein Türchen darf auch über mehrere Tage gehen.</p>
-      <button class="button primary" type="button" data-route="tuer/${weiter ? weiter.nr : 1}">${weiter && weiter.nr > 1 ? `Weiter mit Türchen ${weiter.nr}` : "Türchen 1 ansehen"}</button></article>`;
+    oben = `<article class="card hero-advent schnee">${kranz(tage, tage === 1 ? "Tag bis zum<br>ersten Türchen" : "Tage bis zum<br>ersten Türchen")}
+      <div class="hero-text"><h1>Alle 24 Türchen sind schon da</h1><p class="lead">Du kannst am 1. Dezember beginnen oder heute schon das erste Türchen ausprobieren. Ein Türchen darf auch über mehrere Tage gehen.</p>
+      <button class="button gold" type="button" data-route="tuer/${weiter ? weiter.nr : 1}">${weiter && weiter.nr > 1 ? `Weiter mit Türchen ${weiter.nr}` : "Türchen 1 ansehen"}</button></div></article>`;
   } else {
-    oben = `<article class="card"><p class="eyebrow">Nach Heiligabend</p><h1>Alle Türchen bleiben offen</h1>
-      <p class="lead">Schlag jeden Handgriff nach, wann immer du ihn brauchst.</p>
-      <button class="button primary" type="button" data-route="tuerchen">Zu den Türchen</button></article>`;
+    oben = `<article class="card hero-advent schnee">${kranz(24, "Frohe<br>Weihnachten")}
+      <div class="hero-text"><h1>Alle Türchen bleiben offen</h1><p class="lead">Schlag jeden Handgriff nach, wann immer du ihn brauchst.</p>
+      <button class="button gold" type="button" data-route="tuerchen">Zu den Türchen</button></div></article>`;
   }
   const weiterKarte = weiter && h && weiter.nr !== h && zahl > 0
     ? `<button class="card quick" type="button" data-route="tuer/${weiter.nr}" style="width:100%"><b>Weiter mit Türchen ${weiter.nr}</b><small>${esc(weiter.titel)}</small></button>` : "";
   const fertig = zahl === 24
-    ? `<p>Alle 24 Türchen abgehakt. <button class="text-button" type="button" data-route="seite/abschluss">Was du mitnimmst</button></p>`
+    ? `<p>Alle 24 Türchen abgehakt. Frohe Weihnachten! <button class="text-button" type="button" data-route="seite/abschluss">Was du mitnimmst</button></p>`
     : `<p>${zahl === 0 ? "Hak ein Türchen ab, wenn du die kleine Übung gestrickt hast." : weiter ? `Als Nächstes: Türchen ${weiter.nr}, ${esc(weiter.titel)}.` : ""}</p>`;
   const z = state.zaehler;
-  return `${oben}${weiterKarte}
+  return `${oben}${weiterKarte}${girlande()}
+    ${zahl === 24 ? `<img class="bildkarte" src="assets/deko/stimmung-schleife.webp" alt="Die Strickschleife aus Türchen 24 auf einem Geschenk" width="900" height="600">` : ""}
     <article class="card progress"><div class="ring" style="--p:${Math.round(zahl / 24 * 100)}"><span>${zahl}/24</span></div>
       <div><h2>Dein Fortschritt</h2>${fertig}</div></article>
     <div class="quick-grid">
       <button class="quick" type="button" data-route="zaehler"><b>Zähler</b><small>${z.label ? esc(z.label) + ": " : ""}Reihe ${z.reihen}, ${z.maschen} Maschen</small></button>
       <button class="quick" type="button" data-route="hilfe"><b>Schnelle Hilfe</b><small>Masche zu viel? Kante eng? Hier nachschlagen.</small></button>
     </div>
-    <article class="card"><div class="vorab-cover"><img src="assets/book-cover-240.webp" width="84" height="120" alt="Cover Dein Strick-Adventskalender zum Mitstricken">
+    <article class="card"><img class="bildkarte" src="assets/deko/stimmung-wolle.webp" alt="Wollknäuel, Holznadeln und Weihnachtsschmuck" width="900" height="600" loading="lazy"><div class="vorab-cover"><img src="assets/book-cover-240.webp" width="84" height="120" alt="Cover Dein Strick-Adventskalender zum Mitstricken">
       <div><p class="eyebrow">Vor dem Start</p><h2>Material und Grundlagen</h2></div></div>
       <div class="link-list" style="margin-top:12px">${vorabLinks()}</div></article>`;
 }
@@ -105,12 +108,13 @@ function vorabLinks() {
 function ansichtRaster() {
   const h = heuteNr();
   const kacheln = T.map((t) => {
-    const cls = ["tuer", state.opened[t.nr] ? "offen" : "", state.done[t.nr] ? "erledigt" : "", h === t.nr ? "heute" : ""].join(" ");
+    const farbe = ["rot", "gruen", "pflaume"][(t.nr * 5 + Math.floor(t.nr / 4)) % 3];
+    const cls = ["tuer", farbe, state.opened[t.nr] ? "offen" : "", state.done[t.nr] ? "erledigt" : "", h === t.nr ? "heute" : ""].join(" ");
     const bild = state.opened[t.nr] ? `<img src="${esc(t.fotoErgebnis.src)}" alt="" loading="lazy">` : "";
     const status = state.done[t.nr] ? ", erledigt" : state.opened[t.nr] ? ", geöffnet" : "";
     return `<button class="${cls}" type="button" data-route="tuer/${t.nr}" aria-label="Türchen ${t.nr}: ${esc(t.titel)}${status}">${bild}<span class="zahl">${t.nr}</span></button>`;
   }).join("");
-  return `<p class="eyebrow">24 Türchen</p><h1>Dein Strick-Adventskalender</h1>
+  return `${girlande()}<p class="eyebrow">✦ 24 Türchen ✦</p><h1>Dein Strick-Adventskalender</h1>
     <p class="lead">Jedes Türchen ist ein Handgriff: entdecken, Schritt für Schritt nachstricken, ausprobieren.</p>
     <div class="tuer-grid">${kacheln}</div>
     <div class="legende"><span><span class="pill">Gold</span> geöffnet</span><span><span class="pill green">✓</span> erledigt</span>${h ? "<span>Leuchtend: heute</span>" : ""}</div>`;
@@ -152,7 +156,7 @@ function ansichtTuer(nr, tab) {
   }
   const zurueck = nr > 1 ? `<button class="button secondary" type="button" data-route="tuer/${nr - 1}">‹ Türchen ${nr - 1}</button>` : `<span></span>`;
   const vor = nr < 24 ? `<button class="button secondary" type="button" data-route="tuer/${nr + 1}">Türchen ${nr + 1} ›</button>` : `<button class="button secondary" type="button" data-route="seite/abschluss">Abschluss ›</button>`;
-  return `<div class="tuer-kopf"><span class="badge">${nr}</span><div><p class="eyebrow">Türchen ${nr} · Buch S. ${t.seite}</p><h1>${esc(t.titel)}</h1></div></div>
+  return `<div class="tuer-kopf"><span class="badge-kranz" aria-hidden="true"><img src="assets/deko/kranz.webp" alt="" width="760" height="499"><b>${nr}</b></span><div><p class="eyebrow">Türchen ${nr} · Buch S. ${t.seite}</p><h1>${esc(t.titel)}</h1></div></div>
     <div class="tabs" role="tablist" aria-label="Teile des Türchens">${reiter}</div>
     <section role="tabpanel">${inhalt}</section>
     <div class="blaettern">${zurueck}${vor}</div>`;

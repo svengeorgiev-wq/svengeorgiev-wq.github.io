@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sherlock Modern Crime Files – Bonus-Fallarchiv</title>
+<meta name="description" content="Zehn Bonusfälle zum Buch Sherlock Modern Crime Files. Drei Ebenen pro Fall, Antwortprüfung, Tipp und Lösungsweg. Ohne Account.">
+<meta name="theme-color" content="#0b1420">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Fallarchiv">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+:root{
+  --bg:#0b1420; --bg2:#101b29; --panel:#142233; --panel2:#1a2a3e; --line:#26384f;
+  --gold:#d4b46a; --gold2:#b8954a; --gold-soft:rgba(212,180,106,.14);
+  --text:#ece6d8; --muted:#a3abb7; --ok:#7fc29b; --ok-soft:rgba(127,194,155,.13);
+  --bad:#e08a7a; --bad-soft:rgba(224,138,122,.13);
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 var(--sans);
+  background-image:radial-gradient(1200px 500px at 50% -200px,#1b2c44 0%,transparent 70%);
+  min-height:100vh;padding-bottom:env(safe-area-inset-bottom)}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:var(--gold)}
+.wrap{max-width:720px;margin:0 auto;padding:16px 16px 48px}
+.hidden{display:none!important}
+
+/* brand */
+.brand{text-align:center;padding:28px 0 6px}
+.brand .hat{width:38px;height:38px;margin:0 auto 6px;display:block}
+.brand .s{font-family:var(--serif);font-weight:700;letter-spacing:.06em;font-size:clamp(34px,9vw,52px);line-height:1;
+  background:linear-gradient(180deg,#f3dc9c 0%,#d4b46a 45%,#a8823c 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand .m{font-weight:700;letter-spacing:.22em;font-size:13px;color:var(--gold);margin-top:8px}
+.brand .rule{width:72px;height:1px;background:var(--gold2);margin:14px auto 0;opacity:.8}
+.kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700}
+
+/* intro + progress */
+.lead{text-align:center;color:var(--muted);max-width:520px;margin:14px auto 22px}
+.progress{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:18px}
+.progress .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.progress b{font-family:var(--serif);font-size:20px}
+.bar{height:6px;background:#0d1724;border-radius:6px;overflow:hidden;margin-top:10px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold2),var(--gold));width:0;transition:width .4s}
+
+.notice{border:1px dashed var(--gold2);background:var(--gold-soft);border-radius:var(--r);padding:12px 16px;margin-bottom:18px;font-size:14px}
+
+/* case list */
+.list{display:grid;gap:12px}
+.card{display:flex;gap:14px;align-items:center;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);
+  border-radius:var(--r);padding:14px 16px;transition:border-color .15s,transform .15s}
+.card:hover{border-color:var(--gold2)}
+.card:active{transform:scale(.99)}
+.card .no{flex:0 0 46px;height:46px;border-radius:10px;border:1px solid var(--gold2);display:grid;place-items:center;
+  font-family:var(--serif);font-weight:700;color:var(--gold);font-size:18px}
+.card .t{font-family:var(--serif);font-weight:700;font-size:17px;line-height:1.25}
+.card .o{font-size:13px;color:var(--muted);margin-top:2px}
+.card .dots{display:flex;gap:5px;margin-top:8px;align-items:center}
+.dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--gold2)}
+.dot.on{background:var(--gold);border-color:var(--gold)}
+.tag{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.card .go{margin-left:auto;color:var(--gold);font-size:22px;line-height:1}
+.card.locked{opacity:.55}
+.card.done .no{background:var(--gold);color:#1a1408}
+
+/* case view */
+.top{display:flex;align-items:center;gap:10px;padding:6px 0 14px;position:sticky;top:0;background:linear-gradient(var(--bg) 70%,transparent);z-index:5}
+.back{background:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px}
+.back:hover{border-color:var(--gold2)}
+.top .crumb{font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-left:auto}
+.hero{border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:16px;background:var(--panel)}
+.hero .band{background:#070d16;padding:10px 16px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:#fff;display:flex;justify-content:space-between;gap:10px}
+.hero .band span:last-child{color:var(--gold)}
+.hero .in{padding:16px 18px 18px}
+h1.ct{font-family:var(--serif);font-size:clamp(24px,6vw,32px);line-height:1.15;margin:4px 0 12px}
+.hero p{margin:0 0 10px}
+.dialog{border-left:3px solid var(--gold);padding:8px 12px;background:var(--gold-soft);border-radius:0 10px 10px 0;font-family:var(--serif);font-style:italic;margin-top:12px}
+
+.sec{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin-bottom:16px}
+.sec h2{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:0 0 10px}
+ul.facts{margin:0;padding-left:18px}
+ul.facts li{margin:4px 0}
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.person{display:flex;gap:10px;align-items:center;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.av{flex:0 0 36px;height:36px;border-radius:50%;background:#22344b;display:grid;place-items:center;font-weight:700;font-size:13px;color:var(--gold)}
+.person b{display:block;font-size:14px;line-height:1.2}
+.person small{color:var(--muted);font-size:12px}
+
+/* levels */
+.lvl{border:1px solid var(--line);border-radius:var(--r);margin-bottom:16px;overflow:hidden;background:var(--panel)}
+.lvl .hd{display:flex;align-items:center;gap:10px;padding:12px 16px;background:#0c1622;border-bottom:1px solid var(--line)}
+.lvl .hd .k{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+.lvl .hd .st{margin-left:auto;font-size:12px;color:var(--muted)}
+.lvl .hd .st.ok{color:var(--ok)}
+.lvl .bd{padding:16px 18px}
+.lvl.locked .bd{color:var(--muted);font-size:14px}
+.anl{color:var(--muted);margin:0 0 12px}
+.hints{list-style:none;margin:0 0 14px;padding:12px 14px;background:var(--bg2);border:1px solid var(--line);border-radius:10px}
+.hints li{padding:5px 0 5px 18px;position:relative;font-family:var(--serif)}
+.hints li:before{content:"";position:absolute;left:2px;top:13px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.q{font-weight:700;margin:4px 0 10px;font-family:var(--serif);font-size:17px}
+.opts{display:grid;gap:8px}
+@media(min-width:560px){.opts{grid-template-columns:1fr 1fr}}
+.opt{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-align:left;min-height:48px;transition:border-color .15s,background .15s}
+.opt:hover:not(:disabled){border-color:var(--gold2)}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.fb{margin-top:12px;font-size:15px;min-height:1px}
+.fb .bad{color:var(--bad)}
+.fb .good{color:var(--ok);font-weight:700}
+.tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.link{background:none;border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px;color:var(--gold)}
+.link:hover{border-color:var(--gold2)}
+.tip,.sol{margin-top:12px;padding:12px 14px;border-radius:10px;font-size:15px}
+.tip{background:var(--gold-soft);border:1px solid rgba(212,180,106,.35)}
+.sol{background:var(--ok-soft);border:1px solid rgba(127,194,155,.35)}
+.sol b,.tip b{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+.end{text-align:center;border:1px solid var(--gold2);border-radius:var(--r);padding:20px 18px;margin-bottom:16px;background:linear-gradient(180deg,rgba(212,180,106,.12),transparent)}
+.end .big{font-family:var(--serif);font-size:24px;margin:6px 0 10px}
+.end .dialog{text-align:left}
+.btn{display:inline-block;background:var(--gold);color:#1a1408;border:0;border-radius:999px;padding:12px 22px;font-weight:700;text-decoration:none;margin-top:14px}
+.btn:hover{background:#e2c47e}
+textarea{width:100%;min-height:110px;background:var(--bg2);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:12px;font:15px/1.5 var(--sans);resize:vertical}
+textarea:focus,button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+footer{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
+footer .priv{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:6px 12px;margin-bottom:12px}
+.reset{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13px}
+
+.install{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto;background:var(--panel2);
+  border:1px solid var(--gold2);border-radius:var(--r);padding:12px 14px;display:flex;gap:12px;align-items:center;box-shadow:0 10px 30px rgba(0,0,0,.45);z-index:20;font-size:14px}
+.install .x{margin-left:auto;background:none;border:0;color:var(--muted);font-size:20px;line-height:1}
+.install .btn{margin:0;padding:8px 14px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<div class="install hidden" id="install" role="dialog" aria-label="App installieren">
+  <div id="installText">Das Fallarchiv als App auf dem Startbildschirm ablegen?</div>
+  <button class="btn hidden" id="installBtn">Installieren</button>
+  <button class="x" id="installX" aria-label="Hinweis schließen">×</button>
+</div>
+
+<script>
+const CASES = [
+{
+  id: 'b01', nr: '01', titel: 'Das Leck im 31. Stock', ort: 'Kanzlei Hallberg & Rauch', zeit: '19:40–19:52', stufe: 'leicht',
+  intro: [
+    'Die Vergleichsjuristin Marlene Ott wird um 19:52 Uhr benommen im Kopierraum gefunden. Der vertrauliche Vergleichsentwurf liegt wieder in ihrer Mappe. Das Kopiersystem zählt allerdings zwölf Seiten mehr als am Nachmittag.',
+    'Voss steht vor dem Kopierer, der seit Stunden „Papierstau“ meldet. Sie sehen auf den Zähler des Systems. Zwölf Seiten. Irgendwo im Haus liegt jetzt eine zweite Fassung.'
+  ],
+  dialog: '„Vier Personen, vier Aussagen.“ – „Und genau eine davon passt nicht zu den anderen.“',
+  fakten: ['Ab 19:40 Uhr war die Kanzlei für Besucher geschlossen.', 'Genau eine Person nahm den Entwurf an sich.', 'Genau eine der vier Aussagen ist falsch.'],
+  personen: [['Ida Sommer', 'Partnerin'], ['Felix Aumann', 'Associate'], ['Nele Krug', 'Assistentin'], ['Paul Weidner', 'IT-Administrator']],
+  ebenen: [
+    { typ: 'Aussagenlogik',
+      anleitung: 'Setzen Sie jede Person probeweise als Täterperson ein. Genau eine der vier Aussagen ist falsch.',
+      hinweise: ['Ida: „Felix war es nicht.“', 'Felix: „Nele war es.“', 'Nele: „Felix lügt.“', 'Paul: „Weder Ida noch ich waren es.“'],
+      frage: 'Wer nahm den Entwurf an sich?',
+      optionen: ['Ida Sommer', 'Felix Aumann', 'Nele Krug', 'Paul Weidner'], loesung: 2,
+      tipp: 'Felix und Nele widersprechen sich direkt. Eine der beiden Aussagen ist also die einzige falsche.',
+      erklaerung: 'Felix und Nele widersprechen sich, eine der beiden Aussagen muss die Lüge sein. Damit sind Idas und Pauls Aussagen wahr: Felix, Ida und Paul scheiden aus. Bleibt Nele. Dann stimmt Felix’ Aussage, und Neles Aussage ist die einzige falsche.' },
+    { typ: 'Garderobenliste',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Jede Person trug genau einen der vier Gegenstände bei sich: Aktenkoffer, Regenschirm, Kopierkarte, Laptoptasche.',
+      hinweise: ['Ida Sommer trug den Aktenkoffer.', 'Felix Aumann trug den Regenschirm.', 'Paul Weidner trug nicht die Kopierkarte.'],
+      frage: 'Welchen Gegenstand trug die Täterperson?',
+      optionen: ['Aktenkoffer', 'Regenschirm', 'Kopierkarte', 'Laptoptasche'], loesung: 2,
+      tipp: 'Für Paul und Nele bleiben nur zwei Gegenstände übrig.',
+      erklaerung: 'Ida und Felix sind festgelegt. Für Paul und Nele bleiben Kopierkarte und Laptoptasche. Paul hatte die Kopierkarte nicht, also trug Nele sie.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie den Gegenstand aus Ebene 2. Das Kopiersystem protokolliert jede Nutzung dieser Karte.',
+      hinweise: ['19:43 Uhr: Kopierer Etage 31, Auftrag abgebrochen. Das Gerät meldet seit 18:05 Uhr Papierstau.', '19:47 Uhr: Scanner im Archiv, Scan an die eigene Adresse, kein Ausdruck.', '19:50 Uhr: Drucker am Empfang, 12 Seiten gedruckt.', 'Der Plotter im Besprechungsraum wurde heute nicht benutzt.'],
+      frage: 'Wo wurden die zwölf Seiten ausgedruckt?',
+      optionen: ['Kopierer Etage 31', 'Scanner im Archiv', 'Drucker am Empfang', 'Plotter im Besprechungsraum'], loesung: 2,
+      tipp: 'Nur ein Gerät hat tatsächlich Papier ausgegeben.',
+      erklaerung: 'Der Kopierer brach wegen des Papierstaus ab, der Scanner druckt nicht, der Plotter blieb unbenutzt. Nur der Drucker am Empfang gab um 19:50 Uhr zwölf Seiten aus, genau die zusätzlichen Seiten im Zähler.' }
+  ],
+  schluss: 'Voss: „Sie hat am Empfang gedruckt. Vor aller Augen.“ – Sie: „Um 19:50 Uhr gab es dort keine Augen mehr.“'
+},
+{
+  id: 'b02', nr: '02', titel: 'Zwölf Minuten im Uhrenmuseum', ort: 'Haus der Zeit, Museumsnacht', zeit: '22:30–22:42', stufe: 'leicht',
+  intro: [
+    'Während der Museumsnacht wird Sammlungsleiter Bernhard Ilg um 22:42 Uhr benommen im Vitrinenraum gefunden. Eine der ausgestellten Taschenuhren wurde gegen eine Replik getauscht.',
+    'Voss zählt die Uhren an der Wand. Alle zeigen dieselbe Zeit. Sie interessieren sich mehr für die Lücken zwischen den Protokollen.'
+  ],
+  dialog: '„Zwölf Minuten sind nicht viel.“ – „Für einen Tausch reichen sechs.“',
+  fakten: ['Der Tausch dauerte mindestens sechs Minuten ohne Unterbrechung im Vitrinenraum.', 'Der Weg zum Vitrinenraum dauert eine Minute, der Rückweg ebenfalls.', 'Alle Zeitangaben stammen aus synchronisierten Systemen.'],
+  personen: [['Lara Engel', 'Kuratorin'], ['Jonas Pfeiffer', 'Restaurator'], ['Mehmet Arslan', 'Sicherheitsdienst'], ['Clara Hansen', 'Sponsorin']],
+  ebenen: [
+    { typ: 'Zeitfenster und Alibis',
+      anleitung: 'Suchen Sie für jede Person die längste Lücke zwischen zwei Belegen und ziehen Sie Hin- und Rückweg ab. Gesucht ist die einzige Person mit mindestens sechs freien Minuten im Vitrinenraum.',
+      hinweise: ['Lara: Führung im Foyer 22:30–22:35 Uhr, Kassenbeleg im Café 22:39 Uhr, danach bis 22:42 Uhr im Café gefilmt.', 'Jonas: Werkstattkamera 22:30–22:33 Uhr, Festnetzgespräch aus der Werkstatt 22:41–22:42 Uhr.', 'Mehmet: Rundgang-Scanner 22:31 Uhr Foyer, 22:36 Uhr Treppenhaus, 22:41 Uhr Foyer.', 'Clara: Vortrag im Saal 22:30–22:38 Uhr auf Video, Foto beim Sektempfang 22:40 Uhr.'],
+      frage: 'Wer hatte genug Zeit für den Tausch?',
+      optionen: ['Lara Engel', 'Jonas Pfeiffer', 'Mehmet Arslan', 'Clara Hansen'], loesung: 1,
+      tipp: 'Rechnen Sie bei jeder Lücke zwei Minuten Weg ab.',
+      erklaerung: 'Lara hat vier freie Minuten (22:35–22:39), abzüglich Weg bleiben zwei. Mehmets längste Lücke beträgt fünf Minuten, es bleiben drei. Clara hat höchstens zwei freie Minuten. Nur Jonas ist von 22:33 bis 22:41 Uhr ohne Beleg: acht Minuten, abzüglich Weg genau sechs.' },
+    { typ: 'Ausgabeliste',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Jede Person erhielt für die Museumsnacht genau ein Hilfsmittel. Die Vitrinen öffnen nur mit einem Vitrinenschlüssel oder mit einem Saugheber am Glasdeckel.',
+      hinweise: ['Lara Engel: Tablet mit Führungstexten.', 'Jonas Pfeiffer: Saugheber mit zwei Saugtellern.', 'Mehmet Arslan: Funkgerät.', 'Clara Hansen: Gästeausweis.'],
+      frage: 'Womit wurde die Vitrine geöffnet?',
+      optionen: ['Tablet', 'Saugheber', 'Funkgerät', 'Vitrinenschlüssel'], loesung: 1,
+      tipp: 'Niemand der vier hatte einen Vitrinenschlüssel.',
+      erklaerung: 'Einen Vitrinenschlüssel hatte niemand erhalten. Von den ausgegebenen Hilfsmitteln öffnet nur der Saugheber eine Vitrine, und er gehört Jonas.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie das Hilfsmittel aus Ebene 2. Die Spurensicherung hat alle vier Vitrinen untersucht.',
+      hinweise: ['Vitrine 1, Taschenuhr von 1871: Glasdeckel ohne Spuren, Schloss unberührt.', 'Vitrine 2, Sonnenuhr aus Messing: frische Kratzer am Schloss, Deckel ohne Spuren.', 'Vitrine 3, Taschenuhr Nr. 7, Prototyp von 1898: zwei runde Abdrücke auf dem Glasdeckel im Abstand der Saugteller.', 'Vitrine 4, Schiffschronometer: Fingerabdrücke von Besuchern an der Frontscheibe.'],
+      frage: 'Welche Uhr wurde gegen die Replik getauscht?',
+      optionen: ['Taschenuhr von 1871', 'Sonnenuhr aus Messing', 'Taschenuhr Nr. 7', 'Schiffschronometer'], loesung: 2,
+      tipp: 'Gesucht ist eine Taschenuhr, und der Saugheber hinterlässt runde Abdrücke.',
+      erklaerung: 'Getauscht wurde eine Taschenuhr, also Vitrine 1 oder 3. Nur auf Vitrine 3 sitzen die zwei runden Abdrücke im Abstand der Saugteller. Die Kratzer an Vitrine 2 stammen nicht vom Saugheber und betreffen keine Taschenuhr.' }
+  ],
+  schluss: 'Voss: „Die Replik ist wirklich gut.“ – Sie: „Die Saugringe auf dem Glas sind besser.“'
+},
+{
+  id: 'b03', nr: '03', titel: 'Vier Koffer in der Bahnhofslounge', ort: 'Hauptbahnhof, Lounge Gleis 7', zeit: '06:05–06:20', stufe: 'leicht',
+  intro: [
+    'In der Lounge an Gleis 7 wird die Kurierin Leonie Bach benommen in ihrem Sessel gefunden. Ihr Dokumentenkoffer ist geöffnet, ein versiegelter Umschlag fehlt. Die Kamera zeigt nur einen roten Koffer, der kurz neben ihrem Sessel stand.',
+    'Voss sieht auf die Anzeigetafel, der Zug nach Wien hat Verspätung. Sie sehen auf die Koffer. Vier Farben, vier Personen, eine Zuordnung.'
+  ],
+  dialog: '„Die Kamera zeigt nur einen Koffer.“ – „Mehr braucht es nicht, wenn man weiß, wem er gehört.“',
+  fakten: ['Jede Person hatte genau einen Koffer.', 'Die Koffer sind grau, rot, schwarz und grün.', 'Der rote Koffer stand neben Bachs Sessel.'],
+  personen: [['Rafael Ortiz', 'Architekt'], ['Sina Hartwig', 'Ärztin'], ['Kemal Yildiz', 'Unternehmensberater'], ['Britta Lund', 'Übersetzerin']],
+  ebenen: [
+    { typ: 'Matching und Zuordnung',
+      anleitung: 'Ordnen Sie die vier Koffer den vier Personen zu. Jede Farbe gehört genau einer Person.',
+      hinweise: ['Sinas Koffer ist weder rot noch grau.', 'Rafael trug weder den grünen noch den roten Koffer.', 'Der schwarze Koffer gehört einer Frau.', 'Kemals Koffer ist nicht grau.', 'Britta trug weder den grünen noch den roten Koffer.'],
+      frage: 'Wem gehört der rote Koffer?',
+      optionen: ['Rafael Ortiz', 'Sina Hartwig', 'Kemal Yildiz', 'Britta Lund'], loesung: 2,
+      tipp: 'Beginnen Sie mit Rafael: Welche Farben bleiben für ihn übrig?',
+      erklaerung: 'Rafael bleiben grau und schwarz. Schwarz gehört einer Frau, also hat Rafael grau. Britta bleibt damit nur schwarz, Sina nur grün. Für Kemal bleibt der rote Koffer.' },
+    { typ: 'Gepäckscanner',
+      anleitung: 'Nutzen Sie die Farbe aus Ebene 1. Der Scanner am Lounge-Eingang hat in jedem Koffer genau einen auffälligen Gegenstand erfasst: Faltstativ, Stethoskop, Wörterbücher, Dietrich-Set.',
+      hinweise: ['Im grauen Koffer: Faltstativ.', 'Im schwarzen Koffer: Stethoskop.', 'Der grüne Koffer enthielt kein Werkzeug.'],
+      frage: 'Welcher Gegenstand lag im Koffer der Täterperson?',
+      optionen: ['Faltstativ', 'Stethoskop', 'Wörterbücher', 'Dietrich-Set'], loesung: 3,
+      tipp: 'Für grün und rot bleiben zwei Gegenstände. Welcher davon ist ein Werkzeug?',
+      erklaerung: 'Grau und schwarz sind belegt. Für grün und rot bleiben Wörterbücher und Dietrich-Set. Der grüne Koffer enthielt kein Werkzeug, also liegt das Dietrich-Set im roten Koffer.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie den Gegenstand aus Ebene 2. Die Schließfächer an Gleis 7 protokollieren, wie sie geöffnet wurden.',
+      hinweise: ['Fach 3: seit gestern nicht geöffnet.', 'Fach 9: 06:11 Uhr mit dem richtigen Zahlencode geöffnet.', 'Fach 14: 06:16 Uhr geöffnet, ohne Code, Werkzeugspuren am Schließzylinder.', 'Fach 21: 06:18 Uhr mit Bahncard-Chip geöffnet.'],
+      frage: 'In welchem Schließfach liegt der Umschlag?',
+      optionen: ['Fach 3', 'Fach 9', 'Fach 14', 'Fach 21'], loesung: 2,
+      tipp: 'Ein Dietrich-Set braucht weder Code noch Chip.',
+      erklaerung: 'Fach 9 und 21 wurden regulär mit Code oder Chip geöffnet, Fach 3 gar nicht. Nur Fach 14 ging ohne Code auf und zeigt Werkzeugspuren, passend zum Dietrich-Set.' }
+  ],
+  schluss: 'Voss: „Er wollte mit dem nächsten Zug weg.“ – Sie: „Der hat Verspätung. Das Schließfach nicht.“'
+},
+{
+  id: 'b04', nr: '04', titel: 'Die Gästeliste der Rooftop-Bar', ort: 'Bar Nordlicht, 18. Etage', zeit: '23:10–23:25', stufe: 'leicht',
+  intro: [
+    'Weinhändler Gregor Thal wird um 23:25 Uhr benommen im Lagerraum der Bar gefunden. Aus seiner Tasche fehlt das Probenbuch mit den Einkaufspreisen der Saison.',
+    'Voss blickt über die Stadt. Sie blicken auf drei Zugangslisten. Wer auf welcher Liste steht, verrät mehr als die Aussicht.'
+  ],
+  dialog: '„Fünf Personen und drei Listen.“ – „Und nur eine Person mit der richtigen Kombination.“',
+  fakten: ['Jede Zugangsliste ist vollständig.', 'Die Täterperson stand auf genau zwei der drei Listen.', 'Auf der Terrassenliste stand sie nicht.'],
+  personen: [['Ella Brandl', 'Barchefin'], ['Marko Simic', 'Sommelier'], ['Fiona Graf', 'Eventplanerin'], ['Jasper Lohmann', 'Investor'], ['Dilara Aksu', 'Köchin']],
+  ebenen: [
+    { typ: 'Mengen- und Ausschlusslogik',
+      anleitung: 'Vergleichen Sie die drei Listen. Gesucht ist die Person auf genau zwei Listen, die nicht auf der Terrassenliste steht.',
+      hinweise: ['VIP-Lounge: Ella, Marko, Jasper, Fiona.', 'Küche: Marko, Fiona, Dilara, Jasper.', 'Terrasse: Ella, Jasper, Dilara, Fiona.'],
+      frage: 'Wer erfüllt beide Bedingungen?',
+      optionen: ['Ella Brandl', 'Marko Simic', 'Fiona Graf', 'Jasper Lohmann', 'Dilara Aksu'], loesung: 1,
+      tipp: 'Zählen Sie zuerst für jede Person, auf wie vielen Listen sie steht.',
+      erklaerung: 'Fiona und Jasper stehen auf allen drei Listen. Ella und Dilara stehen auf genau zwei, aber jeweils auf der Terrassenliste. Nur Marko steht auf genau zwei Listen, VIP-Lounge und Küche, und nicht auf der Terrasse.' },
+    { typ: 'Ausgabeliste',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Jede Person hatte genau einen dieser Gegenstände: Kassentablet, Klemmbrett, Kühlhausschlüssel, Smartphone, Weinkühltasche.',
+      hinweise: ['Ella Brandl: Kassentablet.', 'Fiona Graf: Klemmbrett.', 'Dilara Aksu: Kühlhausschlüssel.', 'Jasper Lohmann trug keine Tasche.'],
+      frage: 'Welchen Gegenstand hatte die Täterperson?',
+      optionen: ['Kassentablet', 'Klemmbrett', 'Kühlhausschlüssel', 'Smartphone', 'Weinkühltasche'], loesung: 4,
+      tipp: 'Für Marko und Jasper bleiben zwei Gegenstände.',
+      erklaerung: 'Drei Gegenstände sind fest zugeordnet. Für Marko und Jasper bleiben Smartphone und Weinkühltasche. Jasper trug keine Tasche, also gehört die Weinkühltasche Marko.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie den Gegenstand aus Ebene 2. In der Weinkühltasche steckt ein Temperaturlogger, der Ort und Temperatur meldet.',
+      hinweise: ['23:16 Uhr: Lagerraum, 14 °C. Nur diese Tasche war zwischen 23:10 und 23:25 Uhr im Lagerraum.', '23:19 Uhr: Kühlhaus, 4 °C.', '23:22 Uhr: Garderobe, Fach 12, 21 °C.', '23:25 Uhr: Garderobe, Fach 12, 21 °C, letzte Meldung.'],
+      frage: 'Wo befindet sich das Probenbuch jetzt?',
+      optionen: ['Lagerraum', 'Kühlhaus', 'Garderobe, Fach 12', 'Weinregal auf der Terrasse'], loesung: 2,
+      tipp: 'Das Probenbuch kam mit der Tasche aus dem Lagerraum. Wo meldet sie sich zuletzt?',
+      erklaerung: 'Nur die Weinkühltasche war im Lagerraum, also nahm sie das Probenbuch auf. Danach wanderte sie durchs Kühlhaus und liegt seit 23:22 Uhr unverändert in der Garderobe, Fach 12.' }
+  ],
+  schluss: 'Voss: „Ein Sommelier mit Kühltasche fällt nicht auf.“ – Sie: „Bis man sie an der Garderobe abgibt.“'
+},
+{
+  id: 'b05', nr: '05', titel: 'Fünf Scans in der Poststelle', ort: 'Verlagshaus Seeberg', zeit: '08:02–08:20', stufe: 'mittel',
+  intro: [
+    'Die Volontärin Svea Lindner wird benommen hinter dem Sortierregal der Poststelle gefunden. Ein Einschreiben mit einem unveröffentlichten Manuskript ist verschwunden.',
+    'Der Scanner der Poststelle hat fünf Abholungen protokolliert, wegen eines Updates aber ohne Namen. Voss nennt das eine Panne. Sie nennen es eine Reihenfolge, die nur noch Namen braucht.'
+  ],
+  dialog: '„Fünf Personen, fünf Scans.“ – „Und eine Lücke zwischen dem dritten und dem vierten.“',
+  fakten: ['Jede Person holte genau einmal Post ab.', 'Nach dem dritten Scan lag das Einschreiben noch im Fach.', 'Nach dem vierten Scan war es verschwunden.'],
+  personen: [['Lukas Endres', 'Lektor'], ['Hanna Wirth', 'Herstellerin'], ['Malte Krüger', 'Hausmeister'], ['Rosa Albers', 'Lizenzmanagerin'], ['Timo Seidel', 'Praktikant']],
+  ebenen: [
+    { typ: 'Reihenfolgen und Platzierungen',
+      anleitung: 'Ordnen Sie die fünf Abholungen von Position eins bis fünf. Die Täterperson kam an vierter Stelle.',
+      hinweise: ['Hanna kam vor Malte.', 'Rosa kam unmittelbar nach Lukas.', 'Timo war weder der Erste noch der Letzte.', 'Malte kam nicht unmittelbar nach Hanna.', 'Timo kam vor Lukas.', 'Rosa war nicht die Letzte.'],
+      frage: 'Wer holte an vierter Stelle Post ab?',
+      optionen: ['Lukas Endres', 'Hanna Wirth', 'Malte Krüger', 'Rosa Albers', 'Timo Seidel'], loesung: 3,
+      tipp: 'Lukas und Rosa bilden ein festes Paar. Wo kann es stehen, wenn Timo davor kommen muss?',
+      erklaerung: 'Timo steht vor Lukas und nicht auf Platz 1, also steht Lukas frühestens auf Platz 3. Rosa folgt direkt auf Lukas und ist nicht Letzte, also Lukas 3 und Rosa 4. Timo muss davor stehen, aber nicht auf Platz 1: Timo 2. Für Hanna und Malte bleiben 1 und 5, Hanna vor Malte. Die Folge lautet Hanna, Timo, Lukas, Rosa, Malte. An vierter Stelle steht Rosa.' },
+    { typ: 'Abteilungsfächer',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Die Täterperson legte das Einschreiben in das Fach ihrer eigenen Abteilung.',
+      hinweise: ['Fach A: Lektorat.', 'Fach B: Herstellung.', 'Fach C: Haustechnik.', 'Fach D: Lizenzen.', 'Fach E: Praktikum und Volontariat.'],
+      frage: 'In welchem Fach landete das Einschreiben?',
+      optionen: ['Fach A', 'Fach B', 'Fach C', 'Fach D', 'Fach E'], loesung: 3,
+      tipp: 'Welche Aufgabe hat die Täterperson im Verlag?',
+      erklaerung: 'Rosa Albers ist Lizenzmanagerin. Ihre Abteilung ist Lizenzen, also Fach D.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie das Fach aus Ebene 2. Das Postausgangsbuch verzeichnet, was am Vormittag aus welchem Fach das Haus verließ.',
+      hinweise: ['Fach A, 08:40 Uhr: Hauspost an die Geschäftsführung.', 'Fach B, 08:45 Uhr: Druckfreigabe an die Druckerei in Leipzig.', 'Fach C: kein Ausgang.', 'Fach D, 08:35 Uhr: Kurierumschlag an die Agentur Kessler & Bloom in Hamburg.', 'Fach E: kein Ausgang.'],
+      frage: 'Wohin sollte das Manuskript gehen?',
+      optionen: ['Geschäftsführung im Haus', 'Druckerei in Leipzig', 'Agentur in Hamburg', 'Es blieb im Haus'], loesung: 2,
+      tipp: 'Schauen Sie nur auf das Fach aus Ebene 2.',
+      erklaerung: 'Aus Fach D ging um 08:35 Uhr genau ein Kurierumschlag hinaus, adressiert an die Agentur Kessler & Bloom in Hamburg. Rosa wollte das Manuskript an eine fremde Agentur weiterreichen, bevor der Verlag die Rechte sichern konnte.' }
+  ],
+  schluss: 'Voss: „Ein Einschreiben verschwindet in einer Poststelle.“ – Sie: „Es verschwand nicht. Es wurde nur weitergeleitet.“'
+},
+{
+  id: 'b06', nr: '06', titel: 'Der Weg durch die Bibliothek', ort: 'Stadtbibliothek, Rara-Abteilung', zeit: '23:05–23:20', stufe: 'mittel',
+  intro: [
+    'Nachtwächter Ulrich Benz wird benommen vor dem Rara-Raum der Stadtbibliothek gefunden. Ein Stundenbuch aus dem 15. Jahrhundert fehlt, Gewicht 1,2 Kilogramm.',
+    'Voss läuft die Gänge ab. Sie zeichnen einen Grundriss auf die Rückseite eines Leihscheins. Türen sind nur dann ein Weg, wenn jemand sie öffnen kann.'
+  ],
+  dialog: '„Vier Personen im Haus.“ – „Und nur ein Weg, der wirklich offen war.“',
+  fakten: ['Der Rara-Raum hat zwei Türen: eine zum Magazin, eine zur Verwaltung.', 'Die Tür zur Verwaltung ist nachts von innen verriegelt.', 'Die Tür vom Magazin öffnet nur mit Magazinkarte und gültiger PIN.'],
+  personen: [['Konrad Weiß', 'Bibliotheksleiter'], ['Leni Hofer', 'Studentin'], ['Rasmus Ek', 'Magaziner'], ['Selma Aydin', 'Restauratorin']],
+  ebenen: [
+    { typ: 'Räumliche Logik',
+      anleitung: 'Bestimmen Sie, wer den Rara-Raum erreichen konnte. Ausgangsort und Berechtigung müssen zusammenpassen. Es gibt keine weiteren Türen.',
+      hinweise: ['Lesesaal und Magazin verbindet eine Tür, die mit Magazinkarte öffnet.', 'Der Aufzug vom Foyer ins Magazin ist seit 22 Uhr außer Betrieb.', 'Konrad war in der Verwaltung und hatte den Generalschlüssel, aber keine Magazinkarte.', 'Leni saß im Lesesaal und hatte nur einen Leseausweis.', 'Rasmus war im Magazin und hatte eine Magazinkarte. Seine PIN wurde um 21 Uhr gesperrt.', 'Selma war im Lesesaal und hatte Magazinkarte und gültige PIN.'],
+      frage: 'Wer konnte den Rara-Raum erreichen?',
+      optionen: ['Konrad Weiß', 'Leni Hofer', 'Rasmus Ek', 'Selma Aydin'], loesung: 3,
+      tipp: 'Der einzige offene Zugang führt über das Magazin. Was braucht man an der letzten Tür?',
+      erklaerung: 'Die Verwaltungstür ist von innen verriegelt, Konrads Schlüssel hilft ihm nicht. Leni kommt nicht einmal ins Magazin. Rasmus steht im Magazin, aber ohne gültige PIN. Nur Selma kommt mit ihrer Karte vom Lesesaal ins Magazin und mit Karte und PIN in den Rara-Raum.' },
+    { typ: 'Ausgabeliste',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Für die Nachtschicht wurde jeder Person genau ein Gegenstand ausgegeben.',
+      hinweise: ['Konrad Weiß: Schlüsselbund der Verwaltung.', 'Leni Hofer: Leihlaptop.', 'Rasmus Ek: Bücherwagen.', 'Selma Aydin: gepolsterte Transportbox 4 mit Funketikett.'],
+      frage: 'Worin wurde das Stundenbuch transportiert?',
+      optionen: ['Schlüsselbund', 'Leihlaptop', 'Bücherwagen', 'Transportbox 4'], loesung: 3,
+      tipp: 'Welcher Gegenstand gehört der Person aus Ebene 1?',
+      erklaerung: 'Selma ist die Täterperson. Ihr wurde die gepolsterte Transportbox 4 ausgegeben.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie den Gegenstand aus Ebene 2. Das Funketikett der Box und der Rückgabeautomat haben Folgendes protokolliert.',
+      hinweise: ['23:12 Uhr: Box 4 im Rara-Raum.', '23:15 Uhr: Box 4 im Magazin.', '23:18 Uhr: Box 4 im Lesesaal, Platz 12. Dort wurde sie um 23:30 Uhr leer gefunden.', '23:20 Uhr: Rückgabeautomat West neben dem Lesesaal, Einwurf von 1,2 kg ohne Medienetikett.'],
+      frage: 'Wo befindet sich das Stundenbuch jetzt?',
+      optionen: ['Rara-Raum', 'Magazin', 'Lesesaal, Platz 12', 'Rückgabeautomat West'], loesung: 3,
+      tipp: 'Die Box war am Ende leer. Was wog genau so viel wie das Stundenbuch?',
+      erklaerung: 'Die Box kam bis zu Platz 12 und war dort leer. Zwei Minuten später wurden am Rückgabeautomaten West genau 1,2 Kilogramm ohne Medienetikett eingeworfen, das Gewicht des Stundenbuchs. Selma wollte es am Morgen unauffällig mit der Rückgabe abholen.' }
+  ],
+  schluss: 'Voss: „Ein Buch in der Rückgabe. Fast schon ehrlich.“ – Sie: „Nur ohne Etikett.“'
+},
+{
+  id: 'b07', nr: '07', titel: 'Die Kette in der Kletterhalle', ort: 'Kletterhalle Vertikal', zeit: '20:05–20:15', stufe: 'leicht',
+  intro: [
+    'Kassenleiterin Anke Moll wird benommen im Kassenraum der Kletterhalle gefunden. Der Umschlag mit den Tageseinnahmen fehlt.',
+    'Voss sieht nach oben zu den Routen. Sie sehen auf die Chipprotokolle. Der Kassenraum öffnet nur nach einer festen Abfolge, und Abfolgen lassen sich prüfen.'
+  ],
+  dialog: '„Vier Chips, vier Geschichten.“ – „Und nur eine davon hat keine Lücke.“',
+  fakten: ['Der Kassenraum öffnet nur mit einem Personalchip.', 'Derselbe Chip muss höchstens fünf Minuten vorher am Personalspind gewesen sein.', 'Ein Ausgang zwischen Spind und Kassenraum unterbricht die Kette.'],
+  personen: [['Nico Behrens', 'Trainer'], ['Ayla Korkmaz', 'Routenbauerin'], ['Jens Möller', 'Hallenleiter'], ['Vivien Stahl', 'Stammkundin']],
+  ebenen: [
+    { typ: 'Kettenregeln und Ausnahmen',
+      anleitung: 'Prüfen Sie jede Chipkette vollständig. Gesucht ist die einzige Person, die alle drei Regeln erfüllt.',
+      hinweise: ['Nico, Personalchip: Spind 20:11 Uhr, Ausgang 20:12 Uhr, Kassenraum 20:14 Uhr.', 'Ayla, Personalchip: Spind 20:05 Uhr, Kassenraum 20:12 Uhr.', 'Jens, Personalchip: Spind 20:09 Uhr, Kassenraum 20:12 Uhr.', 'Vivien, Gästechip: Spind 20:10 Uhr, Versuch am Kassenraum 20:13 Uhr.'],
+      frage: 'Wer erfüllt die vollständige Zutrittskette?',
+      optionen: ['Nico Behrens', 'Ayla Korkmaz', 'Jens Möller', 'Vivien Stahl'], loesung: 2,
+      tipp: 'Prüfen Sie Chipart, Abstand und Ausgang einzeln.',
+      erklaerung: 'Nicos Ausgang unterbricht die Kette. Bei Ayla liegen sieben Minuten zwischen Spind und Kassenraum. Viviens Gästechip öffnet den Kassenraum nie. Nur Jens erfüllt alles: Personalchip, drei Minuten Abstand, kein Ausgang.' },
+    { typ: 'Fundstücke',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Im Kassenraum lagen vier Fundstücke, jedes gehört genau einer der vier Personen.',
+      hinweise: ['Ein Kreidebeutel mit den Initialen N. B.', 'Ein Inbusschlüssel aus dem Routenbau.', 'Ein Paar Leihschuhe aus dem Gästeverleih.', 'Ein Schlüsselbund mit dem Anhänger „Leitung“.'],
+      frage: 'Welches Fundstück gehört der Täterperson?',
+      optionen: ['Kreidebeutel', 'Inbusschlüssel', 'Leihschuhe', 'Schlüsselbund „Leitung“'], loesung: 3,
+      tipp: 'Verbinden Sie die Fundstücke mit den Berufen der vier Personen.',
+      erklaerung: 'Der Kreidebeutel gehört Nico Behrens, der Inbusschlüssel der Routenbauerin Ayla, die Leihschuhe der Kundin Vivien. Der Schlüsselbund „Leitung“ gehört dem Hallenleiter Jens.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie das Fundstück aus Ebene 2. Am Schlüsselbund hängen die Schlüssel L1 (Büro), L2 (Materiallager) und L3 (Seilkammer). Die Schlösser speichern jede Öffnung.',
+      hinweise: ['Büro: zuletzt um 18:40 Uhr geöffnet.', 'Materiallager: um 20:16 Uhr mit Schlüssel L2 geöffnet, um 20:17 Uhr wieder verschlossen.', 'Seilkammer: seit Montag nicht geöffnet.', 'Die Personalspinde haben keine Schlüssel, nur Chips.'],
+      frage: 'Wo liegt der Umschlag mit den Einnahmen?',
+      optionen: ['Büro', 'Materiallager', 'Seilkammer', 'Personalspind'], loesung: 1,
+      tipp: 'Welcher Raum wurde nach dem Tatfenster mit dem Schlüsselbund geöffnet?',
+      erklaerung: 'Nur das Materiallager wurde nach dem Kassenraum mit einem Schlüssel dieses Bundes geöffnet, um 20:16 Uhr mit L2. Eine Minute später war es wieder zu. Dort liegt der Umschlag.' }
+  ],
+  schluss: 'Voss: „Der Hallenleiter. Sein eigener Laden.“ – Sie: „Gerade deshalb kannte er die Regeln so gut. Nur nicht die Protokolle.“'
+},
+{
+  id: 'b08', nr: '08', titel: 'Die falsche Belichtung', ort: 'Fotostudio Lichtwerk', zeit: '16:40–16:55', stufe: 'mittel',
+  intro: [
+    'Galerist Arne Vogel wird benommen im Lagerraum des Fotostudios gefunden. Die Speicherkarte mit den Detailaufnahmen eines Gemäldes fehlt. Die Aufnahmen sollten am Abend die Echtheit des Bildes belegen.',
+    'Voss blinzelt ins Blitzlicht eines Testauslösers. Sie hören zu. Vier Aussagen, und dieses Mal stimmt genau die Hälfte.'
+  ],
+  dialog: '„Zwei sagen die Wahrheit, zwei nicht.“ – „Das ist mehr Ehrlichkeit, als ich erwartet hatte.“',
+  fakten: ['Genau eine Person nahm die Speicherkarte.', 'Genau zwei der vier Aussagen sind wahr.', 'Jede Aussage wird als vollständiger Satz geprüft.'],
+  personen: [['Liv Marten', 'Fotografin'], ['Bastian Kühn', 'Assistent'], ['Mona Riedel', 'Stylistin'], ['Darius Fischer', 'Kunde']],
+  ebenen: [
+    { typ: 'Aussagenlogik',
+      anleitung: 'Setzen Sie jede Person probeweise als Täterperson ein. Genau zwei Aussagen müssen wahr sein.',
+      hinweise: ['Liv: „Bastian war es.“', 'Bastian: „Weder Mona noch ich waren es.“', 'Mona: „Darius war es.“', 'Darius: „Liv lügt.“'],
+      frage: 'Wer nahm die Speicherkarte?',
+      optionen: ['Liv Marten', 'Bastian Kühn', 'Mona Riedel', 'Darius Fischer'], loesung: 0,
+      tipp: 'Liv und Darius widersprechen sich. Von diesen beiden ist also immer genau eine Aussage wahr.',
+      erklaerung: 'Zwischen Liv und Darius ist immer genau eine Aussage wahr. Also muss von Bastian und Mona ebenfalls genau eine stimmen. Bei Bastian als Täter wären beide falsch, bei Mona ebenfalls, bei Darius beide wahr. Nur bei Liv stimmt Bastians Aussage und Monas nicht. Dazu ist Livs Aussage falsch und Darius’ wahr: genau zwei wahre Aussagen.' },
+    { typ: 'Studioinventar',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Jede Person hatte genau ein Behältnis dabei: Objektivköcher, Stativtasche, Schminkkoffer, Aktentasche.',
+      hinweise: ['Bastian trug die Stativtasche.', 'Mona kam mit dem Schminkkoffer.', 'Darius hatte nur eine Aktentasche dabei.'],
+      frage: 'In welchem Behältnis verschwand die Karte?',
+      optionen: ['Objektivköcher', 'Stativtasche', 'Schminkkoffer', 'Aktentasche'], loesung: 0,
+      tipp: 'Drei Behältnisse sind schon vergeben.',
+      erklaerung: 'Stativtasche, Schminkkoffer und Aktentasche sind vergeben. Für Liv bleibt der Objektivköcher.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie das Behältnis aus Ebene 2. Am Objektivköcher hängt ein Bluetooth-Tracker.',
+      hinweise: ['16:47 Uhr: Lagerraum.', '16:52 Uhr: Studio 1.', '16:58 Uhr: Parkplatz vor dem Studio.', '17:05 Uhr: Kofferraum des Studiowagens, Parkplatz.'],
+      frage: 'Um wie viel Uhr verließ die Speicherkarte das Studio?',
+      optionen: ['16:47 Uhr', '16:52 Uhr', '16:58 Uhr', '17:05 Uhr'], loesung: 2,
+      tipp: 'Lagerraum und Studio 1 liegen im Gebäude.',
+      erklaerung: 'Lagerraum und Studio 1 gehören zum Studio. Die erste Meldung außerhalb ist der Parkplatz um 16:58 Uhr. Liv wollte die Aufnahmen verschwinden lassen, weil sie zeigten, dass ihr eigenes Gutachten zu dem Bild falsch war.' }
+  ],
+  schluss: 'Voss: „Die Fotografin selbst.“ – Sie: „Sie wusste am besten, was auf den Bildern zu sehen war.“'
+},
+{
+  id: 'b09', nr: '09', titel: 'Der Tresor im Weinkeller', ort: 'Weingut Hollerbach', zeit: '21:30–21:45', stufe: 'mittel',
+  intro: [
+    'Kellermeisterin Johanna Reuter wird benommen im Weinkeller gefunden. Der Tresor steht offen, die Echtheitszertifikate für zwölf Raritäten fehlen.',
+    'Auf der Rückseite des Kellerbuchs stehen fünf Zahlenreihen mit kurzen Notizen. Voss hält das für Kritzeleien. Sie halten es für eine Gedächtnisstütze, die zu gut funktioniert.'
+  ],
+  dialog: '„Fünf falsche Codes.“ – „Fünf falsche Codes ergeben einen richtigen.“',
+  fakten: ['Der Tresorcode hat drei verschiedene Ziffern.', 'Jede Person mit Tresorzugang hat einen eigenen Code.', 'Der Tresor wurde um 21:38 Uhr mit einem gültigen Code geöffnet.'],
+  personen: [['Bernd Hollerbach', 'Winzer'], ['Ines Wolter', 'Sommelière'], ['Kilian Roos', 'Vertriebsleiter'], ['Petra Asmus', 'Buchhalterin']],
+  ebenen: [
+    { typ: 'Code-Logik',
+      anleitung: 'Bestimmen Sie den dreistelligen Code, mit dem der Tresor geöffnet wurde. Jede Notiz bewertet eine Zahlenreihe im Vergleich zu diesem Code.',
+      hinweise: ['341: nichts stimmt.', '428: eine Ziffer stimmt und steht an der richtigen Stelle.', '152: eine Ziffer stimmt, steht aber an der falschen Stelle.', '567: zwei Ziffern stimmen, beide stehen an der falschen Stelle.', '682: zwei Ziffern stimmen, beide stehen an der falschen Stelle.'],
+      frage: 'Wie lautet der Code?',
+      optionen: ['726', '762', '276', '627'], loesung: 0,
+      tipp: 'Streichen Sie 3, 4 und 1. Prüfen Sie dann, ob der Code ohne die 6 überhaupt drei Ziffern haben kann.',
+      erklaerung: '341 streicht 3, 4 und 1. Gehörte die 6 nicht zum Code, kämen aus 567 die 5 und die 7 und aus 682 die 8 und die 2, also vier Ziffern. Die 6 gehört also dazu: nicht an Stelle 2 (567) und nicht an Stelle 1 (682), also an Stelle 3. Damit kann in 428 nicht die 8 an Stelle 3 stimmen, also steht die 2 an Stelle 2. In 152 ist die 2 die eine richtige Ziffer, die 5 fällt weg. Aus 567 bleibt die 7, nicht an Stelle 3, also an Stelle 1. Der Code lautet 726.' },
+    { typ: 'Codeliste',
+      anleitung: 'Nutzen Sie den Code aus Ebene 1. Die Tresorverwaltung ordnet jeder Person genau einen Code zu.',
+      hinweise: ['Bernd Hollerbach: 762.', 'Ines Wolter: 726.', 'Kilian Roos: 672.', 'Petra Asmus: 267.'],
+      frage: 'Wessen Code öffnete den Tresor?',
+      optionen: ['Bernd Hollerbach', 'Ines Wolter', 'Kilian Roos', 'Petra Asmus'], loesung: 1,
+      tipp: 'Alle Codes bestehen aus denselben Ziffern. Achten Sie auf die Reihenfolge.',
+      erklaerung: 'Alle vier Codes nutzen 2, 6 und 7. Nur Ines Wolter hat genau die Reihenfolge 726.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie die Person aus Ebene 2. Die Bewegungsmelder und Deckelsensoren im Keller haben Folgendes erfasst.',
+      hinweise: ['21:38 Uhr: Ines im Weinkeller, Tresor geöffnet.', '21:41 Uhr: Ines in der Probierstube. Gleichzeitig meldet der Deckelsensor der Dekantierkiste eine Öffnung.', '21:44 Uhr: Ines wieder im Weinkeller.', 'Kellerbüro und Hofladen registrierten nach 21:30 Uhr niemanden.'],
+      frage: 'Wo liegen die Zertifikate?',
+      optionen: ['Im Tresor', 'In der Dekantierkiste in der Probierstube', 'Im Kellerbüro', 'Im Hofladen'], loesung: 1,
+      tipp: 'Wo wurde in genau dem Moment etwas geöffnet, in dem Ines dort war?',
+      erklaerung: 'Im Tresor fehlen die Zertifikate, Kellerbüro und Hofladen betrat niemand. Um 21:41 Uhr war Ines in der Probierstube, und genau dann ging die Dekantierkiste auf. Dort liegen die Zertifikate. Ines wollte damit Kopien der Raritäten verkaufen.' }
+  ],
+  schluss: 'Voss: „Eine Sommelière mit Tresorcode.“ – Sie: „Und mit einer Kollegin, die sich Codes zu gründlich notiert.“'
+},
+{
+  id: 'b10', nr: '10', titel: 'Ein Satz an Deck', ort: 'Yacht Albatros, Stadthafen', zeit: '22:50–23:05', stufe: 'mittel',
+  intro: [
+    'Yachtmakler Benedikt Saur wird benommen in der Achterkajüte der Albatros gefunden. Das unterschriebene Kaufangebot für die Yacht fehlt aus dem Kartentisch.',
+    'Voss hält sich an der Reling fest. Sie hören vier Sätze und merken sofort: Diesmal ist die Wahrheit in der Minderheit.'
+  ],
+  dialog: '„Drei lügen?“ – „Drei. Das macht die Sache übersichtlich.“',
+  fakten: ['Genau eine Person nahm das Kaufangebot.', 'Genau eine der vier Aussagen ist wahr.', 'Jede Aussage wird als vollständiger Satz geprüft.'],
+  personen: [['Henrik Sand', 'Skipper'], ['Julia Weber', 'Käuferin'], ['Noel Brückner', 'Bootsmann'], ['Ronja Falkner', 'Anwältin']],
+  ebenen: [
+    { typ: 'Aussagenlogik',
+      anleitung: 'Setzen Sie jede Person probeweise als Täterperson ein. Genau eine Aussage darf wahr sein.',
+      hinweise: ['Henrik: „Julia war es.“', 'Julia: „Noel war es.“', 'Noel: „Julia lügt.“', 'Ronja: „Ich war es nicht.“'],
+      frage: 'Wer nahm das Kaufangebot?',
+      optionen: ['Henrik Sand', 'Julia Weber', 'Noel Brückner', 'Ronja Falkner'], loesung: 3,
+      tipp: 'Julia und Noel widersprechen sich. Eine der beiden Aussagen ist also immer die einzige wahre.',
+      erklaerung: 'Von Julia und Noel ist immer genau eine Aussage wahr. Henriks und Ronjas Aussagen müssen also beide falsch sein. Ronjas Aussage ist nur falsch, wenn sie selbst die Täterin ist. Dann ist auch Henriks Aussage falsch, Julias falsch und Noels wahr: genau eine wahre Aussage.' },
+    { typ: 'Gepäck an Bord',
+      anleitung: 'Nutzen Sie die Person aus Ebene 1. Jede Person hatte genau ein Gepäckstück dabei: Seesack, Handtasche, Werkzeugtasche, Aktenmappe aus Leder.',
+      hinweise: ['Henrik Sand kam mit dem Seesack.', 'Julia Weber trug die Handtasche.', 'Noel Brückner hatte die Werkzeugtasche.'],
+      frage: 'In welchem Gepäckstück verschwand das Angebot?',
+      optionen: ['Seesack', 'Handtasche', 'Werkzeugtasche', 'Aktenmappe aus Leder'], loesung: 3,
+      tipp: 'Drei Gepäckstücke sind schon vergeben.',
+      erklaerung: 'Seesack, Handtasche und Werkzeugtasche gehören Henrik, Julia und Noel. Für Ronja bleibt die Aktenmappe aus Leder.' },
+    { typ: 'Die endgültige Deduktion',
+      anleitung: 'Verwenden Sie das Gepäckstück aus Ebene 2. In der Mappe steckt ein Tracker. Die Mappe wurde um 23:10 Uhr leer in Ronjas Auto gefunden.',
+      hinweise: ['22:58 Uhr: Achterkajüte, Start.', '23:01 Uhr: Steg C, ohne Halt weiter.', '23:03 Uhr: Briefkasten der Hafenmeisterei, eine Minute Halt. Der Briefkasten wird erst morgens geleert.', '23:06 Uhr: Parkplatz, Ronjas Auto.'],
+      frage: 'Wo liegt das Kaufangebot jetzt?',
+      optionen: ['Achterkajüte', 'Steg C', 'Briefkasten der Hafenmeisterei', 'Ronjas Auto'], loesung: 2,
+      tipp: 'Die Mappe kam leer am Auto an. Wo hat sie unterwegs angehalten?',
+      erklaerung: 'In der Achterkajüte nahm Ronja das Angebot an sich, im Auto war die Mappe leer. Unterwegs hielt der Tracker nur einmal, eine Minute am Briefkasten der Hafenmeisterei. Ronja schickte das Angebot an sich selbst, um den Kauf für einen anderen Mandanten zu verzögern.' }
+  ],
+  schluss: 'Voss: „Eine Anwältin, die Post an sich selbst schickt.“ – Sie: „Sie wollte die Frist gewinnen. Sie hat nur Zeit verloren.“'
+}
+];
+
+
+const AMAZON_URL = 'AMAZON-URL-HIER';
+const PROBE_IDS = ['b01', 'b02'];
+const PROBE = new URLSearchParams(location.search).get('zugang') === 'probe';
+const KEY = 'mcf-bonus-v1';
+
+let S;
+try { S = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { S = {}; }
+S.lv = S.lv || {};        // caseId -> [state,state,state]  state: 0 open, 1 solved, 2 revealed
+S.tries = S.tries || {};  // caseId-level -> number of wrong answers
+S.notes = S.notes || {};
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const lv = id => S.lv[id] || [0, 0, 0];
+const caseDone = id => lv(id).every(x => x > 0);
+const locked = c => PROBE && !PROBE_IDS.includes(c.id);
+const initials = n => n.split(' ').map(w => w[0]).join('').slice(0, 2);
+
+const HAT = '<svg class="hat" viewBox="0 0 64 64" aria-hidden="true"><circle cx="27" cy="27" r="15" fill="none" stroke="#d4b46a" stroke-width="5"/><line x1="38" y1="38" x2="55" y2="55" stroke="#d4b46a" stroke-width="7" stroke-linecap="round"/></svg>';
+
+function home() {
+  const done = CASES.filter(c => !locked(c) && caseDone(c.id)).length;
+  const avail = PROBE ? PROBE_IDS.length : CASES.length;
+  app.innerHTML = `
+    <header class="brand">${HAT}
+      <div class="s">SHERLOCK</div>
+      <div class="m">MODERN CRIME FILES</div>
+      <div class="rule"></div>
+    </header>
+    <p class="kicker" style="text-align:center;margin:16px 0 0">Bonus-Fallarchiv</p>
+    <p class="lead">${PROBE
+      ? 'Zwei Fälle aus dem Bonusarchiv zum Ausprobieren. Drei Ebenen pro Fall, jede Antwort wird direkt geprüft.'
+      : 'Zehn neue Fälle nach dem Buch. Drei Ebenen pro Fall, jede Antwort wird direkt geprüft, Tipp und Lösungsweg inklusive.'}</p>
+    ${PROBE ? `<div class="notice">Sie spielen die Probefassung. Die übrigen acht Bonusfälle sind für Leserinnen und Leser des Buchs freigeschaltet, zusammen mit den 20 Fällen im Buch selbst.${AMAZON_URL.startsWith('http') ? ` <a href="${AMAZON_URL}" target="_blank" rel="noopener">Zum Buch auf Amazon</a>` : ''}</div>` : ''}
+    <div class="progress">
+      <div class="row"><span class="kicker">Fortschritt</span><b>${done} von ${avail} Fällen gelöst</b></div>
+      <div class="bar"><i style="width:${Math.round(done / avail * 100)}%"></i></div>
+    </div>
+    <div class="list">
+      ${CASES.map(c => {
+        const l = lv(c.id), lock = locked(c), d = caseDone(c.id);
+        return `<button class="card${lock ? ' locked' : ''}${d ? ' done' : ''}" data-id="${c.id}" ${lock ? 'aria-disabled="true"' : ''}>
+          <span class="no">${c.nr}</span>
+          <span><span class="t">${esc(c.titel)}</span>
+            <span class="o" style="display:block">${esc(c.ort)} · <span style="white-space:nowrap">${esc(c.zeit)}</span></span>
+            <span class="dots">${lock ? '<span class="tag" style="margin:0">Im Buch freigeschaltet</span>'
+              : l.map(x => `<span class="dot${x ? ' on' : ''}"></span>`).join('') + `<span class="tag">${c.stufe}</span>`}</span>
+          </span>
+          <span class="go" aria-hidden="true">${lock ? '🔒' : '›'}</span>
+        </button>`;
+      }).join('')}
+    </div>
+    <footer>
+      <div class="priv">🔒 Ohne Account. Ihr Fortschritt bleibt auf diesem Gerät.</div><br>
+      <button class="reset" id="reset">Fortschritt zurücksetzen</button>
+      <p>© 2026 Munich Publishing · Personen und Ereignisse sind fiktiv.</p>
+    </footer>`;
+  app.querySelectorAll('.card').forEach(b => b.onclick = () => {
+    const c = CASES.find(x => x.id === b.dataset.id);
+    if (locked(c)) return;
+    location.hash = c.id;
+  });
+  document.getElementById('reset').onclick = () => {
+    if (confirmReset()) { S = { lv: {}, tries: {}, notes: {} }; save(); home(); }
+  };
+}
+
+// inline confirmation instead of a blocking browser dialog
+let resetArmed = false;
+function confirmReset() {
+  const b = document.getElementById('reset');
+  if (!resetArmed) { resetArmed = true; b.textContent = 'Wirklich alles zurücksetzen? Zum Bestätigen erneut tippen.'; setTimeout(() => { resetArmed = false; if (b.isConnected) b.textContent = 'Fortschritt zurücksetzen'; }, 4000); return false; }
+  resetArmed = false; return true;
+}
+
+function view(id) {
+  const c = CASES.find(x => x.id === id);
+  if (!c || locked(c)) { location.hash = ''; return; }
+  const l = lv(c.id);
+  const idx = CASES.indexOf(c);
+  let next = CASES.slice(idx + 1).find(x => !locked(x));
+  app.innerHTML = `
+    <div class="top"><button class="back" id="back">‹ Fallarchiv</button><span class="crumb">Bonusfall ${c.nr}</span></div>
+    <article class="hero">
+      <div class="band"><span>${esc(c.ort)}</span><span>${esc(c.zeit)}</span></div>
+      <div class="in">
+        <div class="kicker">Bonusfall ${c.nr} · ${c.stufe}</div>
+        <h1 class="ct">${esc(c.titel)}</h1>
+        ${c.intro.map(p => `<p>${esc(p)}</p>`).join('')}
+        <div class="dialog">${esc(c.dialog)}</div>
+      </div>
+    </article>
+    <section class="sec"><h2>Gesicherte Fakten</h2><ul class="facts">${c.fakten.map(f => `<li>${esc(f)}</li>`).join('')}</ul></section>
+    <section class="sec"><h2>Beteiligte</h2><div class="people">${c.personen.map(p => `<div class="person"><span class="av">${initials(p[0])}</span><span><b>${esc(p[0])}</b><small>${esc(p[1])}</small></span></div>`).join('')}</div></section>
+    ${c.ebenen.map((e, i) => level(c, e, i, l)).join('')}
+    ${caseDone(c.id) ? `<div class="end"><div class="kicker">Fall abgeschlossen</div><div class="big">${esc(c.ebenen[0].optionen[c.ebenen[0].loesung])} · ${esc(c.ebenen[1].optionen[c.ebenen[1].loesung])} · ${esc(c.ebenen[2].optionen[c.ebenen[2].loesung])}</div><div class="dialog">${esc(c.schluss)}</div>${next ? `<a class="btn" href="#${next.id}">Nächster Fall: ${esc(next.titel)} ›</a>` : '<a class="btn" href="#">Zurück zum Fallarchiv</a>'}</div>` : ''}
+    <section class="sec"><h2>Notizen des Ermittlers</h2><textarea id="notes" placeholder="Platz für Ihre Überlegungen. Wird nur auf diesem Gerät gespeichert.">${esc(S.notes[c.id] || '')}</textarea></section>`;
+  document.getElementById('back').onclick = () => { location.hash = ''; };
+  document.getElementById('notes').oninput = ev => { S.notes[c.id] = ev.target.value; save(); };
+  app.querySelectorAll('.opt').forEach(b => b.onclick = () => answer(c, +b.dataset.l, +b.dataset.o));
+  app.querySelectorAll('[data-tip]').forEach(b => b.onclick = () => { document.getElementById('tip-' + b.dataset.tip).classList.remove('hidden'); b.remove(); });
+  app.querySelectorAll('[data-reveal]').forEach(b => b.onclick = () => reveal(c, +b.dataset.reveal));
+}
+
+function level(c, e, i, l) {
+  const open = i === 0 || l[i - 1] > 0;
+  const st = l[i];
+  const head = `<div class="hd"><span class="k">Ebene ${i + 1} · ${esc(e.typ)}</span><span class="st${st ? ' ok' : ''}">${st === 1 ? '✓ gelöst' : st === 2 ? '✓ aufgedeckt' : open ? 'offen' : 'gesperrt'}</span></div>`;
+  if (!open) return `<section class="lvl locked">${head}<div class="bd">Lösen Sie zuerst Ebene ${i}. Diese Ebene baut auf dem Ergebnis auf.</div></section>`;
+  const tries = S.tries[c.id + i] || 0;
+  return `<section class="lvl" id="lvl-${i}">${head}<div class="bd">
+    <p class="anl">${esc(e.anleitung)}</p>
+    <ul class="hints">${e.hinweise.map(h => `<li>${esc(h)}</li>`).join('')}</ul>
+    <p class="q">● ${esc(e.frage)}</p>
+    <div class="opts">${e.optionen.map((o, k) => `<button class="opt${st && k === e.loesung ? ' right' : ''}" data-l="${i}" data-o="${k}" ${st ? 'disabled' : ''}>${esc(o)}</button>`).join('')}</div>
+    <div class="fb" id="fb-${i}" aria-live="polite">${st === 1 ? '<span class="good">Richtig. Die Akte stützt genau diese Antwort.</span>' : ''}</div>
+    ${st ? `<div class="sol"><b>Lösungsweg</b>${esc(e.erklaerung)}</div>` : `
+      <div class="tools"><button class="link" data-tip="${i}">Tipp anzeigen</button>${tries ? `<button class="link" data-reveal="${i}">Auflösung zeigen</button>` : ''}</div>
+      <div class="tip hidden" id="tip-${i}"><b>Tipp</b>${esc(e.tipp)}</div>`}
+  </div></section>`;
+}
+
+function answer(c, i, o) {
+  const e = c.ebenen[i];
+  if (o === e.loesung) {
+    const l = lv(c.id).slice(); l[i] = 1; S.lv[c.id] = l; save();
+    view(c.id);
+    const el = document.getElementById(i < 2 ? 'lvl-' + (i + 1) : 'lvl-2');
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: i < 2 ? 'start' : 'center' });
+  } else {
+    S.tries[c.id + i] = (S.tries[c.id + i] || 0) + 1; save();
+    const btn = app.querySelector(`.opt[data-l="${i}"][data-o="${o}"]`);
+    btn.classList.add('wrong'); btn.disabled = true;
+    document.getElementById('fb-' + i).innerHTML = '<span class="bad">Nicht schlüssig. Mindestens ein Hinweis passt nicht zu dieser Antwort.</span>';
+    const tools = btn.closest('.bd').querySelector('.tools');
+    if (tools && !tools.querySelector('[data-reveal]')) {
+      const r = document.createElement('button'); r.className = 'link'; r.dataset.reveal = i; r.textContent = 'Auflösung zeigen';
+      r.onclick = () => reveal(c, i); tools.appendChild(r);
+    }
+  }
+}
+
+function reveal(c, i) {
+  const l = lv(c.id).slice(); l[i] = 2; S.lv[c.id] = l; save();
+  view(c.id);
+  const el = document.getElementById('lvl-' + i); if (el) el.scrollIntoView({ block: 'start' });
+}
+
+function route() {
+  const id = location.hash.slice(1);
+  if (id) view(id); else home();
+  window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+route();
+
+/* install hint */
+(function () {
+  const box = document.getElementById('install'), btn = document.getElementById('installBtn'), txt = document.getElementById('installText');
+  let dismissed = false; try { dismissed = localStorage.getItem('mcf-install-x') === '1'; } catch (e) {}
+  const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+  if (dismissed || standalone) return;
+  let deferred = null;
+  window.addEventListener('beforeinstallprompt', ev => { ev.preventDefault(); deferred = ev; btn.classList.remove('hidden'); box.classList.remove('hidden'); });
+  btn.onclick = async () => { if (!deferred) return; deferred.prompt(); await deferred.userChoice; deferred = null; box.classList.add('hidden'); };
+  const ios = /iphone|ipad|ipod/i.test(navigator.userAgent) && !/crios|fxios/i.test(navigator.userAgent);
+  if (ios) { txt.innerHTML = 'Als App nutzen: in Safari auf <b>Teilen</b> tippen, dann <b>Zum Home-Bildschirm</b>.'; setTimeout(() => box.classList.remove('hidden'), 2500); }
+  document.getElementById('installX').onclick = () => { box.classList.add('hidden'); try { localStorage.setItem('mcf-install-x', '1'); } catch (e) {} };
+})();
+</script>
+</body>
+</html>

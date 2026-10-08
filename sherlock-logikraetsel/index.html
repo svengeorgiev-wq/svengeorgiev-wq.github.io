@@ -2,6 +2,22 @@
 <html lang="de">
   <head>
     <meta charset="utf-8">
+<script>
+/* Zugang nach E-Mail-Eintrag: Danke-Seite (?zugang=1), Bestandsnutzer und Klicks aus der Bestätigung kommen rein, alle anderen auf die Landingpage */
+(function () {
+  try {
+    if (window.top !== window.self) return;
+    var key = "mp-zugang-sherlock-logikraetsel";
+    var ok = /[?&]zugang=1(&|#|$)/.test(location.search + location.hash);
+    if (/^https?:\/\/(bonus\.munichpublishing\.de|[a-z0-9.-]*mailerlite\.com|[a-z0-9.-]*mlsend\.com|[a-z0-9.-]*mailerpage\.io)\//i.test(document.referrer || "")) ok = true;
+    try {
+      if (localStorage.getItem(key) === "1") ok = true;
+      if (ok) localStorage.setItem(key, "1");
+    } catch (e) { ok = true; }
+    if (!ok) location.replace("https://munichpublishing.de/sherlock-logikraetsel?utm_source=app&utm_medium=sperre&utm_campaign=sherlock-logikraetsel");
+  } catch (e) {}
+})();
+</script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Sherlock Holmes Logikraetsel: leichte und mittelschwere Textfaelle mit Loesung.">
     <title>Sherlock Logikraetsel</title>

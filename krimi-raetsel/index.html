@@ -2,6 +2,23 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+<script>
+/* Zugang nach E-Mail-Eintrag: Danke-Seite (?zugang=1), Bestandsnutzer und Klicks aus der Bestätigung kommen rein, alle anderen auf die Landingpage */
+(function () {
+  try {
+    if (window.top !== window.self) return;
+    var key = "mp-zugang-krimi-raetsel";
+    var ok = /[?&]zugang=1(&|#|$)/.test(location.search + location.hash);
+    if (/^https?:\/\/(bonus\.munichpublishing\.de|[a-z0-9.-]*mailerlite\.com|[a-z0-9.-]*mlsend\.com|[a-z0-9.-]*mailerpage\.io)\//i.test(document.referrer || "")) ok = true;
+    try {
+      if (localStorage.getItem(key) === "1") ok = true;
+      if (localStorage.getItem("krimi-raetsel-light-v1")) ok = true;
+      if (ok) localStorage.setItem(key, "1");
+    } catch (e) { ok = true; }
+    if (!ok) location.replace("https://munichpublishing.de/krimi-raetsel?utm_source=app&utm_medium=sperre&utm_campaign=krimi-raetsel");
+  } catch (e) {}
+})();
+</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#073d35">
   <title>Krimi-Rätsel</title>

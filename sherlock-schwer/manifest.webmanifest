@@ -4,7 +4,7 @@
   "short_name": "Sherlock Schwer",
   "description": "Buchbegleiter und schwerer textbasierter Bonusfall in vier logisch aufeinander aufbauenden Ebenen.",
   "lang": "de-DE",
-  "start_url": "./#start",
+  "start_url": "./?zugang=1#start",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",

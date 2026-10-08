@@ -133,7 +133,7 @@
           <div class="hero__copy">
             <span class="eyebrow">ADHS und Overthinking im Dezember</span>
             <h1>Heute reicht <span>heute.</span></h1>
-            <p>31 geführte Tage, dein täglicher Ampel-Check und kurze Audio-Begleitung. Ohne Anmeldung, ohne Abo, ohne Streak-Druck.</p>
+            <p>31 geführte Tage, dein täglicher Ampel-Check und kurze Audio-Begleitung. Ohne Account, ohne Abo, ohne Streak-Druck.</p>
             <div class="hero__actions">
               <button class="button button--primary" type="button" data-scroll-today>Tag ${day.day} öffnen</button>
               <button class="button button--secondary" type="button" data-route="help">Ich brauche Ampel-Hilfe</button>

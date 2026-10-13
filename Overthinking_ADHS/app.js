@@ -200,6 +200,7 @@
 
       <div class="day-layout">
         <section class="panel exercise">
+          ${renderDayAudio(day)}
           <div class="exercise__section">
             <span class="section-label">1 · Kurz einchecken</span>
             <h2>Wie laut ist dein Kopf gerade?</h2>
@@ -237,6 +238,21 @@
           </div>
         </aside>
       </div>
+    </div>`;
+  }
+
+  function findDayAudio(dayNumber) {
+    return (window.DAY_AUDIOS || []).find((audio) => audio.day === dayNumber);
+  }
+
+  function renderDayAudio(day) {
+    const audio = findDayAudio(day.day);
+    if (!audio) return "";
+    return `<div class="exercise__section day-audio">
+      <span class="section-label">Zum Anhören · ${escapeHtml(audio.duration)}</span>
+      <h2>Lieber hören statt lesen?</h2>
+      <p>Das Audio führt dich durch den Mini-Schritt von heute. Wenn du mehr Zeit zum Aufschreiben brauchst, drück einfach auf Pause.</p>
+      <audio controls preload="none" src="${escapeHtml(audio.file)}" aria-label="Audio zu Tag ${day.day} abspielen">Dein Browser unterstützt die Audiowiedergabe nicht. <a href="${escapeHtml(audio.file)}">MP3 herunterladen</a>.</audio>
     </div>`;
   }
 
@@ -303,9 +319,10 @@
 
   function renderListen() {
     const audioTracks = window.AUDIO_TRACKS || [];
+    const dayAudios = window.DAY_AUDIOS || [];
     main.innerHTML = `<div class="view audio-view">
       <header class="page-head audio-head">
-        <div><span class="eyebrow">Vier Impulse für laute Kopf-Momente</span><h1>Zum <span class="gradient-text">Anhören</span></h1><p>Drück auf Play und nimm dir nur den Impuls, der gerade zu deinem Moment passt. Die Audios sind jederzeit und unabhängig vom 21-Tage-Plan verfügbar.</p></div>
+        <div><span class="eyebrow">${dayAudios.length ? `${dayAudios.length} Tages-Audios und vier Impulse` : "Vier Impulse für laute Kopf-Momente"}</span><h1>Zum <span class="gradient-text">Anhören</span></h1><p>Drück auf Play und nimm dir nur den Impuls, der gerade zu deinem Moment passt. Die Audios sind jederzeit und unabhängig vom 21-Tage-Plan verfügbar.</p></div>
         <div class="audio-head__mark" aria-hidden="true">♫</div>
       </header>
       ${renderAudiobookCard()}
@@ -313,7 +330,24 @@
       <section class="audio-list" aria-label="Audio-Impulse">
         ${audioTracks.map(renderAudioTrack).join("")}
       </section>
+      ${dayAudios.length ? `<section class="audio-days" aria-label="Tages-Audios zum 21-Tage-Plan">
+        <div class="audio-days__head"><span class="eyebrow">Dein 21-Tage-Plan zum Anhören</span><h2>Ein Audio für jeden Tag</h2><p>Jedes Audio führt dich durch den Mini-Schritt des Tages. Wenn du mehr Zeit zum Aufschreiben brauchst, drück einfach auf Pause.</p></div>
+        <div class="audio-list">${dayAudios.map(renderDayAudioCard).join("")}</div>
+      </section>` : ""}
     </div>`;
+  }
+
+  function renderDayAudioCard(audio) {
+    const day = days.find((item) => item.day === audio.day);
+    if (!day) return "";
+    const week = getWeek(day.week);
+    return `<article class="audio-card" id="tag-audio-${day.day}" style="--week-color:${week.color}">
+      <div class="audio-card__number audio-card__number--day" aria-hidden="true">${String(day.day).padStart(2, "0")}</div>
+      <div class="audio-card__content">
+        <div class="audio-card__head"><div><h2>Tag ${day.day}: ${escapeHtml(day.title)}</h2><p>Woche ${week.id} · ${escapeHtml(week.short)} · <button class="text-link" type="button" data-hash="day-${day.day}">Zum Tagesmodul →</button></p></div><span class="audio-duration">${escapeHtml(audio.duration)}</span></div>
+        <audio controls preload="none" src="${escapeHtml(audio.file)}" aria-label="Audio zu Tag ${day.day} abspielen">Dein Browser unterstützt die Audiowiedergabe nicht. <a href="${escapeHtml(audio.file)}">MP3 herunterladen</a>.</audio>
+      </div>
+    </article>`;
   }
 
   function renderAudiobookCard() {

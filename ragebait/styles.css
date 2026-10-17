@@ -10,10 +10,7 @@ body { background: #f2f2f2; color: #000; font-family: "Inter", system-ui, sans-s
 .screen { flex: 1; display: flex; flex-direction: column; }
 [hidden] { display: none !important; }
 
-.cover { position: relative; background: #000; color: #fff; border-radius: 6px; padding: 26px 20px 22px; overflow: hidden; box-shadow: 6px 6px 0 #9a9a9a; }
-.cover-hook { position: absolute; right: 14px; top: -10px; width: 64px; height: 166px; }
-.cover-word { font-family: "Anton", sans-serif; font-size: 58px; line-height: 0.95; margin-top: 54px; letter-spacing: 0.5px; }
-.cover-sub { font-weight: 800; font-size: 15px; margin-top: 8px; max-width: 75%; }
+.cover { display: block; width: 62%; max-width: 280px; height: auto; margin: 0 auto; border-radius: 3px; box-shadow: 6px 6px 0 #9a9a9a; }
 
 .tag { display: inline-block; align-self: flex-start; background: #000; color: #fff; font-weight: 800; font-size: 12px; letter-spacing: 1.6px; padding: 4px 10px; margin-top: 22px; transform: rotate(-2deg); }
 h1 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 44px; line-height: 1; margin-top: 10px; transform: rotate(-1.5deg); transform-origin: left center; }

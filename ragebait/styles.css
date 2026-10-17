@@ -1,0 +1,67 @@
+@font-face { font-family: "Anton"; src: url("assets/anton-latin-400-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Inter"; font-weight: 400; src: url("assets/inter-latin-400-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Inter"; font-weight: 700; src: url("assets/inter-latin-700-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Inter"; font-weight: 800; src: url("assets/inter-latin-800-normal.woff2") format("woff2"); font-display: swap; }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body { background: #f2f2f2; color: #000; font-family: "Inter", system-ui, sans-serif; font-size: 17px; line-height: 1.45; }
+.app { max-width: 520px; margin: 0 auto; min-height: 100vh; background: #fff; padding: 20px 16px 24px; display: flex; flex-direction: column; }
+.screen { flex: 1; display: flex; flex-direction: column; }
+[hidden] { display: none !important; }
+
+.cover { position: relative; background: #000; color: #fff; border-radius: 6px; padding: 26px 20px 22px; overflow: hidden; box-shadow: 6px 6px 0 #9a9a9a; }
+.cover-hook { position: absolute; right: 14px; top: -10px; width: 64px; height: 166px; }
+.cover-word { font-family: "Anton", sans-serif; font-size: 58px; line-height: 0.95; margin-top: 54px; letter-spacing: 0.5px; }
+.cover-sub { font-weight: 800; font-size: 15px; margin-top: 8px; max-width: 75%; }
+
+.tag { display: inline-block; align-self: flex-start; background: #000; color: #fff; font-weight: 800; font-size: 12px; letter-spacing: 1.6px; padding: 4px 10px; margin-top: 22px; transform: rotate(-2deg); }
+h1 { font-family: "Anton", sans-serif; font-weight: 400; font-size: 44px; line-height: 1; margin-top: 10px; transform: rotate(-1.5deg); transform-origin: left center; }
+.lead { font-size: 18px; font-weight: 700; margin-top: 14px; }
+.facts { list-style: none; margin: 14px 0 6px; border-top: 2px solid #000; }
+.facts li { padding: 8px 0; border-bottom: 1px solid #000; }
+.small { font-size: 13px; color: #333; margin-top: 12px; }
+.center { text-align: center; }
+
+.btn { margin-top: 18px; width: 100%; min-height: 54px; border: 2.5px solid #000; border-radius: 8px; background: #000; color: #fff; font: 800 18px "Inter", sans-serif; cursor: pointer; box-shadow: 4px 4px 0 #9a9a9a; }
+.btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #9a9a9a; }
+.btn:disabled { background: #fff; color: #8a8a8a; border-color: #bdbdbd; box-shadow: none; cursor: default; }
+.btn.ghost { background: #fff; color: #000; }
+.btn:focus-visible, .comments button:focus-visible { outline: 3px solid #e0b000; outline-offset: 2px; }
+
+.bar { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2.5px solid #000; padding-bottom: 6px; }
+.level { font-family: "Anton", sans-serif; font-size: 28px; line-height: 1; }
+.level small { font-family: "Inter", sans-serif; font-weight: 800; font-size: 11px; letter-spacing: 1.4px; margin-left: 8px; vertical-align: 5px; }
+.count { font-family: "Anton", sans-serif; font-size: 22px; }
+.progress { height: 6px; background: #dcdcdc; margin-top: 8px; border-radius: 3px; overflow: hidden; }
+.progress span { display: block; height: 100%; background: #000; width: 0; transition: width .3s; }
+
+.post { margin-top: 16px; border: 2px solid #000; border-radius: 10px; padding: 12px 14px; background: #ededed; }
+.post-head { display: flex; align-items: center; gap: 8px; font-size: 15px; }
+.ava { width: 28px; height: 28px; border-radius: 50%; background: #6b6b6b; display: inline-block; }
+.post p { margin-top: 8px; font-size: 17px; font-weight: 700; }
+.hint { margin-top: 14px; font-weight: 800; }
+
+.comments { list-style: none; margin-top: 8px; display: flex; flex-direction: column; gap: 8px; }
+.comments button { width: 100%; text-align: left; display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; padding: 10px 12px; border: 2px solid #000; border-radius: 10px; background: #fff; color: #000; font: 400 16px/1.4 "Inter", sans-serif; cursor: pointer; }
+.comments .nr { font-family: "Anton", sans-serif; font-size: 22px; line-height: 1; text-align: center; padding-top: 1px; }
+.comments .user { display: block; font-weight: 800; font-size: 14px; }
+.comments button.sel { background: #000; color: #fff; }
+.comments button.troll { background: #000; color: #fff; box-shadow: 0 0 0 3px #e0b000; }
+.comments button.falsch { background: #fff; color: #000; border-style: dashed; text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.comments button:disabled { cursor: default; }
+
+.feedback { margin-top: 14px; border-left: 5px solid #000; padding: 4px 0 4px 12px; }
+.verdict { font-family: "Anton", sans-serif; font-size: 30px; line-height: 1.05; }
+.feedback p + p { margin-top: 6px; }
+
+.rank-card { margin-top: 14px; border: 3px solid #000; border-radius: 12px; padding: 22px 18px; box-shadow: 7px 7px 0 #000; background: #fff; }
+.rank { font-family: "Anton", sans-serif; font-size: 52px; line-height: 1; }
+.rank-line { font-weight: 800; font-size: 19px; margin-top: 8px; }
+.score { margin-top: 14px; border-top: 2px solid #000; padding-top: 10px; font-size: 15px; }
+.buch { margin-top: 20px; font-weight: 700; }
+
+footer { margin-top: 28px; border-top: 1.5px solid #000; padding-top: 10px; display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: #333; }
+footer a { color: #000; font-weight: 700; }
+
+@media (min-width: 560px) { .app { margin: 24px auto; min-height: auto; border: 2px solid #000; border-radius: 12px; } }

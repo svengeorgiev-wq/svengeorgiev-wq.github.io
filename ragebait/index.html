@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#000000">
+  <title>Finde den Troll – Ragebait</title>
+  <meta name="description" content="Bonus zum Rätselbuch Ragebait: zehn neue Fälle Finde den Troll, ohne Account.">
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css?v=20261017">
+</head>
+<body>
+  <main class="app">
+    <section id="start" class="screen">
+      <div class="cover" aria-hidden="true">
+        <svg class="cover-hook" viewBox="0 0 200 520" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M120 -40 L120 120" stroke="#fff" stroke-width="5"/>
+          <ellipse cx="120" cy="150" rx="16" ry="20" stroke="#fff" stroke-width="10"/>
+          <path d="M120 172 L120 360 C120 450 20 460 20 380 L20 300" stroke="#fff" stroke-width="22"/>
+          <path d="M9 304 L20 246 L31 304 Z" fill="#fff" stroke="#fff" stroke-width="3"/>
+        </svg>
+        <div class="cover-word">RAGEBAIT</div>
+        <div class="cover-sub">150 Rätsel, die dich absichtlich reinlegen.</div>
+      </div>
+      <p class="tag">BONUS ZUM BUCH</p>
+      <h1>Finde den Troll.<br>Online.</h1>
+      <p class="lead">10 neue Fälle, die nicht im Buch stehen. Unter jedem Post provoziert genau ein Kommentar absichtlich. Tipp ihn an.</p>
+      <ul class="facts">
+        <li><b>5 × Chill</b> je 1 Punkt</li>
+        <li><b>5 × Ragebait</b> je 2 Punkte</li>
+        <li>Am Ende: dein Rang, von Geködert bis Peak</li>
+      </ul>
+      <button class="btn" id="los" type="button">Los geht’s</button>
+      <p class="small">Ohne Account, ohne Name, ohne E-Mail. Es wird nichts gespeichert und nichts gesendet.</p>
+    </section>
+
+    <section id="fall" class="screen" hidden>
+      <div class="bar">
+        <span id="stufe" class="level"></span>
+        <span id="zaehler" class="count"></span>
+      </div>
+      <div class="progress" aria-hidden="true"><span id="fortschritt"></span></div>
+      <article class="post">
+        <div class="post-head"><span class="ava" aria-hidden="true"></span><b id="autor"></b></div>
+        <p id="posttext"></p>
+      </article>
+      <p class="hint" id="hinweis">Welcher Kommentar ist der Troll?</p>
+      <ol class="comments" id="kommentare"></ol>
+      <div class="feedback" id="feedback" hidden>
+        <p class="verdict" id="urteil"></p>
+        <p id="erklaerung"></p>
+      </div>
+      <button class="btn" id="aktion" type="button" disabled>Das ist der Troll</button>
+    </section>
+
+    <section id="ende" class="screen" hidden>
+      <p class="tag">DEIN RANG</p>
+      <div class="rank-card">
+        <div class="rank" id="rang"></div>
+        <div class="rank-line" id="rangsatz"></div>
+        <div class="score"><span id="punkte"></span> von 15 Punkten · <span id="treffer"></span> von 10 Trollen erwischt</div>
+      </div>
+      <button class="btn" id="teilen" type="button">Rang teilen</button>
+      <p class="small center" id="geteilt" hidden>Link kopiert. Schick ihn an die Person, die dir das Buch geschenkt hat.</p>
+      <button class="btn ghost" id="nochmal" type="button">Nochmal spielen</button>
+      <p class="buch">Im Buch warten 24 weitere Trolle. Und Crashout, die Stufe, die es online nicht gibt.</p>
+    </section>
+
+    <footer>
+      <span>Ragebait · Nice Try Studio · Munich Publishing</span>
+      <a href="https://munichpublishing.de/impressum" target="_blank" rel="noopener">Impressum</a>
+    </footer>
+  </main>
+  <script src="faelle.js?v=20261017"></script>
+  <script src="app.js?v=20261017"></script>
+</body>
+</html>

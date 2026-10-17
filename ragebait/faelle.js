@@ -1,5 +1,5 @@
 // Finde den Troll – 10 Online-Fälle zum Buch „Ragebait“. Keiner davon steht im Buch.
-// stufe: "chill" (1 Punkt) oder "ragebait" (2 Punkte); troll: Position 1 bis 5
+// stufe: "chill" (1 Punkt) oder "ragebait" (2 Punkte); troll: Position 1 bis 5 in der Grundreihenfolge (die App mischt die Kommentare)
 window.FAELLE = [
   {
     "stufe": "chill",
@@ -20,7 +20,7 @@ window.FAELLE = [
       ],
       [
         "limo_33",
-        "Zu kalt. Ich bin drin geblieben."
+        "Zu kalt. Schnee nervt einfach, ich bin drin geblieben."
       ],
       [
         "wolle_k",
@@ -28,7 +28,7 @@ window.FAELLE = [
       ]
     ],
     "troll": 3,
-    "l": "Alle erzählen, wie es bei ihnen war. Nummer 3 erklärt alle, die mitmachen, für peinlich, ohne dass jemand gefragt hat. Nummer 4 macht auch nicht mit, redet aber nur über sich."
+    "l": "Alle erzählen, wie es bei ihnen war. trommel_7 erklärt alle, die mitmachen, für peinlich, ohne dass jemand gefragt hat. limo_33 macht auch nicht mit, redet aber nur über sich."
   },
   {
     "stufe": "chill",
@@ -57,36 +57,36 @@ window.FAELLE = [
       ]
     ],
     "troll": 1,
-    "l": "Nummer 1 unterstellt etwas ohne jeden Grund und verlangt einen Beweis. So zwingt er dich zu antworten. Nummer 3 schreit, will aber nur das Rezept."
+    "l": "gabel_58 unterstellt etwas ohne jeden Grund und verlangt einen Beweis. So zwingt er dich zu antworten. kompass_2 schreit, will aber nur das Rezept."
   },
   {
     "stufe": "chill",
     "autor": "ziegel_8",
-    "post": "Fahrrad endlich repariert. Die Kette hält wieder.",
+    "post": "Endlich den letzten Boss geschafft. Drei Tage hat’s gedauert.",
     "k": [
       [
         "mango_17",
-        "nice, selbst gemacht?"
+        "nice, welcher boss?"
       ],
       [
         "stift.b",
-        "Meins quietscht seit Wochen."
+        "Ich häng da seit Wochen fest."
       ],
       [
         "anker_62",
-        "Ich krieg die Kette nie drauf, wie hast du das gemacht?"
+        "Ich krieg den nie, wie hast du das gemacht?"
       ],
       [
         "wal_23",
-        "wen interessiert dein fahrrad. schaut lieber in die klassengruppe, da wird gerade über dich gelästert"
+        "wen interessiert dein spiel. schau lieber in die klassengruppe, da wird gerade über dich gelästert"
       ],
       [
         "krokus_5",
-        "Jetzt noch das Licht reparieren, meins geht nie."
+        "Jetzt kommt das Ende, das ist noch schwerer."
       ]
     ],
     "troll": 4,
-    "l": "Nummer 4 lenkt vom Thema ab und streut ein Gerücht, das niemand prüfen kann. Er will Unruhe, keine Antwort zum Fahrrad. Alle anderen bleiben beim Fahrrad."
+    "l": "wal_23 lenkt vom Thema ab und streut ein Gerücht, das niemand prüfen kann. Er will Unruhe, keine Antwort zum Spiel. Alle anderen bleiben beim Spiel."
   },
   {
     "stufe": "chill",
@@ -95,7 +95,7 @@ window.FAELLE = [
     "k": [
       [
         "kekse_77",
-        "komm ich"
+        "komm ich, aber nur wenn’s nicht wieder zwei Stunden dauert"
       ],
       [
         "flocke.t",
@@ -111,11 +111,11 @@ window.FAELLE = [
       ],
       [
         "bohne_46",
-        "Schulbands sind das Schlimmste. Wer da hingeht, hat Ohren aus Holz."
+        "Schulbands sind das Schlimmste. Wer da hingeht, hat einfach keinen Geschmack."
       ]
     ],
     "troll": 5,
-    "l": "Nummer 5 übertreibt maßlos und beleidigt alle, die hingehen wollen. Nummer 4 ist laut, aber vor Vorfreude."
+    "l": "bohne_46 übertreibt maßlos und beleidigt alle, die hingehen wollen. hummer_9 ist laut, aber vor Vorfreude."
   },
   {
     "stufe": "chill",
@@ -144,7 +144,7 @@ window.FAELLE = [
       ]
     ],
     "troll": 2,
-    "l": "Nummer 2 behauptet etwas Falsches mit großer Sicherheit („steht schon überall“) und ruft zum Schwänzen auf. Wer ihm glaubt, fehlt morgen und hat Ärger."
+    "l": "tonne_53 behauptet etwas Falsches mit großer Sicherheit („steht schon überall“) und ruft zum Schwänzen auf. Wer ihm glaubt, fehlt morgen und hat Ärger."
   },
   {
     "stufe": "ragebait",
@@ -173,7 +173,7 @@ window.FAELLE = [
       ]
     ],
     "troll": 2,
-    "l": "Nummer 2 klingt sachlich, macht aber die Freude kaputt, ohne dass es einen Anlass gibt. Der Haken: Nummer 5 klingt ähnlich, redet aber über das eigene Team. Nummer 1 ist laut, aber begeistert."
+    "l": "delfin.s klingt sachlich, macht aber die Freude kaputt, ohne dass es einen Anlass gibt. Der Haken: quark_22 klingt ähnlich, redet aber über das eigene Team. gecko_81 ist laut, aber begeistert."
   },
   {
     "stufe": "ragebait",
@@ -202,7 +202,7 @@ window.FAELLE = [
       ]
     ],
     "troll": 5,
-    "l": "Nummer 5 macht deinen Post klein und dir ein schlechtes Gewissen, das mit dem Post nichts zu tun hat. Er will, dass du dich verteidigst. Der Haken: Nummer 2 ist auch kritisch, gibt aber einen echten Grund und einen Rat."
+    "l": "taube_59 macht deinen Post klein und dir ein schlechtes Gewissen, das mit dem Post nichts zu tun hat. Er will, dass du dich verteidigst. Der Haken: kiwi.b ist auch kritisch, gibt aber einen echten Grund und einen Rat."
   },
   {
     "stufe": "ragebait",
@@ -215,7 +215,7 @@ window.FAELLE = [
       ],
       [
         "tomate_65",
-        "Ich lauf das jeden Tag, ist doch nicht viel."
+        "Ich lauf das jeden Tag, nach zwei Wochen merkst du es kaum noch. Mit Musik geht’s schneller."
       ],
       [
         "muschel_8",
@@ -231,7 +231,7 @@ window.FAELLE = [
       ]
     ],
     "troll": 4,
-    "l": "Nummer 4 erfindet eine Gefahr, beruft sich auf „alle Ärzte“ und reibt dir noch rein, dass du selbst schuld bist. Der Haken: Nummer 2 klingt abwertend, erzählt aber nur, wie es bei ihm ist."
+    "l": "kakao_27 erfindet eine Gefahr, beruft sich auf „alle Ärzte“ und reibt dir noch rein, dass du selbst schuld bist. Der Haken: tomate_65 klingt erst nach Angeberei, gibt dir aber einen Tipp."
   },
   {
     "stufe": "ragebait",
@@ -260,20 +260,20 @@ window.FAELLE = [
       ]
     ],
     "troll": 1,
-    "l": "Nummer 1 steckt alle Herbst-Fans in eine Schublade und macht sich über sie lustig. Ein Lager gegen das andere. Der Haken: Nummer 2 ist laut und duldet keine Widerrede, sagt aber nur die eigene Meinung."
+    "l": "leiter_3 steckt alle Herbst-Fans in eine Schublade und macht sich über sie lustig. Ein Lager gegen das andere. Der Haken: salami_6 ist laut und duldet keine Widerrede, sagt aber nur die eigene Meinung."
   },
   {
     "stufe": "ragebait",
     "autor": "harfe_57",
-    "post": "Mein Lieblingslied läuft gerade im Radio, so gut!",
+    "post": "Mein Lieblingslied kam gerade im Shuffle, so gut!",
     "k": [
       [
         "dose_21",
-        "welches?? sag den titel, ich hör grad auch radio"
+        "welches?? sag den titel, ich such neue lieder"
       ],
       [
         "lachs_k",
-        "Radio? Das hört bei uns nur meine Mutter im Auto. Aber wenn’s dein Lied ist, okay."
+        "Shuffle ist das Schlimmste, da kommt nie, was man will. Mach dir eine Playlist, dann kommt es öfter."
       ],
       [
         "wiesel_90",
@@ -281,7 +281,7 @@ window.FAELLE = [
       ],
       [
         "zebra.n",
-        "radio?? läuft bei uns nur im auto und da streiten wir uns immer, wer den sender aussuchen darf"
+        "bei mir kommt im shuffle immer dasselbe lied, egal wie oft ich skippe"
       ],
       [
         "kompott_7",
@@ -289,7 +289,7 @@ window.FAELLE = [
       ]
     ],
     "troll": 3,
-    "l": "Nummer 3 stellt eine Bedingung auf, die niemand verlangt hat, und fordert einen Beweis. Er will dich vorführen. Der Haken: Nummer 2 lästert übers Radio, lässt dir dein Lied aber."
+    "l": "wiesel_90 stellt eine Bedingung auf, die niemand verlangt hat, und fordert einen Beweis. Er will dich vorführen. Der Haken: lachs_k meckert über Shuffle, gibt dir aber einen Tipp."
   }
 ];
 

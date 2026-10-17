@@ -3,7 +3,15 @@
   var F = window.FAELLE, RAENGE = window.RAENGE;
   var URL_APP = "https://tools.munichpublishing.de/ragebait/";
   var $ = function (id) { return document.getElementById(id); };
-  var i = 0, punkte = 0, treffer = 0, wahl = 0, beantwortet = false;
+  var i = 0, punkte = 0, treffer = 0, wahl = 0, beantwortet = false, reihe = [], trollPos = 0;
+
+  function mischen(arr) {
+    var a = arr.slice();
+    for (var n = a.length - 1; n > 0; n--) { var r = Math.floor(Math.random() * (n + 1)); var t = a[n]; a[n] = a[r]; a[r] = t; }
+    return a;
+  }
+
+  function esc(t) { return t.replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
 
   function zeige(id) {
     ["start", "fall", "ende"].forEach(function (s) { $(s).hidden = s !== id; });
@@ -22,9 +30,12 @@
     $("posttext").textContent = f.post;
     $("hinweis").hidden = false;
     $("feedback").hidden = true;
+    var trollName = f.k[f.troll - 1][0];
+    reihe = mischen(f.k);
+    trollPos = reihe.findIndex(function (k) { return k[0] === trollName; }) + 1;
     var ol = $("kommentare");
     ol.innerHTML = "";
-    f.k.forEach(function (kom, j) {
+    reihe.forEach(function (kom, j) {
       var li = document.createElement("li");
       var b = document.createElement("button");
       b.type = "button";
@@ -57,17 +68,20 @@
   function aufloesen() {
     var f = F[i];
     beantwortet = true;
-    var richtig = wahl === f.troll;
+    var richtig = wahl === trollPos;
     if (richtig) { punkte += wert(f); treffer += 1; }
     knoepfe().forEach(function (b, j) {
       b.disabled = true;
       b.classList.remove("sel");
-      if (j + 1 === f.troll) b.classList.add("troll");
-      else if (j + 1 === wahl) b.classList.add("falsch");
+      if (j + 1 === trollPos) b.classList.add("troll");
+      else if (j + 1 === wahl) { b.classList.add("falsch"); b.querySelector(".user").textContent += " · dein Tipp"; }
     });
     $("hinweis").hidden = true;
-    $("urteil").textContent = richtig ? "Erwischt." : "Reingefallen. Der Troll war Nummer " + f.troll + ".";
-    $("erklaerung").textContent = f.l;
+    $("urteil").textContent = richtig ? "Erwischt. +" + wert(f) : "Daneben. +0";
+    var html = esc(f.l);
+    f.k.forEach(function (k) { html = html.split(esc(k[0])).join("<b>" + esc(k[0]) + "</b>"); });
+    html = html.replace("Der Haken:", "<b>Der Haken:</b>");
+    $("erklaerung").innerHTML = (richtig ? "" : "Der Troll war Nummer " + trollPos + ". ") + html;
     $("feedback").hidden = false;
     $("fortschritt").style.width = ((i + 1) / F.length * 100) + "%";
     var a = $("aktion");
@@ -93,7 +107,7 @@
 
   function teilen() {
     var r = rang();
-    var text = "Finde den Troll: Ich bin „" + r.name.replace(/\.$/, "") + "“ (" + punkte + " von 15). Schaffst du Peak?";
+    var text = "Ich hab " + punkte + " von 15 bei Finde den Troll. " + r.name + " Schaffst du mehr?";
     if (navigator.share) {
       navigator.share({ title: "Finde den Troll – Ragebait", text: text, url: URL_APP }).catch(function () {});
       return;
@@ -114,5 +128,5 @@
     if (i < F.length) { fall(); window.scrollTo(0, 0); } else { ende(); }
   });
   $("teilen").addEventListener("click", teilen);
-  $("nochmal").addEventListener("click", function () { zeige("start"); });
+  $("nochmal").addEventListener("click", function () { i = 0; punkte = 0; treffer = 0; fall(); zeige("fall"); });
 })();

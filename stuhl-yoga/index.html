@@ -186,7 +186,7 @@ button { font: inherit; }
       var p = document.createElement('div'); p.className = 'player';
       var v = document.createElement('video');
       v.src = 'videos/' + VIDEO[key] + '.mp4'; v.poster = 'videos/' + VIDEO[key] + '.jpg';
-      v.preload = 'metadata'; v.playsInline = true; v.setAttribute('playsinline', '');
+      v.preload = 'auto'; v.playsInline = true; v.setAttribute('playsinline', '');
       v.setAttribute('aria-label', 'Video: ' + NAME[key]);
       var go = document.createElement('button');
       go.type = 'button'; go.className = 'play'; go.setAttribute('aria-label', 'Video abspielen');

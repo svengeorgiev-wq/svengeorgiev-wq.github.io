@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE = "stuhl-yoga-v2";
+const CACHE = "stuhl-yoga-v3";
 const SHELL = [
   "./",
   "./index.html",

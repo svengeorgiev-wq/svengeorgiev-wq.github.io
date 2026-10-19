@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f4fa3">
+<meta name="description" content="Die Übungsvideos zum Buch „Gedächtnistraining und Stuhl Yoga für Senioren“ von Munich Publishing. 21 Tage, jeden Tag ein Video. Ohne Account.">
+<meta name="robots" content="noindex">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Stuhl Yoga">
+<title>Stuhl Yoga Videos</title>
+<link rel="manifest" href="manifest.webmanifest?v=1">
+<link rel="icon" href="icons/favicon-64.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root {
+  --bg: #f4f7fc; --card: #ffffff; --ink: #0e1d3a; --muted: #3f4d68;
+  --blue: #1f4fa3; --blue-ink: #ffffff; --sun: #ffd84a; --sun-ink: #0e1d3a;
+  --line: #c9d5ea; --soon: #e6ecf6;
+  --font: "Atkinson Hyperlegible", Verdana, "Segoe UI", system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1730; --card: #13244a; --ink: #f4f7fc; --muted: #c4d0e8;
+    --blue: #3f74d6; --line: #2a3f6e; --soon: #1a2d57; color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+[hidden] { display: none !important; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font); font-size: 1.375rem; line-height: 1.4;
+  -webkit-text-size-adjust: 100%;
+}
+.wrap {
+  max-width: 40rem; margin: 0 auto; display: grid; gap: 1.5rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-top: calc(1.25rem + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
+}
+button { font: inherit; }
+:focus-visible { outline: 4px solid var(--sun); outline-offset: 3px; }
+.stack { display: grid; gap: 1.5rem; }
+
+.head { display: flex; align-items: center; gap: 1rem; }
+.head img { width: 5.5rem; height: auto; border-radius: .4rem; box-shadow: 0 2px 10px rgb(0 0 0 / .18); flex: none; }
+.head h1 { margin: 0; font-size: 2.1rem; line-height: 1.15; text-wrap: balance; }
+
+.big {
+  display: flex; align-items: center; justify-content: center; gap: .6rem;
+  width: 100%; min-height: 4.5rem; padding: .8rem 1.2rem;
+  border: 0; border-radius: 1rem; cursor: pointer;
+  font-size: 1.6rem; font-weight: 700; text-align: center;
+}
+.big.sun { background: var(--sun); color: var(--sun-ink); }
+.big.blue { background: var(--blue); color: var(--blue-ink); }
+.big.plain { background: var(--card); color: var(--ink); border: 3px solid var(--line); }
+
+.week { display: grid; gap: .75rem; }
+.week h2 { margin: .5rem 0 0; font-size: 1.5rem; color: var(--muted); }
+.day {
+  display: flex; align-items: center; gap: 1rem; width: 100%;
+  min-height: 5rem; padding: .7rem 1rem; cursor: pointer; text-align: left;
+  background: var(--card); color: var(--ink);
+  border: 3px solid var(--line); border-radius: 1rem;
+}
+.day .num {
+  flex: none; width: 4.2rem; height: 4.2rem; border-radius: .8rem;
+  display: grid; place-items: center; background: var(--blue); color: var(--blue-ink);
+  font-size: 1.9rem; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+.day .txt { min-width: 0; display: grid; }
+.day .txt b { font-size: 1.5rem; }
+.day .txt span { font-size: 1.2rem; color: var(--muted); }
+.day.is-last { border-color: var(--sun); border-width: 4px; }
+
+.tag { margin: 0; font-size: 3.4rem; line-height: 1; font-weight: 700; }
+.uebung { margin: .3rem 0 0; font-size: 1.7rem; font-weight: 700; }
+.player { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: 1rem; overflow: hidden; background: #fff; border: 3px solid var(--line); }
+.player video { width: 100%; height: 100%; display: block; object-fit: contain; background: #fff; }
+.play {
+  position: absolute; inset: 0; margin: auto; width: 8rem; height: 8rem;
+  border: 0; border-radius: 50%; cursor: pointer; background: var(--sun); color: var(--sun-ink);
+  box-shadow: 0 6px 24px rgb(0 0 0 / .25); display: grid; place-items: center;
+}
+.play svg { width: 3.4rem; height: 3.4rem; margin-left: .5rem; }
+.soon {
+  aspect-ratio: 4 / 5; border-radius: 1rem; background: var(--soon); border: 3px dashed var(--line);
+  display: grid; place-items: center; text-align: center; padding: 1.5rem;
+  font-size: 1.6rem; font-weight: 700; color: var(--muted);
+}
+.nav { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
+@media (max-width: 26rem) { .nav { grid-template-columns: 1fr; } .tag { font-size: 3rem; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="head">
+    <img src="assets/cover.jpg" alt="Buchcover Gedächtnistraining und Stuhl Yoga für Senioren" width="88" height="114">
+    <h1>Ihre Übungs&shy;videos</h1>
+  </header>
+
+  <section id="liste" class="stack">
+    <button class="big sun" id="weiter" type="button"></button>
+    <div id="wochen" class="stack"></div>
+  </section>
+
+  <section id="ansicht" class="stack" hidden>
+    <button class="big plain" id="zurueck" type="button">← Alle Tage</button>
+    <div>
+      <p class="tag" id="tagNr"></p>
+      <p class="uebung" id="tagUebung"></p>
+    </div>
+    <div id="medien"></div>
+    <div class="nav">
+      <button class="big plain" id="vorher" type="button">← Tag davor</button>
+      <button class="big blue" id="naechster" type="button">Nächster Tag →</button>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  var WT = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+  var NAME = {
+    katze: 'Katzenbuckel im Sitzen', fuesse: 'Füße kreisen', kopf: 'Sanftes Kopfdrehen',
+    umarm: 'Selbstumarmung', vorbeuge: 'Stehende Vorbeuge', rueck: 'Körperrückseite dehnen',
+    schulter: 'Schultern heben', gesaess: 'Gesäß-Dehnung', rotieren: 'Arme rotieren',
+    ueberkopf: 'Arme über Kopf', nacken: 'Seitliche Nacken-Muskeln'
+  };
+  // Fertige Videos (Dateiname ohne Endung in videos/)
+  var VIDEO = { kopf: 'kopfdrehen' };
+  // Tag 1 bis 21, wie im Buch
+  var PLAN = [
+    'katze', 'fuesse', 'kopf', 'umarm', 'vorbeuge', 'rueck', 'schulter',
+    'gesaess', 'rotieren', 'rueck', 'vorbeuge', 'ueberkopf', 'kopf', 'katze',
+    'nacken', 'rotieren', 'rueck', 'vorbeuge', 'ueberkopf', 'kopf', 'katze'
+  ];
+  var $ = function (id) { return document.getElementById(id); };
+  function merke(n) { try { localStorage.setItem('stuhlYogaTag', String(n)); } catch (e) {} }
+  function letzter() { try { var n = parseInt(localStorage.getItem('stuhlYogaTag'), 10); return n >= 1 && n <= 21 ? n : 0; } catch (e) { return 0; } }
+
+  var wochen = $('wochen');
+  for (var w = 0; w < 3; w++) {
+    var box = document.createElement('div'); box.className = 'week';
+    var h = document.createElement('h2'); h.textContent = 'Woche ' + (w + 1); box.appendChild(h);
+    for (var t = 0; t < 7; t++) {
+      var n = w * 7 + t + 1;
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'day'; b.dataset.tag = n;
+      b.innerHTML = '<span class="num">' + n + '</span><span class="txt"><b>' + NAME[PLAN[n - 1]] + '</b><span>' + WT[t] + '</span></span>';
+      b.addEventListener('click', function () { zeige(parseInt(this.dataset.tag, 10)); });
+      box.appendChild(b);
+    }
+    wochen.appendChild(box);
+  }
+
+  function liste() {
+    $('ansicht').hidden = true; $('liste').hidden = false; $('medien').innerHTML = '';
+    var l = letzter(), weiter = $('weiter'), ziel = l ? Math.min(l + 1, 21) : 1;
+    document.querySelectorAll('.day').forEach(function (d) { d.classList.toggle('is-last', +d.dataset.tag === l); });
+    weiter.textContent = l ? 'Weiter mit Tag ' + ziel + ' →' : 'Mit Tag 1 beginnen →';
+    weiter.onclick = function () { zeige(ziel); };
+    if (location.hash) history.replaceState(null, '', location.pathname);
+    window.scrollTo(0, 0);
+  }
+
+  function zeige(n) {
+    var key = PLAN[n - 1];
+    $('liste').hidden = true; $('ansicht').hidden = false;
+    $('tagNr').textContent = 'Tag ' + n;
+    $('tagUebung').textContent = NAME[key];
+    var m = $('medien'); m.innerHTML = '';
+    if (VIDEO[key]) {
+      var p = document.createElement('div'); p.className = 'player';
+      var v = document.createElement('video');
+      v.src = 'videos/' + VIDEO[key] + '.mp4'; v.poster = 'videos/' + VIDEO[key] + '.jpg';
+      v.preload = 'metadata'; v.playsInline = true; v.setAttribute('playsinline', '');
+      v.setAttribute('aria-label', 'Video: ' + NAME[key]);
+      var go = document.createElement('button');
+      go.type = 'button'; go.className = 'play'; go.setAttribute('aria-label', 'Video abspielen');
+      go.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4l15 8-15 8z" fill="currentColor"/></svg>';
+      go.addEventListener('click', function () { v.controls = true; v.play(); });
+      v.addEventListener('play', function () { go.hidden = true; });
+      v.addEventListener('ended', function () { go.hidden = false; v.controls = false; v.currentTime = 0; });
+      p.appendChild(v); p.appendChild(go); m.appendChild(p);
+    } else {
+      var s = document.createElement('div'); s.className = 'soon';
+      s.textContent = 'Video folgt in Kürze';
+      m.appendChild(s);
+    }
+    $('vorher').style.visibility = n === 1 ? 'hidden' : 'visible';
+    $('naechster').style.visibility = n === 21 ? 'hidden' : 'visible';
+    $('vorher').onclick = function () { zeige(n - 1); };
+    $('naechster').onclick = function () { zeige(n + 1); };
+    merke(n);
+    history.replaceState(null, '', '#tag' + n);
+    window.scrollTo(0, 0);
+  }
+
+  $('zurueck').addEventListener('click', liste);
+  var m = /^#tag(\d{1,2})$/.exec(location.hash);
+  if (m && +m[1] >= 1 && +m[1] <= 21) zeige(+m[1]); else liste();
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
+})();
+</script>
+</body>
+</html>

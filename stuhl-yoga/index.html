@@ -10,9 +10,9 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Stuhl Yoga">
 <title>Stuhl Yoga Videos</title>
-<link rel="manifest" href="manifest.webmanifest?v=1">
-<link rel="icon" href="icons/favicon-64.png" type="image/png">
-<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest?v=2">
+<link rel="icon" href="icons/favicon-64.png?v=2" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
@@ -98,18 +98,62 @@ button { font: inherit; }
 }
 .nav { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
 @media (max-width: 26rem) { .nav { grid-template-columns: 1fr; } .tag { font-size: 3rem; } }
+
+/* Anleitung: Seite auf den Startbildschirm legen */
+.install { background: var(--card); border: 3px solid var(--line); border-radius: 1rem; padding: 1.2rem 1.2rem 1.4rem; }
+.install h2 { margin: 0 0 .4rem; font-size: 1.6rem; line-height: 1.2; }
+.install p { margin: 0 0 1rem; color: var(--muted); font-size: 1.25rem; }
+.install ol { margin: 0; padding: 0; list-style: none; display: grid; gap: .9rem; }
+.install li { display: flex; align-items: flex-start; gap: .9rem; font-size: 1.3rem; line-height: 1.35; }
+.install li .n {
+  flex: none; width: 2.6rem; height: 2.6rem; border-radius: 50%; margin-top: .1rem;
+  display: grid; place-items: center; background: var(--sun); color: var(--sun-ink); font-weight: 700; font-size: 1.4rem;
+}
+.install li svg { width: 1.6rem; height: 1.6rem; vertical-align: -.3rem; margin: 0 .15rem; }
+.install li b { font-weight: 700; }
+.install .big { margin-bottom: 1rem; }
+.install .hint { margin: 1rem 0 0; font-size: 1.1rem; }
 </style>
 </head>
 <body>
 <main class="wrap">
   <header class="head">
-    <img src="assets/cover.jpg" alt="Buchcover Gedächtnistraining und Stuhl Yoga für Senioren" width="88" height="114">
+    <img src="assets/cover.jpg?v=2" alt="Buchcover Gedächtnistraining und Stuhl-Yoga für Senioren ab 60" width="88" height="115">
     <h1>Ihre Übungs&shy;videos</h1>
   </header>
 
   <section id="liste" class="stack">
     <button class="big sun" id="weiter" type="button"></button>
     <div id="wochen" class="stack"></div>
+
+    <aside class="install" id="install" hidden>
+      <h2>Tipp: Videos immer griffbereit</h2>
+      <p>Legen Sie diese Seite auf Ihren Startbildschirm. Dann öffnen Sie die Videos mit einem Fingertipp, so wie eine App, ohne etwas einzutippen.</p>
+
+      <div id="installIos" hidden>
+        <ol>
+          <li><span class="n">1</span><span>Tippen Sie auf das Teilen-Symbol
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l4 4h-3v8h-2V7H8l4-4zM5 11h3v2H7v7h10v-7h-1v-2h3v11H5V11z" fill="currentColor"/></svg>
+            (ein Viereck mit Pfeil nach oben). Sehen Sie es nicht? Dann tippen Sie zuerst auf die drei Punkte <b>• • •</b> und danach auf „Teilen“.</span></li>
+          <li><span class="n">2</span><span>Wischen Sie in der Liste nach unten und tippen Sie auf <b>„Zum Home-Bildschirm“</b>.</span></li>
+          <li><span class="n">3</span><span>Tippen Sie oben rechts auf <b>„Hinzufügen“</b>.</span></li>
+        </ol>
+      </div>
+
+      <div id="installAndroid" hidden>
+        <button class="big blue" id="installBtn" type="button" hidden>Auf den Startbildschirm legen</button>
+        <div id="installAndroidSteps">
+          <ol>
+            <li><span class="n">1</span><span>Tippen Sie oben rechts auf die drei Punkte <b>⋮</b>.</span></li>
+            <li><span class="n">2</span><span>Tippen Sie auf <b>„Zum Startbildschirm hinzufügen“</b> (bei manchen Handys heißt es „App installieren“).</span></li>
+            <li><span class="n">3</span><span>Tippen Sie auf <b>„Hinzufügen“</b>.</span></li>
+          </ol>
+          <p class="hint">Samsung-Handy mit dem Browser „Samsung Internet“? Dann unten rechts auf die drei Striche <b>≡</b> tippen, dann „Seite hinzufügen zu“, dann „Startbildschirm“.</p>
+        </div>
+      </div>
+
+      <p id="installDone" class="hint" hidden><b>Geschafft!</b> Die Videos finden Sie jetzt auf Ihrem Startbildschirm.</p>
+    </aside>
   </section>
 
   <section id="ansicht" class="stack" hidden>
@@ -216,6 +260,32 @@ button { font: inherit; }
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
   }
+
+  // Anleitung "Auf den Startbildschirm" nur zeigen, wenn die Seite im Browser läuft (nicht als App)
+  (function () {
+    var ua = navigator.userAgent || '';
+    var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+    if (standalone) return;
+    var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    var android = /Android/.test(ua);
+    if (!ios && !android) return;
+    $('install').hidden = false;
+    if (ios) { $('installIos').hidden = false; return; }
+    $('installAndroid').hidden = false;
+    var prompt = null;
+    window.addEventListener('beforeinstallprompt', function (e) {
+      e.preventDefault(); prompt = e;
+      $('installBtn').hidden = false; $('installAndroidSteps').hidden = true;
+    });
+    $('installBtn').addEventListener('click', function () {
+      if (!prompt) return;
+      prompt.prompt();
+      prompt.userChoice.then(function () { prompt = null; });
+    });
+    window.addEventListener('appinstalled', function () {
+      $('installIos').hidden = true; $('installAndroid').hidden = true; $('installDone').hidden = false;
+    });
+  })();
 })();
 </script>
 </body>

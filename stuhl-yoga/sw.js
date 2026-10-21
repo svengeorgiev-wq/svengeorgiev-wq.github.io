@@ -1,14 +1,14 @@
 "use strict";
 
-const CACHE = "stuhl-yoga-v4";
+const CACHE = "stuhl-yoga-v5";
 const SHELL = [
   "./",
   "./index.html",
-  "./manifest.webmanifest?v=1",
-  "./assets/cover.jpg",
-  "./icons/favicon-64.png",
-  "./icons/icon-192.png",
-  "./icons/apple-touch-icon.png"
+  "./manifest.webmanifest?v=2",
+  "./assets/cover.jpg?v=2",
+  "./icons/favicon-64.png?v=2",
+  "./icons/icon-192.png?v=2",
+  "./icons/apple-touch-icon.png?v=2"
 ];
 
 self.addEventListener("install", (event) => {

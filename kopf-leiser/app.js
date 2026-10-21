@@ -242,6 +242,34 @@ const emergencyAudios = [
   {
     title: "🌊 Ich brauche einfach gerade 3 Minuten Ruhe",
     file: "audio/07_drei_minuten_ruhe.mp3"
+  },
+  {
+    title: "🗓️ Die neue Woche liegt mir schon im Magen",
+    file: "audio/08_neue_woche.mp3"
+  },
+  {
+    title: "🔂 Ich komme von einem Fehler nicht los",
+    file: "audio/09_fehler_loslassen.mp3"
+  },
+  {
+    title: "🎬 Mein Kopf spielt Katastrophen-Kino",
+    file: "audio/10_kopfkino.mp3"
+  },
+  {
+    title: "🎒 Ich trage gerade die Sorgen anderer mit",
+    file: "audio/11_sorgen_anderer.mp3"
+  },
+  {
+    title: "✋ Ich will es perfekt machen und fange nicht an",
+    file: "audio/12_perfektionismus.mp3"
+  },
+  {
+    title: "📱 Ich bin komplett überreizt von Handy und News",
+    file: "audio/13_ueberreizt.mp3"
+  },
+  {
+    title: "☀️ Ich wache auf und bin sofort im Kopf",
+    file: "audio/14_morgens_im_kopf.mp3"
   }
 ];
 

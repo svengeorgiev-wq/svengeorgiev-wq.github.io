@@ -112,6 +112,8 @@ button { font: inherit; }
 .install li svg { width: 1.6rem; height: 1.6rem; vertical-align: -.3rem; margin: 0 .15rem; }
 .install li b { font-weight: 700; }
 .install .big { margin-bottom: 1rem; }
+.install h3.dev { margin: 0 0 .7rem; font-size: 1.3rem; color: var(--muted); }
+.install > div + div { margin-top: 1.4rem; }
 .install .hint { margin: 1rem 0 0; font-size: 1.1rem; }
 </style>
 </head>
@@ -124,13 +126,13 @@ button { font: inherit; }
 
   <section id="liste" class="stack">
     <button class="big sun" id="weiter" type="button"></button>
-    <div id="wochen" class="stack"></div>
-
+    <button class="big blue" id="installToggle" type="button" aria-expanded="false" hidden>Auf den Startbildschirm legen</button>
     <aside class="install" id="install" hidden>
       <h2>Tipp: Videos immer griffbereit</h2>
       <p>Legen Sie diese Seite auf Ihren Startbildschirm. Dann öffnen Sie die Videos mit einem Fingertipp, so wie eine App, ohne etwas einzutippen.</p>
 
       <div id="installIos" hidden>
+        <h3 class="dev">iPhone / iPad (Safari)</h3>
         <ol>
           <li><span class="n">1</span><span>Tippen Sie auf das Teilen-Symbol
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l4 4h-3v8h-2V7H8l4-4zM5 11h3v2H7v7h10v-7h-1v-2h3v11H5V11z" fill="currentColor"/></svg>
@@ -141,6 +143,7 @@ button { font: inherit; }
       </div>
 
       <div id="installAndroid" hidden>
+        <h3 class="dev">Android-Handy (Chrome)</h3>
         <button class="big blue" id="installBtn" type="button" hidden>Auf den Startbildschirm legen</button>
         <div id="installAndroidSteps">
           <ol>
@@ -154,6 +157,8 @@ button { font: inherit; }
 
       <p id="installDone" class="hint" hidden><b>Geschafft!</b> Die Videos finden Sie jetzt auf Ihrem Startbildschirm.</p>
     </aside>
+    <div id="wochen" class="stack"></div>
+
   </section>
 
   <section id="ansicht" class="stack" hidden>
@@ -261,17 +266,26 @@ button { font: inherit; }
     window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
   }
 
-  // Anleitung "Auf den Startbildschirm" nur zeigen, wenn die Seite im Browser läuft (nicht als App)
+  // Anleitung "Auf den Startbildschirm": Button immer sichtbar, solange die Seite im Browser läuft (nicht als App)
   (function () {
     var ua = navigator.userAgent || '';
     var standalone = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
     if (standalone) return;
     var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     var android = /Android/.test(ua);
-    if (!ios && !android) return;
-    $('install').hidden = false;
-    if (ios) { $('installIos').hidden = false; return; }
-    $('installAndroid').hidden = false;
+    var toggle = $('installToggle'), card = $('install');
+    toggle.hidden = false;
+    // Erkanntes Gerät zeigt nur seine Schritte, sonst (z. B. Computer) beide
+    $('installIos').hidden = android && !ios;
+    $('installAndroid').hidden = ios;
+    if (!ios && !android) { $('installIos').hidden = false; $('installAndroid').hidden = false; $('installBtn').hidden = true; }
+    toggle.addEventListener('click', function () {
+      var open = card.hidden;
+      card.hidden = !open;
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.textContent = open ? 'Anleitung schließen' : 'Auf den Startbildschirm legen';
+      if (open) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     var prompt = null;
     window.addEventListener('beforeinstallprompt', function (e) {
       e.preventDefault(); prompt = e;
@@ -283,7 +297,7 @@ button { font: inherit; }
       prompt.userChoice.then(function () { prompt = null; });
     });
     window.addEventListener('appinstalled', function () {
-      $('installIos').hidden = true; $('installAndroid').hidden = true; $('installDone').hidden = false;
+      $('installIos').hidden = true; $('installAndroid').hidden = true; toggle.hidden = true; $('installDone').hidden = false;
     });
   })();
 })();

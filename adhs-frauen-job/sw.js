@@ -1,18 +1,18 @@
 "use strict";
 
-const CACHE_NAME = "adhs-frauen-job-v5.0.0";
+const CACHE_NAME = "adhs-frauen-job-v6.0.0";
 const AUDIO_FILES = Array.from({ length: 21 }, (_, index) => `./audios/tag-${String(index + 1).padStart(2, "0")}.mp3`);
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=5",
-  "./app.js?v=5",
-  "./manifest.webmanifest?v=5",
-  "./favicon-32.png?v=5",
-  "./icon-180.png?v=5",
-  "./icon-192.png?v=5",
-  "./icon-512.png?v=5",
-  "./assets/book-cover-2026.jpg?v=1",
+  "./styles.css?v=6",
+  "./app.js?v=6",
+  "./manifest.webmanifest?v=6",
+  "./favicon-32.png?v=6",
+  "./icon-180.png?v=6",
+  "./icon-192.png?v=6",
+  "./icon-512.png?v=6",
+  "./assets/book-cover-2026-10-22.jpg",
   ...AUDIO_FILES
 ];
 

@@ -1,12 +1,13 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "sherlock-schwer-v2";
-  const LEGACY_STORAGE_KEY = "sherlock-schwer-v1";
-  const BACKUP_PREFIX = "SHERLOCK-SCHWER-2:";
+  const STORAGE_KEY = "sherlock-schwer-v3";
+  const LEGACY_STORAGE_KEYS = ["sherlock-schwer-v2", "sherlock-schwer-v1"];
+  const BACKUP_PREFIX = "SHERLOCK-SCHWER-3:";
+  const LEGACY_BACKUP_PREFIX = "SHERLOCK-SCHWER-2:";
   const ROUTES = ["start", "book", "bonus", "install"];
   const Engine = window.SherlockEngine;
-  const Puzzle = Engine.puzzle;
+  const Puzzles = Engine.puzzles;
 
   const BOOK_CASES = [
     { id: 1, title: "Die Spur im Frost", task: "S. 6–7", solution: "S. 81–83" },
@@ -31,33 +32,53 @@
     { id: 20, title: "Der Mord im Schlittenzug", task: "S. 75–76", solution: "S. 149–151" }
   ];
 
-  function freshState(seed = {}) {
+  function freshBonusState(seed = {}) {
     return {
-      version: 2,
-      route: ROUTES.includes(seed.route) ? seed.route : "start",
-      completed: Array.isArray(seed.completed) ? seed.completed : [],
-      bookFilter: ["all", "open", "done"].includes(seed.bookFilter) ? seed.bookFilter : "all",
       notes: typeof seed.notes === "string" ? seed.notes.slice(0, 5000) : "",
-      levelAnswers: {},
-      levelResults: {},
+      levelAnswers: seed.levelAnswers && typeof seed.levelAnswers === "object" ? seed.levelAnswers : {},
+      levelResults: seed.levelResults && typeof seed.levelResults === "object" ? seed.levelResults : {},
       unlockedLevel: 1,
       bonusComplete: false,
       solutionVisible: false
     };
   }
 
+  function normalizeBonusState(puzzle, candidate = {}) {
+    const normalized = freshBonusState(candidate);
+    const solvedInOrder = puzzle.levels.reduce((count, level) => {
+      if (count === level.number - 1 && normalized.levelResults[level.number] === "correct" && Engine.isCorrect(puzzle.id, level.number, normalized.levelAnswers[level.number])) return count + 1;
+      return count;
+    }, 0);
+    normalized.unlockedLevel = Math.min(puzzle.levels.length, solvedInOrder + 1);
+    normalized.bonusComplete = solvedInOrder === puzzle.levels.length;
+    normalized.solutionVisible = normalized.bonusComplete && candidate?.solutionVisible !== false;
+    return normalized;
+  }
+
+  function freshState(seed = {}) {
+    return {
+      version: 3,
+      route: ROUTES.includes(seed.route) ? seed.route : "start",
+      completed: Array.isArray(seed.completed) ? seed.completed : [],
+      bookFilter: ["all", "open", "done"].includes(seed.bookFilter) ? seed.bookFilter : "all",
+      activePuzzleId: Puzzles.some((puzzle) => puzzle.id === seed.activePuzzleId) ? seed.activePuzzleId : Puzzles[0].id,
+      bonusById: Object.fromEntries(Puzzles.map((puzzle) => [puzzle.id, freshBonusState()]))
+    };
+  }
+
   function normalizeState(candidate) {
     const normalized = freshState(candidate || {});
     normalized.completed = [...new Set((candidate?.completed || []).filter((id) => Number.isInteger(id) && id >= 1 && id <= 20))].sort((a, b) => a - b);
-    normalized.levelAnswers = candidate?.levelAnswers && typeof candidate.levelAnswers === "object" ? candidate.levelAnswers : {};
-    normalized.levelResults = candidate?.levelResults && typeof candidate.levelResults === "object" ? candidate.levelResults : {};
-    const solvedInOrder = Puzzle.levels.reduce((count, level) => {
-      if (count === level.number - 1 && normalized.levelResults[level.number] === "correct" && Engine.isCorrect(level.number, normalized.levelAnswers[level.number])) return count + 1;
-      return count;
-    }, 0);
-    normalized.unlockedLevel = Math.min(Puzzle.levels.length, solvedInOrder + 1);
-    normalized.bonusComplete = solvedInOrder === Puzzle.levels.length;
-    normalized.solutionVisible = normalized.bonusComplete && candidate?.solutionVisible !== false;
+    const legacyFirstPuzzle = candidate && !candidate.bonusById ? {
+      notes: candidate.notes,
+      levelAnswers: candidate.levelAnswers,
+      levelResults: candidate.levelResults,
+      solutionVisible: candidate.solutionVisible
+    } : null;
+    Puzzles.forEach((puzzle, index) => {
+      const source = candidate?.bonusById?.[puzzle.id] || (index === 0 ? legacyFirstPuzzle : null) || {};
+      normalized.bonusById[puzzle.id] = normalizeBonusState(puzzle, source);
+    });
     return normalized;
   }
 
@@ -65,8 +86,10 @@
     try {
       const current = localStorage.getItem(STORAGE_KEY);
       if (current) return normalizeState(JSON.parse(current));
-      const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
-      if (legacy) return normalizeState(JSON.parse(legacy));
+      for (const key of LEGACY_STORAGE_KEYS) {
+        const legacy = localStorage.getItem(key);
+        if (legacy) return normalizeState(JSON.parse(legacy));
+      }
     } catch (error) {
       console.warn("Gespeicherter Fortschritt konnte nicht geladen werden.", error);
     }
@@ -80,6 +103,14 @@
 
   function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function activePuzzle() {
+    return Engine.getPuzzle(state.activePuzzleId);
+  }
+
+  function activeBonusState() {
+    return state.bonusById[state.activePuzzleId];
   }
 
   function nextOpenCase() {
@@ -98,6 +129,14 @@
     $("#book-summary-count").textContent = `${count} / 20`;
     $("#next-case-copy").textContent = next ? `Als Nächstes: Fall ${next.id} · ${next.title}` : "Alle 20 Fälle abgeschlossen – ausgezeichnet ermittelt.";
     $("#continue-book").textContent = next ? `Mit Fall ${next.id} starten` : "Fallübersicht öffnen";
+  }
+
+  function updateBonusSummary() {
+    const completed = Puzzles.filter((puzzle) => state.bonusById[puzzle.id].bonusComplete).length;
+    $("#bonus-teaser-status").textContent = `${completed} von ${Puzzles.length} Bonusfällen gelöst`;
+    $("#bonus-library-status").textContent = completed === Puzzles.length
+      ? "Alle fünf Bonusakten sind vollständig gelöst. Jede Akte kann erneut geöffnet oder zurückgesetzt werden."
+      : `${completed} von ${Puzzles.length} Akten abgeschlossen. Wähle einen Fall; der Fortschritt wird getrennt gespeichert.`;
   }
 
   function routeTo(route, updateHash = true) {
@@ -191,36 +230,40 @@
   }
 
   function checkLevel(levelNumber) {
-    const selected = state.levelAnswers[levelNumber];
+    const puzzle = activePuzzle();
+    const bonus = activeBonusState();
+    const selected = bonus.levelAnswers[levelNumber];
     if (!selected) {
-      state.levelResults[levelNumber] = "empty";
+      bonus.levelResults[levelNumber] = "empty";
       saveState();
       renderBonus();
       return;
     }
-    if (!Engine.isCorrect(levelNumber, selected)) {
-      state.levelResults[levelNumber] = "wrong";
+    if (!Engine.isCorrect(puzzle.id, levelNumber, selected)) {
+      bonus.levelResults[levelNumber] = "wrong";
       saveState();
       renderBonus();
       return;
     }
-    state.levelResults[levelNumber] = "correct";
-    if (levelNumber < Puzzle.levels.length) state.unlockedLevel = levelNumber + 1;
+    bonus.levelResults[levelNumber] = "correct";
+    if (levelNumber < puzzle.levels.length) bonus.unlockedLevel = levelNumber + 1;
     else {
-      state.bonusComplete = true;
-      state.solutionVisible = true;
+      bonus.bonusComplete = true;
+      bonus.solutionVisible = true;
     }
     saveState();
     renderBonus();
     requestAnimationFrame(() => {
-      const target = levelNumber < Puzzle.levels.length ? $(`#level-${levelNumber + 1}`) : $("#solution-panel");
+      const target = levelNumber < puzzle.levels.length ? $(`#level-${levelNumber + 1}`) : $("#solution-panel");
       target?.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }
 
   function createLevelCard(level) {
-    const solved = state.levelResults[level.number] === "correct";
-    const unlocked = level.number <= state.unlockedLevel || solved;
+    const puzzle = activePuzzle();
+    const bonus = activeBonusState();
+    const solved = bonus.levelResults[level.number] === "correct";
+    const unlocked = level.number <= bonus.unlockedLevel || solved;
     const article = document.createElement("article");
     article.id = `level-${level.number}`;
     article.className = `panel level-card${solved ? " solved" : unlocked ? " current" : " locked"}`;
@@ -250,7 +293,7 @@
     if (solved) {
       const success = document.createElement("div");
       success.className = "level-feedback success";
-      success.textContent = `Richtig – ${level.answer}. Ebene ${Math.min(level.number + 1, 4)} ${level.number < 4 ? "ist freigeschaltet" : "schließt den Fall ab"}.`;
+      success.textContent = `Richtig – ${level.answer}. ${level.number < puzzle.levels.length ? `Ebene ${level.number + 1} ist freigeschaltet.` : "Damit ist diese Bonusakte vollständig gelöst."}`;
       content.append(success);
     } else {
       const fieldset = document.createElement("fieldset");
@@ -261,12 +304,12 @@
         const label = document.createElement("label");
         const input = document.createElement("input");
         input.type = "radio";
-        input.name = `level-${level.number}-answer`;
+        input.name = `${puzzle.id}-level-${level.number}-answer`;
         input.value = choice.value;
-        input.checked = state.levelAnswers[level.number] === choice.value;
+        input.checked = bonus.levelAnswers[level.number] === choice.value;
         input.addEventListener("change", () => {
-          state.levelAnswers[level.number] = choice.value;
-          delete state.levelResults[level.number];
+          bonus.levelAnswers[level.number] = choice.value;
+          delete bonus.levelResults[level.number];
           saveState();
         });
         label.append(input, createTextBlock("span", choice.label));
@@ -277,56 +320,91 @@
       check.type = "button";
       check.addEventListener("click", () => checkLevel(level.number));
       content.append(check);
-      if (state.levelResults[level.number] === "empty") content.append(createTextBlock("div", "Bitte wähle zuerst eine Antwort.", "level-feedback try-again"));
-      if (state.levelResults[level.number] === "wrong") content.append(createTextBlock("div", "Diese Antwort widerspricht mindestens einer Angabe. Prüfe die Reihenfolge erneut.", "level-feedback try-again"));
+      if (bonus.levelResults[level.number] === "empty") content.append(createTextBlock("div", "Bitte wähle zuerst eine Antwort.", "level-feedback try-again"));
+      if (bonus.levelResults[level.number] === "wrong") content.append(createTextBlock("div", level.retry || "Diese Antwort widerspricht mindestens einer Angabe. Prüfe deine Ableitung erneut.", "level-feedback try-again"));
     }
     article.append(content);
     return article;
   }
 
-  function renderSolution() {
+  function renderBonusLibrary() {
+    const list = $("#bonus-case-list");
+    const cards = Puzzles.map((puzzle, index) => {
+      const bonus = state.bonusById[puzzle.id];
+      const solved = puzzle.levels.filter((level) => bonus.levelResults[level.number] === "correct").length;
+      const active = puzzle.id === state.activePuzzleId;
+      const item = document.createElement("article");
+      item.className = `bonus-case-item${active ? " active" : ""}${bonus.bonusComplete ? " done" : ""}`;
+      item.setAttribute("role", "listitem");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "bonus-case-card";
+      button.setAttribute("aria-pressed", String(active));
+      button.setAttribute("aria-label", `Bonusakte ${index + 1}: ${puzzle.title}. ${solved} von 4 Ebenen gelöst.`);
+      const number = createTextBlock("span", String(index + 1).padStart(2, "0"), "bonus-case-number");
+      const copy = document.createElement("span");
+      copy.className = "bonus-case-copy";
+      copy.append(createTextBlock("small", `Akte ${index + 1} · ${puzzle.primaryMechanism}`), createTextBlock("strong", puzzle.title));
+      const progress = createTextBlock("span", bonus.bonusComplete ? "Gelöst" : `${solved}/4`, "bonus-case-progress");
+      button.append(number, copy, progress);
+      button.addEventListener("click", () => {
+        state.activePuzzleId = puzzle.id;
+        saveState();
+        renderBonus();
+        requestAnimationFrame(() => $(".puzzle-dossier")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+      });
+      item.append(button);
+      return item;
+    });
+    list.replaceChildren(...cards);
+    updateBonusSummary();
+  }
+
+  function renderSolution(puzzle, bonus) {
     const panel = $("#solution-panel");
-    panel.hidden = !state.solutionVisible;
-    if (!state.solutionVisible) return;
+    panel.hidden = !bonus.solutionVisible;
+    if (!bonus.solutionVisible) return;
     const steps = $("#solution-steps");
     steps.textContent = "";
-    Puzzle.solutionSteps.forEach((step) => {
+    puzzle.solutionSteps.forEach((step) => {
       const section = document.createElement("section");
       section.className = "solution-step";
       section.append(createTextBlock("h3", step.title.toUpperCase()), createTextBlock("p", step.answer, "solution-answer"), createTextBlock("p", step.explanation));
       steps.append(section);
     });
-    $("#solution-bridge").textContent = Puzzle.bridge;
-    $("#solution-outro").textContent = Puzzle.outro;
-    $("#verification-note").textContent = Puzzle.checkNote;
+    $("#solution-bridge").textContent = puzzle.bridge;
+    $("#solution-outro").textContent = puzzle.outro;
+    $("#verification-note").textContent = puzzle.checkNote;
   }
 
   function renderBonus() {
-    $("#bonus-number").textContent = Puzzle.id;
-    $("#puzzle-title").textContent = Puzzle.title;
-    $("#bonus-intro").textContent = Puzzle.intro;
-    $("#bonus-case-intro").textContent = Puzzle.introduction;
-    $("#detective-notes").value = state.notes;
-    const solvedCount = Puzzle.levels.filter((level) => state.levelResults[level.number] === "correct").length;
-    const percent = Math.round((solvedCount / Puzzle.levels.length) * 100);
-    $("#level-progress-copy").textContent = state.bonusComplete ? "4 von 4 Ebenen gelöst" : `Ebene ${state.unlockedLevel} von 4`;
-    $("#level-progress-status").textContent = state.bonusComplete ? "Fall vollständig gelöst" : solvedCount ? "Nächste Spur freigeschaltet" : "Ermittlung begonnen";
+    const puzzle = activePuzzle();
+    const bonus = activeBonusState();
+    renderBonusLibrary();
+    $("#bonus-number").textContent = puzzle.id;
+    $("#puzzle-title").textContent = puzzle.title;
+    $("#puzzle-mechanism").textContent = `Primärmechanik · ${puzzle.primaryMechanism}`;
+    $("#puzzle-end-answer").textContent = `Endantwort · ${puzzle.endAnswerType}`;
+    $("#bonus-intro").textContent = puzzle.intro;
+    $("#bonus-case-intro").textContent = puzzle.introduction;
+    $("#detective-notes").value = bonus.notes;
+    $("#reset-bonus").setAttribute("aria-label", `${puzzle.title} neu beginnen`);
+    const solvedCount = puzzle.levels.filter((level) => bonus.levelResults[level.number] === "correct").length;
+    const percent = Math.round((solvedCount / puzzle.levels.length) * 100);
+    $("#level-progress-copy").textContent = bonus.bonusComplete ? "4 von 4 Ebenen gelöst" : `Ebene ${bonus.unlockedLevel} von 4`;
+    $("#level-progress-status").textContent = bonus.bonusComplete ? "Fall vollständig gelöst" : solvedCount ? "Nächste Spur freigeschaltet" : "Ermittlung begonnen";
     $("#level-progress-bar").style.width = `${percent}%`;
     $(".level-progress .progress-track").setAttribute("aria-valuenow", String(solvedCount));
-    const list = $("#level-list");
-    list.replaceChildren(...Puzzle.levels.map(createLevelCard));
-    renderSolution();
+    $("#level-list").replaceChildren(...puzzle.levels.map(createLevelCard));
+    renderSolution(puzzle, bonus);
   }
 
   function resetBonus() {
-    const hasProgress = Object.keys(state.levelAnswers).length || state.notes.trim();
-    if (hasProgress && !window.confirm("Den Vier-Ebenen-Fall und alle dazugehörigen Notizen neu beginnen?")) return;
-    state.levelAnswers = {};
-    state.levelResults = {};
-    state.unlockedLevel = 1;
-    state.bonusComplete = false;
-    state.solutionVisible = false;
-    state.notes = "";
+    const puzzle = activePuzzle();
+    const bonus = activeBonusState();
+    const hasProgress = Object.keys(bonus.levelAnswers).length || bonus.notes.trim();
+    if (hasProgress && !window.confirm(`„${puzzle.title}“ und alle dazugehörigen Notizen neu beginnen?`)) return;
+    state.bonusById[puzzle.id] = freshBonusState();
     saveState();
     renderBonus();
     $("#level-1")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -340,11 +418,12 @@
   }
 
   function decodeBackup(code) {
-    if (!code.startsWith(BACKUP_PREFIX)) throw new Error("Der Code gehört nicht zur aktuellen Sherlock-Schwer-App.");
-    const binary = atob(code.slice(BACKUP_PREFIX.length));
+    const prefix = code.startsWith(BACKUP_PREFIX) ? BACKUP_PREFIX : code.startsWith(LEGACY_BACKUP_PREFIX) ? LEGACY_BACKUP_PREFIX : null;
+    if (!prefix) throw new Error("Der Code gehört nicht zur Sherlock-Schwer-App.");
+    const binary = atob(code.slice(prefix.length));
     const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
     const parsed = JSON.parse(new TextDecoder().decode(bytes));
-    if (parsed.version !== 2 || !Array.isArray(parsed.completed)) throw new Error("Der Sicherungscode ist unvollständig oder ungültig.");
+    if (![2, 3].includes(parsed.version) || !Array.isArray(parsed.completed)) throw new Error("Der Sicherungscode ist unvollständig oder ungültig.");
     return normalizeState(parsed);
   }
 
@@ -401,7 +480,7 @@
       requestAnimationFrame(() => $("#book-case-" + next.id)?.scrollIntoView({ behavior: "smooth", block: "center" }));
     });
     $("#detective-notes").addEventListener("input", (event) => {
-      state.notes = event.target.value.slice(0, 5000);
+      activeBonusState().notes = event.target.value.slice(0, 5000);
       saveState();
     });
     $("#reset-bonus").addEventListener("click", resetBonus);
@@ -424,7 +503,7 @@
     $("#reset-data").addEventListener("click", () => {
       if (!window.confirm("Wirklich alle lokalen Fortschritte, Notizen und Bonusantworten löschen?")) return;
       localStorage.removeItem(STORAGE_KEY);
-      localStorage.removeItem(LEGACY_STORAGE_KEY);
+      LEGACY_STORAGE_KEYS.forEach((key) => localStorage.removeItem(key));
       location.reload();
     });
     window.addEventListener("hashchange", () => routeTo(location.hash.slice(1), false));
@@ -445,13 +524,14 @@
   function initialize() {
     bindEvents();
     updateBookProgress();
+    updateBonusSummary();
     renderBookCases();
     renderBonus();
     saveState();
     const hashRoute = location.hash.slice(1);
     routeTo(ROUTES.includes(hashRoute) ? hashRoute : state.route, false);
     if ("serviceWorker" in navigator && location.protocol !== "file:") {
-      navigator.serviceWorker.register("sw.js?v=4").catch((error) => console.warn("Offline-Modus konnte nicht aktiviert werden.", error));
+      navigator.serviceWorker.register("sw.js?v=6").catch((error) => console.warn("Offline-Modus konnte nicht aktiviert werden.", error));
     }
   }
 

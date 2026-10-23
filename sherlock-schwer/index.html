@@ -12,6 +12,7 @@
     if (/^https?:\/\/(bonus\.munichpublishing\.de|[a-z0-9.-]*mailerlite\.com|[a-z0-9.-]*mlsend\.com|[a-z0-9.-]*mailerpage\.io)\//i.test(document.referrer || "")) ok = true;
     try {
       if (localStorage.getItem(key) === "1") ok = true;
+      if (localStorage.getItem("sherlock-schwer-v3")) ok = true;
       if (localStorage.getItem("sherlock-schwer-v2")) ok = true;
       if (localStorage.getItem("sherlock-schwer-v1")) ok = true;
       if (ok) localStorage.setItem(key, "1");
@@ -22,16 +23,16 @@
 </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#111722">
-    <meta name="description" content="Buchbegleiter und interaktives Bonus-Rätsel zu Sherlock Logikrätsel, Band 4 – Schwer.">
+    <meta name="description" content="Buchbegleiter und fünf interaktive Bonus-Rätsel zu Sherlock Logikrätsel, Band 4 – Schwer.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Sherlock Schwer">
     <title>Sherlock Schwer – Buchbegleiter</title>
-    <link rel="manifest" href="manifest.webmanifest?v=5">
+    <link rel="manifest" href="manifest.webmanifest?v=6">
     <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="assets/icon-192.png">
     <link rel="preload" href="assets/sherlock-schwer-cover.jpg" as="image">
-    <link rel="stylesheet" href="styles.css?v=4">
+    <link rel="stylesheet" href="styles.css?v=6">
   </head>
   <body>
     <a class="skip-link" href="#main-content">Zum Inhalt</a>
@@ -50,10 +51,10 @@
           <div class="hero-copy">
             <p class="eyebrow">Der digitale Ermittlungsbegleiter</p>
             <h1 id="start-title">Ein klarer Kopf.<br><span>Zwanzig schwere Fälle.</span></h1>
-            <p class="lede">Behalte deinen Buchfortschritt im Blick und löse zusätzlich immer neue, eindeutig geprüfte Bonusfälle auf dem interaktiven Ermittlungsbrett.</p>
+            <p class="lede">Behalte deinen Buchfortschritt im Blick und löse fünf eindeutig geprüfte Bonusfälle mit insgesamt zwanzig aufeinander aufbauenden Ebenen.</p>
             <div class="hero-actions">
               <button id="continue-book" class="button button-primary" type="button">Mit Fall 1 starten</button>
-              <button class="button button-ghost" type="button" data-route="bonus">Bonusfall öffnen</button>
+              <button class="button button-ghost" type="button" data-route="bonus">Bonusrätsel öffnen</button>
             </div>
             <div class="trust-row" aria-label="Eigenschaften der App">
               <span>Ohne Konto</span><span>Offline nutzbar</span><span>Speichert lokal</span>
@@ -82,9 +83,10 @@
             <div class="teaser-icon" aria-hidden="true">✦</div>
             <div>
               <p class="kicker">Bonus-Rätsel</p>
-              <h2>Ein neuer Fall wartet</h2>
-              <p>Vier textbasierte Ebenen. Jede Lösung öffnet den nächsten, logisch zwingenden Ermittlungsschritt.</p>
-              <button class="text-button" type="button" data-route="bonus">Ermittlung aufnehmen <span aria-hidden="true">→</span></button>
+              <h2>Fünf neue Fälle warten</h2>
+              <p>Fünf textbasierte Akten mit je vier Ebenen. Jede richtige Lösung öffnet den nächsten, logisch zwingenden Ermittlungsschritt.</p>
+              <p id="bonus-teaser-status" class="bonus-teaser-status">0 von 5 Bonusfällen gelöst</p>
+              <button class="text-button" type="button" data-route="bonus">Bonusakten öffnen <span aria-hidden="true">→</span></button>
             </div>
           </article>
         </div>
@@ -97,7 +99,7 @@
           <ol>
             <li><span>1</span><div><strong>Im Buch lösen</strong><p>Öffne in der App „Buchfälle“ und wähle dieselbe Fallnummer.</p></div></li>
             <li><span>2</span><div><strong>Fortschritt sichern</strong><p>Markiere den Fall als gelöst. Die App merkt sich deinen Stand auf diesem Gerät.</p></div></li>
-            <li><span>3</span><div><strong>Weitertrainieren</strong><p>Öffne „Bonusfall“ für eine zusätzliche schwere Ermittlung in vier aufeinander aufbauenden Ebenen.</p></div></li>
+            <li><span>3</span><div><strong>Weitertrainieren</strong><p>Öffne „Bonusrätsel“ für fünf zusätzliche schwere Ermittlungen mit jeweils vier aufeinander aufbauenden Ebenen.</p></div></li>
           </ol>
         </section>
       </section>
@@ -125,12 +127,23 @@
       <section id="bonus" class="view" data-view="bonus" aria-labelledby="bonus-title" hidden>
         <div class="section-head shell bonus-head">
           <div>
-            <p class="eyebrow">Bonus-Rätsel · Schwer · Vier Ebenen</p>
-            <h1 id="bonus-title">Deduktion ohne Sprung</h1>
-            <p>Textbasiert, ohne Tabelle und ohne visuelle Lösungstricks. Löse jede Ebene eindeutig, bevor die nächste Spur geöffnet wird.</p>
+            <p class="eyebrow">5 Bonus-Rätsel · Schwer · Je vier Ebenen</p>
+            <h1 id="bonus-title">Fünf Akten. Zwanzig Schlüsse.</h1>
+            <p>Textbasiert, ohne visuelle Lösungstricks. Wähle eine Akte und löse jede Ebene eindeutig, bevor die nächste Spur geöffnet wird.</p>
           </div>
           <button id="reset-bonus" class="button button-small" type="button">Fall neu beginnen</button>
         </div>
+
+        <section class="shell bonus-library" aria-labelledby="bonus-library-title">
+          <div class="panel bonus-library-panel">
+            <div>
+              <p class="kicker">Bonus-Bibliothek</p>
+              <h2 id="bonus-library-title">Deine fünf Bonusakten</h2>
+              <p id="bonus-library-status">Wähle einen Fall. Jeder Fortschritt wird getrennt auf diesem Gerät gespeichert.</p>
+            </div>
+            <div id="bonus-case-list" class="bonus-case-list" role="list"></div>
+          </div>
+        </section>
 
         <div class="shell four-level-case">
           <article class="panel puzzle-dossier" aria-labelledby="puzzle-title">
@@ -139,7 +152,7 @@
               <div><p class="kicker">Bonus-Akte <span id="bonus-number">NACHTZUG-01</span></p><h2 id="puzzle-title">Das Telegramm im Nachtzug</h2></div>
             </div>
             <div class="puzzle-meta" aria-label="Rätselmerkmale">
-              <span>Primärmechanik · Reihenfolgen</span><span>Endantwort · Gegenstand</span><span>4 Ebenen</span>
+              <span id="puzzle-mechanism">Primärmechanik · Reihenfolgen</span><span id="puzzle-end-answer">Endantwort · Gegenstand</span><span>4 Ebenen</span>
             </div>
             <section aria-labelledby="intro-heading"><h3 id="intro-heading">INTRO</h3><p id="bonus-intro"></p></section>
             <section aria-labelledby="case-intro-heading"><h3 id="case-intro-heading">EINLEITUNG</h3><p id="bonus-case-intro"></p></section>
@@ -193,11 +206,11 @@
     <nav class="bottom-nav" aria-label="Hauptnavigation">
       <button class="nav-item active" type="button" data-route="start" aria-current="page"><span aria-hidden="true">⌂</span><small>Start</small></button>
       <button class="nav-item" type="button" data-route="book"><span aria-hidden="true">▤</span><small>Buchfälle</small></button>
-      <button class="nav-item" type="button" data-route="bonus"><span aria-hidden="true">◇</span><small>Bonusfall</small></button>
+      <button class="nav-item" type="button" data-route="bonus"><span aria-hidden="true">◇</span><small>Bonusrätsel</small></button>
       <button class="nav-item" type="button" data-route="install"><span aria-hidden="true">⇩</span><small>Installieren</small></button>
     </nav>
 
-    <script src="engine.js?v=4"></script>
-    <script src="app.js?v=4"></script>
+    <script src="engine.js?v=6"></script>
+    <script src="app.js?v=6"></script>
   </body>
 </html>

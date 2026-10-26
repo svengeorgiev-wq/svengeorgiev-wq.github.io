@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#1f4fa3">
-<meta name="description" content="Die Übungsvideos zum Buch „Gedächtnistraining und Stuhl Yoga für Senioren“ von Munich Publishing. 21 Tage, jeden Tag ein Video. Ohne Account.">
+<meta name="description" content="Die Übungsvideos zum Buch „Gedächtnistraining und Stuhl Yoga für Senioren“ von Munich Publishing. 14 Tage, jeden Tag ein Vorführvideo. Ohne Account.">
 <meta name="robots" content="noindex">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -121,7 +121,7 @@ button { font: inherit; }
 <main class="wrap">
   <header class="head">
     <img src="assets/cover.jpg?v=2" alt="Buchcover Gedächtnistraining und Stuhl-Yoga für Senioren ab 60" width="88" height="115">
-    <h1>Ihre Übungs&shy;videos</h1>
+    <h1>Ihre Vorführ&shy;videos</h1>
   </header>
 
   <section id="liste" class="stack">
@@ -179,31 +179,32 @@ button { font: inherit; }
 (function () {
   var WT = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
   var NAME = {
-    katze: 'Katzenbuckel im Sitzen', fuesse: 'Füße kreisen', kopf: 'Sanftes Kopfdrehen',
-    umarm: 'Selbstumarmung', vorbeuge: 'Stehende Vorbeuge', rueck: 'Körperrückseite dehnen',
-    schulter: 'Schultern heben', gesaess: 'Gesäß-Dehnung', rotieren: 'Arme rotieren',
-    ueberkopf: 'Arme über Kopf', nacken: 'Seitliche Nacken-Muskeln'
+    schulter: 'Schultern heben', fuesse: 'Füße kreisen', kopf: 'Sanftes Kopfdrehen',
+    fersen: 'Fersen und Zehen heben', rotieren: 'Arme rotieren', umarm: 'Selbstumarmung',
+    nacken: 'Seitliche Nacken-Muskeln', katze: 'Katzenbuckel im Sitzen', ueberkopf: 'Arme über Kopf',
+    gesaess: 'Gesäß-Dehnung', drehung: 'Sitzende Drehung', rueck: 'Körperrückseite dehnen',
+    vorbeuge: 'Vorbeuge im Sitzen', beine: 'Beine abwechselnd strecken'
   };
-  // Fertige Videos (Dateiname ohne Endung in videos/)
+  // Fertige Videos (Dateiname ohne Endung in videos/). Ohne Eintrag: "Video folgt in Kürze".
   var VIDEO = {
     katze: 'katzenbuckel', fuesse: 'fuesse-kreisen', kopf: 'kopfdrehen', umarm: 'selbstumarmung',
-    vorbeuge: 'vorbeuge', rueck: 'koerperrueckseite', schulter: 'schultern-heben', gesaess: 'gesaess',
+    rueck: 'koerperrueckseite', schulter: 'schultern-heben', gesaess: 'gesaess',
     rotieren: 'arme-rotieren', ueberkopf: 'arme-ueber-kopf', nacken: 'nacken'
   };
-  // Tag 1 bis 21, wie im Buch
+  // Tag 1 bis 14, wie im Buch (Woche 1 Leicht, Woche 2 Mittel)
   var PLAN = [
-    'katze', 'fuesse', 'kopf', 'umarm', 'vorbeuge', 'rueck', 'schulter',
-    'gesaess', 'rotieren', 'rueck', 'vorbeuge', 'ueberkopf', 'kopf', 'katze',
-    'nacken', 'rotieren', 'rueck', 'vorbeuge', 'ueberkopf', 'kopf', 'katze'
+    'schulter', 'fuesse', 'kopf', 'fersen', 'rotieren', 'umarm', 'nacken',
+    'katze', 'ueberkopf', 'gesaess', 'drehung', 'rueck', 'vorbeuge', 'beine'
   ];
+  var TAGE = PLAN.length;
   var $ = function (id) { return document.getElementById(id); };
   function merke(n) { try { localStorage.setItem('stuhlYogaTag', String(n)); } catch (e) {} }
-  function letzter() { try { var n = parseInt(localStorage.getItem('stuhlYogaTag'), 10); return n >= 1 && n <= 21 ? n : 0; } catch (e) { return 0; } }
+  function letzter() { try { var n = parseInt(localStorage.getItem('stuhlYogaTag'), 10); return n >= 1 && n <= TAGE ? n : 0; } catch (e) { return 0; } }
 
   var wochen = $('wochen');
-  for (var w = 0; w < 3; w++) {
+  for (var w = 0; w < 2; w++) {
     var box = document.createElement('div'); box.className = 'week';
-    var h = document.createElement('h2'); h.textContent = 'Woche ' + (w + 1); box.appendChild(h);
+    var h = document.createElement('h2'); h.textContent = 'Woche ' + (w + 1) + (w === 0 ? ' · Leicht' : ' · Mittel'); box.appendChild(h);
     for (var t = 0; t < 7; t++) {
       var n = w * 7 + t + 1;
       var b = document.createElement('button');
@@ -217,7 +218,7 @@ button { font: inherit; }
 
   function liste() {
     $('ansicht').hidden = true; $('liste').hidden = false; $('medien').innerHTML = '';
-    var l = letzter(), weiter = $('weiter'), ziel = l ? Math.min(l + 1, 21) : 1;
+    var l = letzter(), weiter = $('weiter'), ziel = l ? Math.min(l + 1, TAGE) : 1;
     document.querySelectorAll('.day').forEach(function (d) { d.classList.toggle('is-last', +d.dataset.tag === l); });
     weiter.textContent = l ? 'Weiter mit Tag ' + ziel + ' →' : 'Mit Tag 1 beginnen →';
     weiter.onclick = function () { zeige(ziel); };
@@ -250,7 +251,7 @@ button { font: inherit; }
       m.appendChild(s);
     }
     $('vorher').style.visibility = n === 1 ? 'hidden' : 'visible';
-    $('naechster').style.visibility = n === 21 ? 'hidden' : 'visible';
+    $('naechster').style.visibility = n === TAGE ? 'hidden' : 'visible';
     $('vorher').onclick = function () { zeige(n - 1); };
     $('naechster').onclick = function () { zeige(n + 1); };
     merke(n);
@@ -260,7 +261,7 @@ button { font: inherit; }
 
   $('zurueck').addEventListener('click', liste);
   var m = /^#tag(\d{1,2})$/.exec(location.hash);
-  if (m && +m[1] >= 1 && +m[1] <= 21) zeige(+m[1]); else liste();
+  if (m && +m[1] >= 1 && +m[1] <= TAGE) zeige(+m[1]); else liste();
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });

@@ -88,7 +88,9 @@ function ansichtHeute() {
     ? `<p>Alle 24 Türchen abgehakt. Frohe Weihnachten! <button class="text-button" type="button" data-route="seite/abschluss">Was du mitnimmst</button></p>`
     : `<p>${zahl === 0 ? "Hak ein Türchen ab, wenn du die kleine Übung gestrickt hast." : weiter ? `Als Nächstes: Türchen ${weiter.nr}, ${esc(weiter.titel)}.` : ""}</p>`;
   const z = state.zaehler;
-  return `${oben}${weiterKarte}${girlande()}
+  const anfaenger = zahl === 0
+    ? `<button class="card extra-karte" type="button" data-route="anschlagen"><span class="extra-band"><span class="pill green">Extra für Anfänger</span><span class="pill">Kein Türchen</span></span><b>Noch nie Maschen angeschlagen?</b><small>Hier lernst du es Schritt für Schritt, bevor du mit Türchen 1 anfängst.</small></button>` : "";
+  return `${oben}${anfaenger}${weiterKarte}${girlande()}
     ${zahl === 24 ? `<img class="bildkarte" src="assets/deko/stimmung-schleife.webp" alt="Die Strickschleife aus Türchen 24 auf einem Geschenk" width="900" height="600">` : ""}
     <article class="card progress"><div class="ring" style="--p:${Math.round(zahl / 24 * 100)}"><span>${zahl}/24</span></div>
       <div><h2>Dein Fortschritt</h2>${fertig}</div></article>
@@ -101,7 +103,8 @@ function ansichtHeute() {
       <div class="link-list" style="margin-top:12px">${vorabLinks()}</div></article>`;
 }
 function vorabLinks() {
-  return [["aufbau", "So ist jedes Türchen aufgebaut"], ["willkommen", "Willkommen"], ["material", "Dein Übungsplatz: Garn, Nadeln, Zubehör"], ["lesen", "So liest du die Anleitungen"], ["proben", "Die kleinen Proben"]]
+  const extra = `<button class="list-link extra-link" type="button" data-route="anschlagen" data-close-dialog>Maschen anschlagen <span class="pill green">Extra für Anfänger</span></button>`;
+  return extra + [["aufbau", "So ist jedes Türchen aufgebaut"], ["willkommen", "Willkommen"], ["material", "Dein Übungsplatz: Garn, Nadeln, Zubehör"], ["lesen", "So liest du die Anleitungen"], ["proben", "Die kleinen Proben"]]
     .map(([k, label]) => `<button class="list-link" type="button" data-route="seite/${k}" data-close-dialog>${esc(label)}</button>`).join("");
 }
 
@@ -132,7 +135,7 @@ function ansichtTuer(nr, tab) {
   if (tab === "entdecken") {
     inhalt = `${foto(t.fotoEntdecken)}${absaetze(t.einleitung)}
       <div class="box"><h3>Heute im Blick</h3><p>${esc(t.imBlick)}</p></div>
-      <div class="box gruen"><h3>Das liegt bereit</h3>${absaetze(t.bereit)}</div>
+      <div class="box gruen"><h3>Das liegt bereit</h3>${absaetze(t.bereit)}${nr === 1 ? `<p class="extra-tipp">Noch nie angeschlagen? <button class="text-button" type="button" data-route="anschlagen">Extra für Anfänger: Maschen anschlagen</button></p>` : ""}</div>
       <button class="button primary" type="button" data-tab="schritte" data-tuer="${nr}">Zu den Schritten</button>`;
   } else if (tab === "schritte") {
     const schritt = (s) => `<div class="schritt"><span class="nr">${s.nr}</span><div><h3>${esc(s.titel)}</h3>${absaetze(s.text)}</div></div>`;
@@ -182,12 +185,14 @@ function hilfeEintraege() {
   const liste = [];
   R.hilfe.abschnitte.forEach((a) => liste.push({ quelle: "Schnelle Hilfe", titel: a.h, text: a.p.join(" "), refs: tuerVerweise(a.p.join(" ")) }));
   R.spickzettel.abschnitte.forEach((a) => liste.push({ quelle: "Spickzettel", titel: a.h, text: a.p.join(" "), refs: tuerVerweise(a.p.join(" ")) }));
+  if (window.STRICK_ANSCHLAGEN) liste.push(Object.assign({ refs: [], route: "anschlagen" }, window.STRICK_ANSCHLAGEN.hilfe));
   T.forEach((t) => t.hakt.forEach((x) => liste.push({ quelle: `Türchen ${t.nr} · Wenn etwas hakt`, titel: x.problem, text: x.loesung, refs: [t.nr] })));
   return liste;
 }
 const HILFE = hilfeEintraege();
 function eintragHtml(e) {
-  return `<div class="eintrag"><div class="treffer-quelle">${esc(e.quelle)}</div><h3>${esc(e.titel)}</h3><p>${esc(e.text)}</p>${chips(e.refs)}</div>`;
+  const link = e.route ? `<div class="chips"><button class="chip" type="button" data-route="${esc(e.route)}">Anleitung öffnen</button></div>` : "";
+  return `<div class="eintrag"><div class="treffer-quelle">${esc(e.quelle)}</div><h3>${esc(e.titel)}</h3><p>${esc(e.text)}</p>${chips(e.refs)}${link}</div>`;
 }
 function ansichtHilfe(q = "") {
   return `<p class="eyebrow">Schnelle Hilfe</p><h1>Wo du nachschlagen kannst</h1>
@@ -198,7 +203,8 @@ function hilfeListe(q) {
   const norm = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
   const woerter = norm(q).split(/\s+/).filter(Boolean);
   if (!woerter.length) {
-    return `<article class="card"><h2>${esc(R.hilfe.titel)}</h2>${HILFE.filter((e) => e.quelle === "Schnelle Hilfe").map(eintragHtml).join("")}</article>
+    return `<article class="card"><h2>Extra für Anfänger</h2>${HILFE.filter((e) => e.route).map(eintragHtml).join("")}</article>
+      <article class="card"><h2>${esc(R.hilfe.titel)}</h2>${HILFE.filter((e) => e.quelle === "Schnelle Hilfe").map(eintragHtml).join("")}</article>
       <article class="card"><h2>${esc(R.spickzettel.titel)}</h2>${HILFE.filter((e) => e.quelle === "Spickzettel").map(eintragHtml).join("")}</article>
       <p class="leer">Dazu findet die Suche alle „Wenn etwas hakt“-Antworten aus den 24 Türchen.</p>`;
   }
@@ -228,7 +234,7 @@ function ansichtQuellen() {
 }
 
 /* ---------- Router ---------- */
-const LABEL = { heute: "Noch eine Masche bis Weihnachten", tuerchen: "Alle 24 Türchen", zaehler: "Reihen- und Maschenzähler", hilfe: "Schnelle Hilfe und Spickzettel", quellen: "Quellen und Bildnachweis" };
+const LABEL = { heute: "Noch eine Masche bis Weihnachten", tuerchen: "Alle 24 Türchen", zaehler: "Reihen- und Maschenzähler", hilfe: "Schnelle Hilfe und Spickzettel", quellen: "Quellen und Bildnachweis", anschlagen: "Extra für Anfänger · kein Türchen" };
 let wakeLock = null;
 let letzteRoute = "";
 
@@ -242,13 +248,14 @@ function render() {
   else if (route === "hilfe") html = ansichtHilfe();
   else if (route === "seite") { html = ansichtSeite(pfad[1]); label = "Vor dem Start"; nav = ""; }
   else if (route === "quellen") { html = ansichtQuellen(); nav = ""; }
+  else if (route === "anschlagen" && window.STRICK_ANSCHLAGEN) { html = window.STRICK_ANSCHLAGEN.ansicht(); nav = ""; }
   else { html = ansichtHeute(); nav = "heute"; }
   app.innerHTML = html;
   document.getElementById("route-label").textContent = label;
   document.querySelectorAll("[data-nav]").forEach((b) => { b.classList.toggle("active", b.dataset.nav === nav); b.toggleAttribute("aria-current", b.dataset.nav === nav); });
   const neu = pfad.slice(0, 2).join("/");
   if (neu !== letzteRoute) { window.scrollTo(0, 0); letzteRoute = neu; }
-  document.title = route === "tuer" ? `Türchen ${pfad[1]} – Strick-Begleiter` : "Strick-Begleiter – Begleit-App zum Strick-Adventskalender";
+  document.title = route === "tuer" ? `Türchen ${pfad[1]} – Strick-Begleiter` : route === "anschlagen" ? "Maschen anschlagen (Extra für Anfänger) – Strick-Begleiter" : "Strick-Begleiter – Begleit-App zum Strick-Adventskalender";
   wachHalten(route === "zaehler" && state.zaehler.wach);
 }
 function gehe(route) {

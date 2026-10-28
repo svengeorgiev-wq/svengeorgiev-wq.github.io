@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE = "strick-begleiter-v1.2.0";
+const CACHE = "strick-begleiter-v1.3.0";
 const SHELL = [
   "./",
   "./index.html",

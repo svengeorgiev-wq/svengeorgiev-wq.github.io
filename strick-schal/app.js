@@ -204,7 +204,7 @@
   }
 
   // ---------- Router
-  const SUB = { start: "24 Türchen, ein Schal", reihe: "Reihe für Reihe", tuerchen: "Alle 24 Türchen", hilfe: "Fehlerhilfe", tuer: "Kniff, Schal und Rätsel", check: "Maschen-Check" };
+  const SUB = { start: "Reihenzähler-App zum Buch", reihe: "Reihe für Reihe", tuerchen: "Alle 24 Türchen", hilfe: "Fehlerhilfe", tuer: "Kniff, Schal und Rätsel", check: "Maschen-Check" };
   function render() {
     const p = location.hash.replace(/^#\/?/, "").split("/");
     const r = p[0] || "start";
@@ -220,7 +220,7 @@
     else if (r === "info") h = vInfo();
     else h = vStart();
     app.innerHTML = h;
-    $("#sub").textContent = SUB[r] || "24 Türchen, ein Schal";
+    $("#sub").textContent = SUB[r] || "Reihenzähler-App zum Buch";
     document.querySelectorAll(".tabs button").forEach((b) => b.classList.toggle("on", b.dataset.nav === (r === "tuer" || r === "check" ? "tuerchen" : r)));
     wake(r === "reihe");
     if (r === "stand") fillStand();

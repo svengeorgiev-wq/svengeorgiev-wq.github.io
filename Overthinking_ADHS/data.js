@@ -259,15 +259,15 @@ window.APP_DATA = (() => {
       close: "Mein Stabilisator ist vorbereitet.",
     },
     {
-      day: 19, week: 3, title: "90 Sekunden physisch entladen", page: "134", duration: "90 Sek.", toolIds: [19],
+      day: 19, week: 3, title: "Physisch entladen: 2 Minuten", page: "134", duration: "2 Min.", toolIds: [19],
       purpose: "Starke Anspannung steckt nicht nur in deinen Gedanken. Sie zeigt sich auch im Körper. Heute leitest du diese Energie zuerst körperlich ab.",
-      step: "Zehn Kniebeugen, zwanzig Sekunden ausschütteln oder gehen, noch einmal zehn Kniebeugen. Passe alles an deinen Körper und deine Möglichkeiten an.",
-      situation: "Du spürst Wut, Frust oder einen starken Impuls und möchtest sofort reagieren. Vorher bewegst du deinen Körper für 90 Sekunden.",
+      step: "30 Sekunden Kniebeugen, so schnell du kannst, dann 30 Sekunden Wandliegestütze. Beides noch einmal wiederholen. Passe die Bewegung an deinen Körper an: Auch schnelles Gehen, Wanddrücken oder kräftiges Ausschütteln geht. Die Intensität passt, wenn du danach leicht außer Atem bist.",
+      situation: "Du spürst Wut, Frust oder einen starken Impuls und möchtest sofort eine Nachricht senden oder etwas Verletzendes sagen. Bevor du reagierst, bewegst du deinen Körper für zwei Minuten.",
       why: "Bewegung kann körperliche Anspannung reduzieren. Dadurch entsteht eine kurze Unterbrechung zwischen Impuls und Reaktion.",
-      timer: { seconds: 90, label: "Physische Pause", mode: "countdown" },
+      timer: { seconds: 120, label: "Physische Pause", mode: "countdown" },
       fields: [
-        { key: "movement", label: "Meine sichere Variante", type: "radio", wide: true, options: ["Kniebeugen", "schnelles Gehen", "Wanddrücken", "kräftig ausschütteln"] },
-        { key: "sequence", label: "Sequenz", type: "checkbox", wide: true, options: ["erste Bewegung", "20 Sekunden ausschütteln/gehen", "zweite Bewegung"] },
+        { key: "movement", label: "Meine sichere Variante", type: "radio", wide: true, options: ["Kniebeugen und Wandliegestütze", "schnelles Gehen", "Wanddrücken", "kräftig ausschütteln"] },
+        { key: "sequence", label: "Sequenz", type: "checkbox", wide: true, options: ["30 Sek. Kniebeugen", "30 Sek. Wandliegestütze", "beides noch einmal"] },
       ],
       close: "Ich habe vor meiner Reaktion eine körperliche Pause gemacht.",
     },
@@ -357,7 +357,7 @@ window.APP_DATA = (() => {
     { id: "rejection", title: "Es fühlt sich wie Ablehnung an", subtitle: "Nachricht, Blick oder fehlende Antwort", color: "#db55ff", icon: "?", day: 10, steps: ["Benenne: „Das könnte gerade RSD sein.“", "Trenne den beobachtbaren Fakt von deiner Deutung.", "Finde zwei neutrale Erklärungen und reagiere frühestens später."] },
     { id: "conflict", title: "Ein Gespräch kippt", subtitle: "Hitze, Druck oder Eskalationsgefahr", color: "#ff6271", icon: "Ⅱ", day: 11, steps: ["Nutze deine Time-out-Geste.", "Nenne eine konkrete Rückkehrzeit.", "Reguliere erst deinen Körper – löse den Inhalt später."] },
     { id: "stuck", title: "Ich komme nicht ins Tun", subtitle: "Aufgabe wirkt zu groß", color: "#50df99", icon: "›", day: 15, steps: ["Benenne nur die eine wichtige Aufgabe.", "Verkleinere den Start auf maximal eine Minute.", "Mach nur diesen Schritt. Danach darfst du neu entscheiden."] },
-    { id: "impulse", title: "Ich will sofort reagieren", subtitle: "Wut, Frust oder starker Impuls", color: "#ff8d32", icon: "!", day: 19, steps: ["Lege das Handy außer Reichweite.", "Bewege dich 90 Sekunden passend zu deinem Körper.", "Bewerte die Anspannung danach erneut, erst dann die Reaktion."] },
+    { id: "impulse", title: "Ich will sofort reagieren", subtitle: "Wut, Frust oder starker Impuls", color: "#ff8d32", icon: "!", day: 19, steps: ["Lege das Handy außer Reichweite.", "Bewege dich zwei Minuten passend zu deinem Körper.", "Bewerte die Anspannung danach erneut, erst dann die Reaktion."] },
     { id: "admin", title: "Post oder Anruf blockiert", subtitle: "Bürokratie und Fristendruck", color: "#6e91ff", icon: "□", day: 21, steps: ["Öffne oder nimm genau ein Dokument.", "Ordne es nur in JETZT, WARTEN oder ARCHIV ein.", "Falls ein Anruf nötig ist: schreibe drei Sätze vor."] },
   ];
 

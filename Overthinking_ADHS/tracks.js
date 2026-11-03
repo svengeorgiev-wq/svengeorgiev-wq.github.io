@@ -55,7 +55,7 @@ window.DAY_AUDIOS = [
   { day: 16, file: "audio/tag-16.mp3", duration: "1:39" },
   { day: 17, file: "audio/tag-17.mp3", duration: "1:34" },
   { day: 18, file: "audio/tag-18.mp3", duration: "1:41" },
-  { day: 19, file: "audio/tag-19.mp3", duration: "2:24" },
+  { day: 19, file: "audio/tag-19.mp3?v=20261103", duration: "3:44" },
   { day: 20, file: "audio/tag-20.mp3", duration: "2:17" },
   { day: 21, file: "audio/tag-21.mp3", duration: "2:16" }
 ];

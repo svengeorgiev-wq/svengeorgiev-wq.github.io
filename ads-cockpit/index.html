@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -11,15 +11,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Unbounded:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* Dark glass: deep ink ground, three blurred light orbs, frosted panels. Boldness lives in the Unbounded numerals. */
+  /* Dunkles Glas. Eine Logik: Bücher zählen alle Verkäufe; nur der Kampagnenblock zählt Ad-Bestellungen. */
   :root {
     --ink: #07080f; --fg: #f4f5fb; --muted: rgba(244,245,251,.62); --faint: rgba(244,245,251,.38);
     --line: rgba(255,255,255,.13); --glass-a: rgba(255,255,255,.10); --glass-b: rgba(255,255,255,.035);
-    --c0: #ff7a59; --c1: #2de2c4; --c2: #9b7cff; --c3: #ffc24a; --c4: #5cc8ff; --c5: #ff6fae;
-    --good: #3ef0b3; --bad: #ff5d73;
+    --c0: #ff7a59; --c1: #2de2c4; --c2: #9b7cff;
+    --good: #3ef0b3; --warn: #ffc24a; --bad: #ff5d73;
     --display: 'Unbounded', 'Arial Black', system-ui, sans-serif; --body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
   }
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.28) transparent; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.22); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; } ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
   html { background: var(--ink); color-scheme: dark; }
   body { margin: 0; min-height: 100vh; font-family: var(--body); font-size: 15px; line-height: 1.5; color: var(--fg); -webkit-font-smoothing: antialiased;
     padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(40px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
@@ -31,8 +32,6 @@
   @media (prefers-reduced-motion: no-preference) {
     body::before { animation: drift 28s ease-in-out infinite alternate; }
     @keyframes drift { from { transform: translate3d(-2%, -1%, 0) scale(1); } to { transform: translate3d(3%, 2%, 0) scale(1.08); } }
-    @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-    .glass, .tile { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
   }
   .glass { background: linear-gradient(135deg, var(--glass-a), var(--glass-b)); -webkit-backdrop-filter: blur(22px) saturate(160%); backdrop-filter: blur(22px) saturate(160%);
     border: 1px solid var(--line); border-radius: 22px; box-shadow: 0 10px 40px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.2); }
@@ -48,92 +47,73 @@
   .chip { display: inline-flex; align-items: center; gap: 8px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.06); color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: inherit; }
   .chip.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 3px rgba(62,240,179,.2); }
   button.chip { cursor: pointer; } button.chip:hover { color: var(--fg); border-color: rgba(255,255,255,.3); }
-  .take { margin: 12px 0 0; max-width: 80ch; color: var(--muted); }
-  .take b { color: var(--fg); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .rule { margin: 12px 0 0; max-width: 84ch; color: var(--muted); }
+  .rule b { color: var(--fg); font-weight: 700; }
 
-  .hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 28px; padding: 28px; overflow: hidden; }
-  @media (max-width: 860px) { .hero { grid-template-columns: minmax(0, 1fr); padding: 20px; } }
-  .hero-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-  .big { font-family: var(--display); font-weight: 700; font-size: clamp(3.1rem, 8vw, 5.2rem); line-height: .95; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+  .hero { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 28px; padding: 26px; }
+  @media (max-width: 900px) { .hero { grid-template-columns: minmax(0, 1fr); padding: 18px; } }
+  .hero-main { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+  .big { font-family: var(--display); font-weight: 700; font-size: clamp(2.8rem, 7vw, 4.4rem); line-height: .95; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
   .big.pos { color: var(--good); } .big.neg { color: var(--bad); }
-  .sub { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; color: var(--muted); font-size: 12.5px; }
-  .mini { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); }
-  .mini > div { display: flex; flex-direction: column; gap: 5px; min-width: 0; align-items: flex-start; }
-  .mini-label { font-size: 12px; color: var(--muted); }
-  .mini-value { font-family: var(--display); font-size: 1.15rem; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .sub { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  table.win { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; margin-top: 8px; }
+  .win th { font-size: 11px; font-weight: 700; color: var(--muted); text-align: right; padding: 6px 8px; letter-spacing: .03em; }
+  .win td { text-align: right; padding: 6px 8px; border-top: 1px solid rgba(255,255,255,.08); white-space: nowrap; }
+  .win th:first-child, .win td:first-child { text-align: left; color: var(--muted); padding-left: 0; }
+  .win td.now, .win th.now { color: var(--fg); font-weight: 700; }
+  .win tr.strong td { font-weight: 700; }
 
-  .pill { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--muted); background: rgba(255,255,255,.09); }
-  .pill.good { color: var(--good); background: rgba(62,240,179,.14); } .pill.bad { color: var(--bad); background: rgba(255,93,115,.15); }
-  .good { color: var(--good); } .bad { color: var(--bad); } .muted { color: var(--muted); }
+  .pill { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; color: var(--muted); background: rgba(255,255,255,.09); }
+  .pill.good { color: var(--good); background: rgba(62,240,179,.14); } .pill.warn { color: var(--warn); background: rgba(255,194,74,.15); } .pill.bad { color: var(--bad); background: rgba(255,93,115,.15); }
+  .good { color: var(--good); } .warn { color: var(--warn); } .bad { color: var(--bad); } .muted { color: var(--muted); }
 
   .section { display: flex; flex-direction: column; gap: 14px; }
-  .tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-  @media (max-width: 1100px) { .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  @media (max-width: 640px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tile-value { font-size: 1.35rem; } }
-  .tile { padding: 16px 16px 12px; display: flex; flex-direction: column; gap: 6px; min-width: 0; border-radius: 20px; }
-  .tile-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-  .tile-label { font-size: 12px; color: var(--muted); }
-  .tile-value { font-family: var(--display); font-size: 1.6rem; font-weight: 600; letter-spacing: -.04em; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  .tile-foot { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
-  .spark { height: 40px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+  .filters button { font: inherit; font-size: 12.5px; font-weight: 600; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.05); color: var(--muted); cursor: pointer; font-variant-numeric: tabular-nums; }
+  .filters button[aria-pressed="true"] { color: var(--fg); border-color: rgba(255,255,255,.45); background: rgba(255,255,255,.14); }
+
+  .top5 { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  @media (max-width: 1100px) { .top5 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 680px) { .top5 { grid-template-columns: minmax(0, 1fr); } }
+  .t5 { padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; border-radius: 20px; }
+  .t5-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .t5-rank { font-family: var(--display); font-size: 12px; color: var(--faint); }
+  .t5-name { font-weight: 600; font-size: 13.5px; line-height: 1.3; min-height: 2.6em; }
+  .t5-roi { font-family: var(--display); font-size: 1.5rem; font-weight: 600; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
+  .t5-meta { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; display: grid; grid-template-columns: 1fr auto; gap: 1px 8px; }
+  .t5-meta b { font-weight: 700; color: var(--fg); text-align: right; }
+
   .card { padding: 22px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
   .card-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
-  .grid-2-1 { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 14px; }
-  @media (max-width: 900px) { .grid-2-1 { grid-template-columns: minmax(0, 1fr); } .card { padding: 16px; } }
-  .chart { position: relative; min-height: 240px; } .chart.short { min-height: 200px; }
+  @media (max-width: 900px) { .card { padding: 16px; } }
+  .chart { position: relative; min-height: 220px; }
   svg { display: block; overflow: visible; }
-  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--muted); }
-  .legend span { display: inline-flex; align-items: center; gap: 6px; }
-  .legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; } .legend i.ln { height: 3px; border-radius: 2px; }
-
-  .top5 { display: flex; flex-direction: column; min-height: 280px; }
-  .t5 { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr) auto; gap: 5px 10px; align-items: center; padding: 11px 4px; }
-  .t5 + .t5 { border-top: 1px solid var(--line); }
-  .t5-rank { grid-row: span 2; font-family: var(--display); font-size: 1rem; color: var(--faint); text-align: center; }
-  .t5-name { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .t5-roi { font-family: var(--display); font-size: 1.05rem; font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; letter-spacing: -.03em; }
-  .t5-track { grid-column: 2 / -1; position: relative; height: 7px; background: rgba(255,255,255,.08); border-radius: 999px; }
-  .t5-bar { position: absolute; top: 0; bottom: 0; border-radius: 999px; }
-  .t5-ghost { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--fg); opacity: .6; border-radius: 1px; }
-  .t5-zero { position: absolute; top: -4px; bottom: -4px; width: 1px; background: rgba(255,255,255,.4); }
-  .t5-meta { grid-column: 2 / -1; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-  .donut-wrap { display: grid; grid-template-columns: 132px minmax(9rem, 1fr); gap: 16px; align-items: center; }
-  .donut-legend div { flex-wrap: nowrap; white-space: nowrap; }
-  .donut { position: relative; width: 132px; height: 132px; }
-  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; pointer-events: none; }
-  .donut-center strong { font-family: var(--display); font-size: 1.2rem; font-variant-numeric: tabular-nums; }
-  .donut-center span { font-size: 11px; color: var(--muted); }
-  .donut-legend { display: flex; flex-direction: column; gap: 10px; font-size: 12.5px; }
-  .donut-legend div { display: flex; align-items: center; gap: 8px; } .donut-legend i { width: 10px; height: 10px; border-radius: 3px; flex: none; } .donut-legend b { margin-left: auto; font-variant-numeric: tabular-nums; }
 
   .tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
   .search { font: inherit; font-size: 13px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255,255,255,.06); color: var(--fg); min-width: 0; width: min(100%, 17rem); }
   .search::placeholder { color: var(--faint); }
-  .search:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
-  .tablewrap { max-height: 32rem; overflow: auto; min-width: 0; margin: 0 -22px -22px; padding: 0 22px 10px; }
-  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12.5px; font-variant-numeric: tabular-nums; }
-  th { position: sticky; top: 0; z-index: 1; text-align: right; font-weight: 700; color: var(--muted); padding: 9px 10px; white-space: nowrap; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; background: rgba(20,21,34,.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-  td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,.07); text-align: right; white-space: nowrap; }
-  th:first-child, td:first-child { text-align: left; }
-  td:first-child { max-width: 24rem; overflow: hidden; text-overflow: ellipsis; }
-  tbody tr:hover td { background: rgba(255,255,255,.05); }
-  tr.alarm td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
-  th button { all: unset; cursor: pointer; } th[aria-sort="descending"] button::after { content: " ↓"; } th[aria-sort="ascending"] button::after { content: " ↑"; }
-  .barcell { position: relative; min-width: 118px; } .barcell > span { position: relative; }
-  * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.28) transparent; }
-  ::-webkit-scrollbar { width: 10px; height: 10px; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.22); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; } ::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
-  .barfill { position: absolute; right: 10px; top: 50%; height: 18px; transform: translateY(-50%); border-radius: 5px; background: rgba(255,122,89,.22); }
+  input:focus-visible, button:focus-visible { outline: 2px solid var(--c1); outline-offset: 2px; }
+  .kpis { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .kpis b { color: var(--fg); font-weight: 700; }
+  .tablewrap { max-height: 34rem; overflow: auto; min-width: 0; margin: 0 -22px -22px; padding: 0 22px 10px; }
+  .data { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  .data th { position: sticky; top: 0; z-index: 1; text-align: right; font-weight: 700; color: var(--muted); padding: 9px 10px; white-space: nowrap; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; background: rgba(20,21,34,.86); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+  .data td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,.07); text-align: right; white-space: nowrap; }
+  .data th.l, .data td.l { text-align: left; }
+  .data td.name { max-width: 22rem; overflow: hidden; text-overflow: ellipsis; }
+  .data tbody tr:hover td { background: rgba(255,255,255,.05); }
+  .data tr.sum td { font-weight: 700; background: rgba(255,255,255,.05); }
+  .data tr.alarm td:first-child { box-shadow: inset 3px 0 0 var(--bad); }
+  .data th button { all: unset; cursor: pointer; } .data th[aria-sort="descending"] button::after { content: " ↓"; } .data th[aria-sort="ascending"] button::after { content: " ↑"; }
   .tag { display: inline-block; margin-right: 8px; padding: 0 5px; border-radius: 4px; font-size: 10px; font-weight: 700; color: var(--muted); border: 1px solid var(--line); }
   .alarmchip { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 999px; font-size: 10.5px; font-weight: 700; color: var(--bad); background: rgba(255,93,115,.16); }
-  @media (max-width: 720px) { .wide { display: none; } .tablewrap { margin: 0 -16px -16px; padding: 0 16px 10px; } }
+  @media (max-width: 760px) { .wide { display: none; } .tablewrap { margin: 0 -16px -16px; padding: 0 16px 10px; } .data td, .data th { padding: 8px 5px; } .data td.name { max-width: 8.5rem; white-space: normal; } .pill { padding: 2px 6px; font-size: 10.5px; } }
 
   .tip { position: fixed; z-index: 50; pointer-events: none; padding: 9px 12px; border-radius: 12px; font-size: 12px; white-space: nowrap; display: grid; gap: 3px; font-variant-numeric: tabular-nums;
     background: rgba(18,19,32,.82); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid var(--line); box-shadow: 0 8px 30px rgba(0,0,0,.5); }
-  .tip-head { color: var(--muted); } .tip-row { display: flex; align-items: center; gap: 7px; } .tip-row i { width: 8px; height: 8px; border-radius: 2px; }
+  .tip-head { color: var(--muted); }
   .foot { color: var(--faint); font-size: 12px; text-align: center; padding-top: 6px; }
 
-  /* Lock screen */
   #lock { min-height: calc(100vh - 80px); display: grid; place-items: center; }
   .lockcard { width: min(100%, 26rem); padding: 34px 30px; display: flex; flex-direction: column; gap: 16px; }
   .lockicon { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(135deg, rgba(255,122,89,.9), rgba(155,124,255,.9)); box-shadow: 0 6px 24px rgba(155,124,255,.4); }
@@ -157,12 +137,12 @@
       <h1>Ads Cockpit</h1>
     </div>
     <form id="lockform" autocomplete="off">
-      <label for="pw" class="note">Password</label>
-      <input class="pwfield" id="pw" type="password" autocomplete="current-password" placeholder="Enter password" required>
-      <button class="go" id="go" type="submit">Unlock</button>
+      <label for="pw" class="note">Passwort</label>
+      <input class="pwfield" id="pw" type="password" autocomplete="current-password" placeholder="Passwort eingeben" required>
+      <button class="go" id="go" type="submit">Entsperren</button>
       <p class="err" id="err" role="alert"></p>
     </form>
-    <p class="note">The data is encrypted. It is decrypted in your browser and never leaves your device.</p>
+    <p class="note">Die Daten sind verschlüsselt und werden nur in deinem Browser entschlüsselt.</p>
   </div>
 </main>
 
@@ -172,97 +152,74 @@
       <div><p class="eyebrow">Munich Publishing</p><h1>Ads Cockpit</h1></div>
       <div class="top-right">
         <span class="chip live" id="period"></span>
-        <button class="chip" id="relock" type="button">Lock</button>
+        <button class="chip" id="relock" type="button">Sperren</button>
       </div>
     </div>
-    <p class="take" id="take"></p>
+    <p class="rule"><b>Alle Zahlen zählen alle Verkäufe, Ads plus organisch.</b> Einzige Ausnahme ist der Block Kampagnen unten, dort kennt Amazon nur Ad-Bestellungen.</p>
   </header>
 
-  <section class="glass hero" id="roi">
+  <section class="glass hero" id="konto">
     <div class="hero-main">
-      <p class="eyebrow">ROI after ad spend · 30 days</p>
+      <p class="eyebrow">ROI nach Ad-Spend · 30 Tage</p>
       <span class="big" id="roi-big"></span>
-      <div class="sub"><span class="pill" id="roi-delta"></span><span id="roi-prev"></span></div>
-      <p class="note" id="roi-ads"></p>
-      <p class="note">ROI = (all royalties − ad spend) ÷ ad spend, as PublisherChamp calculates it, so organic sales count too. Ads-only ROI counts just the orders Amazon attributes to ad clicks, at each book's average royalty per unit. The truth lies between the two; for a decision on one campaign or target, look at the Ads-only figure and the last 7 days.</p>
-      <div class="mini">
-        <div><span class="mini-label">Royalties</span><span class="mini-value" id="m-roy"></span><span class="pill" id="m-roy-d"></span></div>
-        <div><span class="mini-label">Ad spend</span><span class="mini-value" id="m-sp"></span><span class="pill" id="m-sp-d"></span></div>
-        <div><span class="mini-label">Net after ads</span><span class="mini-value" id="m-net"></span><span class="pill" id="m-net-d"></span></div>
-      </div>
+      <span class="sub" id="roi-sub"></span>
+      <table class="win" aria-label="Konto in drei Zeitfenstern">
+        <thead><tr><th></th><th>Vor-30</th><th class="now">30 Tage</th><th>7 Tage</th></tr></thead>
+        <tbody id="win-body"></tbody>
+      </table>
     </div>
     <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
-      <div class="card-head"><h3>ROI trend</h3><span class="note">Rolling 7 days, all books</span></div>
-      <div class="chart short" id="ch-roi"></div>
+      <div class="card-head"><h3>ROI-Verlauf</h3><span class="note">Je Tag über die letzten 7 Tage</span></div>
+      <div class="chart" id="ch-roi"></div>
     </div>
   </section>
 
-  <section class="section" id="ads">
-    <div><p class="eyebrow">Amazon Ads API</p><h2>Ads performance</h2></div>
-    <div class="tiles" id="tiles"></div>
-    <div class="glass card">
-      <div class="card-head"><h3>Spend and ad orders per day</h3>
-        <div class="legend"><span><i style="background:var(--c0)"></i>Spend</span><span><i class="ln" style="background:var(--c1)"></i>Ad orders</span></div></div>
-      <p class="note">All Sponsored Products and Sponsored Brands campaigns. Orders count by click day, so the last few days still fill in.</p>
-      <div class="chart" id="ch-combo"></div>
-    </div>
+  <section class="section" id="top">
+    <h2>Top 5 nach Tantiemen</h2>
+    <div class="top5" id="top5"></div>
+  </section>
+
+  <section class="section" id="buecher">
+    <h2>Alle Bücher</h2>
     <div class="glass card">
       <div class="tools">
-        <div><h3>Active campaigns</h3><p class="note" id="camp-note"></p></div>
-        <input class="search" id="camp-search" type="search" placeholder="Search campaign or book" aria-label="Search campaigns">
+        <div class="filters" id="lage-filter" role="group" aria-label="Nach Lage filtern"></div>
+        <input class="search" id="book-search" type="search" placeholder="Buch suchen" aria-label="Bücher suchen">
       </div>
-      <div class="tablewrap"><table id="camp-table"><thead><tr>
-        <th><button type="button" data-sort="campaign">Campaign</button></th>
-        <th class="wide"><button type="button" data-sort="book">Book</button></th>
-        <th aria-sort="descending"><button type="button" data-sort="spend">Spend</button></th>
-        <th><button type="button" data-sort="clicks">Clicks</button></th>
-        <th><button type="button" data-sort="orders">Orders</button></th>
-        <th><button type="button" data-sort="cvr">CVR</button></th>
-        <th><button type="button" data-sort="cpo">€ / order</button></th>
-        <th class="wide"><button type="button" data-sort="clicks7">Clicks 7d</button></th>
-        <th class="wide"><button type="button" data-sort="orders7">Orders 7d</button></th>
+      <p class="note">Netto = alle Tantiemen minus Ad-Spend. <b class="bad">Verliert</b>: 30 Tage mehr als 3 € im Minus. <b class="warn">Kippt</b>: 30 Tage okay, aber die letzten 7 Tage mehr als 3 € im Minus. <b class="good">Verdient</b>: beide okay. Bestellungen stehen als Ads / organisch / gesamt.</p>
+      <div class="tablewrap"><table class="data" id="book-table"><thead><tr>
+        <th class="l"><button type="button" data-sort="rang">Lage</button></th>
+        <th class="l"><button type="button" data-sort="book">Buch</button></th>
+        <th><button type="button" data-sort="net">Netto 30 T</button></th>
+        <th><button type="button" data-sort="net7">Netto 7 T</button></th>
+        <th><button type="button" data-sort="roi">ROI 30 T</button></th>
+        <th class="wide"><button type="button" data-sort="royalties">Tantiemen</button></th>
+        <th class="wide"><button type="button" data-sort="spend">Ad-Spend</button></th>
+        <th class="wide"><button type="button" data-sort="units">Best. 30 T</button></th>
+        <th class="wide"><button type="button" data-sort="units7">Best. 7 T</button></th>
+        <th class="wide"><button type="button" data-sort="prev_units">Best. Vor-30</button></th>
       </tr></thead><tbody></tbody></table></div>
     </div>
   </section>
 
-  <section class="section" id="books">
-    <div><p class="eyebrow">PublisherChamp + Ads API</p><h2>Books</h2></div>
-    <div class="grid-2-1">
-      <div class="glass card">
-        <div class="card-head"><h3>Top 5 by royalties</h3><span class="note">ROI, 30 days · tick = previous 30</span></div>
-        <div class="top5" id="top5"></div>
-      </div>
-      <div class="glass card">
-        <div class="card-head"><h3>Books sold</h3><span class="pill" id="u-d"></span></div>
-        <span class="tile-value" id="u-n"></span>
-        <div class="donut-wrap">
-          <div class="donut"><div id="donut"></div><div class="donut-center"><strong id="d-pct"></strong><span>organic</span></div></div>
-          <div class="donut-legend">
-            <div><i style="background:var(--c1)"></i>Organic orders <b id="d-org"></b></div>
-            <div><i style="background:var(--c0)"></i>Ad orders <b id="d-ad"></b></div>
-          </div>
-        </div>
-        <p class="note">Orders as PublisherChamp reports them: an ad order is one Amazon attributes to an ad click.</p>
-      </div>
-    </div>
+  <section class="section" id="kampagnen">
+    <div><p class="eyebrow">Nur Ad-Bestellungen</p><h2>Kampagnen</h2></div>
     <div class="glass card">
-      <div class="card-head"><h3>All books</h3><span class="note">Sorted by royalties</span></div>
-      <p class="note">Royalties, spend, ROI and sales from PublisherChamp; clicks, ad orders, CVR and cost per order from the Ads API. Books PublisherChamp doesn't list show their Ads API spend and no ROI.</p>
-      <div class="tablewrap"><table id="book-table"><thead><tr>
-        <th><button type="button" data-sort="book">Book</button></th>
-        <th aria-sort="descending"><button type="button" data-sort="royalties">Royalties</button></th>
-        <th><button type="button" data-sort="spend">Spend</button></th>
-        <th><button type="button" data-sort="roi">ROI</button></th>
-        <th><button type="button" data-sort="adroi">Ads-only ROI</button></th>
-        <th class="wide"><button type="button" data-sort="prev_roi">ROI before</button></th>
-        <th class="wide"><button type="button" data-sort="spend7">Spend 7d</button></th>
-        <th class="wide"><button type="button" data-sort="orders7">Ad orders 7d</button></th>
-        <th><button type="button" data-sort="units">Sold</button></th>
-        <th class="wide"><button type="button" data-sort="organic_orders">Organic</button></th>
-        <th class="wide"><button type="button" data-sort="ads_clicks">Ad clicks</button></th>
-        <th class="wide"><button type="button" data-sort="ads_orders">Ad orders</button></th>
-        <th class="wide"><button type="button" data-sort="cvr">CVR</button></th>
-        <th class="wide"><button type="button" data-sort="cpo">€ / order</button></th>
+      <div class="tools">
+        <div class="kpis" id="camp-kpis"></div>
+        <input class="search" id="camp-search" type="search" placeholder="Kampagne oder Buch suchen" aria-label="Kampagnen suchen">
+      </div>
+      <p class="note" id="camp-note"></p>
+      <div class="tablewrap"><table class="data" id="camp-table"><thead><tr>
+        <th class="l"><button type="button" data-sort="campaign">Kampagne</button></th>
+        <th class="l wide"><button type="button" data-sort="book">Buch</button></th>
+        <th aria-sort="descending"><button type="button" data-sort="spend">Spend</button></th>
+        <th><button type="button" data-sort="clicks">Klicks</button></th>
+        <th><button type="button" data-sort="orders">Ad-Best.</button></th>
+        <th><button type="button" data-sort="cvr">CVR</button></th>
+        <th><button type="button" data-sort="cpo">€ je Best.</button></th>
+        <th class="wide"><button type="button" data-sort="clicks7">Klicks 7 T</button></th>
+        <th class="wide"><button type="button" data-sort="orders7">Best. 7 T</button></th>
       </tr></thead><tbody></tbody></table></div>
     </div>
   </section>
@@ -275,14 +232,22 @@
 <script>
 (() => {
   const $ = (id) => document.getElementById(id);
-  const COL = ['#ff7a59', '#2de2c4', '#9b7cff', '#ffc24a', '#5cc8ff', '#ff6fae'];
-  const eur = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR' });
-  const eur0 = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
-  const F = { eur: (v) => eur.format(v), eur0: (v) => eur0.format(v), int: d3.format(','), pct: d3.format('.1%'), pct0: d3.format('.0%'), date: (v) => d3.utcFormat('%b %-d')(new Date(v)) };
+  const KIPP_SCHWELLE = 3, ALARM_KLICKS = 15;
+  const eur = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
+  const eur0 = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
+  const eurS = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0, signDisplay: 'exceptZero' });
+  const pct = new Intl.NumberFormat('de-DE', { style: 'percent', maximumFractionDigits: 0 });
+  const pct1 = new Intl.NumberFormat('de-DE', { style: 'percent', minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const int = new Intl.NumberFormat('de-DE');
+  const F = { eur: (x) => eur.format(x), eur0: (x) => eur0.format(x), eurS: (x) => eurS.format(x), pct: (x) => pct.format(x), pct1: (x) => pct1.format(x), int: (x) => int.format(x),
+    date: (x) => d3.utcFormat('%d.%m.')(new Date(x)), dateY: (x) => d3.utcFormat('%d.%m.%Y')(new Date(x)) };
+  const v = (x, f) => (x == null || !isFinite(x) ? '–' : F[f](x));
   const r2 = (x) => Math.round(x * 100) / 100, r4 = (x) => Math.round(x * 10000) / 10000;
-  const v = (x, f) => (x == null || !isFinite(x) ? '—' : F[f](x));
+  const set = (id, t) => { $(id).textContent = t; };
+  const tone = (x) => (x == null ? 'muted' : x >= 0 ? 'good' : 'bad');
+  const roiOf = (roy, sp) => (sp ? r4((roy - sp) / sp) : null);
 
-  // ---------- Unlock ----------
+  // ---------- Entsperren ----------
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   async function decrypt(password) {
     const res = await fetch('daten.enc', { cache: 'no-store' });
@@ -292,14 +257,12 @@
     const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(blob.salt), iterations: blob.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
     let plain;
     try { plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(blob.iv) }, key, b64(blob.ct)); } catch { throw new Error('password'); }
-    const text = await new Response(new Blob([plain]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
-    return JSON.parse(text);
+    return JSON.parse(await new Response(new Blob([plain]).stream().pipeThrough(new DecompressionStream('gzip'))).text());
   }
   const store = { get() { try { return sessionStorage.getItem('cockpit'); } catch { return null; } }, set(x) { try { sessionStorage.setItem('cockpit', x); } catch {} }, clear() { try { sessionStorage.removeItem('cockpit'); } catch {} } };
-
   async function unlock(pw, silent) {
     const btn = $('go'), err = $('err');
-    btn.disabled = true; err.textContent = silent ? '' : 'Unlocking…';
+    btn.disabled = true; err.textContent = silent ? '' : 'Entsperre …';
     try {
       const data = await decrypt(pw);
       store.set(pw);
@@ -307,136 +270,83 @@
       start(data);
     } catch (e) {
       store.clear();
-      err.textContent = silent ? '' : e.message === 'password' ? 'Wrong password.' : 'Could not load the data. Try again later.';
+      err.textContent = silent ? '' : e.message === 'password' ? 'Falsches Passwort.' : 'Daten konnten nicht geladen werden. Versuch es später noch einmal.';
     } finally { btn.disabled = false; }
   }
   $('lockform').addEventListener('submit', (e) => { e.preventDefault(); const pw = $('pw').value; if (pw) unlock(pw, false); });
   $('relock').addEventListener('click', () => { store.clear(); location.reload(); });
   const saved = store.get(); if (saved) unlock(saved, true); else $('pw').focus();
 
-  // ---------- Calculations ----------
+  // ---------- Rechnung ----------
+  const LAGE = { verliert: ['Verliert', 'bad', 0], kippt: ['Kippt', 'warn', 1], verdient: ['Verdient', 'good', 2], ohne: ['Ohne Ads', '', 3] };
   function compute(D) {
-    const ads = D.ads_daily, days = [...new Set(ads.map((r) => r.date))].sort();
-    const last7 = new Set(days.slice(-7)), prev7 = new Set(days.slice(-14, -7));
-    const sum = (rows) => { const s = { spend: 0, clicks: 0, orders: 0, sales: 0 }; for (const r of rows) { s.spend += +r.cost; s.clicks += +r.clicks; s.orders += +r.orders; s.sales += +r.sales; }
-      return { spend: r2(s.spend), clicks: s.clicks, orders: s.orders, cvr: s.clicks ? r4(s.orders / s.clicks) : null, cpo: s.orders ? r2(s.spend / s.orders) : null, acos: s.sales ? r4(s.spend / s.sales) : null }; };
-    const A = { d30: sum(ads), d7: sum(ads.filter((r) => last7.has(r.date))), p7: sum(ads.filter((r) => prev7.has(r.date))) };
-
-    const byDay = new Map();
-    for (const r of ads) { const o = byDay.get(r.date) || { date: r.date, spend: 0, clicks: 0, orders: 0, sales: 0 }; o.spend += +r.cost; o.clicks += +r.clicks; o.orders += +r.orders; o.sales += +r.sales; byDay.set(r.date, o); }
-    const dd = [...byDay.values()].sort((a, b) => a.date.localeCompare(b.date));
-    const day = dd.map((o, i) => { const w = dd.slice(Math.max(0, i - 6), i + 1), s = (k) => w.reduce((t, x) => t + x[k], 0);
-      return { date: o.date, spend: r2(o.spend), clicks: o.clicks, orders: o.orders, cvr: o.clicks ? r4(o.orders / o.clicks) : null,
-        cvr7: i >= 6 && s('clicks') ? r4(s('orders') / s('clicks')) : null, cpo7: i >= 6 && s('orders') ? r2(s('spend') / s('orders')) : null, acos7: i >= 6 && s('sales') ? r4(s('spend') / s('sales')) : null }; });
-
-    const cm = new Map();
-    for (const r of ads) { const o = cm.get(r.campaignId) || { campaignId: r.campaignId, campaign: r.campaign, book: r.book, type: r.type, status: r.status, spend: 0, clicks: 0, orders: 0, clicks7: 0, orders7: 0 };
-      o.spend += +r.cost; o.clicks += +r.clicks; o.orders += +r.orders; if (last7.has(r.date)) { o.clicks7 += +r.clicks; o.orders7 += +r.orders; } cm.set(r.campaignId, o); }
-    const camps = [...cm.values()].map((o) => ({ ...o, spend: r2(o.spend), cvr: o.clicks ? r4(o.orders / o.clicks) : null, cpo: o.orders ? r2(o.spend / o.orders) : null, alarm: o.status === 'ENABLED' && o.clicks7 >= 15 && o.orders7 === 0 }));
-    const counts = { alarm: camps.filter((c) => c.alarm).length, paused: camps.filter((c) => c.status !== 'ENABLED' && c.spend > 0).length };
-
-    const pcs = D.pc_books, s = (k) => pcs.reduce((t, r) => t + (+r[k] || 0), 0);
-    const roiOf = (roy, sp) => (sp ? r4((roy - sp) / sp) : null);
-    const P = { roy: r2(s('royalties')), sp: r2(s('spend')), units: s('units'), total: s('total_orders'), org: s('organic_orders'), adOrders: s('ad_orders'), proy: r2(s('prev_royalties')), psp: r2(s('prev_spend')), punits: s('prev_units') };
-    P.net = r2(P.roy - P.sp); P.pnet = r2(P.proy - P.psp); P.roi = roiOf(P.roy, P.sp); P.proi = roiOf(P.proy, P.psp); P.orgShare = P.total ? r4(P.org / P.total) : null;
-    P.adroi = P.sp ? r4((pcs.reduce((t, r) => t + (r.units ? r.ad_orders * r.royalties / r.units : 0), 0) - P.sp) / P.sp) : null;
-
-    const rel = (n, b) => (n == null || !b ? null : r4((n - b) / b));
-    const K = { spend: rel(A.d7.spend, A.p7.spend), clicks: rel(A.d7.clicks, A.p7.clicks), orders: rel(A.d7.orders, A.p7.orders), cvr: rel(A.d7.cvr, A.p7.cvr), cpo: rel(A.d7.cpo, A.p7.cpo), acos: rel(A.d7.acos, A.p7.acos),
-      roy: rel(P.roy, P.proy), psp: rel(P.sp, P.psp), net: rel(P.net, P.pnet), units: rel(P.units, P.punits), roi: P.roi != null && P.proi != null ? Math.round((P.roi - P.proi) * 1000) / 10 : null };
-
-    const a = {};
-    for (const r of ads) { const o = (a[r.asin] = a[r.asin] || { name: r.book, spend: 0, clicks: 0, orders: 0, spend7: 0, orders7: 0 }); o.spend += +r.cost; o.clicks += +r.clicks; o.orders += +r.orders; if (last7.has(r.date)) { o.spend7 += +r.cost; o.orders7 += +r.orders; } }
-    // Ads-only ROI: only orders Amazon attributes to ad clicks, valued at the book's average royalty per unit (organic sales left out).
-    const books = pcs.map((p) => { const x = a[p.asin] || { spend: 0, clicks: 0, orders: 0, spend7: 0, orders7: 0 };
-      const rpu = p.units ? p.royalties / p.units : null;
-      return { asin: p.asin, book: p.book, royalties: p.royalties, spend: p.spend, roi: roiOf(p.royalties, p.spend), prev_roi: roiOf(p.prev_royalties, p.prev_spend), units: p.units, organic_orders: p.organic_orders,
-        adroi: p.spend && rpu != null ? r4((p.ad_orders * rpu - p.spend) / p.spend) : null, spend7: r2(x.spend7), orders7: x.orders7,
-        ads_clicks: x.clicks, ads_orders: x.orders, cvr: x.clicks ? r4(x.orders / x.clicks) : null, cpo: x.orders ? r2(x.spend / x.orders) : null }; });
-    for (const [asin, x] of Object.entries(a)) { if (pcs.some((p) => p.asin === asin) || !x.clicks) continue;
-      books.push({ asin, book: x.name, royalties: 0, spend: r2(x.spend), roi: null, prev_roi: null, adroi: null, spend7: r2(x.spend7), orders7: x.orders7, units: 0, organic_orders: 0, ads_clicks: x.clicks, ads_orders: x.orders, cvr: r4(x.orders / x.clicks), cpo: x.orders ? r2(x.spend / x.orders) : null }); }
-    books.sort((p, q) => q.royalties - p.royalties || q.ads_clicks - p.ads_clicks);
+    const pcs = D.pc_books;
+    const books = pcs.map((p) => {
+      const net = r2(p.royalties - p.spend), net7 = r2(p.royalties7 - p.spend7);
+      const lage = p.spend < 1 ? 'ohne' : net < -KIPP_SCHWELLE ? 'verliert' : net7 < -KIPP_SCHWELLE ? 'kippt' : 'verdient';
+      return { ...p, net, net7, roi: roiOf(p.royalties, p.spend), lage, rang: LAGE[lage][2],
+        org: Math.max(0, p.units - p.ad_orders), org7: Math.max(0, p.units7 - p.ad_orders7), prev_org: Math.max(0, p.prev_units - p.prev_ad_orders) };
+    });
+    const s = (k) => pcs.reduce((t, r) => t + (+r[k] || 0), 0);
+    const fenster = (roy, sp, units, ads) => ({ roy: r2(roy), sp: r2(sp), net: r2(roy - sp), roi: roiOf(roy, sp), units, ads, org: units - ads });
+    const W = { vor: fenster(s('prev_royalties'), s('prev_spend'), s('prev_units'), s('prev_ad_orders')), d30: fenster(s('royalties'), s('spend'), s('units'), s('ad_orders')), d7: fenster(s('royalties7'), s('spend7'), s('units7'), s('ad_orders7')) };
+    const advent = books.filter((b) => /advent|kalender/i.test(b.book));
+    const summe = (list, k) => r2(list.reduce((t, r) => t + (+r[k] || 0), 0));
+    const adventZeile = advent.length ? { book: `Alle Adventskalender (${advent.length})`, net: summe(advent, 'net'), net7: summe(advent, 'net7'), royalties: summe(advent, 'royalties'), spend: summe(advent, 'spend'), roi: roiOf(summe(advent, 'royalties'), summe(advent, 'spend')),
+      units: summe(advent, 'units'), ad_orders: summe(advent, 'ad_orders'), org: summe(advent, 'org'), units7: summe(advent, 'units7'), ad_orders7: summe(advent, 'ad_orders7'), org7: summe(advent, 'org7'), prev_units: summe(advent, 'prev_units'), prev_ad_orders: summe(advent, 'prev_ad_orders'), prev_org: summe(advent, 'prev_org') } : null;
 
     const pd = D.pc_daily.slice().sort((p, q) => p.date.localeCompare(q.date)), trend = [];
     for (let i = 6; i < pd.length; i++) { let roy = 0, sp = 0; for (let j = i - 6; j <= i; j++) { roy += +pd[j].royalties; sp += +pd[j].spend; }
-      trend.push({ date: pd[i].date, d: new Date(pd[i].date), roy7: r2(roy), sp7: r2(sp), roi7: sp ? r4((roy - sp) / sp) : null }); }
-    return { A, day, camps, counts, P, K, books, trend, from: days[0], to: days[days.length - 1] };
+      trend.push({ date: pd[i].date, d: new Date(pd[i].date), roy7: r2(roy), sp7: r2(sp), roi7: roiOf(roy, sp) }); }
+
+    const ads = D.ads_daily, days = [...new Set(ads.map((r) => r.date))].sort(), last7 = new Set(days.slice(-7));
+    const cm = new Map();
+    for (const r of ads) { const o = cm.get(r.campaignId) || { campaignId: r.campaignId, campaign: r.campaign, book: r.book, type: r.type, status: r.status, spend: 0, clicks: 0, orders: 0, spend7: 0, clicks7: 0, orders7: 0 };
+      o.spend += +r.cost; o.clicks += +r.clicks; o.orders += +r.orders; if (last7.has(r.date)) { o.spend7 += +r.cost; o.clicks7 += +r.clicks; o.orders7 += +r.orders; } cm.set(r.campaignId, o); }
+    const camps = [...cm.values()].map((o) => ({ ...o, spend: r2(o.spend), cvr: o.clicks ? r4(o.orders / o.clicks) : null, cpo: o.orders ? r2(o.spend / o.orders) : null, alarm: o.status === 'ENABLED' && o.clicks7 >= ALARM_KLICKS && o.orders7 === 0 }));
+    const aktiv = camps.filter((c) => c.status === 'ENABLED');
+    const sa = (k) => aktiv.reduce((t, c) => t + c[k], 0);
+    const eff = { cvr: sa('clicks') ? sa('orders') / sa('clicks') : null, cvr7: sa('clicks7') ? sa('orders7') / sa('clicks7') : null, cpo: sa('orders') ? sa('spend') / sa('orders') : null, cpo7: sa('orders7') ? sa('spend7') / sa('orders7') : null };
+    return { books, W, adventZeile, trend, camps, eff, aktiv: aktiv.length, alarm: camps.filter((c) => c.alarm).length, pausiert: camps.filter((c) => c.status !== 'ENABLED' && c.spend > 0).length,
+      bis: pd[pd.length - 1].date, adsBis: days[days.length - 1] };
   }
 
-  // ---------- Shared bits ----------
+  // ---------- Bausteine ----------
   const tipEl = $('tip');
   const tip = {
     show(ev, head, rows) {
       tipEl.replaceChildren();
       const h = document.createElement('div'); h.className = 'tip-head'; h.textContent = head; tipEl.append(h);
-      for (const [color, text] of rows) { const r = document.createElement('div'); r.className = 'tip-row'; if (color) { const i = document.createElement('i'); i.style.background = color; r.append(i); } r.append(text); tipEl.append(r); }
+      for (const t of rows) { const r = document.createElement('div'); r.textContent = t; tipEl.append(r); }
       tipEl.hidden = false;
-      const w = tipEl.offsetWidth, h2 = tipEl.offsetHeight;
+      const w = tipEl.offsetWidth;
       tipEl.style.left = Math.max(8, Math.min(innerWidth - w - 8, ev.clientX - w / 2)) + 'px';
-      tipEl.style.top = Math.max(8, ev.clientY - h2 - 16) + 'px';
+      tipEl.style.top = Math.max(8, ev.clientY - tipEl.offsetHeight - 16) + 'px';
     },
     hide() { tipEl.hidden = true; },
   };
   const measure = (svg, texts) => { const p = svg.append('text').attr('font-size', 11); let m = 0; for (const t of texts) { p.text(t); m = Math.max(m, p.node().getComputedTextLength()); } p.remove(); return m; };
-  let gid = 0;
-  const gradient = (svg, color) => { const id = 'g' + (gid++); const g = svg.append('defs').append('linearGradient').attr('id', id).attr('x1', 0).attr('x2', 0).attr('y1', 0).attr('y2', 1);
-    [[0, .38], [.4, .16], [.75, .05], [1, 0]].forEach(([o, a]) => g.append('stop').attr('offset', o).attr('style', `stop-color:${color};stop-opacity:${a}`)); return `url(#${id})`; };
-  const pill = (el, change, kind, good) => {
-    el.className = 'pill';
-    if (change == null || !isFinite(change)) { el.textContent = '—'; return; }
-    const arrow = change > 0 ? '▲ ' : change < 0 ? '▼ ' : '';
-    el.textContent = kind === 'pp' ? `${arrow}${Math.abs(change).toFixed(1)} pts` : `${arrow}${d3.format('.0%')(Math.abs(change))}`;
-    if (good !== 'none' && change !== 0) el.classList.add((change > 0) === (good === 'up') ? 'good' : 'bad');
-  };
-  const set = (id, text) => { $(id).textContent = text; };
-
-  // ---------- Charts ----------
-  function spark(el, rows, y, color) {
-    el.replaceChildren(); rows = rows.filter((r) => r[y] != null); if (rows.length < 2) return;
-    const W = Math.max(100, el.clientWidth), H = 40;
-    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
-    const x = d3.scaleUtc(d3.extent(rows, (r) => new Date(r.date)), [2, W - 5]), yS = d3.scaleLinear([0, d3.max(rows, (r) => r[y]) || 1], [H - 2, 5]);
-    svg.append('path').datum(rows).attr('d', d3.area((r) => x(new Date(r.date)), H - 2, (r) => yS(r[y]))).attr('fill', gradient(svg, color));
-    svg.append('path').datum(rows).attr('d', d3.line((r) => x(new Date(r.date)), (r) => yS(r[y]))).style('fill', 'none').style('stroke', color).attr('stroke-width', 2).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
-    const l = rows[rows.length - 1]; svg.append('circle').attr('cx', x(new Date(l.date))).attr('cy', yS(l[y])).attr('r', 3).style('fill', color);
-  }
-
-  function combo(el, rows) {
-    el.replaceChildren();
-    const W = Math.max(300, el.clientWidth), H = 240, mT = 10, mB = 26;
-    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
-    const yS = d3.scaleLinear([0, d3.max(rows, (r) => r.spend) || 1], [H - mB, mT]).nice(), yO = d3.scaleLinear([0, d3.max(rows, (r) => r.orders) || 1], [H - mB, mT]).nice();
-    const tS = yS.ticks(4), tO = yO.ticks(4).filter(Number.isInteger);
-    const mL = measure(svg, tS.map(F.eur0)) + 10, mR = measure(svg, tO.map(String)) + 10;
-    const xS = d3.scaleBand(rows.map((r) => r.date), [mL, W - mR]).padding(0.3);
-    for (const t of tS) { svg.append('line').attr('x1', mL).attr('x2', W - mR).attr('y1', yS(t)).attr('y2', yS(t)).style('stroke', 'rgba(255,255,255,.08)');
-      svg.append('text').attr('x', mL - 8).attr('y', yS(t)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11).style('fill', 'var(--muted)').text(F.eur0(t)); }
-    for (const t of tO) svg.append('text').attr('x', W - mR + 8).attr('y', yO(t)).attr('dy', '0.32em').attr('font-size', 11).style('fill', COL[1]).text(t);
-    const step = Math.max(1, Math.ceil((measure(svg, ['Oct 30']) + 14) / xS.step()));
-    rows.forEach((r, i) => { if ((rows.length - 1 - i) % step) return; svg.append('text').attr('x', xS(r.date) + xS.bandwidth() / 2).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).style('fill', 'var(--muted)').text(F.date(r.date)); });
-    const bars = svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => xS(r.date)).attr('width', xS.bandwidth()).attr('y', (r) => yS(r.spend)).attr('height', (r) => Math.max(0, yS(0) - yS(r.spend)))
-      .attr('rx', Math.min(4, xS.bandwidth() / 2)).style('fill', COL[0]).style('opacity', 0.6);
-    const cx = (r) => xS(r.date) + xS.bandwidth() / 2;
-    svg.append('path').datum(rows).attr('d', d3.line(cx, (r) => yO(r.orders))).style('fill', 'none').style('stroke', COL[1]).attr('stroke-width', 2.25).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
-    const dots = svg.append('g').selectAll('circle').data(rows).join('circle').attr('cx', cx).attr('cy', (r) => yO(r.orders)).attr('r', 2.5).style('fill', COL[1]);
-    svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', (r) => xS(r.date) - (xS.step() - xS.bandwidth()) / 2).attr('width', xS.step()).attr('y', mT).attr('height', H - mT - mB).style('fill', 'transparent')
-      .on('pointermove', (ev, r) => { bars.style('opacity', (b) => (b === r ? 1 : 0.35)); dots.attr('r', (d) => (d === r ? 4.5 : 2.5));
-        tip.show(ev, F.date(r.date), [[COL[0], `Spend ${F.eur(r.spend)}`], [COL[1], `Ad orders ${r.orders}`], [null, `${F.int(r.clicks)} clicks · CVR ${v(r.cvr, 'pct')}`]]); })
-      .on('pointerleave', () => { bars.style('opacity', 0.6); dots.attr('r', 2.5); tip.hide(); });
-  }
+  const cell = (t, c) => { const td = document.createElement('td'); td.textContent = t; if (c) td.className = c; return td; };
+  const lagePill = (k) => { const s = document.createElement('span'); s.className = 'pill ' + LAGE[k][1]; s.textContent = LAGE[k][0]; return s; };
+  const split = (ads, org, ges) => `${int.format(ads)} / ${int.format(org)} / ${int.format(ges)}`;
+  const sortRows = (rows, s) => rows.slice().sort((a, b) => { for (const [key, dir] of [[s.key, s.dir], ...(s.then || [])]) { const x = a[key], y = b[key]; if (x === y) continue; if (x == null) return 1; if (y == null) return -1; return (typeof x === 'string' ? x.localeCompare(y) : x - y) * dir; } return 0; });
+  const wireSort = (table, state, redraw) => table.querySelectorAll('th button').forEach((btn) => btn.addEventListener('click', () => {
+    const key = btn.dataset.sort; state.dir = state.key === key ? -state.dir : ['campaign', 'book', 'rang'].includes(key) ? 1 : -1; state.key = key;
+    table.querySelectorAll('th').forEach((th) => th.removeAttribute('aria-sort')); btn.closest('th').setAttribute('aria-sort', state.dir > 0 ? 'ascending' : 'descending'); redraw(); }));
 
   function roiLine(el, rows) {
     el.replaceChildren(); rows = rows.filter((r) => r.roi7 != null); if (!rows.length) return;
-    const W = Math.max(280, el.clientWidth), H = 210, mT = 12, mB = 24;
+    const W = Math.max(280, el.clientWidth), H = 230, mT = 12, mB = 24;
     const svg = d3.select(el).append('svg').attr('width', W).attr('height', H);
     const ext = d3.extent(rows, (r) => r.roi7), yS = d3.scaleLinear([Math.min(0, ext[0]), Math.max(0, ext[1])], [H - mB, mT]).nice(), ticks = yS.ticks(4), last = rows[rows.length - 1];
-    const mL = measure(svg, ticks.map(F.pct0)) + 10, mR = measure(svg, [F.pct(last.roi7)]) + 16;
+    const mL = measure(svg, ticks.map(F.pct)) + 10, mR = measure(svg, [F.pct(last.roi7)]) + 16;
     const xS = d3.scaleUtc(d3.extent(rows, (r) => r.d), [mL, W - mR]);
     for (const t of ticks) { svg.append('line').attr('x1', mL).attr('x2', W - mR).attr('y1', yS(t)).attr('y2', yS(t)).style('stroke', t === 0 ? 'rgba(255,255,255,.38)' : 'rgba(255,255,255,.08)');
-      svg.append('text').attr('x', mL - 8).attr('y', yS(t)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11).style('fill', 'var(--muted)').text(F.pct0(t)); }
-    for (const t of xS.ticks(Math.max(2, Math.floor((W - mL - mR) / 80)))) svg.append('text').attr('x', xS(t)).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).style('fill', 'var(--muted)').text(d3.utcFormat('%b %-d')(t));
-    const color = COL[1];
-    svg.append('path').datum(rows).attr('d', d3.area((r) => xS(r.d), yS(0), (r) => yS(r.roi7))).attr('fill', gradient(svg, color));
+      svg.append('text').attr('x', mL - 8).attr('y', yS(t)).attr('dy', '0.32em').attr('text-anchor', 'end').attr('font-size', 11).style('fill', 'var(--muted)').text(F.pct(t)); }
+    for (const t of xS.ticks(Math.max(2, Math.floor((W - mL - mR) / 80)))) svg.append('text').attr('x', xS(t)).attr('y', H - 6).attr('text-anchor', 'middle').attr('font-size', 11).style('fill', 'var(--muted)').text(d3.utcFormat('%d.%m.')(t));
+    const color = '#2de2c4', id = 'roi-fill', g = svg.append('defs').append('linearGradient').attr('id', id).attr('x1', 0).attr('x2', 0).attr('y1', 0).attr('y2', 1);
+    [[0, .38], [.4, .16], [.75, .05], [1, 0]].forEach(([o, a]) => g.append('stop').attr('offset', o).attr('style', `stop-color:${color};stop-opacity:${a}`));
+    svg.append('path').datum(rows).attr('d', d3.area((r) => xS(r.d), yS(0), (r) => yS(r.roi7))).attr('fill', `url(#${id})`);
     svg.append('path').datum(rows).attr('d', d3.line((r) => xS(r.d), (r) => yS(r.roi7))).style('fill', 'none').style('stroke', color).attr('stroke-width', 2.75).attr('stroke-linecap', 'round').attr('stroke-linejoin', 'round');
     svg.append('circle').attr('cx', xS(last.d)).attr('cy', yS(last.roi7)).attr('r', 4.5).style('fill', color).style('stroke', '#0b0c16').attr('stroke-width', 2);
     svg.append('text').attr('x', xS(last.d) + 10).attr('y', yS(last.roi7)).attr('dy', '0.32em').attr('font-size', 12).attr('font-weight', 700).style('fill', 'var(--fg)').text(F.pct(last.roi7));
@@ -446,114 +356,82 @@
     svg.append('rect').attr('x', mL).attr('y', mT).attr('width', W - mL - mR).attr('height', H - mT - mB).style('fill', 'transparent')
       .on('pointermove', (ev) => { const r = rows[bis(rows, xS.invert(d3.pointer(ev)[0]))];
         rule.style('display', null).attr('x1', xS(r.d)).attr('x2', xS(r.d)); dot.style('display', null).attr('cx', xS(r.d)).attr('cy', yS(r.roi7));
-        tip.show(ev, `7 days to ${F.date(r.date)}`, [[color, `ROI ${F.pct(r.roi7)}`], [null, `${F.eur0(r.roy7)} royalties · ${F.eur0(r.sp7)} spend`]]); })
+        tip.show(ev, `7 Tage bis ${F.date(r.date)}`, [`ROI ${F.pct1(r.roi7)}`, `${F.eur0(r.roy7)} Tantiemen · ${F.eur0(r.sp7)} Spend`]); })
       .on('pointerleave', () => { rule.style('display', 'none'); dot.style('display', 'none'); tip.hide(); });
   }
 
-  function top5(el, books) {
-    const top = books.slice(0, 5), vals = top.flatMap((r) => [r.roi, r.prev_roi]).filter((x) => x != null);
-    const x = d3.scaleLinear([Math.min(0, d3.min(vals) ?? 0), Math.max(0, d3.max(vals) ?? 1)], [0, 100]);
-    el.replaceChildren(...top.map((r, i) => {
-      const item = document.createElement('div'); item.className = 't5';
-      const mk = (c, t) => { const s = document.createElement('span'); s.className = c; s.textContent = t; return s; };
-      const name = mk('t5-name', r.book); name.title = r.book;
-      const roi = mk('t5-roi', v(r.roi, 'pct')); if (r.roi != null) roi.classList.add(r.roi >= 0 ? 'good' : 'bad');
-      const track = document.createElement('div'); track.className = 't5-track';
-      if (r.roi != null) { const bar = document.createElement('div'); bar.className = 't5-bar'; bar.style.left = Math.min(x(0), x(r.roi)) + '%'; bar.style.width = Math.abs(x(r.roi) - x(0)) + '%'; bar.style.background = r.roi >= 0 ? `linear-gradient(90deg, ${COL[1]}, #8ff5e0)` : `linear-gradient(90deg, #ff9aa8, ${'#ff5d73'})`; track.append(bar); }
-      const zero = document.createElement('div'); zero.className = 't5-zero'; zero.style.left = x(0) + '%'; track.append(zero);
-      if (r.prev_roi != null) { const g = document.createElement('div'); g.className = 't5-ghost'; g.style.left = `calc(${x(r.prev_roi)}% - 1px)`; track.append(g); }
-      const meta = mk('t5-meta', `${F.eur0(r.royalties)} royalties · ${F.eur0(r.spend)} spend · ${F.int(r.units)} sold · before ${v(r.prev_roi, 'pct')} · ads only `);
-      const ao = document.createElement('b'); ao.textContent = v(r.adroi, 'pct'); ao.className = r.adroi == null ? 'muted' : r.adroi >= 0 ? 'good' : 'bad'; meta.append(ao, ` · last 7 days ${F.eur0(r.spend7)} / ${r.orders7} orders`);
-      item.append(mk('t5-rank', String(i + 1).padStart(2, '0')), name, roi, track, meta);
-      return item;
-    }));
-  }
-
-  function donut(el, P) {
-    el.replaceChildren(); if (!P.total) return;
-    const S = 132, R = S / 2, w = 14, svg = d3.select(el).append('svg').attr('width', S).attr('height', S);
-    const arcs = d3.pie().sort(null).value((p) => p.v).padAngle(0.04)([{ v: P.org, c: COL[1] }, { v: P.adOrders, c: COL[0] }]);
-    svg.append('g').attr('transform', `translate(${R},${R})`).selectAll('path').data(arcs).join('path').attr('d', d3.arc().innerRadius(R - w).outerRadius(R).cornerRadius(5)).style('fill', (a) => a.data.c);
-  }
-
-  // ---------- Tables ----------
-  const cell = (t, c) => { const td = document.createElement('td'); td.textContent = t; if (c) td.className = c; return td; };
-  const barCell = (val, max, f, color) => { const td = document.createElement('td'); td.className = 'barcell'; const fill = document.createElement('div'); fill.className = 'barfill'; if (color) fill.style.background = color; fill.style.width = `calc(${max ? (val / max) * 100 : 0}% - 20px)`;
-    const s = document.createElement('span'); s.textContent = v(val, f); td.append(fill, s); return td; };
-  const sortRows = (rows, s) => rows.slice().sort((a, b) => { const x = a[s.key], y = b[s.key]; if (x == null && y == null) return 0; if (x == null) return 1; if (y == null) return -1; return (typeof x === 'string' ? x.localeCompare(y) : x - y) * s.dir; });
-  const wireSort = (table, state, redraw) => table.querySelectorAll('th button').forEach((btn) => btn.addEventListener('click', () => {
-    const key = btn.dataset.sort; state.dir = state.key === key ? -state.dir : (key === 'campaign' || key === 'book') ? 1 : -1; state.key = key;
-    table.querySelectorAll('th').forEach((th) => th.removeAttribute('aria-sort')); btn.closest('th').setAttribute('aria-sort', state.dir > 0 ? 'ascending' : 'descending'); redraw(); }));
-
-  // ---------- Render ----------
+  // ---------- Anzeige ----------
   let M = null, started = false, resizeT;
-  const campState = { key: 'spend', dir: -1, q: '' }, bookState = { key: 'royalties', dir: -1 };
+  const bookState = { key: 'rang', dir: 1, then: [['spend', -1]], q: '', lage: '' }, campState = { key: 'spend', dir: -1, q: '' };
 
-  function drawCamps() {
-    const q = campState.q.trim().toLowerCase();
-    const rows = sortRows(M.camps.filter((r) => r.status === 'ENABLED' && (!q || `${r.campaign} ${r.book}`.toLowerCase().includes(q))), campState), max = d3.max(rows, (r) => r.spend) || 0;
-    $('camp-table').tBodies[0].replaceChildren(...rows.map((r) => { const tr = document.createElement('tr'); if (r.alarm) tr.className = 'alarm';
-      const n = document.createElement('td'); n.title = r.campaign; const t = document.createElement('span'); t.className = 'tag'; t.textContent = r.type; n.append(t, r.campaign);
-      if (r.alarm) { const c = document.createElement('span'); c.className = 'alarmchip'; c.textContent = 'no order 7d'; n.append(c); }
-      tr.append(n, cell(r.book, 'wide muted'), barCell(r.spend, max, 'eur'), cell(v(r.clicks, 'int')), cell(v(r.orders, 'int')), cell(v(r.cvr, 'pct')), cell(v(r.cpo, 'eur')), cell(v(r.clicks7, 'int'), 'wide'), cell(v(r.orders7, 'int'), 'wide')); return tr; }));
+  function drawWindow() {
+    const { vor, d30, d7 } = M.W;
+    const zeilen = [['Tantiemen', 'roy', 'eur0'], ['Ad-Spend', 'sp', 'eur0'], ['Netto', 'net', 'eur0', 1], ['ROI', 'roi', 'pct', 1], ['Bestellungen gesamt', 'units', 'int'], ['davon Ads', 'ads', 'int'], ['davon organisch', 'org', 'int']];
+    $('win-body').replaceChildren(...zeilen.map(([label, k, f, stark]) => { const tr = document.createElement('tr'); if (stark) tr.className = 'strong';
+      tr.append(cell(label), cell(v(vor[k], f)), cell(v(d30[k], f), 'now'), cell(v(d7[k], f))); return tr; }));
+  }
+  function drawTop5() {
+    const top = M.books.slice().sort((a, b) => b.royalties - a.royalties).slice(0, 5);
+    $('top5').replaceChildren(...top.map((r, i) => {
+      const c = document.createElement('div'); c.className = 'glass t5';
+      const head = document.createElement('div'); head.className = 't5-head'; const rank = document.createElement('span'); rank.className = 't5-rank'; rank.textContent = String(i + 1).padStart(2, '0'); head.append(rank, lagePill(r.lage));
+      const name = document.createElement('div'); name.className = 't5-name'; name.textContent = r.book;
+      const roi = document.createElement('div'); roi.className = 't5-roi ' + tone(r.roi); roi.textContent = v(r.roi, 'pct');
+      const meta = document.createElement('div'); meta.className = 't5-meta';
+      for (const [k, val] of [['Netto 30 T', v(r.net, 'eurS')], ['Netto 7 T', v(r.net7, 'eurS')], ['Best. 30 T', split(r.ad_orders, r.org, r.units)]]) { const a = document.createElement('span'); a.textContent = k; const b = document.createElement('b'); b.textContent = val; meta.append(a, b); }
+      c.append(head, name, roi, meta); return c; }));
+  }
+  function drawFilter() {
+    const n = (k) => M.books.filter((b) => b.lage === k).length;
+    const opts = [['', `Alle ${M.books.length}`], ['verliert', `Verliert ${n('verliert')}`], ['kippt', `Kippt ${n('kippt')}`], ['verdient', `Verdient ${n('verdient')}`], ['ohne', `Ohne Ads ${n('ohne')}`]];
+    $('lage-filter').replaceChildren(...opts.map(([k, t]) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = t; b.setAttribute('aria-pressed', String(bookState.lage === k));
+      b.addEventListener('click', () => { bookState.lage = k; drawFilter(); drawBooks(); }); return b; }));
+  }
+  function bookRow(r, sum) {
+    const tr = document.createElement('tr'); if (sum) tr.className = 'sum';
+    const l = document.createElement('td'); l.className = 'l'; if (!sum) l.append(lagePill(r.lage));
+    const n = cell(r.book, 'l name'); n.title = r.asin ? `${r.book} (${r.asin})` : r.book;
+    tr.append(l, n, cell(v(r.net, 'eurS'), tone(r.net)), cell(v(r.net7, 'eurS'), tone(r.net7)), cell(v(r.roi, 'pct')), cell(v(r.royalties, 'eur0'), 'wide'), cell(v(r.spend, 'eur0'), 'wide'),
+      cell(split(r.ad_orders, r.org, r.units), 'wide'), cell(split(r.ad_orders7, r.org7, r.units7), 'wide'), cell(split(r.prev_ad_orders, r.prev_org, r.prev_units), 'wide'));
+    return tr;
   }
   function drawBooks() {
-    const rows = sortRows(M.books, bookState), max = d3.max(rows, (r) => r.royalties) || 0;
-    $('book-table').tBodies[0].replaceChildren(...rows.map((r) => { const tr = document.createElement('tr'); const n = cell(r.book); n.title = `${r.book} (${r.asin})`;
-      const roi = document.createElement('td'); const p = document.createElement('span'); p.className = 'pill' + (r.roi == null ? '' : r.roi >= 0 ? ' good' : ' bad'); p.textContent = v(r.roi, 'pct'); roi.append(p);
-      const ao = document.createElement('td'); const ap = document.createElement('span'); ap.className = 'pill' + (r.adroi == null ? '' : r.adroi >= 0 ? ' good' : ' bad'); ap.textContent = v(r.adroi, 'pct'); ao.append(ap);
-      tr.append(n, barCell(r.royalties, max, 'eur', 'rgba(45,226,196,.22)'), cell(v(r.spend, 'eur')), roi, ao, cell(v(r.prev_roi, 'pct'), 'wide muted'), cell(v(r.spend7, 'eur'), 'wide'), cell(v(r.orders7, 'int'), 'wide'), cell(v(r.units, 'int')), cell(v(r.organic_orders, 'int'), 'wide'),
-        cell(v(r.ads_clicks, 'int'), 'wide'), cell(v(r.ads_orders, 'int'), 'wide'), cell(v(r.cvr, 'pct'), 'wide'), cell(v(r.cpo, 'eur'), 'wide')); return tr; }));
+    const q = bookState.q.trim().toLowerCase();
+    const rows = sortRows(M.books.filter((b) => (!bookState.lage || b.lage === bookState.lage) && (!q || b.book.toLowerCase().includes(q))), bookState);
+    const body = rows.map((r) => bookRow(r));
+    if (M.adventZeile && !bookState.lage && !q) body.unshift(bookRow(M.adventZeile, true));
+    $('book-table').tBodies[0].replaceChildren(...body);
   }
-  function drawCharts() {
-    const T = [['spend', 'Ad spend · 30 days', M.A.d30.spend, 'eur0', `Last 7 days ${F.eur0(M.A.d7.spend)}`, M.K.spend, 'none', 0],
-      ['orders', 'Ad orders · 30 days', M.A.d30.orders, 'int', `Last 7 days ${F.int(M.A.d7.orders)}`, M.K.orders, 'up', 1],
-      ['cvr7', 'Conversion rate', M.A.d30.cvr, 'pct', `Last 7 days ${v(M.A.d7.cvr, 'pct')} · line: rolling 7 days`, M.K.cvr, 'up', 2],
-      ['cpo7', 'Cost per ad order', M.A.d30.cpo, 'eur', `Last 7 days ${v(M.A.d7.cpo, 'eur')} · line: rolling 7 days`, M.K.cpo, 'down', 3],
-      ['clicks', 'Clicks · 30 days', M.A.d30.clicks, 'int', `Last 7 days ${F.int(M.A.d7.clicks)}`, M.K.clicks, 'none', 4],
-      ['acos7', 'ACOS', M.A.d30.acos, 'pct', `Last 7 days ${v(M.A.d7.acos, 'pct')} · line: rolling 7 days`, M.K.acos, 'down', 5]];
-    T.forEach(([y, , , , , , , ci], i) => spark($('tiles').children[i].querySelector('.spark'), M.day, y, COL[ci]));
-    combo($('ch-combo'), M.day); roiLine($('ch-roi'), M.trend); donut($('donut'), M.P);
+  function drawCamps() {
+    const q = campState.q.trim().toLowerCase();
+    const rows = sortRows(M.camps.filter((r) => r.status === 'ENABLED' && (!q || `${r.campaign} ${r.book}`.toLowerCase().includes(q))), campState);
+    $('camp-table').tBodies[0].replaceChildren(...rows.map((r) => { const tr = document.createElement('tr'); if (r.alarm) tr.className = 'alarm';
+      const n = document.createElement('td'); n.className = 'l name'; n.title = r.campaign; const t = document.createElement('span'); t.className = 'tag'; t.textContent = r.type; n.append(t, r.campaign);
+      if (r.alarm) { const c = document.createElement('span'); c.className = 'alarmchip'; c.textContent = 'keine Best. 7 T'; n.append(c); }
+      tr.append(n, cell(r.book, 'l wide muted'), cell(v(r.spend, 'eur')), cell(v(r.clicks, 'int')), cell(v(r.orders, 'int')), cell(v(r.cvr, 'pct1')), cell(v(r.cpo, 'eur')), cell(v(r.clicks7, 'int'), 'wide'), cell(v(r.orders7, 'int'), 'wide')); return tr; }));
   }
-  function drawAll() { drawCharts(); }
+  function drawKpis() {
+    const { eff } = M, box = $('camp-kpis'); box.replaceChildren();
+    for (const [label, a, b, f] of [['CVR', eff.cvr, eff.cvr7, 'pct1'], ['€ je Ad-Bestellung', eff.cpo, eff.cpo7, 'eur']]) {
+      const s = document.createElement('span'); s.append(`${label}: `); const x = document.createElement('b'); x.textContent = v(a, f); s.append(x, ' in 30 T, '); const y = document.createElement('b'); y.textContent = v(b, f); s.append(y, ' in 7 T'); box.append(s); }
+  }
 
   function start(D) {
     M = compute(D);
-    const { A, P, K, counts } = M;
-    set('period', `${F.date(M.from)} – ${F.date(M.to)} · last 30 full days`);
-    const tk = $('take'); tk.replaceChildren();
-    const parts = [['ROI after ad spend is ', null], [v(P.roi, 'pct'), 1], [' (previous 30 days: ', null], [v(P.proi, 'pct'), 1], ['). Ads spent ', null], [v(A.d30.spend, 'eur0'), 1], [' for ', null], [F.int(A.d30.orders), 1], [' ad orders at ', null], [v(A.d30.cpo, 'eur'), 1], [' each. ', null], [String(counts.alarm), 1], [' active campaigns had 15+ clicks without an order in the last 7 days.', null]];
-    for (const [t, b] of parts) { if (b) { const e = document.createElement('b'); e.textContent = t; tk.append(e); } else tk.append(t); }
-    const big = $('roi-big'); big.textContent = v(P.roi, 'pct'); big.className = 'big ' + (P.roi >= 0 ? 'pos' : 'neg');
-    pill($('roi-delta'), K.roi, 'pp', 'up'); set('roi-prev', `vs ${v(P.proi, 'pct')} in the previous 30 days`);
-    set('roi-ads', `Ads-only ROI: ${v(P.adroi, 'pct')} (${F.int(P.adOrders)} ad orders against ${F.eur0(P.sp)} spend)`);
-    $('roi-ads').style.color = P.adroi >= 0 ? 'var(--good)' : 'var(--bad)'; $('roi-ads').style.fontWeight = '700';
-    set('m-roy', F.eur0(P.roy)); pill($('m-roy-d'), K.roy, 'rel', 'up'); set('m-sp', F.eur0(P.sp)); pill($('m-sp-d'), K.psp, 'rel', 'none'); set('m-net', F.eur0(P.net)); pill($('m-net-d'), K.net, 'rel', 'up');
-
-    const T = [['Ad spend · 30 days', A.d30.spend, 'eur0', `Last 7 days ${F.eur0(A.d7.spend)} · change vs the 7 days before`, K.spend, 'none'],
-      ['Ad orders · 30 days', A.d30.orders, 'int', `Last 7 days ${F.int(A.d7.orders)}`, K.orders, 'up'],
-      ['Conversion rate', A.d30.cvr, 'pct', `Last 7 days ${v(A.d7.cvr, 'pct')} · line: rolling 7 days`, K.cvr, 'up'],
-      ['Cost per ad order', A.d30.cpo, 'eur', `Last 7 days ${v(A.d7.cpo, 'eur')} · line: rolling 7 days`, K.cpo, 'down'],
-      ['Clicks · 30 days', A.d30.clicks, 'int', `Last 7 days ${F.int(A.d7.clicks)}`, K.clicks, 'none'],
-      ['ACOS', A.d30.acos, 'pct', `Last 7 days ${v(A.d7.acos, 'pct')} · line: rolling 7 days`, K.acos, 'down']];
-    $('tiles').replaceChildren(...T.map(([label, val, f, foot, ch, good], i) => {
-      const t = document.createElement('div'); t.className = 'glass tile'; t.style.animationDelay = `${i * 50}ms`;
-      const top = document.createElement('div'); top.className = 'tile-top'; const l = document.createElement('span'); l.className = 'tile-label'; l.textContent = label; const p = document.createElement('span'); pill(p, ch, 'rel', good); top.append(l, p);
-      const val2 = document.createElement('span'); val2.className = 'tile-value'; val2.textContent = v(val, f);
-      const sp = document.createElement('div'); sp.className = 'spark'; const ft = document.createElement('span'); ft.className = 'tile-foot'; ft.textContent = foot;
-      t.append(top, val2, sp, ft); return t; }));
-    set('camp-note', `Red stripe: 15+ clicks without an order in the last 7 days. ${counts.paused} paused or archived campaigns with spend are left out.`);
-    set('u-n', F.int(P.units)); pill($('u-d'), K.units, 'rel', 'up'); set('d-pct', v(P.orgShare, 'pct0')); set('d-org', F.int(P.org)); set('d-ad', F.int(P.adOrders));
-    top5($('top5'), M.books);
-    drawCamps(); drawBooks();
-    set('foot', `Data as of ${new Date(D.updated).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' })} · Amazon Ads API and PublisherChamp · decrypted in your browser`);
-    requestAnimationFrame(drawCharts);
-
+    const { W } = M;
+    set('period', `Stand bis ${F.dateY(M.bis)}`);
+    const big = $('roi-big'); big.textContent = v(W.d30.roi, 'pct1'); big.className = 'big ' + (W.d30.roi >= 0 ? 'pos' : 'neg');
+    set('roi-sub', `${F.eurS(W.d30.net)} Netto in 30 Tagen · Vor-30 ${v(W.vor.roi, 'pct1')} · letzte 7 Tage ${v(W.d7.roi, 'pct1')}`);
+    drawWindow(); drawTop5(); drawFilter(); drawBooks(); drawCamps(); drawKpis();
+    set('camp-note', `${M.aktiv} aktive Kampagnen. Roter Streifen: ${ALARM_KLICKS}+ Klicks ohne Bestellung in 7 Tagen (${M.alarm}). ${M.pausiert} pausierte Kampagnen mit Spend sind ausgeblendet.`);
+    set('foot', `PublisherChamp bis ${F.dateY(M.bis)} · Amazon Ads bis ${F.dateY(M.adsBis)} · gebaut ${new Date(D.updated).toLocaleString('de-DE', { dateStyle: 'medium', timeStyle: 'short' })}`);
+    requestAnimationFrame(() => roiLine($('ch-roi'), M.trend));
     if (!started) {
       started = true;
       wireSort($('camp-table'), campState, drawCamps); wireSort($('book-table'), bookState, drawBooks);
       $('camp-search').addEventListener('input', (e) => { campState.q = e.target.value; drawCamps(); });
-      addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(() => M && drawAll(), 150); });
+      $('book-search').addEventListener('input', (e) => { bookState.q = e.target.value; drawBooks(); });
+      addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(() => M && roiLine($('ch-roi'), M.trend), 150); });
     }
   }
 })();

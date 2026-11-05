@@ -183,7 +183,8 @@
       <p class="eyebrow">ROI after ad spend · 30 days</p>
       <span class="big" id="roi-big"></span>
       <div class="sub"><span class="pill" id="roi-delta"></span><span id="roi-prev"></span></div>
-      <p class="note">(Royalties − ad spend) ÷ ad spend, as PublisherChamp calculates it. 0% means the ads only paid for themselves.</p>
+      <p class="note" id="roi-ads"></p>
+      <p class="note">ROI = (all royalties − ad spend) ÷ ad spend, as PublisherChamp calculates it, so organic sales count too. Ads-only ROI counts just the orders Amazon attributes to ad clicks, at each book's average royalty per unit. The truth lies between the two; for a decision on one campaign or target, look at the Ads-only figure and the last 7 days.</p>
       <div class="mini">
         <div><span class="mini-label">Royalties</span><span class="mini-value" id="m-roy"></span><span class="pill" id="m-roy-d"></span></div>
         <div><span class="mini-label">Ad spend</span><span class="mini-value" id="m-sp"></span><span class="pill" id="m-sp-d"></span></div>
@@ -252,7 +253,10 @@
         <th aria-sort="descending"><button type="button" data-sort="royalties">Royalties</button></th>
         <th><button type="button" data-sort="spend">Spend</button></th>
         <th><button type="button" data-sort="roi">ROI</button></th>
+        <th><button type="button" data-sort="adroi">Ads-only ROI</button></th>
         <th class="wide"><button type="button" data-sort="prev_roi">ROI before</button></th>
+        <th class="wide"><button type="button" data-sort="spend7">Spend 7d</button></th>
+        <th class="wide"><button type="button" data-sort="orders7">Ad orders 7d</button></th>
         <th><button type="button" data-sort="units">Sold</button></th>
         <th class="wide"><button type="button" data-sort="organic_orders">Organic</button></th>
         <th class="wide"><button type="button" data-sort="ads_clicks">Ad clicks</button></th>
@@ -335,18 +339,22 @@
     const roiOf = (roy, sp) => (sp ? r4((roy - sp) / sp) : null);
     const P = { roy: r2(s('royalties')), sp: r2(s('spend')), units: s('units'), total: s('total_orders'), org: s('organic_orders'), adOrders: s('ad_orders'), proy: r2(s('prev_royalties')), psp: r2(s('prev_spend')), punits: s('prev_units') };
     P.net = r2(P.roy - P.sp); P.pnet = r2(P.proy - P.psp); P.roi = roiOf(P.roy, P.sp); P.proi = roiOf(P.proy, P.psp); P.orgShare = P.total ? r4(P.org / P.total) : null;
+    P.adroi = P.sp ? r4((pcs.reduce((t, r) => t + (r.units ? r.ad_orders * r.royalties / r.units : 0), 0) - P.sp) / P.sp) : null;
 
     const rel = (n, b) => (n == null || !b ? null : r4((n - b) / b));
     const K = { spend: rel(A.d7.spend, A.p7.spend), clicks: rel(A.d7.clicks, A.p7.clicks), orders: rel(A.d7.orders, A.p7.orders), cvr: rel(A.d7.cvr, A.p7.cvr), cpo: rel(A.d7.cpo, A.p7.cpo), acos: rel(A.d7.acos, A.p7.acos),
       roy: rel(P.roy, P.proy), psp: rel(P.sp, P.psp), net: rel(P.net, P.pnet), units: rel(P.units, P.punits), roi: P.roi != null && P.proi != null ? Math.round((P.roi - P.proi) * 1000) / 10 : null };
 
     const a = {};
-    for (const r of ads) { const o = (a[r.asin] = a[r.asin] || { name: r.book, spend: 0, clicks: 0, orders: 0 }); o.spend += +r.cost; o.clicks += +r.clicks; o.orders += +r.orders; }
-    const books = pcs.map((p) => { const x = a[p.asin] || { spend: 0, clicks: 0, orders: 0 };
+    for (const r of ads) { const o = (a[r.asin] = a[r.asin] || { name: r.book, spend: 0, clicks: 0, orders: 0, spend7: 0, orders7: 0 }); o.spend += +r.cost; o.clicks += +r.clicks; o.orders += +r.orders; if (last7.has(r.date)) { o.spend7 += +r.cost; o.orders7 += +r.orders; } }
+    // Ads-only ROI: only orders Amazon attributes to ad clicks, valued at the book's average royalty per unit (organic sales left out).
+    const books = pcs.map((p) => { const x = a[p.asin] || { spend: 0, clicks: 0, orders: 0, spend7: 0, orders7: 0 };
+      const rpu = p.units ? p.royalties / p.units : null;
       return { asin: p.asin, book: p.book, royalties: p.royalties, spend: p.spend, roi: roiOf(p.royalties, p.spend), prev_roi: roiOf(p.prev_royalties, p.prev_spend), units: p.units, organic_orders: p.organic_orders,
+        adroi: p.spend && rpu != null ? r4((p.ad_orders * rpu - p.spend) / p.spend) : null, spend7: r2(x.spend7), orders7: x.orders7,
         ads_clicks: x.clicks, ads_orders: x.orders, cvr: x.clicks ? r4(x.orders / x.clicks) : null, cpo: x.orders ? r2(x.spend / x.orders) : null }; });
     for (const [asin, x] of Object.entries(a)) { if (pcs.some((p) => p.asin === asin) || !x.clicks) continue;
-      books.push({ asin, book: x.name, royalties: 0, spend: r2(x.spend), roi: null, prev_roi: null, units: 0, organic_orders: 0, ads_clicks: x.clicks, ads_orders: x.orders, cvr: r4(x.orders / x.clicks), cpo: x.orders ? r2(x.spend / x.orders) : null }); }
+      books.push({ asin, book: x.name, royalties: 0, spend: r2(x.spend), roi: null, prev_roi: null, adroi: null, spend7: r2(x.spend7), orders7: x.orders7, units: 0, organic_orders: 0, ads_clicks: x.clicks, ads_orders: x.orders, cvr: r4(x.orders / x.clicks), cpo: x.orders ? r2(x.spend / x.orders) : null }); }
     books.sort((p, q) => q.royalties - p.royalties || q.ads_clicks - p.ads_clicks);
 
     const pd = D.pc_daily.slice().sort((p, q) => p.date.localeCompare(q.date)), trend = [];
@@ -454,7 +462,9 @@
       if (r.roi != null) { const bar = document.createElement('div'); bar.className = 't5-bar'; bar.style.left = Math.min(x(0), x(r.roi)) + '%'; bar.style.width = Math.abs(x(r.roi) - x(0)) + '%'; bar.style.background = r.roi >= 0 ? `linear-gradient(90deg, ${COL[1]}, #8ff5e0)` : `linear-gradient(90deg, #ff9aa8, ${'#ff5d73'})`; track.append(bar); }
       const zero = document.createElement('div'); zero.className = 't5-zero'; zero.style.left = x(0) + '%'; track.append(zero);
       if (r.prev_roi != null) { const g = document.createElement('div'); g.className = 't5-ghost'; g.style.left = `calc(${x(r.prev_roi)}% - 1px)`; track.append(g); }
-      item.append(mk('t5-rank', String(i + 1).padStart(2, '0')), name, roi, track, mk('t5-meta', `${F.eur0(r.royalties)} royalties · ${F.eur0(r.spend)} spend · ${F.int(r.units)} sold · before ${v(r.prev_roi, 'pct')}`));
+      const meta = mk('t5-meta', `${F.eur0(r.royalties)} royalties · ${F.eur0(r.spend)} spend · ${F.int(r.units)} sold · before ${v(r.prev_roi, 'pct')} · ads only `);
+      const ao = document.createElement('b'); ao.textContent = v(r.adroi, 'pct'); ao.className = r.adroi == null ? 'muted' : r.adroi >= 0 ? 'good' : 'bad'; meta.append(ao, ` · last 7 days ${F.eur0(r.spend7)} / ${r.orders7} orders`);
+      item.append(mk('t5-rank', String(i + 1).padStart(2, '0')), name, roi, track, meta);
       return item;
     }));
   }
@@ -491,7 +501,8 @@
     const rows = sortRows(M.books, bookState), max = d3.max(rows, (r) => r.royalties) || 0;
     $('book-table').tBodies[0].replaceChildren(...rows.map((r) => { const tr = document.createElement('tr'); const n = cell(r.book); n.title = `${r.book} (${r.asin})`;
       const roi = document.createElement('td'); const p = document.createElement('span'); p.className = 'pill' + (r.roi == null ? '' : r.roi >= 0 ? ' good' : ' bad'); p.textContent = v(r.roi, 'pct'); roi.append(p);
-      tr.append(n, barCell(r.royalties, max, 'eur', 'rgba(45,226,196,.22)'), cell(v(r.spend, 'eur')), roi, cell(v(r.prev_roi, 'pct'), 'wide muted'), cell(v(r.units, 'int')), cell(v(r.organic_orders, 'int'), 'wide'),
+      const ao = document.createElement('td'); const ap = document.createElement('span'); ap.className = 'pill' + (r.adroi == null ? '' : r.adroi >= 0 ? ' good' : ' bad'); ap.textContent = v(r.adroi, 'pct'); ao.append(ap);
+      tr.append(n, barCell(r.royalties, max, 'eur', 'rgba(45,226,196,.22)'), cell(v(r.spend, 'eur')), roi, ao, cell(v(r.prev_roi, 'pct'), 'wide muted'), cell(v(r.spend7, 'eur'), 'wide'), cell(v(r.orders7, 'int'), 'wide'), cell(v(r.units, 'int')), cell(v(r.organic_orders, 'int'), 'wide'),
         cell(v(r.ads_clicks, 'int'), 'wide'), cell(v(r.ads_orders, 'int'), 'wide'), cell(v(r.cvr, 'pct'), 'wide'), cell(v(r.cpo, 'eur'), 'wide')); return tr; }));
   }
   function drawCharts() {
@@ -515,6 +526,8 @@
     for (const [t, b] of parts) { if (b) { const e = document.createElement('b'); e.textContent = t; tk.append(e); } else tk.append(t); }
     const big = $('roi-big'); big.textContent = v(P.roi, 'pct'); big.className = 'big ' + (P.roi >= 0 ? 'pos' : 'neg');
     pill($('roi-delta'), K.roi, 'pp', 'up'); set('roi-prev', `vs ${v(P.proi, 'pct')} in the previous 30 days`);
+    set('roi-ads', `Ads-only ROI: ${v(P.adroi, 'pct')} (${F.int(P.adOrders)} ad orders against ${F.eur0(P.sp)} spend)`);
+    $('roi-ads').style.color = P.adroi >= 0 ? 'var(--good)' : 'var(--bad)'; $('roi-ads').style.fontWeight = '700';
     set('m-roy', F.eur0(P.roy)); pill($('m-roy-d'), K.roy, 'rel', 'up'); set('m-sp', F.eur0(P.sp)); pill($('m-sp-d'), K.psp, 'rel', 'none'); set('m-net', F.eur0(P.net)); pill($('m-net-d'), K.net, 'rel', 'up');
 
     const T = [['Ad spend · 30 days', A.d30.spend, 'eur0', `Last 7 days ${F.eur0(A.d7.spend)} · change vs the 7 days before`, K.spend, 'none'],

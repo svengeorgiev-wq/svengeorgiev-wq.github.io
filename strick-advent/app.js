@@ -90,7 +90,8 @@ function ansichtHeute() {
   const z = state.zaehler;
   const anfaenger = zahl === 0
     ? `<button class="card extra-karte" type="button" data-route="anschlagen"><span class="extra-band"><span class="pill green">Extra für Anfänger</span><span class="pill">Kein Türchen</span></span><b>Noch nie Maschen angeschlagen?</b><small>Hier lernst du es Schritt für Schritt, bevor du mit Türchen 1 anfängst.</small></button>` : "";
-  return `${oben}${anfaenger}${weiterKarte}${girlande()}
+  const appStart = `<button class="card install-karte" type="button" data-open-install><span class="install-symbol" aria-hidden="true">＋</span><span><b>App schnell wiederfinden</b><small>Auf den Startbildschirm legen und künftig wie eine App öffnen. Anleitung für iPhone, Android und Computer.</small></span></button>`;
+  return `${oben}${appStart}${anfaenger}${weiterKarte}${girlande()}
     ${zahl === 24 ? `<img class="bildkarte" src="assets/deko/stimmung-schleife.webp" alt="Die Strickschleife aus Türchen 24 auf einem Geschenk" width="900" height="600">` : ""}
     <article class="card progress"><div class="ring" style="--p:${Math.round(zahl / 24 * 100)}"><span>${zahl}/24</span></div>
       <div><h2>Dein Fortschritt</h2>${fertig}</div></article>
@@ -265,6 +266,14 @@ function gehe(route) {
 
 /* ---------- Ereignisse ---------- */
 document.addEventListener("click", (ev) => {
+  const installLink = ev.target.closest("[data-open-install]");
+  if (installLink) {
+    const dialog = document.getElementById("mehr-dialog");
+    document.getElementById("vorab-links").innerHTML = vorabLinks();
+    dialog.showModal();
+    requestAnimationFrame(() => dialog.querySelector(".install-block").scrollIntoView({ behavior: "smooth", block: "start" }));
+    return;
+  }
   const el = ev.target.closest("button, [data-route]");
   if (!el) return;
   if (el.dataset.closeDialog !== undefined) { const d = el.closest("dialog"); if (d) d.close(); }

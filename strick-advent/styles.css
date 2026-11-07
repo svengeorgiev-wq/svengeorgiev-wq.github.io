@@ -249,6 +249,10 @@ body { background-color: var(--cream); background-image: radial-gradient(rgba(19
 .extra-karte { display: block; width: 100%; text-align: left; cursor: pointer; border: 2px solid var(--green); background: #f3f8f4; }
 .extra-karte b { display: block; font: 700 20px/1.2 var(--serif); color: var(--plum); margin: 2px 0 4px; }
 .extra-karte small { color: var(--muted); font-size: 15px; }
+.install-karte { display: flex; width: 100%; align-items: center; gap: 14px; text-align: left; cursor: pointer; border: 2px solid var(--gold); background: #fff9ea; }
+.install-karte b { display: block; font: 700 20px/1.2 var(--serif); color: var(--plum); margin-bottom: 4px; }
+.install-karte small { display: block; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.install-symbol { flex: 0 0 44px; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 13px; background: var(--plum); color: var(--gold); font-size: 30px; font-weight: 800; line-height: 1; }
 .extra-link { border-color: var(--green); background: #f3f8f4; }
 .extra-link .pill { margin-left: 6px; vertical-align: 2px; }
 .extra-hinweis { background: #f3f8f4; }

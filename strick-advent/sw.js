@@ -1,13 +1,13 @@
 "use strict";
 
-const CACHE = "strick-begleiter-v1.4.0";
+const CACHE = "strick-begleiter-v1.5.0";
 const SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=4",
+  "./styles.css?v=5",
   "./content.js?v=1",
   "./anschlagen.js?v=1",
-  "./app.js?v=4",
+  "./app.js?v=5",
   "./manifest.webmanifest?v=1",
   "./assets/book-cover-240.webp",
   "./assets/deko/kranz.webp",

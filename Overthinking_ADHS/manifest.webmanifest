@@ -3,7 +3,6 @@
   "short_name": "Kopf leiser",
   "description": "Interaktiver Begleiter zum 21-Tage-Plan von Anna Lorenz",
   "lang": "de",
-  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#061139",

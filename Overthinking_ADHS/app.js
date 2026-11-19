@@ -646,11 +646,11 @@
   function reminderKey() {
     try {
       const fromUrl = new URLSearchParams(location.search).get("k");
-      if (fromUrl && /^[a-f0-9]{32}$/.test(fromUrl)) {
-        localStorage.setItem(REMINDER_KEY, fromUrl);
-        history.replaceState(null, "", location.pathname + location.hash);
-      }
-      return localStorage.getItem(REMINDER_KEY);
+      if (fromUrl && /^[a-f0-9]{32}$/.test(fromUrl)) localStorage.setItem(REMINDER_KEY, fromUrl);
+      const k = localStorage.getItem(REMINDER_KEY);
+      // Kennung bleibt in der Adresse: iPhone legt die Startbildschirm-App mit dieser Adresse an (eigener Speicher).
+      if (k && fromUrl !== k) history.replaceState(null, "", location.pathname + "?k=" + k + location.hash);
+      return k;
     } catch { return null; }
   }
   function reminderOff() {

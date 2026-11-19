@@ -31,6 +31,7 @@
     document.querySelector("#resetButton").addEventListener("click", resetData);
     if (!location.hash) history.replaceState(null, "", "#today");
     render();
+    reminderPing();
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
       navigator.serviceWorker.register("./sw.js").catch(() => {});
     }
@@ -636,7 +637,32 @@
     } catch { return structuredClone(DEFAULT_STATE); }
   }
 
+  // Erinnerungs-Mails: nur aktiv, wenn die App über den Link aus der Mail (?k=…) geöffnet wurde.
+  // Gesendet werden nur Kennung, Zahl erledigter Tage und nächster Tag, nie Einträge.
+  const REMINDER_KEY = "adhs-erinnerung-k";
+  const REMINDER_URL = "https://app-erinnerung.munichpublishing.workers.dev/ping";
+  function reminderKey() {
+    try {
+      const fromUrl = new URLSearchParams(location.search).get("k");
+      if (fromUrl && /^[a-f0-9]{32}$/.test(fromUrl)) {
+        localStorage.setItem(REMINDER_KEY, fromUrl);
+        history.replaceState(null, "", location.pathname + location.hash);
+      }
+      return localStorage.getItem(REMINDER_KEY);
+    } catch { return null; }
+  }
+  function reminderPing() {
+    const k = reminderKey();
+    if (!k || !navigator.onLine) return;
+    const done = doneCount(), next = firstOpenDay().day;
+    const sig = `${new Date().toISOString().slice(0, 10)}|${done}|${next}`;
+    try { if (localStorage.getItem(REMINDER_KEY + "-sig") === sig) return; localStorage.setItem(REMINDER_KEY + "-sig", sig); } catch { return; }
+    const body = JSON.stringify({ k, done, next });
+    fetch(REMINDER_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true }).catch(() => {});
+  }
+
   function saveState() {
+    reminderPing();
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { showToast("Deine Eingabe konnte lokal nicht gespeichert werden."); }
   }
 

@@ -3,6 +3,8 @@
 
   const { weeks, days, tools, supportTools, sosRoutes } = window.APP_DATA;
   const STORAGE_KEY = "adhs-overthinking-21-v1";
+  const REMINDER_KEY = "adhs-erinnerung-k";
+  const REMINDER_URL = "https://app-erinnerung.munichpublishing.workers.dev/ping";
   const DEFAULT_STATE = { version: 1, activeDay: 1, entries: {}, supportEntries: {}, startedAt: null };
   const main = document.querySelector("#mainContent");
   const sidebarProgress = document.querySelector("#sidebarProgress");
@@ -641,8 +643,6 @@
 
   // Erinnerungs-Mails: nur aktiv, wenn die App über den Link aus der Mail (?k=…) geöffnet wurde.
   // Gesendet werden nur Kennung, Zahl erledigter Tage und nächster Tag, nie Einträge.
-  const REMINDER_KEY = "adhs-erinnerung-k";
-  const REMINDER_URL = "https://app-erinnerung.munichpublishing.workers.dev/ping";
   function reminderKey() {
     try {
       const fromUrl = new URLSearchParams(location.search).get("k");

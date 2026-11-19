@@ -143,6 +143,7 @@
         </section>
       </div>
 
+      ${renderReminderCard()}
       ${completedEntry ? `<section class="panel panel__pad" style="margin-top:18px">
         <div class="panel-head"><div><span class="eyebrow">Dein letzter Schritt</span><h3>${escapeHtml(completedEntry.day.title)}</h3></div><button class="button button--secondary" type="button" data-hash="day-${completedEntry.day.day}">Ansehen</button></div>
         <p>${completedEntry.entry.notes ? `Deine Notiz: „${escapeHtml(truncate(completedEntry.entry.notes, 180))}“` : "Du hast den Tagesabschluss gespeichert. Wiederholen ist erlaubt – und oft wirksamer als Perfektion."}</p>
@@ -442,6 +443,7 @@
     if (timerButton) { controlTimer(timerButton.dataset.timerAction); return; }
     const timerChoice = event.target.closest("[data-timer-seconds]");
     if (timerChoice) { selectTimerDuration(Number(timerChoice.dataset.timerSeconds)); return; }
+    if (event.target.closest("[data-reminder-toggle]")) { toggleReminder(); return; }
     if (event.target.closest("[data-open-data]")) dataDialog.showModal();
   }
 
@@ -651,13 +653,30 @@
       return localStorage.getItem(REMINDER_KEY);
     } catch { return null; }
   }
+  function reminderOff() {
+    try { return localStorage.getItem(REMINDER_KEY + "-off") === "1"; } catch { return false; }
+  }
+  function toggleReminder() {
+    try { localStorage.setItem(REMINDER_KEY + "-off", reminderOff() ? "0" : "1"); } catch { return; }
+    reminderPing();
+    showToast(reminderOff() ? "Erinnerungen per Mail sind aus." : "Erinnerungen per Mail sind an.");
+    render();
+  }
+  function renderReminderCard() {
+    if (!reminderKey()) return "";
+    const on = !reminderOff();
+    return `<section class="panel panel__pad" style="margin-top:18px">
+      <div class="panel-head"><div><span class="eyebrow">Erinnerung per Mail</span><h3>${on ? "Ich erinnere dich, wenn du zwei Tage nicht da warst" : "Erinnerungen per Mail sind aus"}</h3></div><button class="button button--secondary" type="button" data-reminder-toggle>${on ? "Ausschalten" : "Einschalten"}</button></div>
+      <p>Dazu meldet die App nur, wie viele Tage du erledigt hast und welcher als Nächstes kommt. Deine Einträge und Notizen bleiben auf deinem Gerät. Nach Woche 1 und nach Tag 21 bekommst du je eine kurze Mail.</p>
+    </section>`;
+  }
   function reminderPing() {
     const k = reminderKey();
     if (!k || !navigator.onLine) return;
-    const done = doneCount(), next = firstOpenDay().day;
-    const sig = `${new Date().toISOString().slice(0, 10)}|${done}|${next}`;
+    const done = doneCount(), next = firstOpenDay().day, off = reminderOff();
+    const sig = `${new Date().toISOString().slice(0, 10)}|${done}|${next}|${off ? 1 : 0}`;
     try { if (localStorage.getItem(REMINDER_KEY + "-sig") === sig) return; localStorage.setItem(REMINDER_KEY + "-sig", sig); } catch { return; }
-    const body = JSON.stringify({ k, done, next });
+    const body = JSON.stringify({ k, done, next, off });
     fetch(REMINDER_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true }).catch(() => {});
   }
 

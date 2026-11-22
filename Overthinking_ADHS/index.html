@@ -3,6 +3,15 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* Zugang nur mit persoenlichem Link aus der Mail (k) oder vorhandenem Fortschritt, 22.11.2026 */
+(function(){var ok=false;try{var ls=localStorage,k=new URLSearchParams(location.search).get("k");
+if(k&&/^[a-f0-9]{32}$/.test(k)){ls.setItem("adhs-erinnerung-k",k);ls.setItem("adhs-overthinking-reminder-k-typ",k);ok=true}
+else if(ls.getItem("adhs-erinnerung-k")||ls.getItem("adhs-overthinking-reminder-k-typ")||ls.getItem("adhs-typ-v1")){ok=true}
+else{var s=JSON.parse(ls.getItem("adhs-overthinking-21-v1")||"null");if(s&&(s.startedAt||(s.activeDay||1)>1||Object.keys(s.entries||{}).length||Object.keys(s.supportEntries||{}).length))ok=true}}catch(e){ok=true}
+if(ok)return;document.documentElement.className+=" gesperrt";
+document.addEventListener("DOMContentLoaded",function(){var d=document.createElement("div");d.id="sperre";d.innerHTML='<div class="sp-in"><div class="sp-t"><img src="assets/cover.webp" alt="Buchcover"><p class="sp-k">Zum Buch „ADHS &amp; Overthinking bei Erwachsenen“</p></div><h1>Deine App öffnest du über deinen persönlichen Link.</h1><p>21 Tage, 25 geführte Audios und dein Startplan durch das Buch. Trag deine E-Mail ein, dann kommt dein Link per Mail.</p><a class="sp-b" href="https://munichpublishing.de/Overthinking_ADHS?utm_source=app&utm_medium=sperre&utm_campaign=adhs-typ&utm_content=app">Zugang anfordern</a><p class="sp-s">Schon angemeldet? Öffne die App über den Knopf in der Mail „Dein Zugang und eine kleine Aufmerksamkeit“.</p></div>';document.body.appendChild(d)})})();</script>
+<style>html.gesperrt body>*:not(#sperre){display:none!important}html.gesperrt body{margin:0;background:#07143c}#sperre{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px 16px;background:#07143c;color:#fff;font-family:Arial,Helvetica,sans-serif}#sperre .sp-in{width:100%;max-width:460px}#sperre .sp-t{display:flex;gap:12px;align-items:center}#sperre .sp-t img{width:56px;border-radius:6px}#sperre .sp-k{margin:0;color:#ffbf00;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;line-height:1.35}#sperre h1{margin:18px 0 10px;font-size:26px;line-height:1.2;color:#fff}#sperre p{margin:0 0 10px;font-size:17px;line-height:1.5;color:#d6e1ff}#sperre .sp-b{display:block;margin:20px 0 16px;padding:16px;border-radius:12px;background:#ffb000;color:#10182f;text-align:center;font-weight:700;font-size:18px;text-decoration:none}#sperre .sp-s{font-size:14px;color:#9fb0d8}</style>
+
     <meta name="theme-color" content="#07143c">
     <meta name="description" content="Der interaktive 21-Tage-Begleiter zum Buch ADHS & Overthinking bei Erwachsenen von Anna Lorenz.">
     <meta name="robots" content="index,follow">

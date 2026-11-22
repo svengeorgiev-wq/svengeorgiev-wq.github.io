@@ -1,4 +1,4 @@
-const CACHE = "adhs-overthinking-v1-20261119-erinnerung4";
+const CACHE = "adhs-overthinking-v1-20261122-sperre1";
 const ASSETS = ["./", "./index.html", "./styles.css?v=20261013-tagesaudios", "./data.js?v=20261103-tag19", "./tracks.js?v=20261103-tag19", "./app.js?v=20261119-erinnerung4", "./manifest.webmanifest", "./assets/cover.webp", "./assets/icon-192.png"];
 
 self.addEventListener("install", (event) => {

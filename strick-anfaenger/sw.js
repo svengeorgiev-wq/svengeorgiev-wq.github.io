@@ -1,13 +1,13 @@
 "use strict";
 
-const CACHE = "strick-anfaenger-v1.0.2";
+const CACHE = "strick-anfaenger-v1.0.3";
 const SHELL = [
   "./",
   "./index.html",
   "./styles.css?v=1",
-  "./data.js?v=2",
+  "./data.js?v=3",
   "./anschlagen.js?v=1",
-  "./app.js?v=2",
+  "./app.js?v=3",
   "./manifest.webmanifest?v=1",
   "./icons/favicon-64.png",
   "./icons/icon-192.png",

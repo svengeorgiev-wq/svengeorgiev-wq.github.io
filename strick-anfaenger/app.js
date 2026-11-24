@@ -169,13 +169,27 @@
     return `<div class="navi">
       <div class="meta"><button class="button ghost" type="button" data-go="abend/${r.abend}" style="padding:6px 12px">Abend ${r.abend} · ${e(d.block)}</button>${sideTag(r)}</div>
       <div class="rowno">Reihe <strong>${r.row}</strong>${r.partial ? " (nur bis zur Mitte)" : ""} <span class="muted">· ${r.i + 1} von ${r.of} heute</span></div>
-      <div class="instr">${e(r.text)}</div>
+      <div class="instr">${e(r.text)}</div>${kuerzel(r.text)}
       <p class="after">${after}</p>
       <button class="next" type="button" id="next">${r.i + 1 === r.of ? "Reihe fertig · zum Maschen-Check" : "Reihe fertig ✓"}</button>
       <div class="small"><button class="button ghost" type="button" id="prev" ${st.pos === 0 ? "disabled" : ""}>‹ Eine Reihe zurück</button><button class="button ghost" type="button" data-go="hilfe">Hilfe</button></div>
       <p class="muted" style="margin-top:14px">Gesamt: Reihe ${rowsDoneLabel() + (r.id ? 1 : 0)} von ${S.totalRows}</p>${bar(rowsDoneLabel(), S.totalRows)}
     </div>`;
   }
+
+  const KUERZEL = [
+    [/\bre\b/, "re", "rechte Masche: Faden hinten, von vorn einstechen (Abend 2)"],
+    [/\bli\b/, "li", "linke Masche: Faden vorn, von rechts nach links einstechen (Abend 3)"],
+    [/Rand A/, "Rand A", "1 Masche wie zum Linksstricken abheben, Faden vorn, dann Faden nach hinten, 1 re (Abend 4)"],
+    [/Rand E/, "Rand E", "die letzten 2 Maschen rechts (Abend 4)"],
+    [/\babh\b/, "abh", "1 Masche wie zum Linksstricken abheben, Faden hinten (Abend 12)"],
+    [/\bU\b/, "U", "Umschlag: Faden einmal um die rechte Nadel, ergibt eine Masche mehr (Abend 15)"],
+    [/2 re zus/, "2 re zus", "2 Maschen zusammen rechts stricken, eine Masche weniger (Abend 14)"]
+  ];
+  const kuerzel = (t) => {
+    const k = KUERZEL.filter(([re]) => re.test(t));
+    return k.length ? `<details class="hakt kuerzel"><summary>Was heißt ${k.map(([, a]) => e(a)).join(", ")}?</summary><ul>${k.map(([, a, b]) => `<li><b>${e(a)}</b>: ${e(b)}</li>`).join("")}</ul></details>` : "";
+  };
 
   let zahl = null;
   function vCheck(n) {

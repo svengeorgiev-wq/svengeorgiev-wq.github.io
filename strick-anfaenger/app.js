@@ -86,7 +86,7 @@
   function kniff(d) {
     const st4 = d.steps.map(([t, x], i) => {
       const p = [ph(d, "schritt-1"), ph(d, "schritt-2"), ph(d, "detail-1"), ph(d, "detail-2")][i];
-      return `<div class="step"><span class="n">${i + 1}</span><div><h3>${e(t)}</h3><p>${e(x)}</p>${photo(p)}</div></div>`;
+      return `<div class="step"><span class="n">${i + 1}</span><div><h3>${e(t)}</h3><p>${e(x)}</p>${photo(p)}${photo(ph(d, `zusatz-${i + 1}`))}</div></div>`;
     }).join("");
     const erg = ph(d, "ergebnis");
     const extra = d.typ === "anschlag" ? `<div class="box gruen"><b>Noch genauer?</b> Die Zeichnungen zeigen jeden Handgriff einzeln, mit Fadenende und Knäuelfaden in zwei Farben.

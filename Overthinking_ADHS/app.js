@@ -5,6 +5,8 @@
   const STORAGE_KEY = "adhs-overthinking-21-v1";
   const REMINDER_KEY = "adhs-erinnerung-k";
   const REMINDER_URL = "https://app-erinnerung.munichpublishing.workers.dev/ping";
+  const REMINDER_CHOICES = [1, 2, 3, 5, 7];
+  const DAY_WORDS = { 1: "einen Tag", 2: "zwei Tage", 3: "drei Tage", 5: "fünf Tage", 7: "sieben Tage" };
   const DEFAULT_STATE = { version: 1, activeDay: 1, entries: {}, supportEntries: {}, startedAt: null };
   const main = document.querySelector("#mainContent");
   const sidebarProgress = document.querySelector("#sidebarProgress");
@@ -446,6 +448,8 @@
     const timerChoice = event.target.closest("[data-timer-seconds]");
     if (timerChoice) { selectTimerDuration(Number(timerChoice.dataset.timerSeconds)); return; }
     if (event.target.closest("[data-reminder-toggle]")) { toggleReminder(); return; }
+    const dayChoice = event.target.closest("[data-reminder-days]");
+    if (dayChoice) { setReminderDays(Number(dayChoice.dataset.reminderDays)); return; }
     if (event.target.closest("[data-open-data]")) dataDialog.showModal();
   }
 
@@ -662,21 +666,34 @@
     showToast(reminderOff() ? "Erinnerungen per Mail sind aus." : "Erinnerungen per Mail sind an.");
     render();
   }
+  // Tage bis zur Erinnerung: wählbar, Standard 2 (so steht es in Buch, Cover und Beschreibung).
+  function reminderDays() {
+    try { const d = Number(localStorage.getItem(REMINDER_KEY + "-days")); return REMINDER_CHOICES.includes(d) ? d : 2; } catch { return 2; }
+  }
+  function setReminderDays(d) {
+    if (!REMINDER_CHOICES.includes(d)) return;
+    try { localStorage.setItem(REMINDER_KEY + "-days", String(d)); } catch { return; }
+    reminderPing();
+    showToast(`Ich erinnere dich nach ${DAY_WORDS[d]} Pause.`);
+    render();
+  }
   function renderReminderCard() {
     if (!reminderKey()) return "";
-    const on = !reminderOff();
+    const on = !reminderOff(), days = reminderDays();
+    const choices = on ? `<div class="reminder-days" role="group" aria-label="Erinnern nach wie vielen Tagen Pause?"><span>Erinnern nach</span>${REMINDER_CHOICES.map((d) => `<button type="button" class="reminder-day${d === days ? " is-active" : ""}" data-reminder-days="${d}" aria-pressed="${d === days}">${d} ${d === 1 ? "Tag" : "Tagen"}</button>`).join("")}</div>` : "";
     return `<section class="panel panel__pad" style="margin-top:18px">
-      <div class="panel-head"><div><span class="eyebrow">Erinnerung per Mail</span><h3>${on ? "Ich erinnere dich, wenn du zwei Tage nicht da warst" : "Erinnerungen per Mail sind aus"}</h3></div><button class="button button--secondary" type="button" data-reminder-toggle>${on ? "Ausschalten" : "Einschalten"}</button></div>
+      <div class="panel-head"><div><span class="eyebrow">Erinnerung per Mail</span><h3>${on ? `Ich erinnere dich, wenn du ${DAY_WORDS[days]} nicht da warst` : "Erinnerungen per Mail sind aus"}</h3></div><button class="button button--secondary" type="button" data-reminder-toggle>${on ? "Ausschalten" : "Einschalten"}</button></div>
+      ${choices}
       <p>Dazu meldet die App nur, wie viele Tage du erledigt hast und welcher als Nächstes kommt. Deine Einträge und Notizen bleiben auf deinem Gerät. Nach Woche 1 und nach Tag 21 bekommst du je eine kurze Mail.</p>
     </section>`;
   }
   function reminderPing() {
     const k = reminderKey();
     if (!k || !navigator.onLine) return;
-    const done = doneCount(), next = firstOpenDay().day, off = reminderOff();
-    const sig = `${new Date().toISOString().slice(0, 10)}|${done}|${next}|${off ? 1 : 0}`;
+    const done = doneCount(), next = firstOpenDay().day, off = reminderOff(), days = reminderDays();
+    const sig = `${new Date().toISOString().slice(0, 10)}|${done}|${next}|${off ? 1 : 0}|${days}`;
     try { if (localStorage.getItem(REMINDER_KEY + "-sig") === sig) return; localStorage.setItem(REMINDER_KEY + "-sig", sig); } catch { return; }
-    const body = JSON.stringify({ k, done, next, off });
+    const body = JSON.stringify({ k, done, next, off, days });
     fetch(REMINDER_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true }).catch(() => {});
   }
 

@@ -640,3 +640,9 @@ input[type="range"] { width: 100%; accent-color: var(--week-color); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+.reminder-days { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: -6px 0 16px; }
+.reminder-days span { color: var(--muted, #aab4c8); margin-right: 4px; }
+.reminder-day { min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.045); color: #eef3ff; cursor: pointer; }
+.reminder-day:hover { background: rgba(255,255,255,.085); }
+.reminder-day.is-active { border-color: var(--week-color, #7fd1c7); background: color-mix(in srgb, var(--week-color, #7fd1c7) 22%, transparent); }

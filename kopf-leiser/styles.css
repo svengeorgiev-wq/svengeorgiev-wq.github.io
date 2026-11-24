@@ -86,6 +86,7 @@ button:disabled {
 
 .hero,
 .stat,
+.reminder-card,
 .workspace,
 .daily-card,
 .day-rail,
@@ -916,3 +917,17 @@ input:focus {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+/* Erinnerung per Mail (seit 23.11.2026) */
+.reminder-card { margin: 0 0 14px; padding: 18px 20px; }
+.reminder-card[hidden] { display: none; }
+.reminder-card > * { position: relative; z-index: 1; }
+.reminder-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.reminder-head h2 { margin: 4px 0 0; font-size: 1.25rem; }
+.reminder-card p { margin: 0; }
+.reminder-days { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 12px; }
+.reminder-days span { margin-right: 4px; font-weight: 700; }
+.reminder-day { min-height: 40px; padding: 6px 14px; border-radius: 999px; border: 1px solid var(--line-strong); background: rgba(255, 255, 255, 0.45); color: var(--blue); font-weight: 700; cursor: pointer; }
+.reminder-day:hover { background: rgba(255, 255, 255, 0.7); }
+.reminder-day.is-active { background: var(--blue); border-color: var(--blue); color: #fff; }
+.reminder-card .save-state:empty { display: none; }

@@ -1,5 +1,11 @@
 const STORAGE_KEY = "kopf-leiser-overthinking-v1";
 const TIMER_SECONDS = 25 * 60;
+// Erinnerungs-Mails (seit 23.11.2026, wie in der ADHS-App): nur aktiv, wenn die App über den Link aus der Mail (?k=…) geöffnet wurde.
+// Gesendet werden nur Kennung, Zahl abgeschlossener Tage, nächster Tag, An/Aus und gewählte Tage, nie Notizen.
+const REMINDER_KEY = "kl-erinnerung-k";
+const REMINDER_URL = "https://app-erinnerung.munichpublishing.workers.dev/ping";
+const REMINDER_CHOICES = [1, 2, 3, 5, 7];
+const DAY_WORDS = { 1: "einen Tag", 2: "zwei Tage", 3: "drei Tage", 5: "fünf Tage", 7: "sieben Tage" };
 
 const days = [
   {
@@ -329,11 +335,20 @@ const elements = {
 init();
 
 function init() {
-  state.activeDay = findActiveDay();
+  state.activeDay = dayFromHash() ?? findActiveDay();
   hydratePlanner();
   hydrateEnergyInputs();
   bindEvents();
   renderAll();
+  renderReminderCard();
+  reminderPing();
+}
+
+// Link aus der Mail: #day-12 öffnet Tag 12.
+function dayFromHash() {
+  const m = /^#day-(\d+)$/.exec(location.hash);
+  const n = m ? Number(m[1]) : 0;
+  return n >= 1 && n <= days.length ? n - 1 : null;
 }
 
 function bindEvents() {
@@ -755,6 +770,92 @@ function loadState() {
 
 function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
+  reminderPing();
+}
+
+function reminderKey() {
+  try {
+    const fromUrl = new URLSearchParams(location.search).get("k");
+    if (fromUrl && /^[a-f0-9]{32}$/.test(fromUrl)) localStorage.setItem(REMINDER_KEY, fromUrl);
+    const k = localStorage.getItem(REMINDER_KEY);
+    // Kennung bleibt in der Adresse: iPhone legt die Startbildschirm-App mit dieser Adresse an (eigener Speicher).
+    if (k && fromUrl !== k) history.replaceState(null, "", location.pathname + "?k=" + k + location.hash);
+    return k;
+  } catch {
+    return null;
+  }
+}
+
+function reminderOff() {
+  try { return localStorage.getItem(REMINDER_KEY + "-off") === "1"; } catch { return false; }
+}
+
+// Tage bis zur Erinnerung: wählbar, Standard 2.
+function reminderDays() {
+  try {
+    const d = Number(localStorage.getItem(REMINDER_KEY + "-days"));
+    return REMINDER_CHOICES.includes(d) ? d : 2;
+  } catch {
+    return 2;
+  }
+}
+
+function toggleReminder() {
+  try { localStorage.setItem(REMINDER_KEY + "-off", reminderOff() ? "0" : "1"); } catch { return; }
+  reminderPing();
+  renderReminderCard(reminderOff() ? "Erinnerungen per Mail sind aus." : "Erinnerungen per Mail sind an.");
+}
+
+function setReminderDays(d) {
+  if (!REMINDER_CHOICES.includes(d)) return;
+  try { localStorage.setItem(REMINDER_KEY + "-days", String(d)); } catch { return; }
+  reminderPing();
+  renderReminderCard(`Ich erinnere dich nach ${DAY_WORDS[d]} Pause.`);
+}
+
+function renderReminderCard(note = "") {
+  const mount = document.querySelector("#reminderCard");
+  if (!mount) return;
+  if (!reminderKey()) { mount.hidden = true; return; }
+  const on = !reminderOff();
+  const days = reminderDays();
+  const choices = on
+    ? `<div class="reminder-days" role="group" aria-label="Erinnern nach wie vielen Tagen Pause?"><span>Erinnern nach</span>${REMINDER_CHOICES.map((d) => `<button type="button" class="reminder-day${d === days ? " is-active" : ""}" data-reminder-days="${d}" aria-pressed="${d === days}">${d} ${d === 1 ? "Tag" : "Tagen"}</button>`).join("")}</div>`
+    : "";
+  mount.hidden = false;
+  mount.innerHTML = `
+    <div class="reminder-head">
+      <div>
+        <p class="panel-label">Erinnerung per Mail</p>
+        <h2>${on ? `Ich erinnere dich, wenn du ${DAY_WORDS[days]} nicht da warst` : "Erinnerungen per Mail sind aus"}</h2>
+      </div>
+      <button class="ghost-action" type="button" data-reminder-toggle>${on ? "Ausschalten" : "Einschalten"}</button>
+    </div>
+    ${choices}
+    <p>Dazu meldet die App nur, wie viele Tage du abgeschlossen hast und welcher als Nächstes kommt. Deine Notizen bleiben auf deinem Gerät. Nach Woche 1 und nach Tag 30 bekommst du je eine kurze Mail.</p>
+    <p class="save-state" aria-live="polite">${escapeHtml(note)}</p>
+  `;
+  mount.querySelector("[data-reminder-toggle]").addEventListener("click", toggleReminder);
+  mount.querySelectorAll("[data-reminder-days]").forEach((b) => b.addEventListener("click", () => setReminderDays(Number(b.dataset.reminderDays))));
+}
+
+function reminderPing() {
+  const k = reminderKey();
+  if (!k || !navigator.onLine) return;
+  const done = state.data.completed.length;
+  const open = days.findIndex((_, i) => !state.data.completed.includes(i));
+  const next = open === -1 ? days.length : open + 1;
+  const off = reminderOff();
+  const d = reminderDays();
+  const sig = `${new Date().toISOString().slice(0, 10)}|${done}|${next}|${off ? 1 : 0}|${d}`;
+  try {
+    if (localStorage.getItem(REMINDER_KEY + "-sig") === sig) return;
+    localStorage.setItem(REMINDER_KEY + "-sig", sig);
+  } catch {
+    return;
+  }
+  const body = JSON.stringify({ k, done, next, off, days: d });
+  fetch(REMINDER_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body, keepalive: true }).catch(() => {});
 }
 
 function escapeHtml(value) {

@@ -95,7 +95,7 @@
       <p class="muted">Dauer: ${e(d.min)}</p>${st4}${extra}
       ${erg ? `<h2>So sieht es aus</h2>${photo(erg)}` : ""}
       <h2>Wenn etwas hakt</h2>${hakt(d)}
-      <button class="button primary wide" type="button" data-go="abend/${d.nr}/schal" style="margin-top:12px">Weiter: am Schal ${d.typ === "anschlag" ? "anschlagen" : "stricken"}</button>`;
+      <button class="button primary wide" type="button" data-go="abend/${d.nr}/schal" style="margin-top:12px">${d.typ === "anschlag" ? "Weiter: am Schal anschlagen" : d.typ === "ende" ? "Weiter: heute am Schal" : "Weiter: am Schal stricken"}</button>`;
   }
 
   function wiederholen(d) {

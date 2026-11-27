@@ -98,6 +98,20 @@
 .vc-fuss { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
 .vc-fuss summary { cursor: pointer; }
 .vc-fehler { color: var(--color-bad); font-size: var(--cds-font-size-caption); }
+.vc-pfeile { display: flex; gap: var(--cds-gap-sm); }
+.vc-pfeil { font: inherit; font-size: 20px; line-height: 1; width: 34px; height: 34px; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); color: var(--color-fg); cursor: pointer; }
+.vc-pfeil:hover, .vc-pfeil:focus-visible { border-color: var(--color-fg-muted); }
+.vc-leiste { display: flex; gap: var(--cds-gap-md); overflow-x: auto; scroll-snap-type: x proximity; padding: 2px 2px 8px; min-height: 300px; overscroll-behavior-x: contain; }
+.vc-tb { flex: 0 0 136px; scroll-snap-align: start; margin: 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-caption); min-width: 0; }
+.vc-tb-rang { color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.vc-tb-bild { width: 100px; height: 150px; display: flex; align-items: center; justify-content: center; margin: 2px 0 4px; }
+.vc-tb-bild img { max-width: 100%; max-height: 100%; border-radius: 3px; box-shadow: 0 2px 8px rgba(0,0,0,.18); }
+.vc-tb-ohne { width: 96px; height: 144px; border-radius: 3px; border: 1px dashed var(--color-border-line); color: var(--color-fg-muted); display: flex; align-items: center; justify-content: center; padding: 6px; font-size: 11px; }
+.vc-tb-name { color: var(--color-fg-muted); font-size: 11px; line-height: 1.3; height: 2.6em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; width: 100%; }
+.vc-tb-t { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-heading); white-space: nowrap; margin-top: 2px; }
+.vc-tb-t b { font-weight: 400; }
+.vc-tb-z { white-space: nowrap; color: var(--color-fg-muted); }
+.vc-tb-z b { font-weight: var(--cds-font-weight-medium); }
 
 </style>
 </head>
@@ -164,6 +178,20 @@
       <span class="vc-zahl dash-skeleton" data-draw="k-anteil" data-source="zeitraum" data-field="adsAnteil" data-row="0"></span>
       <span class="vc-delta" data-draw="d-anteil" data-source="zeitraum" data-field="adsBest" data-row="0"></span>
     </div>
+  </section>
+
+  <section class="vc-karte" id="top">
+    <div class="vc-kopf">
+      <div>
+        <h2 class="vc-h">Top-Bücher nach Tantiemen</h2>
+        <p class="vc-unter">Im gewählten Zeitraum, alle Formate eines Titels zusammen. Netto = Tantiemen minus Ads-Spend, rot wenn negativ. Seitlich wischen oder die Pfeile nutzen.</p>
+      </div>
+      <div class="vc-pfeile">
+        <button type="button" class="vc-pfeil" data-richtung="-1" aria-label="Zurück blättern">‹</button>
+        <button type="button" class="vc-pfeil" data-richtung="1" aria-label="Weiter blättern">›</button>
+      </div>
+    </div>
+    <div class="vc-leiste dash-skeleton" id="top-leiste" data-draw="top-leiste" data-source="jeBuch cover"></div>
   </section>
 
   <section class="vc-karte" id="verlauf">
@@ -237,6 +265,7 @@
     <p>Tantiemen und Stück stammen aus dem KDP-Bericht (Reports › Orders › Download report), Fremdwährungen sind mit dem EZB-Kurs des Tages in Euro umgerechnet. Ads-Zahlen kommen aus der Amazon-Ads-API (amazon.de, Sponsored Products je beworbener ASIN, Sponsored-Brands-Video je Kampagne über die Buchzuordnung der Ads-Skill).</p>
     <p>Netto nach Ads ist alle Tantieme des Buchs minus Ads-Spend, also organisch und über Ads zusammen. Ads-Anteil ist der Anteil der Ads-Bestellungen (7-Tage-Zuordnung) an allen verkauften Stück. Kosten je Ads-Bestellung stehen neben der Tantieme je Stück: Liegen sie darüber, verliert jeder Ads-Verkauf Geld. ACOS steht nur zur Info dabei.</p>
     <p>CTR (Klickrate) ist Klicks je Impression, CVR (Conversion Rate) ist Ads-Bestellungen je Klick, CPC ist Spend je Klick. Alle drei kommen nur aus den Ads, organische Verkäufe zählen nicht mit. Der Monatsverlauf rechnet dieselben Werte je Kalendermonat; Monate, in denen KDP- oder Ads-Daten nur teilweise vorliegen, sind unter dem Monatsnamen vermerkt. Ads-Tagesdaten gibt es ab dem 28.09.2026, ältere Tage liefert Amazon nicht mehr.</p>
+    <p>Die Cover in der Leiste der Top-Bücher sind die Produktbilder der Bücher auf Amazon, je Titel vom Taschenbuch, sonst vom eBook.</p>
     <p>Die KENP-Tantieme (Kindle Unlimited) meldet KDP erst nach Monatsende, sie fehlt deshalb in den Tantiemen. Amazon bucht Ads-Bestellungen bis zu 14 Tage nach; die letzten Tage werden bei jedem Lauf neu geholt. Den Vergleich mit dem Zeitraum davor gibt es nur, wo für beide Zeiträume Daten vorliegen.</p>
   </details>
 </div>
@@ -550,6 +579,54 @@ dash.draw('buecher-zeilen', (tb) => {
   }
 });
 
+document.querySelectorAll('.vc-pfeil').forEach((b) => {
+  b.addEventListener('click', () => {
+    const r = Number(b.getAttribute('data-richtung')) || 1;
+    const ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('#top-leiste').forEach((l) => l.scrollBy({ left: r * Math.max(140, l.clientWidth * 0.8), behavior: ruhig ? 'auto' : 'smooth' }));
+  });
+});
+
+dash.draw('top-leiste', (el) => {
+  const d = dash.data('jeBuch'), c = dash.data('cover');
+  if (d.status === 'loading') return;
+  el.classList.remove('dash-skeleton');
+  el.replaceChildren();
+  const hinweis = (text, cls) => { const p = document.createElement('p'); p.className = cls || 'vc-unter'; p.textContent = text; el.append(p); };
+  if (d.status !== 'ok') { hinweis('Die Top-Bücher konnten nicht geladen werden.', 'vc-fehler'); return; }
+  const bilder = {};
+  if (c.status === 'ok' && Array.isArray(c.data)) for (const r of c.data) if (typeof r.bild === 'string' && r.bild.startsWith('data:image/')) bilder[r.buch] = r.bild;
+  const rows = d.data.filter((r) => r.tantieme > 0 || r.spend > 0).sort((p, q) => q.tantieme - p.tantieme || q.spend - p.spend);
+  if (!rows.length) { hinweis('Im gewählten Zeitraum gibt es keine Verkäufe und keinen Spend.'); return; }
+  const leer = '–';
+  const wert = (cls, label, text, feld, buch, farbe) => {
+    const z = document.createElement('div'); z.className = cls;
+    if (label) z.append(document.createTextNode(label + ' '));
+    const b = document.createElement('b');
+    b.textContent = text;
+    if (feld) { b.dataset.source = 'jeBuch'; b.dataset.field = feld; b.dataset.where = 'buch=' + encodeURIComponent(buch); }
+    if (farbe) b.className = farbe;
+    z.append(b);
+    return z;
+  };
+  rows.forEach((r, i) => {
+    const f = document.createElement('figure');
+    f.className = 'vc-tb';
+    f.dataset.key = encodeURIComponent(r.buch);
+    const rang = document.createElement('div'); rang.className = 'vc-tb-rang'; rang.textContent = '#' + (i + 1);
+    const box = document.createElement('div'); box.className = 'vc-tb-bild';
+    if (bilder[r.buch]) { const img = document.createElement('img'); img.src = bilder[r.buch]; img.alt = 'Cover: ' + r.buch; img.loading = 'lazy'; box.append(img); }
+    else { const o = document.createElement('div'); o.className = 'vc-tb-ohne'; o.textContent = r.buch; box.append(o); }
+    const name = document.createElement('figcaption'); name.className = 'vc-tb-name'; name.textContent = r.buch;
+    const t = wert('vc-tb-t', '', eur(r.tantieme), 'tantieme', r.buch);
+    const s = wert('vc-tb-z', 'Spend', r.spend ? eur(r.spend) : leer, r.spend ? 'spend' : null, r.buch, r.spend ? 'vc-bad' : '');
+    const n = wert('vc-tb-z', 'Netto', eur(r.netto), 'netto', r.buch, r.netto < 0 ? 'vc-bad' : 'vc-ok');
+    const a = wert('vc-tb-z', 'ACoS', r.acos === null ? leer : window.vcProz.format(r.acos) + ' %', r.acos === null ? null : 'acos', r.buch);
+    f.append(rang, box, name, t, s, n, a);
+    el.append(f);
+  });
+});
+
 dash.draw('buch-wahl', (sel) => {
   const g = dash.data('buchliste');
   const liste = g.status === 'ok' ? g.data : [];
@@ -696,7 +773,7 @@ dash.draw('chart', {
       const kdpBis = d.kdp.reduce((m, r) => (r.datum > m ? r.datum : m), ''), adsBis = d.ads.reduce((m, r) => (r.datum > m ? r.datum : m), '');
       const tag = (s) => s ? s.slice(8, 10) + '.' + s.slice(5, 7) + '.' : '–';
       $('stand').textContent = 'Stand ' + fmtStand.format(new Date(d.updated)) + ' · KDP bis ' + tag(kdpBis) + ' · Ads bis ' + tag(adsBis);
-      window.dash.__start({ kdp: d.kdp, ads: d.ads });
+      window.dash.__start({ kdp: d.kdp, ads: d.ads, cover: d.cover || [] });
     } catch (e) {
       store.clear();
       err.textContent = still ? '' : e.message === 'password' ? 'Falsches Passwort.' : 'Daten konnten nicht geladen werden. Versuch es später noch einmal.';

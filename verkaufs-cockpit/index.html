@@ -7,6 +7,9 @@
 <meta name="referrer" content="no-referrer">
 <meta name="color-scheme" content="light dark">
 <title>Verkaufs-Cockpit</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=2">
+<link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">
 <style>
   :root {
     --color-fg: #1f1e1c; --color-fg-muted: #6b6862; --color-bg: #f7f6f2; --color-panel: #ffffff; --color-border-line: #e4e1da;
@@ -232,7 +235,7 @@
     <div class="vc-kopf">
       <div>
         <h2 class="vc-h">Monatsverlauf</h2>
-        <p class="vc-unter">Je Kalendermonat, unabhängig vom gewählten Zeitraum. So siehst du, wie sich Ads-Anteil, Netto und die Klickwerte eines Buchs über die Monate entwickeln. Der laufende Monat ist noch nicht fertig.</p>
+        <p class="vc-unter">Je Kalendermonat, unabhängig vom gewählten Zeitraum. So siehst du, wie sich Ads-Anteil, Netto und die Klickwerte eines Buchs über die Monate entwickeln. Ab Oktober 2024, ältere Monate aus PublisherChamp. Der laufende Monat ist noch nicht fertig.</p>
       </div>
       <label class="vc-wahl" for="monat-buch">Buch
         <select class="dash-select" id="monat-buch" data-draw="buch-wahl" data-source="buchliste" aria-label="Buch für den Monatsverlauf"></select>
@@ -265,6 +268,7 @@
     <p>Tantiemen und Stück stammen aus dem KDP-Bericht (Reports › Orders › Download report), Fremdwährungen sind mit dem EZB-Kurs des Tages in Euro umgerechnet. Ads-Zahlen kommen aus der Amazon-Ads-API (amazon.de, Sponsored Products je beworbener ASIN, Sponsored-Brands-Video je Kampagne über die Buchzuordnung der Ads-Skill).</p>
     <p>Netto nach Ads ist alle Tantieme des Buchs minus Ads-Spend, also organisch und über Ads zusammen. Ads-Anteil ist der Anteil der Ads-Bestellungen (7-Tage-Zuordnung) an allen verkauften Stück. Kosten je Ads-Bestellung stehen neben der Tantieme je Stück: Liegen sie darüber, verliert jeder Ads-Verkauf Geld. ACOS steht nur zur Info dabei.</p>
     <p>CTR (Klickrate) ist Klicks je Impression, CVR (Conversion Rate) ist Ads-Bestellungen je Klick, CPC ist Spend je Klick. Alle drei kommen nur aus den Ads, organische Verkäufe zählen nicht mit. Der Monatsverlauf rechnet dieselben Werte je Kalendermonat; Monate, in denen KDP- oder Ads-Daten nur teilweise vorliegen, sind unter dem Monatsnamen vermerkt. Ads-Tagesdaten gibt es ab dem 28.09.2026, ältere Tage liefert Amazon nicht mehr.</p>
+    <p>Monate vor den eigenen Daten stammen aus dem PublisherChamp-Export (ab Oktober 2024, nur Monatswerte): KDP bis August 2026, Ads bis September 2026. Gezählt werden wie bei den eigenen Daten Taschenbuch, Hardcover und eBook, ohne Hörbuch und ohne KENP-Tantieme; Spend ist nur Amazon Ads, ohne Facebook. Sechs Titel hatte PublisherChamp nicht erfasst, ihre Monate vor September 2026 fehlen: Sherlock Adventskalender Kids &amp; Eltern, Ganzheitlich fit, Achtsamkeit &amp; Gelassenheit, Büro-Quatsch in jeder Firma, Dankbarkeitstagebuch für Frauen und Overthinking Nr 2.</p>
     <p>Die Cover in der Leiste der Top-Bücher sind die Produktbilder der Bücher auf Amazon, je Titel vom Taschenbuch, sonst vom eBook.</p>
     <p>Die KENP-Tantieme (Kindle Unlimited) meldet KDP erst nach Monatsende, sie fehlt deshalb in den Tantiemen. Amazon bucht Ads-Bestellungen bis zu 14 Tage nach; die letzten Tage werden bei jedem Lauf neu geholt. Den Vergleich mit dem Zeitraum davor gibt es nur, wo für beide Zeiträume Daten vorliegen.</p>
   </details>
@@ -392,40 +396,57 @@ dash.calc('jeBuch', {
 });
 
 dash.calc('buchliste', {
-  inputs: ['kdp', 'ads'],
+  inputs: ['kdp', 'ads', 'historie'],
   title: 'Bücher für den Monatsverlauf',
-  description: 'Alle Bücher aus KDP und Ads, sortiert nach Tantiemen über den ganzen Datenbestand.',
-  fn: (kdp, ads) => {
+  description: 'Alle Bücher aus KDP, Ads und der PublisherChamp-Historie, sortiert nach Tantiemen über den ganzen Datenbestand.',
+  fn: (kdp, ads, historie) => {
     const t = {};
     for (const r of kdp) t[r.buch] = (t[r.buch] || 0) + Number(r.tantieme);
+    for (const r of historie || []) t[r.buch] = (t[r.buch] || 0) + Number(r.tantieme);
     for (const r of ads) if (!(r.buch in t)) t[r.buch] = 0;
     return Object.entries(t).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).map(([buch, tantieme]) => ({ buch, tantieme: Math.round(tantieme * 100) / 100 }));
   },
 });
 
 dash.calc('monate', {
-  inputs: ['kdp', 'ads'],
+  inputs: ['kdp', 'ads', 'historie'],
   title: 'Monatsverlauf',
-  description: 'Je Kalendermonat für alle Bücher oder das gewählte Buch: Stück, Ads-Bestellungen, Ads-Anteil, Tantiemen, Spend, Netto, ACOS, CTR, CVR, CPC und KENP, dazu wie viele Tage KDP- und Ads-Daten der Monat hat.',
-  fn: (kdp, ads) => {
+  description: 'Je Kalendermonat für alle Bücher oder das gewählte Buch: Stück, Ads-Bestellungen, Ads-Anteil, Tantiemen, Spend, Netto, ACOS, CTR, CVR, CPC und KENP. Monate vor den eigenen Daten kommen aus der PublisherChamp-Historie (KDP vor dem ersten vollen eigenen KDP-Monat, Ads vor dem ersten vollen eigenen Ads-Monat), damit nichts doppelt zählt.',
+  fn: (kdp, ads, historie) => {
     const buch = dash.params().buch || '';
     const r2 = (x) => Math.round(x * 100) / 100;
     const mon = {};
-    const zu = (d) => { const k = d.slice(0, 7); return (mon[k] = mon[k] || { monat: k, stueck: 0, tantieme: 0, kenp: 0, spend: 0, adsBest: 0, umsatz: 0, klicks: 0, impressionen: 0 }); };
+    const zu = (k) => (mon[k] = mon[k] || { monat: k, stueck: 0, tantieme: 0, kenp: 0, spend: 0, adsBest: 0, umsatz: 0, klicks: 0, impressionen: 0 });
     const spanne = (rows) => rows.reduce((s, r) => [!s[0] || r.datum < s[0] ? r.datum : s[0], !s[1] || r.datum > s[1] ? r.datum : s[1]], [null, null]);
     const [kAb, kBis] = spanne(kdp), [aAb, aBis] = spanne(ads);
+    // Erster voller eigener Monat: davor gilt die PublisherChamp-Historie
+    const grenze = (ab) => { if (!ab) return '9999-99'; if (ab.slice(8, 10) === '01') return ab.slice(0, 7); const d = new Date(Date.UTC(Number(ab.slice(0, 4)), Number(ab.slice(5, 7)), 1)); return d.toISOString().slice(0, 7); };
+    const hist = Array.isArray(historie) ? historie : [];
+    const kGrenze = hist.length ? grenze(kAb) : '', aGrenze = hist.length ? grenze(aAb) : '';
     const schnitt = (k, ab, bis) => {
       const erster = k + '-01', letzter = k + '-' + String(new Date(Date.UTC(Number(k.slice(0, 4)), Number(k.slice(5, 7)), 0)).getUTCDate()).padStart(2, '0');
       if (!ab || bis < erster || ab > letzter) return { von: null, bis: null, ganz: false };
       const von = ab > erster ? ab : erster, b2 = bis < letzter ? bis : letzter;
       return { von, bis: b2, ganz: von === erster && b2 === letzter };
     };
-    for (const r of kdp) if (!buch || r.buch === buch) { const x = zu(r.datum); x.stueck += Number(r.stueck); x.tantieme += Number(r.tantieme); x.kenp += Number(r.kenp); }
-    for (const r of ads) if (!buch || r.buch === buch) { const x = zu(r.datum); x.spend += Number(r.spend); x.adsBest += Number(r.bestellungen); x.umsatz += Number(r.umsatz); x.klicks += Number(r.klicks); x.impressionen += Number(r.impressionen); }
+    const histMonate = new Set(hist.map((r) => r.monat));
+    for (const r of kdp) if ((!buch || r.buch === buch) && r.datum.slice(0, 7) >= kGrenze) { const x = zu(r.datum.slice(0, 7)); x.stueck += Number(r.stueck); x.tantieme += Number(r.tantieme); x.kenp += Number(r.kenp); }
+    for (const r of ads) if ((!buch || r.buch === buch) && r.datum.slice(0, 7) >= aGrenze) { const x = zu(r.datum.slice(0, 7)); x.spend += Number(r.spend); x.adsBest += Number(r.bestellungen); x.umsatz += Number(r.umsatz); x.klicks += Number(r.klicks); x.impressionen += Number(r.impressionen); }
+    for (const r of hist) {
+      if (buch && r.buch !== buch) continue;
+      const pk = r.monat < kGrenze, pa = r.monat < aGrenze;
+      if (!pk && !pa) continue;
+      const x = zu(r.monat);
+      if (pk) { x.stueck += Number(r.stueck); x.tantieme += Number(r.tantieme); x.kenp += Number(r.kenp); }
+      if (pa) { x.spend += Number(r.spend); x.adsBest += Number(r.adsBest); x.umsatz += Number(r.umsatz); x.klicks += Number(r.klicks); x.impressionen += Number(r.impressionen); }
+    }
     return Object.values(mon).sort((a, b) => a.monat.localeCompare(b.monat)).map((x) => {
-      const k = schnitt(x.monat, kAb, kBis), a = schnitt(x.monat, aAb, aBis);
+      const pk = x.monat < kGrenze && histMonate.has(x.monat), pa = x.monat < aGrenze && histMonate.has(x.monat);
+      const ganzerMonat = schnitt(x.monat, x.monat + '-01', x.monat + '-31');
+      const k = pk ? ganzerMonat : schnitt(x.monat, kAb, kBis);
+      const a = pa ? ganzerMonat : schnitt(x.monat, aAb, aBis);
       return {
-      monat: x.monat, kdpVon: k.von, kdpBis: k.bis, kdpGanz: k.ganz, adsVon: a.von, adsBis: a.bis, adsGanz: a.ganz,
+      monat: x.monat, kdpPC: pk, adsPC: pa, kdpVon: k.von, kdpBis: k.bis, kdpGanz: k.ganz, adsVon: a.von, adsBis: a.bis, adsGanz: a.ganz,
       stueck: Math.round(x.stueck), adsBest: x.adsBest,
       adsAnteil: x.stueck ? r2(Math.min(x.adsBest / x.stueck, 1) * 100) : null,
       tantieme: r2(x.tantieme), spend: r2(x.spend), netto: r2(x.tantieme - x.spend),
@@ -653,6 +674,9 @@ dash.draw('monats-zeilen', (tb) => {
     const name = document.createElement('td');
     name.append(document.createTextNode(fmtMonat.format(new Date(r.monat + '-01T00:00:00Z'))));
     const hinweise = [];
+    if (r.kdpPC && r.adsPC) hinweise.push('aus PublisherChamp');
+    else if (r.kdpPC) hinweise.push('KDP aus PublisherChamp');
+    else if (r.adsPC) hinweise.push('Ads aus PublisherChamp');
     if (!r.kdpVon) hinweise.push('ohne KDP-Daten');
     else if (!r.kdpGanz) hinweise.push('KDP ' + fmtTag(r.kdpVon) + '–' + fmtTag(r.kdpBis));
     const adsTeil = Boolean(r.adsVon) && (r.adsVon !== r.kdpVon || r.adsBis !== r.kdpBis);
@@ -773,7 +797,7 @@ dash.draw('chart', {
       const kdpBis = d.kdp.reduce((m, r) => (r.datum > m ? r.datum : m), ''), adsBis = d.ads.reduce((m, r) => (r.datum > m ? r.datum : m), '');
       const tag = (s) => s ? s.slice(8, 10) + '.' + s.slice(5, 7) + '.' : '–';
       $('stand').textContent = 'Stand ' + fmtStand.format(new Date(d.updated)) + ' · KDP bis ' + tag(kdpBis) + ' · Ads bis ' + tag(adsBis);
-      window.dash.__start({ kdp: d.kdp, ads: d.ads, cover: d.cover || [] });
+      window.dash.__start({ kdp: d.kdp, ads: d.ads, cover: d.cover || [], historie: d.historie || [] });
     } catch (e) {
       store.clear();
       err.textContent = still ? '' : e.message === 'password' ? 'Falsches Passwort.' : 'Daten konnten nicht geladen werden. Versuch es später noch einmal.';

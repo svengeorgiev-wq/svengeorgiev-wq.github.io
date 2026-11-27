@@ -1,0 +1,720 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="color-scheme" content="light dark">
+<title>Verkaufs-Cockpit</title>
+<style>
+  :root {
+    --color-fg: #1f1e1c; --color-fg-muted: #6b6862; --color-bg: #f7f6f2; --color-panel: #ffffff; --color-border-line: #e4e1da;
+    --color-ok: #2f7d4f; --color-warn: #a86a00; --color-bad: #b3261e;
+    --c0: #3d6fb6; --c1: #d9752b;
+    --font-anthropic-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --font-anthropic-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --cds-font-size-caption: 12.5px; --cds-font-size-body: 14.5px; --cds-font-size-heading: 17px; --cds-font-size-title: 28px;
+    --cds-font-weight-medium: 600;
+    --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 12px; --cds-gap-lg: 20px; --cds-gap-xl: 32px;
+    --cds-pad-xs: 4px; --cds-pad-sm: 8px; --cds-pad-md: 12px; --cds-pad-lg: 16px; --cds-pad-xl: 24px;
+    --cds-radius: 10px;
+    --cds-text-secondary: #6b6862; --cds-chart-grid: #ebe8e1; --cds-chart-axis: #c9c5bc;
+    --cds-surface-popover: #ffffff; --cds-border: #dcd8cf; --cds-shadow-popover: 0 6px 24px rgba(0,0,0,.12);
+    --skel: #ebe8e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-fg: #ecebe7; --color-fg-muted: #a3a09a; --color-bg: #1b1a18; --color-panel: #252422; --color-border-line: #3a3835;
+      --color-ok: #6cc28c; --color-warn: #e0a440; --color-bad: #f07a70;
+      --c0: #7aa7e8; --c1: #f0a05f;
+      --cds-text-secondary: #a3a09a; --cds-chart-grid: #34322f; --cds-chart-axis: #4a4844;
+      --cds-surface-popover: #2c2b28; --cds-border: #45433f; --cds-shadow-popover: 0 6px 24px rgba(0,0,0,.5);
+      --skel: #34322f;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--color-bg); }
+  body { margin: 0; font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); line-height: 1.5; color: var(--color-fg); -webkit-font-smoothing: antialiased;
+    padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(32px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
+  .site { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--cds-gap-lg); }
+  .leiste { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+  .knopf { font: inherit; color: var(--color-fg); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 999px; padding: 4px 12px; cursor: pointer; }
+  .knopf:hover { border-color: var(--color-fg-muted); }
+  .dash-select { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg); background-color: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 8px; padding: 6px 28px 6px 10px; max-width: 100%;
+    appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%23888' stroke-width='1.5'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+  .dash-skeleton { color: transparent !important; background: var(--skel); border-radius: 6px; min-height: 1.2em; }
+  .dash-skeleton > * { visibility: hidden; }
+  .vc-zahl.dash-skeleton { width: 70%; }
+  #lock { min-height: 70vh; display: grid; place-items: center; }
+  .lockkarte { width: min(380px, 100%); background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+  .lockkarte h1 { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 26px; }
+  .lockkarte p { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+  .lockkarte input { font: inherit; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--color-border-line); background: var(--color-bg); color: var(--color-fg); width: 100%; }
+  .lockkarte button { font: inherit; font-weight: 600; padding: 10px 12px; border-radius: 8px; border: 0; background: var(--color-fg); color: var(--color-bg); cursor: pointer; }
+  .lockkarte button:disabled { opacity: .6; cursor: progress; }
+  .fehler { min-height: 1.2em; color: var(--color-bad) !important; }
+  [hidden] { display: none !important; }
+</style>
+<style>
+
+.vc { display: flex; flex-direction: column; gap: var(--cds-gap-lg); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+.vc-kopf { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--cds-gap-md); }
+.vc-kopf > div { min-width: 0; }
+.vc-titel { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
+.vc-satz { margin: 6px 0 0; color: var(--color-fg-muted); max-width: 72ch; line-height: 1.5; }
+.vc-satz b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; }
+.vc-wahl { display: flex; align-items: center; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.vc-kacheln { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--cds-gap-md); }
+.vc-karte { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.vc-karte.vc-haupt { border-color: var(--color-fg-muted); }
+.vc-label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.vc-zahl { display: block; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; margin-top: 6px; white-space: nowrap; }
+.vc-delta { display: block; min-height: 1.3em; margin-top: 4px; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; color: var(--color-fg-muted); }
+.vc-ok { color: var(--color-ok); }
+.vc-bad { color: var(--color-bad); }
+.vc-h { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0 0 4px; }
+.vc-unter { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin: 0 0 var(--cds-gap-md); }
+.vc-legende { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); margin-bottom: var(--cds-gap-sm); }
+.vc-legende i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.vc-legende i.vc-l2 { height: 3px; vertical-align: 3px; }
+.vc-chart { position: relative; min-height: 260px; }
+.vc-chart svg text { fill: var(--cds-text-secondary); font-size: var(--cds-font-size-caption); font-family: var(--font-anthropic-sans); }
+.vc-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: 8px 10px; font-size: var(--cds-font-size-caption); white-space: nowrap; font-variant-numeric: tabular-nums; z-index: 2; }
+.vc-tip b { font-weight: var(--cds-font-weight-medium); }
+.vc-tabwrap { overflow-x: auto; }
+.vc-tab { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: var(--cds-font-size-body); }
+.vc-tab th { text-align: right; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: 8px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; cursor: pointer; user-select: none; }
+.vc-tab th:hover, .vc-tab th:focus-visible { color: var(--color-fg); }
+.vc-tab th[aria-sort="descending"]::after { content: " ↓"; }
+.vc-tab th[aria-sort="ascending"]::after { content: " ↑"; }
+.vc-tab td { text-align: right; padding: 8px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.vc-tab th:first-child, .vc-tab td:first-child { text-align: left; white-space: normal; min-width: 200px; }
+.vc-tab tfoot td { font-weight: var(--cds-font-weight-medium); border-bottom: 0; }
+.vc-pill { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; font-size: var(--cds-font-size-caption); color: var(--color-bad); border: 1px solid var(--color-bad); white-space: nowrap; }
+#monatstabelle th:first-child, #monatstabelle td:first-child { min-width: 120px; }
+#monatstabelle th { cursor: default; }
+.vc-klein { display: block; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.vc-fuss { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.5; }
+.vc-fuss summary { cursor: pointer; }
+.vc-fehler { color: var(--color-bad); font-size: var(--cds-font-size-caption); }
+
+</style>
+</head>
+<body>
+
+<main id="lock">
+  <form class="lockkarte" id="lockform" autocomplete="off">
+    <p>Munich Publishing</p>
+    <h1>Verkaufs-Cockpit</h1>
+    <label for="pw" class="vc-label">Passwort</label>
+    <input id="pw" type="password" autocomplete="current-password" placeholder="Passwort eingeben" required>
+    <button id="go" type="submit">Entsperren</button>
+    <p class="fehler" id="err" role="alert"></p>
+    <p>Die Daten sind verschlüsselt und werden nur in deinem Browser entschlüsselt.</p>
+  </form>
+</main>
+
+<div class="site" id="app" hidden>
+  <div class="leiste">
+    <span>Munich Publishing · <span id="stand">–</span></span>
+    <button class="knopf" id="relock" type="button">Sperren</button>
+  </div>
+<div class="vc">
+  <header class="vc-kopf" id="kopf">
+    <div>
+      <h1 class="vc-titel">Verkaufs-Cockpit</h1>
+      <p class="vc-satz" id="satz"><span data-draw="s-zeitraum">—</span> brachten deine Bücher <b data-draw="s-tantieme" data-source="zeitraum" data-field="tantieme" data-row="0">—</b> Tantiemen. Nach <b data-draw="s-spend" data-source="zeitraum" data-field="spend" data-row="0">—</b> Ads-Spend blieben <b data-draw="s-netto" data-source="zeitraum" data-field="netto" data-row="0">—</b>. <span data-draw="s-ueber">—</span></p>
+    </div>
+    <label class="vc-wahl" for="zeitraum-wahl">Zeitraum
+      <select class="dash-select" id="zeitraum-wahl" aria-label="Zeitraum">
+        <option value="1">Heute</option>
+        <option value="7">Letzte 7 Tage</option>
+        <option value="14">Letzte 14 Tage</option>
+        <option value="30">Letzte 30 Tage</option>
+        <option value="0">Aktueller Monat</option>
+        <option value="60">Letzte 60 Tage</option>
+      </select>
+    </label>
+  </header>
+
+  <section class="vc-kacheln" id="kennzahlen" aria-label="Kennzahlen">
+    <div class="vc-karte vc-haupt" id="k-netto">
+      <div class="vc-label">Netto nach Ads</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-netto" data-source="zeitraum" data-field="netto" data-row="0"></span>
+      <span class="vc-delta" data-draw="d-netto" data-source="zeitraum" data-field="nettoVsVor" data-row="0"></span>
+    </div>
+    <div class="vc-karte" id="k-tantieme">
+      <div class="vc-label">Tantiemen</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-tantieme" data-source="zeitraum" data-field="tantieme" data-row="0"></span>
+      <span class="vc-delta" data-draw="d-tantieme" data-source="zeitraum" data-field="tantiemeVsVor" data-row="0"></span>
+    </div>
+    <div class="vc-karte" id="k-spend">
+      <div class="vc-label">Ads-Spend</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-spend" data-source="zeitraum" data-field="spend" data-row="0"></span>
+      <span class="vc-delta" data-draw="d-spend" data-source="zeitraum" data-field="spendVsVor" data-row="0"></span>
+    </div>
+    <div class="vc-karte" id="k-stueck">
+      <div class="vc-label">Verkaufte Stück</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-stueck" data-source="zeitraum" data-field="stueck" data-row="0"></span>
+      <span class="vc-delta" data-draw="d-stueck" data-source="zeitraum" data-field="stueckVsVor" data-row="0"></span>
+    </div>
+    <div class="vc-karte" id="k-anteil">
+      <div class="vc-label">Ads-Anteil an Verkäufen</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-anteil" data-source="zeitraum" data-field="adsAnteil" data-row="0"></span>
+      <span class="vc-delta" data-draw="d-anteil" data-source="zeitraum" data-field="adsBest" data-row="0"></span>
+    </div>
+    <div class="vc-karte" id="k-kenp">
+      <div class="vc-label">KENP gelesen</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-kenp" data-source="zeitraum" data-field="kenp" data-row="0"></span>
+      <span class="vc-delta" data-draw="d-kenp" data-source="zeitraum" data-field="kenpVsVor" data-row="0"></span>
+    </div>
+  </section>
+
+  <section class="vc-karte" id="verlauf">
+    <h2 class="vc-h">Tantiemen und Ads-Spend je Tag</h2>
+    <p class="vc-unter">Tantiemen nach KDP-Buchungstag, Spend nach Klicktag. Der heutige Tag ist noch unvollständig.</p>
+    <div class="vc-legende" aria-hidden="true"><span><i class="vc-l1"></i>Tantiemen</span><span><i class="vc-l2"></i>Ads-Spend</span></div>
+    <div class="vc-chart dash-skeleton" data-draw="chart" data-source="tage"></div>
+  </section>
+
+  <section class="vc-karte" id="buecher">
+    <h2 class="vc-h">Bücher</h2>
+    <p class="vc-unter">Alle Formate eines Titels zusammen. Rot markiert: Spend liegt über den Tantiemen des Buchs. Klick auf eine Spalte sortiert.</p>
+    <div class="vc-tabwrap">
+      <table class="vc-tab" data-source="jeBuch" data-row-key="buch" id="buchtabelle">
+        <thead>
+          <tr>
+            <th data-field="buch" data-sort="buch" tabindex="0">Buch</th>
+            <th data-field="stueck" data-sort="stueck" tabindex="0">Stück</th>
+            <th data-field="adsBest" data-sort="adsBest" tabindex="0">Ads-Best.</th>
+            <th data-field="adsAnteil" data-sort="adsAnteil" tabindex="0">Ads-Anteil</th>
+            <th data-field="tantieme" data-sort="tantieme" tabindex="0" aria-sort="descending">Tantiemen</th>
+            <th data-field="spend" data-sort="spend" tabindex="0">Spend</th>
+            <th data-field="netto" data-sort="netto" tabindex="0">Netto nach Ads</th>
+            <th data-field="tantiemeJeStueck" data-sort="tantiemeJeStueck" tabindex="0">Tantieme je Stück</th>
+            <th data-field="kostenJeAdsBest" data-sort="kostenJeAdsBest" tabindex="0">Kosten je Ads-Best.</th>
+            <th data-field="acos" data-sort="acos" tabindex="0">ACOS</th>
+            <th data-field="ctr" data-sort="ctr" tabindex="0">CTR</th>
+            <th data-field="cvr" data-sort="cvr" tabindex="0">CVR</th>
+            <th data-field="cpc" data-sort="cpc" tabindex="0">CPC</th>
+          </tr>
+        </thead>
+        <tbody data-draw="buecher-zeilen"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="vc-karte" id="monate">
+    <div class="vc-kopf">
+      <div>
+        <h2 class="vc-h">Monatsverlauf</h2>
+        <p class="vc-unter">Je Kalendermonat, unabhängig vom gewählten Zeitraum. So siehst du, wie sich Ads-Anteil, Netto und die Klickwerte eines Buchs über die Monate entwickeln. Der laufende Monat ist noch nicht fertig.</p>
+      </div>
+      <label class="vc-wahl" for="monat-buch">Buch
+        <select class="dash-select" id="monat-buch" data-draw="buch-wahl" data-source="buchliste" aria-label="Buch für den Monatsverlauf"></select>
+      </label>
+    </div>
+    <div class="vc-tabwrap">
+      <table class="vc-tab" data-source="monate" data-row-key="monat" id="monatstabelle">
+        <thead>
+          <tr>
+            <th data-field="monat">Monat</th>
+            <th data-field="stueck">Stück</th>
+            <th data-field="adsBest">Ads-Best.</th>
+            <th data-field="adsAnteil">Ads-Anteil</th>
+            <th data-field="tantieme">Tantiemen</th>
+            <th data-field="spend">Spend</th>
+            <th data-field="netto">Netto nach Ads</th>
+            <th data-field="acos">ACOS</th>
+            <th data-field="ctr">CTR</th>
+            <th data-field="cvr">CVR</th>
+            <th data-field="cpc">CPC</th>
+            <th data-field="kenp">KENP</th>
+          </tr>
+        </thead>
+        <tbody data-draw="monats-zeilen"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <details class="vc-fuss" id="erklaerung">
+    <summary>Wie die Zahlen entstehen</summary>
+    <p>Tantiemen, Stück und KENP stammen aus dem KDP-Bericht (Reports › Orders › Download report), Fremdwährungen sind mit dem EZB-Kurs des Tages in Euro umgerechnet. Ads-Zahlen kommen aus der Amazon-Ads-API (amazon.de, Sponsored Products je beworbener ASIN, Sponsored-Brands-Video je Kampagne über die Buchzuordnung der Ads-Skill).</p>
+    <p>Netto nach Ads ist alle Tantieme des Buchs minus Ads-Spend, also organisch und über Ads zusammen. Ads-Anteil ist der Anteil der Ads-Bestellungen (7-Tage-Zuordnung) an allen verkauften Stück. Kosten je Ads-Bestellung stehen neben der Tantieme je Stück: Liegen sie darüber, verliert jeder Ads-Verkauf Geld. ACOS steht nur zur Info dabei.</p>
+    <p>CTR (Klickrate) ist Klicks je Impression, CVR (Conversion Rate) ist Ads-Bestellungen je Klick, CPC ist Spend je Klick. Alle drei kommen nur aus den Ads, organische Verkäufe zählen nicht mit. Der Monatsverlauf rechnet dieselben Werte je Kalendermonat; Monate, in denen KDP- oder Ads-Daten nur teilweise vorliegen, sind unter dem Monatsnamen vermerkt. Ads-Tagesdaten gibt es ab dem 28.09.2026, ältere Tage liefert Amazon nicht mehr.</p>
+    <p>KENP zeigt gelesene Seiten. Die KENP-Tantieme meldet KDP erst nach Monatsende, sie fehlt deshalb in den Tantiemen. Amazon bucht Ads-Bestellungen bis zu 14 Tage nach; die letzten Tage werden bei jedem Lauf neu geholt. Den Vergleich mit dem Zeitraum davor gibt es nur, wo für beide Zeiträume Daten vorliegen.</p>
+  </details>
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script>
+// Kleiner Ersatz für die Dashboard-Laufzeit der Claude-Seite: dieselben Rechnungen (dash.calc) und Zeichnungen (dash.draw) laufen hier im Browser.
+window.dash = (() => {
+  const calcs = {}, draws = {}, cache = {};
+  let basis = null;
+  const params = { tage: 30, buch: '' };
+  try { Object.assign(params, JSON.parse(localStorage.getItem('vc-params') || '{}')); } catch {}
+  const lauf = (name) => {
+    const d = draws[name]; if (!d) return;
+    document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => {
+      try {
+        if (d.mount && !el.__made) { el.replaceChildren(); el.__made = d.mount(el) || {}; }
+        d.update(el, el.__made);
+      } catch (e) { console.error('Zeichnung ' + name, e); }
+    });
+  };
+  const alle = () => { for (const k in cache) delete cache[k]; Object.keys(draws).forEach(lauf); };
+  let breite = 0;
+  window.addEventListener('resize', () => { if (Math.abs(innerWidth - breite) > 20) { breite = innerWidth; Object.keys(draws).forEach(lauf); } });
+  return {
+    colors: ['var(--c0)', 'var(--c1)'],
+    params: () => params,
+    setParams(p) { Object.assign(params, p); try { localStorage.setItem('vc-params', JSON.stringify(params)); } catch {} alle(); },
+    resetParams() { params.tage = 30; params.buch = ''; alle(); },
+    calc(id, o) { calcs[id] = o; },
+    loader() {}, onData() {}, refresh() {}, setLink() {},
+    draw(name, fn) {
+      if (fn === undefined) { lauf(name); return; }
+      draws[name] = typeof fn === 'function' ? { update: fn } : fn;
+      lauf(name);
+    },
+    data(id) {
+      if (!basis) return { status: 'loading', data: calcs[id] ? null : [] };
+      if (id in basis) return { status: 'ok', data: basis[id] };
+      if (!calcs[id]) return { status: 'missing', data: [] };
+      if (!(id in cache)) {
+        try { cache[id] = { status: 'ok', data: calcs[id].fn(...calcs[id].inputs.map((i) => (i in basis ? basis[i] : this.data(i).data))) }; }
+        catch (e) { console.error('Rechnung ' + id, e); cache[id] = { status: 'error', data: null, message: String(e) }; }
+      }
+      return cache[id];
+    },
+    __start(d) { basis = d; breite = innerWidth; alle(); },
+  };
+})();
+</script>
+<script>
+dash.calc('zeitraum', {
+  inputs: ['kdp', 'ads'],
+  title: 'Kennzahlen im gewählten Zeitraum',
+  description: 'Summen der letzten N Tage (oder des laufenden Monats) bis zum letzten KDP-Tag, dazu derselbe Zeitraum davor (beim Monat dieselben Tage im Vormonat) als Vergleich.',
+  fn: (kdp, ads) => {
+    const tag = (s, d) => { const x = new Date(s + 'T00:00:00Z'); x.setUTCDate(x.getUTCDate() + d); return x.toISOString().slice(0, 10); };
+    const ende = kdp.reduce((m, r) => (r.datum > m ? r.datum : m), '');
+    const monat = String(dash.params().tage) === '0';
+    const n = monat ? Number(ende.slice(8, 10)) : Number(dash.params().tage) || 30;
+    const kdpAb = kdp.reduce((m, r) => (!m || r.datum < m ? r.datum : m), '');
+    const adsAb = ads.reduce((m, r) => (!m || r.datum < m ? r.datum : m), '');
+    const von = tag(ende, -(n - 1));
+    let vorVon = tag(ende, -(2 * n - 1)), vorBis = tag(ende, -n);
+    if (monat) {
+      vorVon = tag(von, -1).slice(0, 8) + '01';
+      const vorEnde = tag(von, -1), soll = tag(vorVon, n - 1);
+      vorBis = soll < vorEnde ? soll : vorEnde;
+    }
+    const summe = (a, b) => {
+      const s = { tantieme: 0, stueck: 0, kenp: 0, spend: 0, best: 0 };
+      for (const r of kdp) if (r.datum >= a && r.datum <= b) { s.tantieme += Number(r.tantieme); s.stueck += Number(r.stueck); s.kenp += Number(r.kenp); }
+      for (const r of ads) if (r.datum >= a && r.datum <= b) { s.spend += Number(r.spend); s.best += Number(r.bestellungen); }
+      return s;
+    };
+    const r2 = (x) => Math.round(x * 100) / 100;
+    const pct = (a, b, ok) => (ok && b ? r2(((a - b) / Math.abs(b)) * 100) : null);
+    const j = summe(von, ende), v = summe(vorVon, vorBis);
+    const kdpVgl = vorVon >= kdpAb, adsVgl = Boolean(adsAb) && vorVon >= adsAb && kdpVgl;
+    const proBuch = {};
+    for (const r of kdp) if (r.datum >= von && r.datum <= ende) { const b = (proBuch[r.buch] = proBuch[r.buch] || { t: 0, s: 0 }); b.t += Number(r.tantieme); }
+    for (const r of ads) if (r.datum >= von && r.datum <= ende) { const b = (proBuch[r.buch] = proBuch[r.buch] || { t: 0, s: 0 }); b.s += Number(r.spend); }
+    const ueber = Object.values(proBuch).filter((b) => b.s > 0 && b.s > b.t).length;
+    return [{
+      tage: n, monat, von, bis: ende, vorVon, vorBis, adsAb,
+      tantieme: r2(j.tantieme), stueck: Math.round(j.stueck), kenp: Math.round(j.kenp), spend: r2(j.spend), netto: r2(j.tantieme - j.spend),
+      adsBest: j.best, adsAnteil: j.stueck ? r2(Math.min(j.best / j.stueck, 1) * 100) : 0, buecherUeber: ueber,
+      tantiemeVsVor: pct(j.tantieme, v.tantieme, kdpVgl), stueckVsVor: pct(j.stueck, v.stueck, kdpVgl), kenpVsVor: pct(j.kenp, v.kenp, kdpVgl),
+      spendVsVor: pct(j.spend, v.spend, adsVgl), nettoVsVor: pct(j.tantieme - j.spend, v.tantieme - v.spend, adsVgl),
+    }];
+  },
+});
+
+dash.calc('jeBuch', {
+  inputs: ['kdp', 'ads'],
+  title: 'Kennzahlen je Buch',
+  description: 'Je Buch im gewählten Zeitraum: Stück, Ads-Bestellungen, Tantiemen, Spend und daraus Netto, Ads-Anteil, Kosten je Ads-Bestellung und ACOS.',
+  fn: (kdp, ads) => {
+    const tag = (s, d) => { const x = new Date(s + 'T00:00:00Z'); x.setUTCDate(x.getUTCDate() + d); return x.toISOString().slice(0, 10); };
+    const ende = kdp.reduce((m, r) => (r.datum > m ? r.datum : m), '');
+    const n = String(dash.params().tage) === '0' ? Number(ende.slice(8, 10)) : Number(dash.params().tage) || 30;
+    const von = tag(ende, -(n - 1));
+    const r2 = (x) => Math.round(x * 100) / 100;
+    const b = {};
+    const zu = (name) => (b[name] = b[name] || { buch: name, stueck: 0, tantieme: 0, spend: 0, adsBest: 0, umsatz: 0, klicks: 0, impressionen: 0 });
+    for (const r of kdp) if (r.datum >= von && r.datum <= ende) { const x = zu(r.buch); x.stueck += Number(r.stueck); x.tantieme += Number(r.tantieme); }
+    for (const r of ads) if (r.datum >= von && r.datum <= ende) { const x = zu(r.buch); x.spend += Number(r.spend); x.adsBest += Number(r.bestellungen); x.umsatz += Number(r.umsatz); x.klicks += Number(r.klicks); x.impressionen += Number(r.impressionen); }
+    return Object.values(b)
+      .filter((x) => x.stueck || x.tantieme || x.spend)
+      .map((x) => ({
+        buch: x.buch, stueck: Math.round(x.stueck), adsBest: x.adsBest,
+        adsAnteil: x.stueck ? r2(Math.min(x.adsBest / x.stueck, 1) * 100) : null,
+        tantieme: r2(x.tantieme), spend: r2(x.spend), netto: r2(x.tantieme - x.spend),
+        tantiemeJeStueck: x.stueck ? r2(x.tantieme / x.stueck) : null,
+        kostenJeAdsBest: x.adsBest ? r2(x.spend / x.adsBest) : null,
+        acos: x.umsatz ? r2((x.spend / x.umsatz) * 100) : null,
+        ctr: x.impressionen ? r2((x.klicks / x.impressionen) * 100) : null,
+        cvr: x.klicks ? r2((x.adsBest / x.klicks) * 100) : null,
+        cpc: x.klicks ? r2(x.spend / x.klicks) : null,
+      }))
+      .sort((p, q) => q.tantieme - p.tantieme);
+  },
+});
+
+dash.calc('buchliste', {
+  inputs: ['kdp', 'ads'],
+  title: 'Bücher für den Monatsverlauf',
+  description: 'Alle Bücher aus KDP und Ads, sortiert nach Tantiemen über den ganzen Datenbestand.',
+  fn: (kdp, ads) => {
+    const t = {};
+    for (const r of kdp) t[r.buch] = (t[r.buch] || 0) + Number(r.tantieme);
+    for (const r of ads) if (!(r.buch in t)) t[r.buch] = 0;
+    return Object.entries(t).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'de')).map(([buch, tantieme]) => ({ buch, tantieme: Math.round(tantieme * 100) / 100 }));
+  },
+});
+
+dash.calc('monate', {
+  inputs: ['kdp', 'ads'],
+  title: 'Monatsverlauf',
+  description: 'Je Kalendermonat für alle Bücher oder das gewählte Buch: Stück, Ads-Bestellungen, Ads-Anteil, Tantiemen, Spend, Netto, ACOS, CTR, CVR, CPC und KENP, dazu wie viele Tage KDP- und Ads-Daten der Monat hat.',
+  fn: (kdp, ads) => {
+    const buch = dash.params().buch || '';
+    const r2 = (x) => Math.round(x * 100) / 100;
+    const mon = {};
+    const zu = (d) => { const k = d.slice(0, 7); return (mon[k] = mon[k] || { monat: k, stueck: 0, tantieme: 0, kenp: 0, spend: 0, adsBest: 0, umsatz: 0, klicks: 0, impressionen: 0 }); };
+    const spanne = (rows) => rows.reduce((s, r) => [!s[0] || r.datum < s[0] ? r.datum : s[0], !s[1] || r.datum > s[1] ? r.datum : s[1]], [null, null]);
+    const [kAb, kBis] = spanne(kdp), [aAb, aBis] = spanne(ads);
+    const schnitt = (k, ab, bis) => {
+      const erster = k + '-01', letzter = k + '-' + String(new Date(Date.UTC(Number(k.slice(0, 4)), Number(k.slice(5, 7)), 0)).getUTCDate()).padStart(2, '0');
+      if (!ab || bis < erster || ab > letzter) return { von: null, bis: null, ganz: false };
+      const von = ab > erster ? ab : erster, b2 = bis < letzter ? bis : letzter;
+      return { von, bis: b2, ganz: von === erster && b2 === letzter };
+    };
+    for (const r of kdp) if (!buch || r.buch === buch) { const x = zu(r.datum); x.stueck += Number(r.stueck); x.tantieme += Number(r.tantieme); x.kenp += Number(r.kenp); }
+    for (const r of ads) if (!buch || r.buch === buch) { const x = zu(r.datum); x.spend += Number(r.spend); x.adsBest += Number(r.bestellungen); x.umsatz += Number(r.umsatz); x.klicks += Number(r.klicks); x.impressionen += Number(r.impressionen); }
+    return Object.values(mon).sort((a, b) => a.monat.localeCompare(b.monat)).map((x) => {
+      const k = schnitt(x.monat, kAb, kBis), a = schnitt(x.monat, aAb, aBis);
+      return {
+      monat: x.monat, kdpVon: k.von, kdpBis: k.bis, kdpGanz: k.ganz, adsVon: a.von, adsBis: a.bis, adsGanz: a.ganz,
+      stueck: Math.round(x.stueck), adsBest: x.adsBest,
+      adsAnteil: x.stueck ? r2(Math.min(x.adsBest / x.stueck, 1) * 100) : null,
+      tantieme: r2(x.tantieme), spend: r2(x.spend), netto: r2(x.tantieme - x.spend),
+      acos: x.umsatz ? r2((x.spend / x.umsatz) * 100) : null,
+      ctr: x.impressionen ? r2((x.klicks / x.impressionen) * 100) : null,
+      cvr: x.klicks ? r2((x.adsBest / x.klicks) * 100) : null,
+      cpc: x.klicks ? r2(x.spend / x.klicks) : null,
+      kenp: Math.round(x.kenp),
+      };
+    });
+  },
+});
+
+dash.calc('tage', {
+  inputs: ['kdp', 'ads'],
+  title: 'Tantiemen und Spend je Tag',
+  description: 'Je Tag im gewählten Zeitraum die Summe der Tantiemen und des Ads-Spends.',
+  fn: (kdp, ads) => {
+    const tag = (s, d) => { const x = new Date(s + 'T00:00:00Z'); x.setUTCDate(x.getUTCDate() + d); return x.toISOString().slice(0, 10); };
+    const ende = kdp.reduce((m, r) => (r.datum > m ? r.datum : m), '');
+    const n = String(dash.params().tage) === '0' ? Number(ende.slice(8, 10)) : Number(dash.params().tage) || 30;
+    const t = {};
+    for (let i = n - 1; i >= 0; i--) { const d = tag(ende, -i); t[d] = { datum: d, tantieme: 0, spend: 0 }; }
+    for (const r of kdp) if (t[r.datum]) t[r.datum].tantieme += Number(r.tantieme);
+    for (const r of ads) if (t[r.datum]) t[r.datum].spend += Number(r.spend);
+    return Object.values(t).map((x) => ({ datum: x.datum, tantieme: Math.round(x.tantieme * 100) / 100, spend: Math.round(x.spend * 100) / 100, netto: Math.round((x.tantieme - x.spend) * 100) / 100 }));
+  },
+});
+</script>
+<script>
+window.vcEur = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR' });
+window.vcZahl = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 });
+window.vcProz = new Intl.NumberFormat('de-DE', { maximumFractionDigits: 1 });
+window.vcProz2 = new Intl.NumberFormat('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+window.vcSort = { feld: 'tantieme', ab: true };
+
+document.querySelectorAll('.vc-l1').forEach((i) => { i.style.background = dash.colors[0]; });
+document.querySelectorAll('.vc-l2').forEach((i) => { i.style.background = dash.colors[1]; });
+
+document.querySelectorAll('#zeitraum-wahl').forEach((sel) => {
+  sel.value = String(dash.params().tage ?? 30);
+  sel.addEventListener('change', () => dash.setParams({ tage: Number(sel.value) }));
+});
+
+document.querySelectorAll('#buchtabelle th[data-sort]').forEach((th) => {
+  const sortiere = () => {
+    const f = th.getAttribute('data-sort');
+    window.vcSort = { feld: f, ab: window.vcSort.feld === f ? !window.vcSort.ab : f !== 'buch' };
+    document.querySelectorAll('#buchtabelle th[data-sort]').forEach((x) => x.removeAttribute('aria-sort'));
+    th.setAttribute('aria-sort', window.vcSort.ab ? 'descending' : 'ascending');
+    dash.draw('buecher-zeilen');
+  };
+  th.addEventListener('click', sortiere);
+  th.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); sortiere(); } });
+});
+
+const vcWert = (el, feld, fmt) => {
+  const z = dash.data('zeitraum');
+  if (z.status === 'loading') return;
+  el.classList.remove('dash-skeleton');
+  if (z.status !== 'ok' || !z.data[0]) { el.textContent = '—'; return; }
+  el.textContent = fmt(z.data[0][feld]);
+};
+const vcDelta = (el, feld, gutWennHoch) => {
+  const z = dash.data('zeitraum');
+  if (z.status !== 'ok' || !z.data[0]) { el.textContent = ''; return; }
+  const v = z.data[0][feld];
+  el.classList.remove('vc-ok', 'vc-bad');
+  if (v === null || v === undefined) { el.textContent = 'kein Vergleich möglich'; return; }
+  const gut = gutWennHoch ? v >= 0 : v <= 0;
+  el.classList.add(gut ? 'vc-ok' : 'vc-bad');
+  el.textContent = (v > 0 ? '+' : '') + window.vcProz.format(v) + (z.data[0].monat ? ' % zu den gleichen Tagen im Vormonat' : ' % zum Zeitraum davor');
+};
+
+const eur = (v) => window.vcEur.format(v);
+const zahl = (v) => window.vcZahl.format(v);
+dash.draw('k-netto', (el) => vcWert(el, 'netto', eur));
+dash.draw('k-tantieme', (el) => vcWert(el, 'tantieme', eur));
+dash.draw('k-spend', (el) => vcWert(el, 'spend', eur));
+dash.draw('k-stueck', (el) => vcWert(el, 'stueck', zahl));
+dash.draw('k-anteil', (el) => vcWert(el, 'adsAnteil', (v) => window.vcProz.format(v) + ' %'));
+dash.draw('k-kenp', (el) => vcWert(el, 'kenp', zahl));
+dash.draw('d-netto', (el) => vcDelta(el, 'nettoVsVor', true));
+dash.draw('d-tantieme', (el) => vcDelta(el, 'tantiemeVsVor', true));
+dash.draw('d-spend', (el) => vcDelta(el, 'spendVsVor', false));
+dash.draw('d-stueck', (el) => vcDelta(el, 'stueckVsVor', true));
+dash.draw('d-kenp', (el) => vcDelta(el, 'kenpVsVor', true));
+dash.draw('d-anteil', (el) => {
+  const z = dash.data('zeitraum');
+  el.textContent = z.status === 'ok' && z.data[0] ? zahl(z.data[0].adsBest) + ' Ads-Bestellungen' : '';
+});
+
+const vcSatz = (el, feld, fmt) => { const z = dash.data('zeitraum'); el.textContent = z.status === 'ok' && z.data[0] ? fmt(z.data[0][feld]) : '—'; };
+dash.draw('s-zeitraum', (el) => {
+  const z = dash.data('zeitraum');
+  if (z.status !== 'ok' || !z.data[0]) { el.textContent = '—'; return; }
+  const r = z.data[0];
+  const monatsname = new Intl.DateTimeFormat('de-DE', { month: 'long', timeZone: 'UTC' }).format(new Date(r.bis + 'T00:00:00Z'));
+  el.textContent = r.monat ? 'Im ' + monatsname + ' bis zum ' + Number(r.bis.slice(8, 10)) + '.' : r.tage === 1 ? 'Heute' : 'In den letzten ' + zahl(r.tage) + ' Tagen';
+});
+dash.draw('s-tantieme', (el) => vcSatz(el, 'tantieme', eur));
+dash.draw('s-spend', (el) => vcSatz(el, 'spend', eur));
+dash.draw('s-netto', (el) => vcSatz(el, 'netto', eur));
+dash.draw('s-ueber', (el) => {
+  const z = dash.data('zeitraum');
+  if (z.status !== 'ok' || !z.data[0]) { el.textContent = ''; return; }
+  const n = z.data[0].buecherUeber;
+  el.textContent = n === 0 ? 'Kein Buch hat mehr für Ads ausgegeben, als es an Tantiemen brachte.'
+    : n === 1 ? '1 Buch hat mehr für Ads ausgegeben, als es an Tantiemen brachte.'
+    : n + ' Bücher haben mehr für Ads ausgegeben, als sie an Tantiemen brachten.';
+});
+
+dash.draw('buecher-zeilen', (tb) => {
+  const d = dash.data('jeBuch');
+  tb.replaceChildren();
+  const zeile = (text, cls) => { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 13; td.textContent = text; if (cls) td.className = cls; tr.append(td); tb.append(tr); };
+  if (d.status === 'loading') { zeile('Lädt …'); return; }
+  if (d.status !== 'ok') { zeile('Die Buchtabelle konnte nicht geladen werden.', 'vc-fehler'); return; }
+  if (!d.data.length) { zeile('Im gewählten Zeitraum gibt es keine Verkäufe und keinen Spend.'); return; }
+  const { feld, ab } = window.vcSort;
+  const rows = [...d.data].sort((p, q) => {
+    const a = p[feld], b = q[feld];
+    if (feld === 'buch') return ab ? String(b).localeCompare(String(a), 'de') : String(a).localeCompare(String(b), 'de');
+    const x = a === null ? -Infinity : a, y = b === null ? -Infinity : b;
+    return ab ? y - x : x - y;
+  });
+  const leer = '–';
+  for (const r of rows) {
+    const tr = document.createElement('tr');
+    tr.dataset.key = encodeURIComponent(r.buch);
+    const name = document.createElement('td');
+    name.append(document.createTextNode(r.buch));
+    if (r.spend > 0 && r.spend > r.tantieme) { const p = document.createElement('span'); p.className = 'vc-pill'; p.textContent = 'Spend über Tantieme'; name.append(p); }
+    tr.append(name);
+    const zellen = [
+      zahl(r.stueck), zahl(r.adsBest), r.adsAnteil === null ? leer : window.vcProz.format(r.adsAnteil) + ' %',
+      eur(r.tantieme), r.spend ? eur(r.spend) : leer, eur(r.netto),
+      r.tantiemeJeStueck === null ? leer : eur(r.tantiemeJeStueck),
+      r.kostenJeAdsBest === null ? leer : eur(r.kostenJeAdsBest),
+      r.acos === null ? leer : window.vcProz.format(r.acos) + ' %',
+      r.ctr === null ? leer : window.vcProz2.format(r.ctr) + ' %',
+      r.cvr === null ? leer : window.vcProz.format(r.cvr) + ' %',
+      r.cpc === null ? leer : eur(r.cpc),
+    ];
+    zellen.forEach((t, i) => {
+      const td = document.createElement('td');
+      td.textContent = t;
+      if (i === 5) td.className = r.netto < 0 ? 'vc-bad' : '';
+      if (i === 7 && r.kostenJeAdsBest !== null && r.tantiemeJeStueck !== null && r.kostenJeAdsBest > r.tantiemeJeStueck) td.className = 'vc-bad';
+      tr.append(td);
+    });
+    tb.append(tr);
+  }
+});
+
+dash.draw('buch-wahl', (sel) => {
+  const g = dash.data('buchliste');
+  const liste = g.status === 'ok' ? g.data : [];
+  const gewaehlt = dash.params().buch || '';
+  sel.replaceChildren(new Option('Alle Bücher', ''), ...liste.map((r) => new Option(r.buch, r.buch)));
+  if (gewaehlt && !liste.some((r) => r.buch === gewaehlt)) sel.append(new Option(gewaehlt, gewaehlt));
+  sel.value = gewaehlt;
+  sel.onchange = () => dash.setParams({ buch: sel.value || '' });
+});
+
+dash.draw('monats-zeilen', (tb) => {
+  const d = dash.data('monate');
+  tb.replaceChildren();
+  const zeile = (text, cls) => { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 12; td.textContent = text; if (cls) td.className = cls; tr.append(td); tb.append(tr); };
+  if (d.status === 'loading') { zeile('Lädt …'); return; }
+  if (d.status !== 'ok') { zeile('Der Monatsverlauf konnte nicht geladen werden.', 'vc-fehler'); return; }
+  if (!d.data.length) { zeile('Für dieses Buch gibt es noch keine Verkäufe und keinen Spend.'); return; }
+  const fmtMonat = new Intl.DateTimeFormat('de-DE', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  const fmtTag = (s) => s.slice(8, 10) + '.' + s.slice(5, 7) + '.';
+  const leer = '–';
+  for (const r of d.data) {
+    const tr = document.createElement('tr');
+    tr.dataset.key = encodeURIComponent(r.monat);
+    const name = document.createElement('td');
+    name.append(document.createTextNode(fmtMonat.format(new Date(r.monat + '-01T00:00:00Z'))));
+    const hinweise = [];
+    if (!r.kdpVon) hinweise.push('ohne KDP-Daten');
+    else if (!r.kdpGanz) hinweise.push('KDP ' + fmtTag(r.kdpVon) + '–' + fmtTag(r.kdpBis));
+    const adsTeil = Boolean(r.adsVon) && (r.adsVon !== r.kdpVon || r.adsBis !== r.kdpBis);
+    if (!r.adsVon) hinweise.push('ohne Ads-Daten');
+    else if (adsTeil) hinweise.push('Ads nur ' + fmtTag(r.adsVon) + '–' + fmtTag(r.adsBis) + ', daher kein Netto und Ads-Anteil');
+    if (hinweise.length) { const k = document.createElement('span'); k.className = 'vc-klein'; k.textContent = hinweise.join(', '); name.append(k); }
+    tr.append(name);
+    const ohneAds = !r.adsVon, nichtVergleichbar = ohneAds || adsTeil;
+    const zellen = [
+      zahl(r.stueck), ohneAds ? leer : zahl(r.adsBest),
+      nichtVergleichbar || r.adsAnteil === null ? leer : window.vcProz.format(r.adsAnteil) + ' %',
+      eur(r.tantieme), ohneAds ? leer : eur(r.spend), nichtVergleichbar ? leer : eur(r.netto),
+      r.acos === null ? leer : window.vcProz.format(r.acos) + ' %',
+      r.ctr === null ? leer : window.vcProz2.format(r.ctr) + ' %',
+      r.cvr === null ? leer : window.vcProz.format(r.cvr) + ' %',
+      r.cpc === null ? leer : eur(r.cpc),
+      zahl(r.kenp),
+    ];
+    zellen.forEach((t, i) => {
+      const td = document.createElement('td');
+      td.textContent = t;
+      if (i === 5 && !nichtVergleichbar && r.netto < 0) td.className = 'vc-bad';
+      tr.append(td);
+    });
+    tb.append(tr);
+  }
+});
+
+dash.draw('chart', {
+  mount: (el) => {
+    const tip = document.createElement('div');
+    tip.className = 'vc-tip'; tip.hidden = true;
+    return { tip, gespielt: false };
+  },
+  update: (el, made) => {
+    const d = dash.data('tage');
+    if (d.status === 'loading') return;
+    el.classList.remove('dash-skeleton');
+    el.replaceChildren();
+    if (d.status !== 'ok') { const p = document.createElement('p'); p.className = 'vc-fehler'; p.textContent = 'Der Verlauf konnte nicht geladen werden.'; el.append(p); return; }
+    const rows = d.data;
+    const W = Math.max(280, el.clientWidth), H = 260, m = { t: 10, r: 8, b: 26, l: 56 };
+    const x = d3.scaleBand().domain(rows.map((r) => r.datum)).range([m.l, W - m.r]).padding(0.25);
+    const ymax = d3.max(rows, (r) => Math.max(r.tantieme, r.spend)) || 1;
+    const y = d3.scaleLinear().domain([0, ymax]).nice().range([H - m.b, m.t]);
+    const svg = d3.select(el).append('svg').attr('width', W).attr('height', H).attr('role', 'img')
+      .attr('aria-label', 'Tantiemen als Balken und Ads-Spend als Linie je Tag im gewählten Zeitraum');
+    svg.append('g').attr('transform', `translate(${m.l},0)`)
+      .call(d3.axisLeft(y).ticks(5).tickSize(-(W - m.l - m.r)).tickFormat((v) => window.vcZahl.format(v) + ' €'))
+      .call((g) => g.select('.domain').remove())
+      .call((g) => g.selectAll('line').style('stroke', 'var(--cds-chart-grid)'));
+    const schritt = Math.max(1, Math.ceil(rows.length / Math.max(2, Math.floor((W - m.l) / 70))));
+    const fmtTag = d3.utcFormat('%d.%m.');
+    svg.append('g').attr('transform', `translate(0,${H - m.b})`)
+      .call(d3.axisBottom(x).tickValues(rows.map((r) => r.datum).filter((_, i) => (rows.length - 1 - i) % schritt === 0)).tickFormat((s) => fmtTag(new Date(s + 'T00:00:00Z'))).tickSizeOuter(0))
+      .call((g) => g.select('.domain').style('stroke', 'var(--cds-chart-axis)'))
+      .call((g) => g.selectAll('line').style('stroke', 'var(--cds-chart-axis)'));
+    const reduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const bars = svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', (r) => x(r.datum)).attr('width', x.bandwidth()).attr('rx', 2)
+      .style('fill', dash.colors[0])
+      .attr('y', (r) => y(r.tantieme)).attr('height', (r) => y(0) - y(r.tantieme));
+    if (!made.gespielt && !reduziert && rows.length) {
+      bars.attr('y', y(0)).attr('height', 0).transition().duration(500).attr('y', (r) => y(r.tantieme)).attr('height', (r) => y(0) - y(r.tantieme));
+      made.gespielt = true;
+    }
+    const linie = d3.line().x((r) => x(r.datum) + x.bandwidth() / 2).y((r) => y(r.spend));
+    svg.append('path').datum(rows).attr('d', linie).style('fill', 'none').style('stroke', dash.colors[1]).style('stroke-width', 2);
+    svg.append('g').selectAll('circle').data(rows).join('circle')
+      .attr('cx', (r) => x(r.datum) + x.bandwidth() / 2).attr('cy', (r) => y(r.spend)).attr('r', rows.length > 31 ? 0 : 2.5).style('fill', dash.colors[1]);
+    const tip = made.tip;
+    el.append(tip);
+    const fmtLang = d3.utcFormat('%a, %d.%m.%Y');
+    svg.append('g').selectAll('rect').data(rows).join('rect')
+      .attr('x', (r) => x(r.datum) - (x.step() - x.bandwidth()) / 2).attr('width', x.step()).attr('y', m.t).attr('height', H - m.t - m.b)
+      .style('fill', 'transparent')
+      .on('pointerenter pointermove', (ev, r) => {
+        tip.replaceChildren();
+        const kopf = document.createElement('b'); kopf.textContent = fmtLang(new Date(r.datum + 'T00:00:00Z'));
+        const z1 = document.createElement('div'); z1.textContent = 'Tantiemen ' + window.vcEur.format(r.tantieme);
+        const z2 = document.createElement('div'); z2.textContent = 'Ads-Spend ' + window.vcEur.format(r.spend);
+        const z3 = document.createElement('div'); z3.textContent = 'Netto ' + window.vcEur.format(r.netto);
+        z3.className = r.netto < 0 ? 'vc-bad' : '';
+        tip.append(kopf, z1, z2, z3);
+        tip.hidden = false;
+        const [px, py] = d3.pointer(ev, el);
+        const breite = tip.offsetWidth;
+        tip.style.left = Math.min(Math.max(0, px + 12), el.clientWidth - breite) + 'px';
+        tip.style.top = Math.max(0, py - 70) + 'px';
+      })
+      .on('pointerleave', () => { tip.hidden = true; });
+  },
+});
+</script>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+  async function entschluesseln(password) {
+    const res = await fetch('daten.enc', { cache: 'no-store' });
+    if (!res.ok) throw new Error('data');
+    const blob = await res.json();
+    const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+    const key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(blob.salt), iterations: blob.iter, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    let plain;
+    try { plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(blob.iv) }, key, b64(blob.ct)); } catch { throw new Error('password'); }
+    return JSON.parse(await new Response(new Blob([plain]).stream().pipeThrough(new DecompressionStream('gzip'))).text());
+  }
+  // Gleicher Schlüssel wie beim Ads-Cockpit: einmal entsperrt, gilt es im selben Tab für beide Seiten.
+  const store = { get() { try { return sessionStorage.getItem('cockpit'); } catch { return null; } }, set(x) { try { sessionStorage.setItem('cockpit', x); } catch {} }, clear() { try { sessionStorage.removeItem('cockpit'); } catch {} } };
+  const fmtStand = new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  async function entsperren(pw, still) {
+    const btn = $('go'), err = $('err');
+    btn.disabled = true; err.textContent = still ? '' : 'Entsperre …';
+    try {
+      const d = await entschluesseln(pw);
+      store.set(pw);
+      $('lock').hidden = true; $('app').hidden = false; $('pw').value = '';
+      const kdpBis = d.kdp.reduce((m, r) => (r.datum > m ? r.datum : m), ''), adsBis = d.ads.reduce((m, r) => (r.datum > m ? r.datum : m), '');
+      const tag = (s) => s ? s.slice(8, 10) + '.' + s.slice(5, 7) + '.' : '–';
+      $('stand').textContent = 'Stand ' + fmtStand.format(new Date(d.updated)) + ' · KDP bis ' + tag(kdpBis) + ' · Ads bis ' + tag(adsBis);
+      window.dash.__start({ kdp: d.kdp, ads: d.ads });
+    } catch (e) {
+      store.clear();
+      err.textContent = still ? '' : e.message === 'password' ? 'Falsches Passwort.' : 'Daten konnten nicht geladen werden. Versuch es später noch einmal.';
+    } finally { btn.disabled = false; }
+  }
+  $('lockform').addEventListener('submit', (e) => { e.preventDefault(); const pw = $('pw').value; if (pw) entsperren(pw, false); });
+  $('relock').addEventListener('click', () => { store.clear(); location.reload(); });
+  const gemerkt = store.get(); if (gemerkt) entsperren(gemerkt, true); else $('pw').focus();
+})();
+</script>
+</body>
+</html>

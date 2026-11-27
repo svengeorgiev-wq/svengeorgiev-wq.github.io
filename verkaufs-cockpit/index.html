@@ -181,6 +181,16 @@
       <span class="vc-zahl dash-skeleton" data-draw="k-anteil" data-source="zeitraum" data-field="adsAnteil" data-row="0"></span>
       <span class="vc-delta" data-draw="d-anteil" data-source="zeitraum" data-field="adsBest" data-row="0"></span>
     </div>
+    <div class="vc-karte" id="k-roi">
+      <div class="vc-label">Overall ROI</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-roi" data-source="zeitraum" data-field="roiGesamt" data-row="0"></span>
+      <span class="vc-delta">(alle Tantiemen − Spend) / Spend</span>
+    </div>
+    <div class="vc-karte" id="k-roi-ads">
+      <div class="vc-label">AMS ROI</div>
+      <span class="vc-zahl dash-skeleton" data-draw="k-roi-ads" data-source="zeitraum" data-field="roiAds" data-row="0"></span>
+      <span class="vc-delta">(Ads-Umsatz zum Verkaufspreis − Spend) / Spend, nur zur Info</span>
+    </div>
   </section>
 
   <section class="vc-karte" id="top">
@@ -224,6 +234,8 @@
             <th data-field="ctr" data-sort="ctr" tabindex="0">CTR</th>
             <th data-field="cvr" data-sort="cvr" tabindex="0">CVR</th>
             <th data-field="cpc" data-sort="cpc" tabindex="0">CPC</th>
+            <th data-field="roiGesamt" data-sort="roiGesamt" tabindex="0">Overall ROI</th>
+            <th data-field="roiAds" data-sort="roiAds" tabindex="0">AMS ROI</th>
           </tr>
         </thead>
         <tbody data-draw="buecher-zeilen"></tbody>
@@ -235,7 +247,7 @@
     <div class="vc-kopf">
       <div>
         <h2 class="vc-h">Monatsverlauf</h2>
-        <p class="vc-unter">Je Kalendermonat, unabhängig vom gewählten Zeitraum. So siehst du, wie sich Ads-Anteil, Netto und die Klickwerte eines Buchs über die Monate entwickeln. Ab Oktober 2024, ältere Monate aus PublisherChamp. Der laufende Monat ist noch nicht fertig.</p>
+        <p class="vc-unter">Je Kalendermonat, unabhängig vom gewählten Zeitraum. So siehst du, wie sich Ads-Anteil, Netto und die Klickwerte eines Buchs über die Monate entwickeln. Ab Oktober 2024: KDP komplett aus KDP, Ads bis September 2026 aus PublisherChamp. Der laufende Monat ist noch nicht fertig.</p>
       </div>
       <label class="vc-wahl" for="monat-buch">Buch
         <select class="dash-select" id="monat-buch" data-draw="buch-wahl" data-source="buchliste" aria-label="Buch für den Monatsverlauf"></select>
@@ -256,6 +268,8 @@
             <th data-field="ctr">CTR</th>
             <th data-field="cvr">CVR</th>
             <th data-field="cpc">CPC</th>
+            <th data-field="roiGesamt">Overall ROI</th>
+            <th data-field="roiAds">AMS ROI</th>
           </tr>
         </thead>
         <tbody data-draw="monats-zeilen"></tbody>
@@ -265,10 +279,11 @@
 
   <details class="vc-fuss" id="erklaerung">
     <summary>Wie die Zahlen entstehen</summary>
-    <p>Tantiemen und Stück stammen aus dem KDP-Bericht (Reports › Orders › Download report), Fremdwährungen sind mit dem EZB-Kurs des Tages in Euro umgerechnet. Ads-Zahlen kommen aus der Amazon-Ads-API (amazon.de, Sponsored Products je beworbener ASIN, Sponsored-Brands-Video je Kampagne über die Buchzuordnung der Ads-Skill).</p>
+    <p>Tantiemen und Stück stammen aus dem KDP-Bericht (Reports › Orders › Download report), für die Zeit vor dem 29.08.2026 aus dem KDP Royalties Estimator (ab 01.10.2024, gleiche Tageswerte je Buch, Format und Marktplatz). Fremdwährungen sind mit dem EZB-Kurs des Tages in Euro umgerechnet. Ads-Zahlen kommen aus der Amazon-Ads-API (amazon.de, Sponsored Products je beworbener ASIN, Sponsored-Brands-Video je Kampagne über die Buchzuordnung der Ads-Skill).</p>
     <p>Netto nach Ads ist alle Tantieme des Buchs minus Ads-Spend, also organisch und über Ads zusammen. Ads-Anteil ist der Anteil der Ads-Bestellungen (7-Tage-Zuordnung) an allen verkauften Stück. Kosten je Ads-Bestellung stehen neben der Tantieme je Stück: Liegen sie darüber, verliert jeder Ads-Verkauf Geld. ACOS steht nur zur Info dabei.</p>
     <p>CTR (Klickrate) ist Klicks je Impression, CVR (Conversion Rate) ist Ads-Bestellungen je Klick, CPC ist Spend je Klick. Alle drei kommen nur aus den Ads, organische Verkäufe zählen nicht mit. Der Monatsverlauf rechnet dieselben Werte je Kalendermonat; Monate, in denen KDP- oder Ads-Daten nur teilweise vorliegen, sind unter dem Monatsnamen vermerkt. Ads-Tagesdaten gibt es ab dem 28.09.2026, ältere Tage liefert Amazon nicht mehr.</p>
-    <p>Monate vor den eigenen Daten stammen aus dem PublisherChamp-Export (ab Oktober 2024, nur Monatswerte): KDP bis August 2026, Ads bis September 2026. Gezählt werden wie bei den eigenen Daten Taschenbuch, Hardcover und eBook, ohne Hörbuch und ohne KENP-Tantieme; Spend ist nur Amazon Ads, ohne Facebook. Sechs Titel hatte PublisherChamp nicht erfasst, ihre Monate vor September 2026 fehlen: Sherlock Adventskalender Kids &amp; Eltern, Ganzheitlich fit, Achtsamkeit &amp; Gelassenheit, Büro-Quatsch in jeder Firma, Dankbarkeitstagebuch für Frauen und Overthinking Nr 2.</p>
+    <p>Ads-Monate vor den eigenen Ads-Daten (Oktober 2024 bis September 2026) stammen aus dem PublisherChamp-Export (nur Monatswerte, nur Amazon Ads, ohne Facebook). KDP kommt seit dem 27.11.2026 für den ganzen Zeitraum direkt aus KDP, weil PublisherChamp viele Verkäufe fehlten (zum Beispiel Okt.–Dez. 2024: KDP 1.224 €, PublisherChamp rund 136 €). Gezählt werden Taschenbuch, Hardcover und eBook, ohne Hörbuch und ohne KENP-Tantieme.</p>
+    <p>Overall ROI ist (alle Tantiemen − Spend) / Spend, AMS ROI ist (Ads-Umsatz − Spend) / Spend, beide wie in PublisherChamp. Der AMS ROI rechnet mit dem Verkaufspreis, nicht mit der Tantieme, und sieht deshalb besser aus, als die Ads wirtschaftlich sind; maßgeblich bleiben Netto nach Ads und Kosten je Ads-Bestellung gegen Tantieme je Stück. Beide ROI stehen nur zur Info dabei.</p>
     <p>Die Cover in der Leiste der Top-Bücher sind die Produktbilder der Bücher auf Amazon, je Titel vom Taschenbuch, sonst vom eBook.</p>
     <p>Die KENP-Tantieme (Kindle Unlimited) meldet KDP erst nach Monatsende, sie fehlt deshalb in den Tantiemen. Amazon bucht Ads-Bestellungen bis zu 14 Tage nach; die letzten Tage werden bei jedem Lauf neu geholt. Den Vergleich mit dem Zeitraum davor gibt es nur, wo für beide Zeiträume Daten vorliegen.</p>
   </details>
@@ -325,7 +340,7 @@ window.dash = (() => {
 dash.calc('zeitraum', {
   inputs: ['kdp', 'ads'],
   title: 'Kennzahlen im gewählten Zeitraum',
-  description: 'Summen der letzten N Tage (oder des laufenden Monats) bis zum letzten KDP-Tag, dazu derselbe Zeitraum davor (beim Monat dieselben Tage im Vormonat) als Vergleich.',
+  description: 'Summen der letzten N Tage (oder des laufenden Monats) bis zum letzten KDP-Tag, dazu derselbe Zeitraum davor (beim Monat dieselben Tage im Vormonat) als Vergleich. Overall ROI = (Tantiemen − Spend) / Spend, AMS ROI = (Ads-Umsatz − Spend) / Spend, wie in PublisherChamp.',
   fn: (kdp, ads) => {
     const tag = (s, d) => { const x = new Date(s + 'T00:00:00Z'); x.setUTCDate(x.getUTCDate() + d); return x.toISOString().slice(0, 10); };
     const ende = kdp.reduce((m, r) => (r.datum > m ? r.datum : m), '');
@@ -341,9 +356,9 @@ dash.calc('zeitraum', {
       vorBis = soll < vorEnde ? soll : vorEnde;
     }
     const summe = (a, b) => {
-      const s = { tantieme: 0, stueck: 0, kenp: 0, spend: 0, best: 0 };
+      const s = { tantieme: 0, stueck: 0, kenp: 0, spend: 0, best: 0, umsatz: 0 };
       for (const r of kdp) if (r.datum >= a && r.datum <= b) { s.tantieme += Number(r.tantieme); s.stueck += Number(r.stueck); s.kenp += Number(r.kenp); }
-      for (const r of ads) if (r.datum >= a && r.datum <= b) { s.spend += Number(r.spend); s.best += Number(r.bestellungen); }
+      for (const r of ads) if (r.datum >= a && r.datum <= b) { s.spend += Number(r.spend); s.best += Number(r.bestellungen); s.umsatz += Number(r.umsatz); }
       return s;
     };
     const r2 = (x) => Math.round(x * 100) / 100;
@@ -358,6 +373,7 @@ dash.calc('zeitraum', {
       tage: n, monat, von, bis: ende, vorVon, vorBis, adsAb,
       tantieme: r2(j.tantieme), stueck: Math.round(j.stueck), kenp: Math.round(j.kenp), spend: r2(j.spend), netto: r2(j.tantieme - j.spend),
       adsBest: j.best, adsAnteil: j.stueck ? r2(Math.min(j.best / j.stueck, 1) * 100) : 0, buecherUeber: ueber,
+      roiGesamt: j.spend ? r2(((j.tantieme - j.spend) / j.spend) * 100) : null, roiAds: j.spend ? r2(((j.umsatz - j.spend) / j.spend) * 100) : null,
       tantiemeVsVor: pct(j.tantieme, v.tantieme, kdpVgl), stueckVsVor: pct(j.stueck, v.stueck, kdpVgl), kenpVsVor: pct(j.kenp, v.kenp, kdpVgl),
       spendVsVor: pct(j.spend, v.spend, adsVgl), nettoVsVor: pct(j.tantieme - j.spend, v.tantieme - v.spend, adsVgl),
     }];
@@ -390,6 +406,8 @@ dash.calc('jeBuch', {
         ctr: x.impressionen ? r2((x.klicks / x.impressionen) * 100) : null,
         cvr: x.klicks ? r2((x.adsBest / x.klicks) * 100) : null,
         cpc: x.klicks ? r2(x.spend / x.klicks) : null,
+        roiGesamt: x.spend ? r2(((x.tantieme - x.spend) / x.spend) * 100) : null,
+        roiAds: x.spend ? r2(((x.umsatz - x.spend) / x.spend) * 100) : null,
       }))
       .sort((p, q) => q.tantieme - p.tantieme);
   },
@@ -411,14 +429,16 @@ dash.calc('buchliste', {
 dash.calc('monate', {
   inputs: ['kdp', 'ads', 'historie'],
   title: 'Monatsverlauf',
-  description: 'Je Kalendermonat für alle Bücher oder das gewählte Buch: Stück, Ads-Bestellungen, Ads-Anteil, Tantiemen, Spend, Netto, ACOS, CTR, CVR, CPC und KENP. Monate vor den eigenen Daten kommen aus der PublisherChamp-Historie (KDP vor dem ersten vollen eigenen KDP-Monat, Ads vor dem ersten vollen eigenen Ads-Monat), damit nichts doppelt zählt.',
+  description: 'Je Kalendermonat für alle Bücher oder das gewählte Buch: Stück, Ads-Bestellungen, Ads-Anteil, Tantiemen, Spend, Netto, ACOS, CTR, CVR, CPC, Overall ROI, AMS ROI und KENP. KDP ab Oktober 2024 komplett aus KDP; Ads vor dem ersten vollen eigenen Ads-Monat aus der PublisherChamp-Historie, damit nichts doppelt zählt.',
   fn: (kdp, ads, historie) => {
     const buch = dash.params().buch || '';
     const r2 = (x) => Math.round(x * 100) / 100;
     const mon = {};
     const zu = (k) => (mon[k] = mon[k] || { monat: k, stueck: 0, tantieme: 0, kenp: 0, spend: 0, adsBest: 0, umsatz: 0, klicks: 0, impressionen: 0 });
     const spanne = (rows) => rows.reduce((s, r) => [!s[0] || r.datum < s[0] ? r.datum : s[0], !s[1] || r.datum > s[1] ? r.datum : s[1]], [null, null]);
-    const [kAb, kBis] = spanne(kdp), [aAb, aBis] = spanne(ads);
+    const [kErst, kBis] = spanne(kdp), [aAb, aBis] = spanne(ads);
+    // KDP-Historie aus dem Royalties Estimator ist ab 01.10.2024 abgefragt (erster Verkauf erst am 10.10.)
+    const kAb = kErst && kErst.slice(0, 7) === '2024-10' ? '2024-10-01' : kErst;
     // Erster voller eigener Monat: davor gilt die PublisherChamp-Historie
     const grenze = (ab) => { if (!ab) return '9999-99'; if (ab.slice(8, 10) === '01') return ab.slice(0, 7); const d = new Date(Date.UTC(Number(ab.slice(0, 4)), Number(ab.slice(5, 7)), 1)); return d.toISOString().slice(0, 7); };
     const hist = Array.isArray(historie) ? historie : [];
@@ -455,6 +475,8 @@ dash.calc('monate', {
       cvr: x.klicks ? r2((x.adsBest / x.klicks) * 100) : null,
       cpc: x.klicks ? r2(x.spend / x.klicks) : null,
       kenp: Math.round(x.kenp),
+      roiGesamt: x.spend ? r2(((x.tantieme - x.spend) / x.spend) * 100) : null,
+      roiAds: x.spend ? r2(((x.umsatz - x.spend) / x.spend) * 100) : null,
       };
     });
   },
@@ -528,6 +550,9 @@ dash.draw('k-tantieme', (el) => vcWert(el, 'tantieme', eur));
 dash.draw('k-spend', (el) => vcWert(el, 'spend', eur));
 dash.draw('k-stueck', (el) => vcWert(el, 'stueck', zahl));
 dash.draw('k-anteil', (el) => vcWert(el, 'adsAnteil', (v) => window.vcProz.format(v) + ' %'));
+const vcRoi = (v) => (v === null || v === undefined ? '–' : window.vcProz.format(v) + ' %');
+dash.draw('k-roi', (el) => { vcWert(el, 'roiGesamt', vcRoi); const z = dash.data('zeitraum'); el.classList.toggle('vc-bad', Boolean(z.status === 'ok' && z.data[0] && z.data[0].roiGesamt !== null && z.data[0].roiGesamt < 0)); });
+dash.draw('k-roi-ads', (el) => vcWert(el, 'roiAds', vcRoi));
 dash.draw('d-netto', (el) => vcDelta(el, 'nettoVsVor', true));
 dash.draw('d-tantieme', (el) => vcDelta(el, 'tantiemeVsVor', true));
 dash.draw('d-spend', (el) => vcDelta(el, 'spendVsVor', false));
@@ -560,7 +585,7 @@ dash.draw('s-ueber', (el) => {
 dash.draw('buecher-zeilen', (tb) => {
   const d = dash.data('jeBuch');
   tb.replaceChildren();
-  const zeile = (text, cls) => { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 13; td.textContent = text; if (cls) td.className = cls; tr.append(td); tb.append(tr); };
+  const zeile = (text, cls) => { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 15; td.textContent = text; if (cls) td.className = cls; tr.append(td); tb.append(tr); };
   if (d.status === 'loading') { zeile('Lädt …'); return; }
   if (d.status !== 'ok') { zeile('Die Buchtabelle konnte nicht geladen werden.', 'vc-fehler'); return; }
   if (!d.data.length) { zeile('Im gewählten Zeitraum gibt es keine Verkäufe und keinen Spend.'); return; }
@@ -588,10 +613,13 @@ dash.draw('buecher-zeilen', (tb) => {
       r.ctr === null ? leer : window.vcProz2.format(r.ctr) + ' %',
       r.cvr === null ? leer : window.vcProz.format(r.cvr) + ' %',
       r.cpc === null ? leer : eur(r.cpc),
+      r.roiGesamt === null ? leer : window.vcProz.format(r.roiGesamt) + ' %',
+      r.roiAds === null ? leer : window.vcProz.format(r.roiAds) + ' %',
     ];
     zellen.forEach((t, i) => {
       const td = document.createElement('td');
       td.textContent = t;
+      if (i === 12 && r.roiGesamt !== null && r.roiGesamt < 0) td.className = 'vc-bad';
       if (i === 5) td.className = r.netto < 0 ? 'vc-bad' : '';
       if (i === 7 && r.kostenJeAdsBest !== null && r.tantiemeJeStueck !== null && r.kostenJeAdsBest > r.tantiemeJeStueck) td.className = 'vc-bad';
       tr.append(td);
@@ -661,7 +689,7 @@ dash.draw('buch-wahl', (sel) => {
 dash.draw('monats-zeilen', (tb) => {
   const d = dash.data('monate');
   tb.replaceChildren();
-  const zeile = (text, cls) => { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 11; td.textContent = text; if (cls) td.className = cls; tr.append(td); tb.append(tr); };
+  const zeile = (text, cls) => { const tr = document.createElement('tr'); const td = document.createElement('td'); td.colSpan = 13; td.textContent = text; if (cls) td.className = cls; tr.append(td); tb.append(tr); };
   if (d.status === 'loading') { zeile('Lädt …'); return; }
   if (d.status !== 'ok') { zeile('Der Monatsverlauf konnte nicht geladen werden.', 'vc-fehler'); return; }
   if (!d.data.length) { zeile('Für dieses Buch gibt es noch keine Verkäufe und keinen Spend.'); return; }
@@ -693,11 +721,14 @@ dash.draw('monats-zeilen', (tb) => {
       r.ctr === null ? leer : window.vcProz2.format(r.ctr) + ' %',
       r.cvr === null ? leer : window.vcProz.format(r.cvr) + ' %',
       r.cpc === null ? leer : eur(r.cpc),
+      nichtVergleichbar || r.roiGesamt === null ? leer : window.vcProz.format(r.roiGesamt) + ' %',
+      r.roiAds === null ? leer : window.vcProz.format(r.roiAds) + ' %',
     ];
     zellen.forEach((t, i) => {
       const td = document.createElement('td');
       td.textContent = t;
       if (i === 5 && !nichtVergleichbar && r.netto < 0) td.className = 'vc-bad';
+      if (i === 10 && !nichtVergleichbar && r.roiGesamt !== null && r.roiGesamt < 0) td.className = 'vc-bad';
       tr.append(td);
     });
     tb.append(tr);

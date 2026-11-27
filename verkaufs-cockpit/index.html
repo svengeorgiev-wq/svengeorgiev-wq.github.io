@@ -67,6 +67,11 @@
 .vc-titel { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; text-wrap: balance; }
 .vc-satz { margin: 6px 0 0; color: var(--color-fg-muted); max-width: 72ch; line-height: 1.5; }
 .vc-satz b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); font-variant-numeric: tabular-nums; }
+.vc-aktionen { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.vc-run { display: inline-flex; align-items: center; gap: 6px; font-size: var(--cds-font-size-caption); font-weight: var(--cds-font-weight-medium); color: var(--color-fg); text-decoration: none; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--color-border-line); background: var(--color-panel); white-space: nowrap; }
+.vc-run:hover, .vc-run:focus-visible { border-color: var(--color-fg-muted); }
+.vc-run-hinweis { font-size: 11px; color: var(--color-fg-muted); max-width: 30ch; text-align: right; line-height: 1.35; }
+@media (max-width: 640px) { .vc-aktionen { align-items: flex-start; } .vc-run-hinweis { text-align: left; } }
 .vc-wahl { display: flex; align-items: center; gap: var(--cds-gap-sm); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
 .vc-kacheln { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--cds-gap-md); }
 .vc-karte { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
@@ -145,16 +150,20 @@
       <h1 class="vc-titel">Verkaufs-Cockpit</h1>
       <p class="vc-satz" id="satz"><span data-draw="s-zeitraum">—</span> brachten deine Bücher <b data-draw="s-tantieme" data-source="zeitraum" data-field="tantieme" data-row="0">—</b> Tantiemen. Nach <b data-draw="s-spend" data-source="zeitraum" data-field="spend" data-row="0">—</b> Ads-Spend blieben <b data-draw="s-netto" data-source="zeitraum" data-field="netto" data-row="0">—</b>. <span data-draw="s-ueber">—</span></p>
     </div>
-    <label class="vc-wahl" for="zeitraum-wahl">Zeitraum
-      <select class="dash-select" id="zeitraum-wahl" aria-label="Zeitraum">
-        <option value="1">Heute</option>
-        <option value="7">Letzte 7 Tage</option>
-        <option value="14">Letzte 14 Tage</option>
-        <option value="30">Letzte 30 Tage</option>
-        <option value="0">Aktueller Monat</option>
-        <option value="60">Letzte 60 Tage</option>
-      </select>
-    </label>
+    <div class="vc-aktionen">
+      <label class="vc-wahl" for="zeitraum-wahl">Zeitraum
+        <select class="dash-select" id="zeitraum-wahl" aria-label="Zeitraum">
+          <option value="1">Heute</option>
+          <option value="7">Letzte 7 Tage</option>
+          <option value="14">Letzte 14 Tage</option>
+          <option value="30">Letzte 30 Tage</option>
+          <option value="0">Aktueller Monat</option>
+          <option value="60">Letzte 60 Tage</option>
+        </select>
+      </label>
+      <a class="vc-run" id="run-now" target="_top" title="Öffnet eine neue Sitzung in der Claude-App, die den Tageslauf (KDP und Ads) startet. Geht nur am PC mit Claude-App." href="claude://code/new?q=Starte%20jetzt%20die%20Routine%20verkaufs-cockpit-tageslauf%3A%20mit%20list_task_runs%20pruefen%2C%20ob%20sie%20gerade%20laeuft%3B%20wenn%20nicht%2C%20mit%20run_scheduled_task%20%28taskId%20verkaufs-cockpit-tageslauf%29%20starten.%20Sonst%20nichts%20tun%2C%20keine%20Dateien%20aendern%2C%20kein%20Experten-Briefing%20%28reiner%20Start%20einer%20Routine%29.%20Danach%20in%20einem%20Satz%20melden%2C%20ob%20sie%20gestartet%20wurde.&amp;folder=C%3A%5CUsers%5Csveng%5COneDrive%5CDesktop%5CKDP%5C_Claude-Werkstatt%5CVerkaufs-Dashboard">↻ Daten jetzt holen</a>
+      <span class="vc-run-hinweis">Startet den Tageslauf in der Claude-App (nur am PC). Nach etwa 10 Minuten neu laden.</span>
+    </div>
   </header>
 
   <section class="vc-kacheln" id="kennzahlen" aria-label="Kennzahlen">

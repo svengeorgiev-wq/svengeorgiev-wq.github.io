@@ -161,7 +161,7 @@
           <option value="60">Letzte 60 Tage</option>
         </select>
       </label>
-      <a class="vc-run" id="run-now" target="_top" title="Öffnet eine neue Sitzung in der Claude-App, die den Tageslauf (KDP und Ads) startet. Geht nur am PC mit Claude-App." href="claude://code/new?q=Starte%20jetzt%20die%20Routine%20verkaufs-cockpit-tageslauf%3A%20mit%20list_task_runs%20pruefen%2C%20ob%20sie%20gerade%20laeuft%3B%20wenn%20nicht%2C%20mit%20run_scheduled_task%20%28taskId%20verkaufs-cockpit-tageslauf%29%20starten.%20Sonst%20nichts%20tun%2C%20keine%20Dateien%20aendern%2C%20kein%20Experten-Briefing%20%28reiner%20Start%20einer%20Routine%29.%20Danach%20in%20einem%20Satz%20melden%2C%20ob%20sie%20gestartet%20wurde.&amp;folder=C%3A%5CUsers%5Csveng%5COneDrive%5CDesktop%5CKDP%5C_Claude-Werkstatt%5CVerkaufs-Dashboard">↻ Daten jetzt holen</a>
+      <a class="vc-run" id="run-now" target="_top" title="Öffnet eine neue Sitzung in der Claude-App, die den Tageslauf (KDP und Ads) startet. Geht nur am PC mit Claude-App." href="claude://code/new?q=Starte%20jetzt%20die%20Routine%20verkaufs-cockpit-tageslauf%3A%20mit%20list_task_runs%20pruefen%2C%20ob%20einer%20der%20Laeufe%20verkaufs-cockpit-tageslauf%2C%20verkaufs-cockpit-mittag%20oder%20verkaufs-cockpit-abend%20gerade%20laeuft%3B%20wenn%20ja%2C%20nichts%20starten%20und%20melden%2C%20welcher%20laeuft%3B%20wenn%20nicht%2C%20mit%20run_scheduled_task%20%28taskId%20verkaufs-cockpit-tageslauf%29%20starten.%20Sonst%20nichts%20tun%2C%20keine%20Dateien%20aendern%2C%20kein%20Experten-Briefing%20%28reiner%20Start%20einer%20Routine%29.%20Danach%20in%20einem%20Satz%20melden%2C%20ob%20sie%20gestartet%20wurde.&amp;folder=C%3A%5CUsers%5Csveng%5COneDrive%5CDesktop%5CKDP%5C_Claude-Werkstatt%5CVerkaufs-Dashboard">↻ Daten jetzt holen</a>
       <span class="vc-run-hinweis">Startet den Tageslauf in der Claude-App (nur am PC). Nach etwa 10 Minuten neu laden.</span>
     </div>
   </header>
@@ -1015,7 +1015,7 @@ dash.draw('chart', {
     if (!d.asinBuch || !Object.keys(d.asinBuch).length) return null;   // ohne Zuordnung keine Buchnamen: Tageslauf-Stand behalten
     try {
       const live = await entschluesseln(password, ADS_LIVE);
-      if (!live || !live.tage || !(live.updated > d.updated)) return null;
+      if (!live || !live.tage || !(live.updated > (d.adsStand || d.updated))) return null;
       const zuBuch = d.asinBuch || {};
       const buch = (a) => a === 'unzugeordnet' ? 'Sponsored Brands ohne Buch' : (zuBuch[a] || 'ohne Verkauf (' + a + ')');
       const neu = [];

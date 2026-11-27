@@ -974,8 +974,31 @@ dash.draw('chart', {
 (() => {
   const $ = (id) => document.getElementById(id);
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
-  async function entschluesseln(password) {
-    const res = await fetch('daten.enc', { cache: 'no-store' });
+  // Stündliche Ads-Zahlen der letzten 3 Tage vom Cloudflare-Worker (gleiches Passwort, eigenes Salt). Fehlt er, bleibt der Tageslauf-Stand.
+  const ADS_LIVE = 'https://verkaufs-cockpit-ads.munichpublishing.workers.dev/ads.enc';
+  async function adsLive(password, d) {
+    if (!d.asinBuch || !Object.keys(d.asinBuch).length) return null;   // ohne Zuordnung keine Buchnamen: Tageslauf-Stand behalten
+    try {
+      const live = await entschluesseln(password, ADS_LIVE);
+      if (!live || !live.tage || !(live.updated > d.updated)) return null;
+      const zuBuch = d.asinBuch || {};
+      const buch = (a) => a === 'unzugeordnet' ? 'Sponsored Brands ohne Buch' : (zuBuch[a] || 'ohne Verkauf (' + a + ')');
+      const neu = [];
+      for (const [datum, je] of Object.entries(live.tage)) {
+        const agg = {};
+        for (const [asin, v] of Object.entries(je)) {
+          const b = (agg[buch(asin)] = agg[buch(asin)] || { spend: 0, klicks: 0, impressionen: 0, bestellungen: 0, umsatz: 0 });
+          b.spend += v.s; b.klicks += v.k; b.impressionen += v.i; b.bestellungen += v.o; b.umsatz += v.u;
+        }
+        for (const [b, v] of Object.entries(agg)) neu.push({ datum, buch: b, spend: Math.round(v.spend * 100) / 100, klicks: v.klicks, impressionen: v.impressionen, bestellungen: v.bestellungen, umsatz: Math.round(v.umsatz * 100) / 100 });
+      }
+      const tage = new Set(Object.keys(live.tage));
+      d.ads = d.ads.filter((r) => !tage.has(r.datum)).concat(neu).sort((a, b) => a.datum < b.datum ? -1 : a.datum > b.datum ? 1 : 0);
+      return live.updated;
+    } catch (e) { console.warn('Ads live nicht geladen', e); return null; }
+  }
+  async function entschluesseln(password, quelle = 'daten.enc') {
+    const res = await fetch(quelle, { cache: 'no-store' });
     if (!res.ok) throw new Error('data');
     const blob = await res.json();
     const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
@@ -993,10 +1016,13 @@ dash.draw('chart', {
     try {
       const d = await entschluesseln(pw);
       store.set(pw);
+      const liveStand = await adsLive(pw, d);
       $('lock').hidden = true; $('app').hidden = false; $('pw').value = '';
       const kdpBis = d.kdp.reduce((m, r) => (r.datum > m ? r.datum : m), ''), adsBis = d.ads.reduce((m, r) => (r.datum > m ? r.datum : m), '');
       const tag = (s) => s ? s.slice(8, 10) + '.' + s.slice(5, 7) + '.' : '–';
-      $('stand').textContent = 'Stand ' + fmtStand.format(new Date(d.updated)) + ' · KDP bis ' + tag(kdpBis) + ' · Ads bis ' + tag(adsBis);
+      const uhr = new Intl.DateTimeFormat('de-DE', { hour: '2-digit', minute: '2-digit' });
+      $('stand').textContent = 'Stand ' + fmtStand.format(new Date(d.updated)) + ' · KDP bis ' + tag(kdpBis) + ' · Ads bis ' + tag(adsBis)
+        + (liveStand ? ' (stündlich, zuletzt ' + uhr.format(new Date(liveStand)) + ' Uhr; heute und gestern vorläufig)' : '');
       window.dash.__start({ kdp: d.kdp, ads: d.ads, cover: d.cover || [], historie: d.historie || [], bsr: d.bsr || [], hoerbuch: d.hoerbuch || [] });
     } catch (e) {
       store.clear();
